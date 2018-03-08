@@ -12,6 +12,7 @@
 	   <slf4j.version>1.7.25</slf4j.version>
 	   <log4j.version>1.2.17</log4j.version>
 	   <jackson.version>2.9.4</jackson.version>
+	   <servletapi.version>3.1.0</servletapi.version>
 	</properties>
 	
 	
@@ -73,6 +74,14 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		
+		<!-- JEE -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servletapi.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		 
