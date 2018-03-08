@@ -17,7 +17,7 @@ public class StationDemoController {
 	@Autowired
 	private IStationDemoService stationDemoService;
 	
-	@RequestMapping(value = "/searchStation", method = { RequestMethod.POST}, consumes = {
+	@RequestMapping(value = "/searchStation", method = { RequestMethod.GET}, consumes = {
 			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public List<String> listSearchStations() {
