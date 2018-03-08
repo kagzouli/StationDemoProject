@@ -8,6 +8,9 @@
 	<properties>
 	   <java.version>1.8</java.version>
 	   <spring.version>5.0.4.RELEASE</spring.version>
+	   <springfox.swagger.version>2.8.0</springfox.swagger.version>
+	   <slf4j.version>1.7.25</slf4j.version>
+	   <log4j.version>1.2.17</log4j.version>
 	</properties>
 	
 	
@@ -24,6 +27,24 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		 </dependency>
+		 
+		 <dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox.swagger.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
 
 		 
 		</dependencies>

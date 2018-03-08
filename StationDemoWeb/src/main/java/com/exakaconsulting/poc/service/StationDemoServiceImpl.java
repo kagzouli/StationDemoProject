@@ -1,5 +1,7 @@
 package com.exakaconsulting.poc.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,10 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StationDemoServiceImpl implements IStationDemoService{
+	
+	 private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
 
 	@Override
 	public void searchStation() {
-		// TODO Auto-generated method stub
+		LOGGER.info("Start searchStation");
 		
 	}
 
