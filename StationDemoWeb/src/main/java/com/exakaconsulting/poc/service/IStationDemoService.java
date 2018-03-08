@@ -1,5 +1,7 @@
 package com.exakaconsulting.poc.service;
 
+import java.util.List;
+
 /**
  * Interface to search the station.<br/>
  * 
@@ -8,6 +10,11 @@ package com.exakaconsulting.poc.service;
  */
 public interface IStationDemoService {
 	
-	void searchStation();
+	/**
+	 * Method to search for a stations.<br/>
+	 * 
+	 * @return Return a list of stations.<br/>
+	 */
+	List<TrafficStationBean> searchStation();
 
 }
