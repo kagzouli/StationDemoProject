@@ -16,6 +16,7 @@
 	   <springbatch.version>4.0.1.RELEASE</springbatch.version>
 	   <commons-lang3.version>3.7</commons-lang3.version>
 	   <springboot.version>2.0.0.RELEASE</springboot.version>
+	   <h2database.version>1.4.196</h2database.version>
 	</properties>
 	
 	
@@ -35,7 +36,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
-		 </dependency>		 
+		 </dependency>
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		 </dependency>		 		 
 		  <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -131,6 +137,10 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 			  </exclusion>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+			  </exclusion>
 			 </exclusions>
 		</dependency>
 		
@@ -148,8 +158,27 @@
 				<artifactId>spring-core</artifactId>
 			  </exclusion>
 		    </exclusions>
-			
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<version>${springboot.version}</version>
+			<exclusions>
+			  <exclusion>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-logging</artifactId>
+			  </exclusion>
+		    </exclusions>
+		</dependency>
+		
+		<!-- H2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2database.version}</version>
+		</dependency>
+
 
 
 		 

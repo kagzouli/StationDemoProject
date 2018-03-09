@@ -1,8 +1,11 @@
 package com.exakaconsulting.poc;
 
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
+import org.h2.Driver;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -18,11 +21,12 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -31,6 +35,18 @@ import com.exakaconsulting.poc.service.TrafficStationBean;
 public class BatchConfiguration {
 	
 	private static final String BEGIN_INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (? , ? , ? , ? , ? , ?)";
+
+	@Bean
+    @Primary
+    public DataSource dataSource() throws SQLException {
+		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
+		banqueDatasource.setDriverClassName(Driver.class.getName());
+		banqueDatasource.setUrl("jdbc:h2:~/data/trafstats1;INIT=create schema if not exists users1\\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'");
+		banqueDatasource.setUsername("sa");
+		banqueDatasource.setPassword("");
+		return banqueDatasource;
+    }
+
 	
     @Bean
     public FlatFileItemReader<TrafficStationCsvBean> reader() {
