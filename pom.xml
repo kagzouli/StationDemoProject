@@ -97,6 +97,7 @@
 	</dependencyManagement>
 
 	<modules>
+		<module>StationDemoService</module>
 		<module>StationDemoWeb</module>
 		<module>StationDemoBatch</module>
 	</modules>

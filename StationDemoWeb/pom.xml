@@ -66,6 +66,13 @@
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 
+
+		<!--  Service -->
+		<dependency>
+			<groupId>com.exakaconsulting.poc</groupId>
+			<artifactId>StationDemoService</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		
 		
 		
