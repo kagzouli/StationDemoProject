@@ -1,11 +1,23 @@
 package com.exakaconsulting.poc;
 
+import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
+import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
+import static com.exakaconsulting.poc.service.IConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
+
 
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -34,6 +46,18 @@ public class Application implements WebMvcConfigurer{
 	 
 	    registry.addResourceHandler("/webjars/**")
 	      .addResourceLocations("classpath:/META-INF/resources/webjars/");
+	}
+	
+	@Bean(DATASOURCE_STATION)
+	@Primary
+	public DataSource datasource(){
+		JndiDataSourceLookup jndiBanqueDatasourceLookup = new JndiDataSourceLookup();
+		return jndiBanqueDatasourceLookup.getDataSource("java:comp/env/jdbc/StationDemoDb");
+	}
+	
+	@Bean(TRANSACTIONAL_DATASOURCE_STATION)
+	public PlatformTransactionManager transactionBanqueBean(final ApplicationContext appContext){
+		return new DataSourceTransactionManager(appContext.getBean(TRANSACTIONAL_DATASOURCE_STATION, DataSource.class));
 	}
 
 

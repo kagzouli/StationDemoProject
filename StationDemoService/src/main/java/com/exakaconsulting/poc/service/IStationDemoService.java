@@ -16,5 +16,13 @@ public interface IStationDemoService {
 	 * @return Return a list of stations.<br/>
 	 */
 	List<TrafficStationBean> searchStation();
+	
+	/**
+	 * Method to insert a traffic station in the database.<br/>
+	 * 
+	 * @param trafficStationBean The traffic stationBean.<br/>
+	 * @return Return the key of this record.<br/>
+	 */
+	Integer insertTrafficStation(final TrafficStationBean trafficStationBean);
 
 }

@@ -30,12 +30,13 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
+import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;;
+
+
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-	private static final String BEGIN_INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (? , ? , ? , ? , ? , ?)";
-
 	@Bean
     @Primary
     public DataSource dataSource() throws SQLException {
@@ -52,6 +53,7 @@ public class BatchConfiguration {
     public FlatFileItemReader<TrafficStationCsvBean> reader() {
         FlatFileItemReader<TrafficStationCsvBean> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("trafic-annuel-entrant-par-station-du-reseau-ferre.csv"));
+        reader.setLinesToSkip(1);
         reader.setLineMapper(new DefaultLineMapper<TrafficStationCsvBean>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
                 setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" });
@@ -98,7 +100,7 @@ public class BatchConfiguration {
         databaseItemWriter.setDataSource(dataSource);
         databaseItemWriter.setJdbcTemplate(jdbcTemplate);
  
-        databaseItemWriter.setSql(BEGIN_INSERT_TRAFFIC_SQL);
+        databaseItemWriter.setSql(INSERT_TRAFFIC_SQL);
  
         ItemPreparedStatementSetter<TrafficStationBean> valueSetter = 
                 new TrafficStationPreparedStatement();

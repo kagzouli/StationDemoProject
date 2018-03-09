@@ -2,7 +2,6 @@ package com.exakaconsulting.poc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.database.ItemPreparedStatementSetter;
