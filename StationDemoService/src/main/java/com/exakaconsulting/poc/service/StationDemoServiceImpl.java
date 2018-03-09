@@ -29,10 +29,17 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	 private IStationDemoDao stationDemoDao;
 
 	@Override
-	public List<TrafficStationBean> searchStation() {
-		LOGGER.info("Start searchStation");
-		return null;
+	public List<TrafficStationBean> searchStations() {
+		LOGGER.info("BEGIN of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
 		
+		// TODO : test if the name already exists
+		
+
+		List<TrafficStationBean> listTrafficStations = stationDemoDao.searchStations();
+
+		LOGGER.info("END of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
+		
+		return listTrafficStations;
 	}
 
 	@Override
@@ -46,10 +53,11 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		// TODO : test if the name already exists
 		
 
-		stationDemoDao.insertTrafficStation(trafficStationBean);
+		int returnValue = stationDemoDao.insertTrafficStation(trafficStationBean);
 
-		LOGGER.info("END of the method creditAmount of the class " + StationDemoServiceImpl.class.getName());
+		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
 
+		return returnValue;
 	}
 
 }

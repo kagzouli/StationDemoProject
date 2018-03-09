@@ -10,6 +10,8 @@ public class TrafficStationBean implements Serializable{
 	 */
 	private static final long serialVersionUID = 8820607214452314228L;
 	
+	private Integer id;
+	
 	private String reseau;
 	
 	private String station;
@@ -21,6 +23,16 @@ public class TrafficStationBean implements Serializable{
 	private String ville;
 	
 	private Integer arrondissement;
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getReseau() {
 		return reseau;

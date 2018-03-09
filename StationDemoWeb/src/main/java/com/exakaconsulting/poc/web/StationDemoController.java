@@ -22,7 +22,7 @@ public class StationDemoController {
 			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public List<TrafficStationBean> listSearchStations() {
-		List<TrafficStationBean> listTrafficStation = stationDemoService.searchStation();
+		List<TrafficStationBean> listTrafficStation = stationDemoService.searchStations();
 		return listTrafficStation;
 	}
 

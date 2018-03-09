@@ -1,6 +1,9 @@
 package com.exakaconsulting.poc.dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -24,6 +27,8 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFI
 public class StationDemoDaoImpl implements IStationDemoDao{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoDaoImpl.class);
+	
+	private static final String REQUEST_ALL_SQL = "select * from TRAF_STAT";
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -63,6 +68,29 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			throw new TechnicalException(exception.getMessage());
 		}
 
+	}
+
+	@Override
+	public List<TrafficStationBean> searchStations() throws TechnicalException {
+
+		// Assert.hasLength(identifierUser, "The identifier must be set");
+
+		LOGGER.info("BEGIN of the method searchStations  of the class " + StationDemoDaoImpl.class.getName());
+
+		List<TrafficStationBean> listAccountOperation = Collections.<TrafficStationBean>emptyList();
+		try {
+			Map<String, Object> params = new HashMap<>();
+
+			List<String> listWhereVariable = new ArrayList<>();
+
+			listAccountOperation = jdbcTemplate.query(REQUEST_ALL_SQL, params, new TrafficStationRowMapper());
+			LOGGER.info("END of the method retrieveOperations of the class " + StationDemoDaoImpl.class.getName());
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+
+		return listAccountOperation;
 	}
 
 }
