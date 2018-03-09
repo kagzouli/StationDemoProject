@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,7 +24,7 @@ import com.exakaconsulting.poc.service.TrafficStationBean;
 import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
 import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;
 
-
+@Repository
 public class StationDemoDaoImpl implements IStationDemoDao{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoDaoImpl.class);

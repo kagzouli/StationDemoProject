@@ -25,7 +25,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@ComponentScan({"com.exakaconsulting.poc.service" , "com.exakaconsulting.poc.web."})
+@ComponentScan({"com.exakaconsulting.poc.service" , "com.exakaconsulting.poc.web", "com.exakaconsulting.poc.dao"})
 @EnableWebMvc
 @EnableSwagger2
 public class Application implements WebMvcConfigurer{

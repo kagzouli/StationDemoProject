@@ -17,6 +17,7 @@
 	   <commons-lang3.version>3.7</commons-lang3.version>
 	   <springboot.version>2.0.0.RELEASE</springboot.version>
 	   <h2database.version>1.4.196</h2database.version>
+	   <junit.version>4.12</junit.version>
 	</properties>
 	
 	
@@ -178,6 +179,21 @@
 			<artifactId>h2</artifactId>
 			<version>${h2database.version}</version>
 		</dependency>
+		
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		 </dependency>				
+
 
 
 
