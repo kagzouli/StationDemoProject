@@ -16,7 +16,7 @@ public class TrafficStationBean implements Serializable{
 	
 	private Long traffic;
 	
-	private List<Integer> listCorrespondance;
+	private List<String> listCorrespondance;
 		
 	private String ville;
 	
@@ -47,11 +47,11 @@ public class TrafficStationBean implements Serializable{
 	}
 
 
-	public List<Integer> getListCorrespondance() {
+	public List<String> getListCorrespondance() {
 		return listCorrespondance;
 	}
 
-	public void setListCorrespondance(List<Integer> listCorrespondance) {
+	public void setListCorrespondance(List<String> listCorrespondance) {
 		this.listCorrespondance = listCorrespondance;
 	}
 

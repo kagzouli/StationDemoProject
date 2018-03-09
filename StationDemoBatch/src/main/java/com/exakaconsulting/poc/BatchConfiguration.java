@@ -54,7 +54,8 @@ public class BatchConfiguration {
         reader.setResource(new ClassPathResource("trafic-annuel-entrant-par-station-du-reseau-ferre.csv"));
         reader.setLineMapper(new DefaultLineMapper<TrafficStationCsvBean>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" });
+                setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" });
+                setDelimiter(";");
             }});
             setFieldSetMapper(new BeanWrapperFieldSetMapper<TrafficStationCsvBean>() {{
                 setTargetType(TrafficStationCsvBean.class);

@@ -17,20 +17,28 @@ public class TrafficStationCsvBean implements Serializable{
 	
 	private Long traffic;
 	
-	private Integer correspondance1;
+	private String correspondance1;
 	
-	private Integer correspondance2;
+	private String correspondance2;
 
 	
-	private Integer correspondance3;
+	private String correspondance3;
 	
-	private Integer correspondance4;
+	private String correspondance4;
 	
-	private Integer correspondance5;
+	private String correspondance5;
 	
 	private String ville;
 	
 	private Integer arrondissement;
+	
+	private String column12;
+	
+	private String column13;
+	
+	private String column14;
+	
+	private String column15;
 
 	public Integer getRang() {
 		return rang;
@@ -64,43 +72,43 @@ public class TrafficStationCsvBean implements Serializable{
 		this.traffic = traffic;
 	}
 
-	public Integer getCorrespondance1() {
+	public String getCorrespondance1() {
 		return correspondance1;
 	}
 
-	public void setCorrespondance1(Integer correspondance1) {
+	public void setCorrespondance1(String correspondance1) {
 		this.correspondance1 = correspondance1;
 	}
 
-	public Integer getCorrespondance2() {
+	public String getCorrespondance2() {
 		return correspondance2;
 	}
 
-	public void setCorrespondance2(Integer correspondance2) {
+	public void setCorrespondance2(String correspondance2) {
 		this.correspondance2 = correspondance2;
 	}
 
-	public Integer getCorrespondance3() {
+	public String getCorrespondance3() {
 		return correspondance3;
 	}
 
-	public void setCorrespondance3(Integer correspondance3) {
+	public void setCorrespondance3(String correspondance3) {
 		this.correspondance3 = correspondance3;
 	}
 
-	public Integer getCorrespondance4() {
+	public String getCorrespondance4() {
 		return correspondance4;
 	}
 
-	public void setCorrespondance4(Integer correspondance4) {
+	public void setCorrespondance4(String correspondance4) {
 		this.correspondance4 = correspondance4;
 	}
 
-	public Integer getCorrespondance5() {
+	public String getCorrespondance5() {
 		return correspondance5;
 	}
 
-	public void setCorrespondance5(Integer correspondance5) {
+	public void setCorrespondance5(String correspondance5) {
 		this.correspondance5 = correspondance5;
 	}
 
@@ -119,8 +127,40 @@ public class TrafficStationCsvBean implements Serializable{
 	public void setArrondissement(Integer arrondissement) {
 		this.arrondissement = arrondissement;
 	}
-	
-	
 
+	public String getColumn12() {
+		return column12;
+	}
+
+	public void setColumn12(String column12) {
+		this.column12 = column12;
+	}
+
+	public String getColumn13() {
+		return column13;
+	}
+
+	public void setColumn13(String column13) {
+		this.column13 = column13;
+	}
+
+	public String getColumn14() {
+		return column14;
+	}
+
+	public void setColumn14(String column14) {
+		this.column14 = column14;
+	}
+
+	public String getColumn15() {
+		return column15;
+	}
+
+	public void setColumn15(String column15) {
+		this.column15 = column15;
+	}
+	
+	
+	
 
 }

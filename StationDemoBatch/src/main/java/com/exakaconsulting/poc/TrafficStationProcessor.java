@@ -3,6 +3,7 @@ package com.exakaconsulting.poc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.item.ItemProcessor;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
@@ -18,24 +19,24 @@ public class TrafficStationProcessor implements ItemProcessor<TrafficStationCsvB
 			trafficStationBean.setStation(item.getStation());
 			trafficStationBean.setTraffic(item.getTraffic());
 			
-			List<Integer> listCorrespondances = new ArrayList<>();
+			List<String> listCorrespondances = new ArrayList<>();
 
-			if (item.getCorrespondance1() != null){
+			if (!StringUtils.isBlank(item.getCorrespondance1())){
 				listCorrespondances.add(item.getCorrespondance1());
 			}
 
-			if (item.getCorrespondance2() != null){
+			if (!StringUtils.isBlank(item.getCorrespondance2())){
 				listCorrespondances.add(item.getCorrespondance2());
 			}
 			
-			if (item.getCorrespondance3() != null){
+			if (!StringUtils.isBlank(item.getCorrespondance3())){
 				listCorrespondances.add(item.getCorrespondance3());
 			}
 			
-			if (item.getCorrespondance4() != null){
+			if (!StringUtils.isBlank(item.getCorrespondance4())){
 				listCorrespondances.add(item.getCorrespondance4());
 			}
-			if (item.getCorrespondance5() != null){
+			if (!StringUtils.isBlank(item.getCorrespondance5())){
 				listCorrespondances.add(item.getCorrespondance5());
 			}
 			
