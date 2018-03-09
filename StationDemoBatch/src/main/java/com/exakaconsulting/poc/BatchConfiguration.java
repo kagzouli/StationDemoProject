@@ -30,14 +30,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;;
+import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;
+import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
+
 
 
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-	@Bean
+	@Bean(DATASOURCE_STATION)
     @Primary
     public DataSource dataSource() throws SQLException {
 		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
