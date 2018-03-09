@@ -22,7 +22,6 @@ import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
 import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;
 
 @Repository
 public class StationDemoDaoImpl implements IStationDemoDao{
@@ -30,6 +29,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoDaoImpl.class);
 	
 	private static final String REQUEST_ALL_SQL = "select * from TRAF_STAT";
+	
+	static final String INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (:reseau , :station , :traffic , :corres , :ville , :arron)";
+
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -46,15 +48,16 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		try {
 			
 			Map<String, Object> params = new HashMap<>();
-			params.put("TRAF_RESE", trafficStationBean.getReseau());
-			params.put("TRAF_STAT", trafficStationBean.getStation());
-			params.put("TRAF_TRAF", trafficStationBean.getTraffic());
+			params.put("reseau", trafficStationBean.getReseau());
+			params.put("station", trafficStationBean.getStation());
+			params.put("traffic", trafficStationBean.getTraffic());
 			if (trafficStationBean.getListCorrespondance() != null){
-				params.put("TRAF_CORR", StringUtils.join(trafficStationBean.getListCorrespondance(),","));
-				
+				params.put("corres", StringUtils.join(trafficStationBean.getListCorrespondance(),","));
+			}else{
+				params.put("corres", "");
 			}
-			params.put("TRAF_VILL", trafficStationBean.getVille());
-			params.put("TRAF_ARRO", trafficStationBean.getArrondissement());
+			params.put("ville", trafficStationBean.getVille());
+			params.put("arron", trafficStationBean.getArrondissement());
 
 			int returnValue = this.jdbcTemplate.update(INSERT_TRAFFIC_SQL, params);
 

@@ -16,7 +16,7 @@ public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
 	public TrafficStationBean mapRow(ResultSet rs, int rowNum) throws SQLException {
 		TrafficStationBean trafficStationBean = new TrafficStationBean(); 
 		
-		trafficStationBean.setId(rs.getInt("TRA_IDEN"));
+		trafficStationBean.setId(rs.getInt("TRAF_IDEN"));
 		
 		trafficStationBean.setReseau(rs.getString("TRAF_RESE"));
 		
@@ -29,7 +29,9 @@ public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
 			trafficStationBean.setListCorrespondance(Arrays.asList(correspondance.split(",")));
 		}
 		trafficStationBean.setVille(rs.getString("TRAF_VILL"));
-		trafficStationBean.setArrondissement(rs.getInt("TRAF_ARRO"));		
+		
+		final int arrondissement = rs.getInt("TRAF_ARRO");
+		trafficStationBean.setArrondissement(arrondissement != 0 ? arrondissement : null);		
 		return trafficStationBean;
 	}
 

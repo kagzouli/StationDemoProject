@@ -24,6 +24,19 @@ public class TestStationDemoService {
 	
 	@Test
 	public void testSelectElements(){
+		
+		TrafficStationBean trafficStation = new TrafficStationBean();
+		trafficStation.setReseau("metro");
+		trafficStation.setStation("station");
+		trafficStation.setTraffic(12929191L);
+		trafficStation.setVille("Saint Remy Les chevreuses");
+		
+		int value = stationDemoService.insertTrafficStation(trafficStation);
+		
+		System.out.println("Value ---> " + value);
+		
+		
+		
 		List<TrafficStationBean> listStations = stationDemoService.searchStations();
 		
 		System.out.println("Numbers : "+ listStations);
