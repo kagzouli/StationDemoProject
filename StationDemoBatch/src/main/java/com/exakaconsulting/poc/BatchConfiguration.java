@@ -1,6 +1,8 @@
 package com.exakaconsulting.poc;
 
 
+import javax.sql.DataSource;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -10,6 +12,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.ItemPreparedStatementSetter;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -25,17 +30,8 @@ import com.exakaconsulting.poc.service.TrafficStationBean;
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-	@Autowired
-    public JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    public StepBuilderFactory stepBuilderFactory;
-    
-    @Bean
-    public JobBuilderFactory test(){
-    	return jobBuilderFactory;
-    }
-    
+	private static final String BEGIN_INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (? , ? , ? , ? , ? , ?)";
+	
     @Bean
     public FlatFileItemReader<TrafficStationCsvBean> reader() {
         FlatFileItemReader<TrafficStationCsvBean> reader = new FlatFileItemReader<>();
@@ -77,6 +73,22 @@ public class BatchConfiguration {
 	            .end()
 	            .build();
 	}
-
+	
+	@Bean
+    ItemWriter<TrafficStationBean> csvFileDatabaseItemWriter(DataSource dataSource,
+                                                     NamedParameterJdbcTemplate jdbcTemplate) {
+        JdbcBatchItemWriter<TrafficStationBean> databaseItemWriter = new JdbcBatchItemWriter<>();
+        databaseItemWriter.setDataSource(dataSource);
+        databaseItemWriter.setJdbcTemplate(jdbcTemplate);
+ 
+        databaseItemWriter.setSql(BEGIN_INSERT_TRAFFIC_SQL);
+ 
+        ItemPreparedStatementSetter<TrafficStationBean> valueSetter = 
+                new TrafficStationPreparedStatement();
+        databaseItemWriter.setItemPreparedStatementSetter(valueSetter);
+ 
+        return databaseItemWriter;
+    }
+	 
 
 }

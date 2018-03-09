@@ -14,12 +14,28 @@
 	   <jackson.version>2.9.4</jackson.version>
 	   <servletapi.version>3.1.0</servletapi.version>
 	   <springbatch.version>4.0.1.RELEASE</springbatch.version>
+	   <commons-lang3.version>3.7</commons-lang3.version>
+	   <springboot.version>2.0.0.RELEASE</springboot.version>
 	</properties>
 	
 	
 	<dependencyManagement>
 		<dependencies>
-		
+		  <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		 </dependency>				
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		 </dependency>
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		 </dependency>		 
 		  <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -30,11 +46,17 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		 </dependency>
-		  <dependency>
+		 <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		 </dependency>
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		 </dependency>
+
 		 
 		 <dependency>
 			<groupId>io.springfox</groupId>
@@ -85,12 +107,50 @@
 			<scope>provided</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		
 		<!-- Batch -->
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-core</artifactId>
 			<version>${springbatch.version}</version>
+			<exclusions>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+			  </exclusion>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+			  </exclusion>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+			  </exclusion>
+			 </exclusions>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot</artifactId>
+			<version>${springboot.version}</version>
+			<exclusions>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+			  </exclusion>
+			  <exclusion>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+			  </exclusion>
+		    </exclusions>
+			
+		</dependency>
+
 
 		 
 		</dependencies>
