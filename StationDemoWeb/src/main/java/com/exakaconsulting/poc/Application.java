@@ -57,7 +57,7 @@ public class Application implements WebMvcConfigurer{
 	
 	@Bean(TRANSACTIONAL_DATASOURCE_STATION)
 	public PlatformTransactionManager transactionBanqueBean(final ApplicationContext appContext){
-		return new DataSourceTransactionManager(appContext.getBean(TRANSACTIONAL_DATASOURCE_STATION, DataSource.class));
+		return new DataSourceTransactionManager(appContext.getBean(DATASOURCE_STATION, DataSource.class));
 	}
 
 

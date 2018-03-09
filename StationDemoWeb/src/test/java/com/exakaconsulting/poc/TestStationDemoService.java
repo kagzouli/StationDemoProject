@@ -1,5 +1,7 @@
 package com.exakaconsulting.poc;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.exakaconsulting.poc.service.IStationDemoService;
+import com.exakaconsulting.poc.service.TrafficStationBean;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=Application.class)
+@ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
 @Transactional
 public class TestStationDemoService {
 	
@@ -21,6 +24,8 @@ public class TestStationDemoService {
 	
 	@Test
 	public void testSelectElements(){
-		stationDemoService.searchStations();
+		List<TrafficStationBean> listStations = stationDemoService.searchStations();
+		
+		System.out.println("Numbers : "+ listStations);
 	}
 }

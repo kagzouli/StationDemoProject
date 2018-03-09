@@ -111,7 +111,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servletapi.version}</version>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
