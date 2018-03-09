@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
+import static org.junit.Assert.*;
+
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
 @Transactional
@@ -30,15 +33,16 @@ public class TestStationDemoService {
 		trafficStation.setStation("station");
 		trafficStation.setTraffic(12929191L);
 		trafficStation.setVille("Saint Remy Les chevreuses");
+
+		List<TrafficStationBean> listStations = stationDemoService.searchStations();
+		assertTrue(listStations.size() == 369);
+
 		
 		int value = stationDemoService.insertTrafficStation(trafficStation);
-		
-		System.out.println("Value ---> " + value);
-		
+		assertTrue(value > 0);
 		
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations();
-		
-		System.out.println("Numbers : "+ listStations);
+		listStations = stationDemoService.searchStations();
+		assertTrue(listStations.size() == 370);
 	}
 }

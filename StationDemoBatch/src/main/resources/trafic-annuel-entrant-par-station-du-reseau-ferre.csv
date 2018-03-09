@@ -1,4 +1,4 @@
-Rang;Réseau;Station;Trafic;Correspondance_1;Correspondance_2;Correspondance_3;Correspondance_4;Correspondance_5;Ville;Arrondissement pour Paris;Column 12;Column 13;Column 14;Column 15
+﻿Rang;Réseau;Station;Trafic;Correspondance_1;Correspondance_2;Correspondance_3;Correspondance_4;Correspondance_5;Ville;Arrondissement pour Paris;Column 12;Column 13;Column 14;Column 15
 3;Métro;GARE DE LYON;36352115;1;14;A;;;Paris;12;;;;
 6;Métro;REPUBLIQUE;18340798;3;5;8;9;11;Paris;11;;;;
 13;Métro;PLACE D'ITALIE;11462253;5;6;7;;;Paris;13;;;;

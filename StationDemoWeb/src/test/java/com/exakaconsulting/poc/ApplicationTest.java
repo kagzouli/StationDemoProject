@@ -24,7 +24,7 @@ public class ApplicationTest {
 	public DataSource datasource(){
 		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
 		banqueDatasource.setDriverClassName(Driver.class.getName());
-		banqueDatasource.setUrl("jdbc:h2:~/data/trafstats1");
+		banqueDatasource.setUrl("jdbc:h2:~/data/trafstats1;INIT=create schema if not exists users1\\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'");
 		banqueDatasource.setUsername("sa");
 		banqueDatasource.setPassword("");
 		return banqueDatasource;
