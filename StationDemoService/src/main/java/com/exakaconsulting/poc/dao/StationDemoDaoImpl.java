@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import org.apache.commons.lang3.StringUtils;
 
-
+import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -75,7 +75,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public List<TrafficStationBean> searchStations() throws TechnicalException {
+	public List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) throws TechnicalException {
 
 		// Assert.hasLength(identifierUser, "The identifier must be set");
 
@@ -86,8 +86,22 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			Map<String, Object> params = new HashMap<>();
 
 			List<String> listWhereVariable = new ArrayList<>();
+			
+			if (!StringUtils.isBlank(criteria.getReseau())){
+				listWhereVariable.add("TRAF_RESE = :reseau");
+				params.put("reseau", criteria.getReseau());				
+			}
+			
+			StringBuilder requestSql = new StringBuilder(64);
+			requestSql.append(REQUEST_ALL_SQL);
+			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
+				requestSql.append(" WHERE ");
+				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
+				requestSql.append(" ORDER BY TRAF_IDEN ASC");
+			}
 
-			listAccountOperation = jdbcTemplate.query(REQUEST_ALL_SQL, params, new TrafficStationRowMapper());
+
+			listAccountOperation = jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
 			LOGGER.info("END of the method retrieveOperations of the class " + StationDemoDaoImpl.class.getName());
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);

@@ -49,4 +49,23 @@ public class TestStationDemoService {
 		listStations = stationDemoService.searchStations(emptyCriteria);
 		assertTrue(listStations.size() == 370);
 	}
+	
+	@Test
+	public void testSelectReseauStation(){
+		// Test Metro
+		/*final String METRO = "Métro";
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setReseau(METRO);
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 369);*/
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		final String RER = "RER";
+		criteria.setReseau(RER);
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 369);
+
+		
+		
+	}
 }

@@ -38,7 +38,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		// TODO : test if the name already exists
 		
 
-		List<TrafficStationBean> listTrafficStations = stationDemoDao.searchStations();
+		List<TrafficStationBean> listTrafficStations = stationDemoDao.searchStations(criteria);
 
 		LOGGER.info("END of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
 		
