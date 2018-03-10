@@ -4,5 +4,5 @@
                           maxActive="7" maxIdle="-1" maxWait="10000" 
                           username="sa" password="" 
                           driverClassName="org.h2.Driver" 
-                          url="jdbc:h2:~/data/trafstats1;INIT=create schema if not exists users1\\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'" />                   
+                          url="jdbc:h2:~/data/trafstats1;INIT=create schema if not exists users1\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'" />                   
 </Context> 
