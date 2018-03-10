@@ -10,6 +10,9 @@ public interface IConstantStationDemo {
 	
 	/** Insert traffic sql **/
 	static final String INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (? , ? , ? , ? , ? , ?)";
+	
+	/** Station already exists **/
+	static final String STATION_ALREADY_EXISTS = "station.already.exists";
 
 
 }

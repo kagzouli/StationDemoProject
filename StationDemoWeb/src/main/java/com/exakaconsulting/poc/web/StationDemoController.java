@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exakaconsulting.poc.service.AlreadyStationExistsException;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+
+import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
+
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,32 +84,37 @@ public class StationDemoController {
 	}
 	
 
-	@ApiOperation(value = "This method is use to insert a traffic station", response = Integer.class)
+	@ApiOperation(value = "This method is use to insert a traffic station", response = Integer.class , responseContainer= "JsonResult")
 	@RequestMapping(value = "/insertStation", method = { RequestMethod.PUT}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public Integer insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
+	public JsonResult<Integer> insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
 		
 		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoController.class.getName());
-		Integer returnValue = 0;
+		JsonResult<Integer> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
 			
-			returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
-		} catch (Exception exception) {
+			final Integer returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
+			jsonResult.setResult(returnValue);
+		}catch(AlreadyStationExistsException exception){
+			LOGGER.warn(exception.getMessage());
+			jsonResult.addError(STATION_ALREADY_EXISTS);
+		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoController.class.getName());
 
-		return returnValue;
+		return jsonResult;
 	}
 	
-	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class)
+	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@RequestMapping(value = "/updateStation/{id}", method = { RequestMethod.PATCH}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public void updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
+	public JsonResult<Void> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
 		LOGGER.info("BEGIN of the method updateTrafficStation of the class " + StationDemoController.class.getName());
+		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(id, "The id must be set");
 			
@@ -115,13 +124,15 @@ public class StationDemoController {
 			throw new TechnicalException(exception);
 		}
 		LOGGER.info("END of the method updateTrafficStation of the class " + StationDemoController.class.getName());		
+		return jsonResult;
 	}
 	
-	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class)
+	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@RequestMapping(value = "/deleteStation/{id}", method = { RequestMethod.DELETE}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public void deleteTrafficStation(@PathVariable final Integer id){
+	public JsonResult<Void>  deleteTrafficStation(@PathVariable final Integer id){
 		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoController.class.getName());
+		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(id, "The id must be set");
 			this.stationDemoService.deleteTrafficStation(id);
@@ -129,7 +140,8 @@ public class StationDemoController {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
-		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoController.class.getName());		
+		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoController.class.getName());	
+		return jsonResult;
 		
 	}
 
