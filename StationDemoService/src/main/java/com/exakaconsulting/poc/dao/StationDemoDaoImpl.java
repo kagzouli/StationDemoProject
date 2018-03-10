@@ -98,6 +98,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				
 			}
 			
+			if (criteria.getTrafficMin() != null){
+				listWhereVariable.add("TRAF_TRAF >= :trafficMin");
+				params.put("trafficMin", criteria.getTrafficMin());				
+				
+			}
+			
 			StringBuilder requestSql = new StringBuilder(64);
 			requestSql.append(REQUEST_ALL_SQL);
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {

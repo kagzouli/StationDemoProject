@@ -81,4 +81,16 @@ public class TestStationDemoService {
 		assertEquals(trafficStationBean.getReseau(), "Metro");
 		assertEquals(trafficStationBean.getStation() , "PORTE DE CHOISY");
 	}
+	
+	@Test
+	public void testSelectMinTraffic(){
+		
+		final Long TRAFFICMIN = 31115220L;
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setTrafficMin(TRAFFICMIN);
+		
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 6);
+	}
 }

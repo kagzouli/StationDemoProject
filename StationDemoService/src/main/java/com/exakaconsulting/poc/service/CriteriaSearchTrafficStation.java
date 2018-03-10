@@ -14,6 +14,9 @@ public class CriteriaSearchTrafficStation implements Serializable{
 	
 	// Starts with
 	private String station;
+	
+	// Min traffic
+	private Long trafficMin;
 
 	public String getReseau() {
 		return reseau;
@@ -29,6 +32,14 @@ public class CriteriaSearchTrafficStation implements Serializable{
 
 	public void setStation(String station) {
 		this.station = station;
+	}
+
+	public Long getTrafficMin() {
+		return trafficMin;
+	}
+
+	public void setTrafficMin(Long trafficMin) {
+		this.trafficMin = trafficMin;
 	}
 	
 	
