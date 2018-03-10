@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,7 +58,7 @@ public class StationDemoController {
 		return listStationBean;
 	}
 	
-	
+	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@RequestMapping(value = "/findStationById/{id}", method = { RequestMethod.GET}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public TrafficStationBean findTrafficStationById(@PathVariable final Integer id){
@@ -77,6 +78,65 @@ public class StationDemoController {
 		return trafficStationBean; 
 		
 	}
+	
+
+	@ApiOperation(value = "This method is use to insert a traffic station", response = Integer.class)
+	@RequestMapping(value = "/insertStation", method = { RequestMethod.PUT}, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public Integer insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
+		
+		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoController.class.getName());
+		Integer returnValue = 0;
+		try {
+			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
+			
+			returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoController.class.getName());
+
+		return returnValue;
+	}
+	
+	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class)
+	@RequestMapping(value = "/updateStation/{id}", method = { RequestMethod.PATCH}, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public void updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
+		LOGGER.info("BEGIN of the method updateTrafficStation of the class " + StationDemoController.class.getName());
+		try {
+			Assert.notNull(id, "The id must be set");
+			
+			this.stationDemoService.updateTrafficStation(newTraffic, newCorr, id);
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		LOGGER.info("END of the method updateTrafficStation of the class " + StationDemoController.class.getName());		
+	}
+	
+	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class)
+	@RequestMapping(value = "/deleteStation/{id}", method = { RequestMethod.DELETE}, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public void deleteTrafficStation(@PathVariable final Integer id){
+		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoController.class.getName());
+		try {
+			Assert.notNull(id, "The id must be set");
+			this.stationDemoService.deleteTrafficStation(id);
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoController.class.getName());		
+		
+	}
+
+	
+	
+	
+
 	
 
 }
