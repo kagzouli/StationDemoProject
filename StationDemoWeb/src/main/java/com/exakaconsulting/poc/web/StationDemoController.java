@@ -35,15 +35,17 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "/", description = "This REST API is use to have informations about the traffic on the station.<br/>")
 public class StationDemoController {
 	
+	
 	/** Logger **/
 	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
 
+	public static final String FIND_STAT_CRIT = "/findStationsByCrit";
 	
 	@Autowired
 	private IStationDemoService stationDemoService;
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by criteria", response = TrafficStationBean.class, responseContainer = "List")
-	@RequestMapping(value = "/findStationsByCrit", method = { RequestMethod.POST}, consumes = {
+	@RequestMapping(value = FIND_STAT_CRIT, method = { RequestMethod.POST}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	public List<TrafficStationBean> listSearchStations(@RequestBody CriteriaSearchTrafficStation criteria){	
