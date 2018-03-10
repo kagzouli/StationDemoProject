@@ -33,6 +33,8 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	
 	static final String INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (:reseau , :station , :traffic , :corres , :ville , :arron)";
 
+	static final String BEGIN_UPDATE_SQL = "update TRAF_STAT SET ";
+
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -188,6 +190,39 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		return trafficStation;
 
 	
+	}
+
+	@Override
+	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) {
+		Assert.notNull(id, "The id must be set");
+		
+		Map<String, Object> params = new HashMap<>();
+
+		
+		List<String> listUpdateVariable = new ArrayList<>();
+
+		if (newTrafficValue != null){
+			listUpdateVariable.add("TRAF_TRAF = :newTraffic");
+			params.put("newTraffic", newTrafficValue);				
+		}
+		
+		if (!StringUtils.isBlank(newCorr)){
+			listUpdateVariable.add("TRAF_CORR = :newCorr");
+			params.put("newCorr", newCorr);				
+			
+		}
+		params.put("id", id);
+		
+		final String SQL= BEGIN_UPDATE_SQL + StringUtils.join(listUpdateVariable , " ,") + " WHERE TRAF_IDEN = :id";
+		
+		try{
+			this.jdbcTemplate.update(SQL, params);
+		}catch(Exception exception){
+			LOGGER.error(exception.getMessage() , exception);
+			throw new TechnicalException(exception);
+		}
+
+		
 	}
 		
 		

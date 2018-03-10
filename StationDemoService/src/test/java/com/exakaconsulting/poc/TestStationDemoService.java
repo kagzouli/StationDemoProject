@@ -1,7 +1,9 @@
 package com.exakaconsulting.poc;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,17 +75,11 @@ public class TestStationDemoService {
 	@Test
 	public void testSelectStationName(){
 		
-		final String STATION = "PORTE DE CHOI";
+		final String STATION = "PORTE DE CHOI";	
+		final TrafficStationBean trafficUnicSta = this.getUnicTrafficStation(STATION);
 		
-		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
-		criteria.setStation(STATION);
-		
-		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
-		assertTrue(listStations.size() == 1);
-		
-		TrafficStationBean trafficStationBean = listStations.get(0);
-		assertEquals(trafficStationBean.getReseau(), "Metro");
-		assertEquals(trafficStationBean.getStation() , "PORTE DE CHOISY");
+		assertEquals(trafficUnicSta.getReseau(), "Metro");
+		assertEquals(trafficUnicSta.getStation() , "PORTE DE CHOISY");
 	}
 	
 	@Test
@@ -163,23 +159,53 @@ public class TestStationDemoService {
 	@Test
 	public void testStationFindByIdExists(){
 		
-		final String STATION = "PORTE DE CHOI";
-		
-		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
-		criteria.setStation(STATION);
-		
-		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
-		assertTrue(listStations.size() == 1);
-
-		final Integer id = listStations.get(0).getId();
+		// Search for a uniq traffic station and get his id.
+		final String STATION = "PORTE DE CHOI";	
+		final TrafficStationBean trafficUnicBean = this.getUnicTrafficStation(STATION);
 		
 		//Search for a station traffic by id.
-		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(id);
+		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(trafficUnicBean.getId());
 		assertNotNull(trafficStationBean);
 		
 		assertEquals(trafficStationBean.getStation(), "PORTE DE CHOISY");
 		assertTrue(trafficStationBean.getTraffic()  > 0);
+	}
+	
+	@Test
+	public void testUpdateTrafficStation(){
 		
+		// Search for a uniq traffic station and get his id.
+		final String STATION = "PORTE DE CHOI";	
+		final TrafficStationBean trafficUnicBean =  this.getUnicTrafficStation(STATION);
+
+		final Long newTraffic = 20L;
+		final String newCorr= "L,A,Z";
+		this.stationDemoService.updateTrafficStation(newTraffic, newCorr, trafficUnicBean.getId());
+		
+		//Search for the same station
+		TrafficStationBean trafficJustUpdate = this.stationDemoService.findStationById(trafficUnicBean.getId());
+		assertNotNull(trafficJustUpdate);
+		assertEquals(trafficJustUpdate.getId(), trafficUnicBean.getId());
+		assertEquals(trafficJustUpdate.getTraffic(), newTraffic);
+		assertEquals(StringUtils.join(trafficJustUpdate.getListCorrespondance() , ","), newCorr);
+		
+		
+	}
+	
+	
+	/**
+	 * Method utils to get aunic traffic station
+	 * 
+	 * @return
+	 */
+	protected TrafficStationBean  getUnicTrafficStation(final String station){
+		
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setStation(station);
+		
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
+		assertTrue(listStations.size() == 1);
+		return listStations.get(0);
 	}
 	
 }

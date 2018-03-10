@@ -35,5 +35,14 @@ public interface IStationDemoService {
 	 * @return Return the station corresponding to this id.<br/>
 	 */
 	TrafficStationBean findStationById(final Integer id);
+	
+	/**
+	 * Method to update the traffic station by id.<br/>
+	 * 
+	 * @param newTrafficValue The new traffic value.<br/>
+	 * @param newCorr The new correspondance.<br/>
+	 * @param id The technical id.<br/>
+	 */
+	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id);
 		
 }
