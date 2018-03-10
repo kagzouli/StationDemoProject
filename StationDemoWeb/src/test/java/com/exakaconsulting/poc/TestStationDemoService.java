@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -33,8 +34,11 @@ public class TestStationDemoService {
 		trafficStation.setStation("station");
 		trafficStation.setTraffic(12929191L);
 		trafficStation.setVille("Saint Remy Les chevreuses");
+		
+		CriteriaSearchTrafficStation emptyCriteria = new CriteriaSearchTrafficStation();
 
-		List<TrafficStationBean> listStations = stationDemoService.searchStations();
+
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(emptyCriteria);
 		assertTrue(listStations.size() == 369);
 
 		
@@ -42,7 +46,7 @@ public class TestStationDemoService {
 		assertTrue(value > 0);
 		
 		
-		listStations = stationDemoService.searchStations();
+		listStations = stationDemoService.searchStations(emptyCriteria);
 		assertTrue(listStations.size() == 370);
 	}
 }

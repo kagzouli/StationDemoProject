@@ -13,9 +13,10 @@ public interface IStationDemoService {
 	/**
 	 * Method to search for a stations.<br/>
 	 * 
+	 * @param criteria Criteria of the search.<br/>
 	 * @return Return a list of stations.<br/>
 	 */
-	List<TrafficStationBean> searchStations();
+	List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria);
 	
 	/**
 	 * Method to insert a traffic station in the database.<br/>

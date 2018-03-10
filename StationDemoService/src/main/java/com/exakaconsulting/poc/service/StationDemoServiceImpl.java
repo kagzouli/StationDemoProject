@@ -29,7 +29,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	 private IStationDemoDao stationDemoDao;
 
 	@Override
-	public List<TrafficStationBean> searchStations() {
+	public List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) {
+		
+		Assert.notNull(criteria , "criteria has to be set");
+		
 		LOGGER.info("BEGIN of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
 		
 		// TODO : test if the name already exists

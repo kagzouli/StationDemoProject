@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -21,8 +22,11 @@ public class StationDemoController {
 	@RequestMapping(value = "/searchStation", method = { RequestMethod.GET}, consumes = {
 			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public List<TrafficStationBean> listSearchStations() {
-		List<TrafficStationBean> listTrafficStation = stationDemoService.searchStations();
+	public List<TrafficStationBean> listSearchStations(){
+		
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+	
+		List<TrafficStationBean> listTrafficStation = stationDemoService.searchStations(criteria);
 		return listTrafficStation;
 	}
 
