@@ -76,5 +76,9 @@ public class TestStationDemoService {
 		
 		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
 		assertTrue(listStations.size() == 1);
+		
+		TrafficStationBean trafficStationBean = listStations.get(0);
+		assertEquals(trafficStationBean.getReseau(), "Metro");
+		assertEquals(trafficStationBean.getStation() , "PORTE DE CHOISY");
 	}
 }

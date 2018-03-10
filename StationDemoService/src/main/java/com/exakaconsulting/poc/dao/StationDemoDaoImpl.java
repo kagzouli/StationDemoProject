@@ -94,7 +94,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			
 			if (!StringUtils.isBlank(criteria.getStation())){
 				listWhereVariable.add("TRAF_STAT like :station");
-				params.put("station", criteria.getStation());				
+				params.put("station", criteria.getStation() + "%");				
 				
 			}
 			
