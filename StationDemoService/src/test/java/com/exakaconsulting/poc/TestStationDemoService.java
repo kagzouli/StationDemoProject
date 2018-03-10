@@ -159,4 +159,27 @@ public class TestStationDemoService {
 		assertNull(trafficStationBean);
 	}
 
+	
+	@Test
+	public void testStationFindByIdExists(){
+		
+		final String STATION = "PORTE DE CHOI";
+		
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setStation(STATION);
+		
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
+		assertTrue(listStations.size() == 1);
+
+		final Integer id = listStations.get(0).getId();
+		
+		//Search for a station traffic by id.
+		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(id);
+		assertNotNull(trafficStationBean);
+		
+		assertEquals(trafficStationBean.getStation(), "PORTE DE CHOISY");
+		assertTrue(trafficStationBean.getTraffic()  > 0);
+		
+	}
+	
 }
