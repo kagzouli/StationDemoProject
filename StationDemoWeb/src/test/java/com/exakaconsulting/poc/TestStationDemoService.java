@@ -53,17 +53,16 @@ public class TestStationDemoService {
 	@Test
 	public void testSelectReseauStation(){
 		// Test Metro
-		/*final String METRO = "Métro";
+		final String METRO = "Metro";
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setReseau(METRO);
 		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
-		assertTrue(listStations.size() == 369);*/
+		assertTrue(listStations.size() == 303);
 
-		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		final String RER = "RER";
 		criteria.setReseau(RER);
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
-		assertTrue(listStations.size() == 369);
+		listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 66);
 
 		
 		

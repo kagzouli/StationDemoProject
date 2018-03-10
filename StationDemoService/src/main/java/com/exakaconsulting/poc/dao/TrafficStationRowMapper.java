@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
 public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
@@ -18,7 +19,11 @@ public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
 		
 		trafficStationBean.setId(rs.getInt("TRAF_IDEN"));
 		
-		trafficStationBean.setReseau(rs.getString("TRAF_RESE"));
+		try{
+			trafficStationBean.setReseau(StringUtils.trim(new String(rs.getString("TRAF_RESE").getBytes(), "UTF-8")));
+		}catch(Exception exception){
+			throw new TechnicalException(exception);
+		}
 		
 		trafficStationBean.setStation(rs.getString("TRAF_STAT"));
 		
