@@ -22,7 +22,7 @@ public interface IStationDemoService {
 	 * Method to insert a traffic station in the database.<br/>
 	 * 
 	 * @param trafficStationBean The traffic stationBean.<br/>
-	 * @return Return the key of this record.<br/>
+	 * @return Return the number of insert.<br/>
 	 * @throws AlreadyStationExistsException A station with the same name already exists.<br/>
 	 */
 	Integer insertTrafficStation(final TrafficStationBean trafficStationBean) throws AlreadyStationExistsException;

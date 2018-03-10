@@ -58,7 +58,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		
 
 		int returnValue = stationDemoDao.insertTrafficStation(trafficStationBean);
-
+		
 		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
 
 		return returnValue;

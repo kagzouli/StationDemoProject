@@ -84,19 +84,19 @@ public class StationDemoController {
 	}
 	
 
-	@ApiOperation(value = "This method is use to insert a traffic station", response = Integer.class , responseContainer= "JsonResult")
+	@ApiOperation(value = "This method is use to insert a traffic station", response = Boolean.class , responseContainer= "JsonResult")
 	@RequestMapping(value = "/insertStation", method = { RequestMethod.PUT}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public JsonResult<Integer> insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
+	public JsonResult<Boolean> insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
 		
 		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoController.class.getName());
-		JsonResult<Integer> jsonResult = new JsonResult<>();
+		JsonResult<Boolean> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
 			
 			final Integer returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
-			jsonResult.setResult(returnValue);
+			jsonResult.setResult(returnValue > 0 ? true : false);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());
 			jsonResult.addError(STATION_ALREADY_EXISTS);
