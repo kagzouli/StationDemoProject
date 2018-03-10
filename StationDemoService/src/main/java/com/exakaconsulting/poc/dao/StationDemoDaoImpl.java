@@ -104,6 +104,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				
 			}
 			
+			if (criteria.getTrafficMax() != null){
+				listWhereVariable.add("TRAF_TRAF <= :trafficMax");
+				params.put("trafficMax", criteria.getTrafficMax());				
+				
+			}
+			
 			StringBuilder requestSql = new StringBuilder(64);
 			requestSql.append(REQUEST_ALL_SQL);
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {

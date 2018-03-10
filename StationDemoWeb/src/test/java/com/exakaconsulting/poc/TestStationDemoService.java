@@ -93,4 +93,17 @@ public class TestStationDemoService {
 		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
 		assertTrue(listStations.size() == 6);
 	}
+	
+	@Test
+	public void testSelectMaxTraffic(){
+		
+		final Long TRAFFICMAX = 31115220L;
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setTrafficMax(TRAFFICMAX);
+		
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 363);
+	}
+
 }
