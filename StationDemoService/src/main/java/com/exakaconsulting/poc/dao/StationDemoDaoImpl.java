@@ -76,7 +76,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) throws TechnicalException {
+	public List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) throws TechnicalException {
 
 		Assert.notNull(criteria, "The criteria must be set");
 
@@ -168,8 +168,26 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 	@Override
 	public TrafficStationBean findStationById(Integer id) throws TechnicalException {
-		// TODO Auto-generated method stub
-		return null;
+		Assert.notNull(id, "The id must be set");
+
+		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_IDEN = :id";		
+		//parameters
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);	
+
+		
+		TrafficStationBean trafficStation = null;
+		try{
+			trafficStation = this.jdbcTemplate.queryForObject(SQL, params, new TrafficStationRowMapper());
+		}catch(EmptyResultDataAccessException exception){
+			LOGGER.warn("No traffic has been found for id = ['"+ id + "']");
+		}catch(Exception exception){
+			LOGGER.error(exception.getMessage() , exception);
+			throw new TechnicalException(exception);
+		}
+		return trafficStation;
+
+	
 	}
 		
 		

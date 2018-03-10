@@ -16,7 +16,7 @@ public interface IStationDemoService {
 	 * @param criteria Criteria of the search.<br/>
 	 * @return Return a list of stations.<br/>
 	 */
-	List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria);
+	List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria);
 	
 	/**
 	 * Method to insert a traffic station in the database.<br/>
@@ -27,4 +27,13 @@ public interface IStationDemoService {
 	 */
 	Integer insertTrafficStation(final TrafficStationBean trafficStationBean) throws AlreadyStationExistsException;
 
+	
+	/**
+	 * Method to search for a station by his technical id.<br/>
+	 * 
+	 * @param id Technical id<br/>
+	 * @return Return the station corresponding to this id.<br/>
+	 */
+	TrafficStationBean findStationById(final Integer id);
+		
 }

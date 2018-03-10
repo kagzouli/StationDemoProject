@@ -39,18 +39,18 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation emptyCriteria = new CriteriaSearchTrafficStation();
 
 
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(emptyCriteria);
+		List<TrafficStationBean> listStations = stationDemoService.findStations(emptyCriteria);
 		assertTrue(listStations.size() == 369);
 
 		
 		try{
-			int value = stationDemoService.insertTrafficStation(trafficStation);
+			int value = this.stationDemoService.insertTrafficStation(trafficStation);
 			assertTrue(value > 0);
 		}catch(AlreadyStationExistsException exception){
 			assertEquals(true, false);
 		}
 		
-		listStations = stationDemoService.searchStations(emptyCriteria);
+		listStations = this.stationDemoService.findStations(emptyCriteria);
 		assertTrue(listStations.size() == 370);
 	}
 	
@@ -60,12 +60,12 @@ public class TestStationDemoService {
 		final String METRO = "Metro";
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setReseau(METRO);
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 303);
 
 		final String RER = "RER";
 		criteria.setReseau(RER);
-		listStations = stationDemoService.searchStations(criteria);
+		listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 66);
 		
 	}
@@ -78,7 +78,7 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setStation(STATION);
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 1);
 		
 		TrafficStationBean trafficStationBean = listStations.get(0);
@@ -94,7 +94,7 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setTrafficMin(TRAFFICMIN);
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 6);
 	}
 	
@@ -106,7 +106,7 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setTrafficMax(TRAFFICMAX);
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 363);
 	}
 	
@@ -118,7 +118,7 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setVille(VILLE);
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 255);
 	}
 
@@ -130,7 +130,7 @@ public class TestStationDemoService {
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 		criteria.setArrondiss(ARRONDISS);
 		
-		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 19);
 	}
 	
@@ -145,11 +145,18 @@ public class TestStationDemoService {
 		trafficStation.setArrondissement(13);
 			
 		try{
-			stationDemoService.insertTrafficStation(trafficStation);
+			this.stationDemoService.insertTrafficStation(trafficStation);
 			assertEquals(true, false);
 		}catch(AlreadyStationExistsException exception){
 			assertEquals(true, true);
 		}
+	}
+	
+	@Test
+	public void testStationFindByIdNotExists(){
+		final Integer id= 10100101;
+		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(id);
+		assertNull(trafficStationBean);
 	}
 
 }

@@ -26,7 +26,7 @@ public class StationDemoController {
 		
 		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
 	
-		List<TrafficStationBean> listTrafficStation = stationDemoService.searchStations(criteria);
+		List<TrafficStationBean> listTrafficStation = stationDemoService.findStations(criteria);
 		return listTrafficStation;
 	}
 

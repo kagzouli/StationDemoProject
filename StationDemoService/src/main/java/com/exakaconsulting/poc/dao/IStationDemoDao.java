@@ -16,7 +16,7 @@ public interface IStationDemoDao {
 	 * @return Return the list of station found.<br/>
 	 * @throws TechnicalException
 	 */
-	List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) throws TechnicalException;
+	List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) throws TechnicalException;
 	
 	/**
 	 * Method to insert the trafficStation into database.<br/>

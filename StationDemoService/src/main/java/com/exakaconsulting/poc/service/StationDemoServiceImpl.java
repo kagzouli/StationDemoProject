@@ -29,14 +29,14 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	 private IStationDemoDao stationDemoDao;
 
 	@Override
-	public List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) {
+	public List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) {
 		
 		Assert.notNull(criteria , "criteria has to be set");
 		
 		LOGGER.info("BEGIN of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
 				
 
-		List<TrafficStationBean> listTrafficStations = stationDemoDao.searchStations(criteria);
+		List<TrafficStationBean> listTrafficStations = stationDemoDao.findStations(criteria);
 
 		LOGGER.info("END of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
 		
@@ -62,6 +62,20 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
 
 		return returnValue;
+	}
+
+	@Override
+	public TrafficStationBean findStationById(Integer id) {
+		Assert.notNull(id , "The id station must be set");
+		
+		LOGGER.info("BEGIN of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");
+		
+
+		TrafficStationBean trafficStation = stationDemoDao.findStationById(id);
+
+		LOGGER.info("END of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");
+		
+		return trafficStation;
 	}
 
 }
