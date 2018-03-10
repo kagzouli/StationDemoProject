@@ -105,5 +105,17 @@ public class TestStationDemoService {
 		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
 		assertTrue(listStations.size() == 363);
 	}
+	
+	@Test
+	public void testSelectVilleTraffic(){
+		
+		final String VILLE = "PAR";
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setVille(VILLE);
+		
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 255);
+	}
 
 }
