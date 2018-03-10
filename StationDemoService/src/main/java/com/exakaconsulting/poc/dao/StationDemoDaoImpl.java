@@ -113,6 +113,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				listWhereVariable.add("upper(TRAF_VILL) like :trafficVille");
 				params.put("trafficVille", StringUtils.upperCase(criteria.getVille()) + "%");				
 			}
+			
+			if (criteria.getArrondiss() != null){
+				listWhereVariable.add("TRAF_ARRO = :arrondiss");
+				params.put("arrondiss", criteria.getArrondiss());				
+			}
+
 
 			
 			StringBuilder requestSql = new StringBuilder(64);

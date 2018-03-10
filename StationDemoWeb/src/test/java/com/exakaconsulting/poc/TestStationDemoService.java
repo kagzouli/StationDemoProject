@@ -118,4 +118,16 @@ public class TestStationDemoService {
 		assertTrue(listStations.size() == 255);
 	}
 
+	@Test
+	public void testSelectArrondTraffic(){
+		
+		final Integer ARRONDISS = 15;
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setArrondiss(ARRONDISS);
+		
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 19);
+	}
+
 }

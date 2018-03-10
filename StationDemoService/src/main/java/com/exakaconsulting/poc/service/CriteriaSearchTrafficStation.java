@@ -23,6 +23,9 @@ public class CriteriaSearchTrafficStation implements Serializable{
 	
 	//Starts with
 	private String ville;
+	
+	//Equals
+	private Integer arrondiss;
 
 	public String getReseau() {
 		return reseau;
@@ -62,6 +65,14 @@ public class CriteriaSearchTrafficStation implements Serializable{
 
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+
+	public Integer getArrondiss() {
+		return arrondiss;
+	}
+
+	public void setArrondiss(Integer arrondiss) {
+		this.arrondiss = arrondiss;
 	}
 	
 	

@@ -26,8 +26,8 @@ public class Application {
 				String[] values = utf8.split(";");
 				
 				fileWriter.append("INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values ")
-				.append("(' ")
-				.append(values[1])
+				.append("('")
+				.append(StringUtils.replace(values[1] , "Métro" , "Metro"))
 				.append("' , '")
 				.append(StringUtils.replace(values[2], "'", "''"))
 				.append("' , '")
@@ -63,8 +63,8 @@ public class Application {
 
 				fileWriter.append(corrs).append("' ,'").append(values[9]);
 				
-				if (values.length < 10){
-					fileWriter.append("' , '").append(values[10]).append("')");
+				if (values.length >= 11){
+					fileWriter.append("' , ").append(values[10]).append(")");
 				}else{
 					fileWriter.append("' , ").append("NULL").append(")");
 				}
