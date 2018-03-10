@@ -37,5 +37,14 @@ public interface IStationDemoDao {
 	 * @throws TechnicalException
 	 */
 	TrafficStationBean findStationByName(final String name) throws TechnicalException;
+	
+	/**
+	 * Method to find a station by id.<br/>
+	 * 
+	 * @param id The id of the station.<br/>
+	 * @return Return the station corresponding to the id.<br/>
+	 * @throws TechnicalException
+	 */
+	TrafficStationBean findStationById(Integer id) throws TechnicalException;
 
 }

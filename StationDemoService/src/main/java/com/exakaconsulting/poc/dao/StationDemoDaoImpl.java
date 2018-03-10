@@ -165,6 +165,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		}
 		return trafficStation;
 	}
+
+	@Override
+	public TrafficStationBean findStationById(Integer id) throws TechnicalException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 		
 
