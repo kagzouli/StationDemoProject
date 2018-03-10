@@ -27,5 +27,15 @@ public interface IStationDemoDao {
 	 * @throws TechnicalException
 	 */
 	Integer insertTrafficStation(TrafficStationBean trafficStationBean) throws TechnicalException;
+	
+	
+	/**
+	 * Method to find a station by name.<br/>
+	 * 
+	 * @param name The name of the station to search.<br/>
+	 * @return Return the station corresponding to the name.<br/>
+	 * @throws TechnicalException
+	 */
+	TrafficStationBean findStationByName(final String name) throws TechnicalException;
 
 }

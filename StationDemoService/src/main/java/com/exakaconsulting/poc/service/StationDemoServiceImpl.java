@@ -34,9 +34,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		Assert.notNull(criteria , "criteria has to be set");
 		
 		LOGGER.info("BEGIN of the method searchStations of the class " + StationDemoServiceImpl.class.getName());
-		
-		// TODO : test if the name already exists
-		
+				
 
 		List<TrafficStationBean> listTrafficStations = stationDemoDao.searchStations(criteria);
 
@@ -48,12 +46,15 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	@Override
 	@Transactional(rollbackFor=Throwable.class, propagation = Propagation.REQUIRED, transactionManager=TRANSACTIONAL_DATASOURCE_STATION)
 
-	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) {
+	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) throws AlreadyStationExistsException {
 		Assert.notNull(trafficStationBean , "The traffic station must be set");
 		
 		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
 		
-		// TODO : test if the name already exists
+		TrafficStationBean trafficSearch = stationDemoDao.findStationByName(trafficStationBean.getStation());
+		if (trafficSearch != null && trafficSearch.getId() != null){
+			throw new AlreadyStationExistsException("The station ['" + trafficStationBean.getStation() + "'] already exists");
+		}
 		
 
 		int returnValue = stationDemoDao.insertTrafficStation(trafficStationBean);

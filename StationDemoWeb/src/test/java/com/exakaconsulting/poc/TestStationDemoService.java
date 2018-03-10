@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exakaconsulting.poc.service.AlreadyStationExistsException;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.TrafficStationBean;
@@ -27,13 +28,13 @@ public class TestStationDemoService {
 
 	
 	@Test
-	public void testSelectElements(){
+	public void testInsertOkSelectsElements(){
 		
 		TrafficStationBean trafficStation = new TrafficStationBean();
 		trafficStation.setReseau("metro");
 		trafficStation.setStation("station");
 		trafficStation.setTraffic(12929191L);
-		trafficStation.setVille("Saint Remy Les chevreuses");
+		trafficStation.setVille("SAINT REMY LES CHEVREUSES");
 		
 		CriteriaSearchTrafficStation emptyCriteria = new CriteriaSearchTrafficStation();
 
@@ -42,9 +43,12 @@ public class TestStationDemoService {
 		assertTrue(listStations.size() == 369);
 
 		
-		int value = stationDemoService.insertTrafficStation(trafficStation);
-		assertTrue(value > 0);
-		
+		try{
+			int value = stationDemoService.insertTrafficStation(trafficStation);
+			assertTrue(value > 0);
+		}catch(AlreadyStationExistsException exception){
+			assertEquals(true, false);
+		}
 		
 		listStations = stationDemoService.searchStations(emptyCriteria);
 		assertTrue(listStations.size() == 370);
@@ -128,6 +132,24 @@ public class TestStationDemoService {
 		
 		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
 		assertTrue(listStations.size() == 19);
+	}
+	
+	@Test
+	public void insertStationAlreadyExists(){
+		
+		TrafficStationBean trafficStation = new TrafficStationBean();
+		trafficStation.setReseau("metro");
+		trafficStation.setStation("GONCOURT");
+		trafficStation.setTraffic(12929191L);
+		trafficStation.setVille("Paris");
+		trafficStation.setArrondissement(13);
+			
+		try{
+			stationDemoService.insertTrafficStation(trafficStation);
+			assertEquals(true, false);
+		}catch(AlreadyStationExistsException exception){
+			assertEquals(true, true);
+		}
 	}
 
 }

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -77,7 +78,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	@Override
 	public List<TrafficStationBean> searchStations(CriteriaSearchTrafficStation criteria) throws TechnicalException {
 
-		// Assert.hasLength(identifierUser, "The identifier must be set");
+		Assert.notNull(criteria, "The criteria must be set");
 
 		LOGGER.info("BEGIN of the method searchStations  of the class " + StationDemoDaoImpl.class.getName());
 
@@ -132,7 +133,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			LOGGER.info("Request SQL search  :" + requestSql.toString());
 
 
-			listStationsSearch = jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
+			listStationsSearch = this.jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
 			LOGGER.info("END of the method retrieveOperations of the class " + StationDemoDaoImpl.class.getName());
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
@@ -141,5 +142,30 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 		return listStationsSearch;
 	}
+
+	@Override
+	public TrafficStationBean findStationByName(String name) throws TechnicalException {
+		Assert.notNull(name, "The name must be set");
+		
+		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_STAT = :station";
+		
+		//parameters
+		Map<String, Object> params = new HashMap<>();
+		params.put("station", name);	
+		
+		TrafficStationBean trafficStation = null;
+		
+		try{
+			trafficStation = this.jdbcTemplate.queryForObject(SQL, params, new TrafficStationRowMapper());
+		}catch(EmptyResultDataAccessException exception){
+			LOGGER.warn("No traffic has been found for name = ['"+ name + "']");
+		}catch(Exception exception){
+			LOGGER.error(exception.getMessage() , exception);
+			throw new TechnicalException(exception);
+		}
+		return trafficStation;
+	}
+		
+		
 
 }

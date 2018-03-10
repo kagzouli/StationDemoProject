@@ -23,7 +23,8 @@ public interface IStationDemoService {
 	 * 
 	 * @param trafficStationBean The traffic stationBean.<br/>
 	 * @return Return the key of this record.<br/>
+	 * @throws AlreadyStationExistsException A station with the same name already exists.<br/>
 	 */
-	Integer insertTrafficStation(final TrafficStationBean trafficStationBean);
+	Integer insertTrafficStation(final TrafficStationBean trafficStationBean) throws AlreadyStationExistsException;
 
 }
