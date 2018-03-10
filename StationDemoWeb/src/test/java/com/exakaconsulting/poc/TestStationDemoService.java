@@ -63,8 +63,18 @@ public class TestStationDemoService {
 		criteria.setReseau(RER);
 		listStations = stationDemoService.searchStations(criteria);
 		assertTrue(listStations.size() == 66);
-
 		
+	}
+	
+	@Test
+	public void testSelectStationName(){
 		
+		final String STATION = "PORTE DE CHOI";
+		
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setStation(STATION);
+		
+		List<TrafficStationBean> listStations = stationDemoService.searchStations(criteria);
+		assertTrue(listStations.size() == 1);
 	}
 }

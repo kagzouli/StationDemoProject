@@ -81,7 +81,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 		LOGGER.info("BEGIN of the method searchStations  of the class " + StationDemoDaoImpl.class.getName());
 
-		List<TrafficStationBean> listAccountOperation = Collections.<TrafficStationBean>emptyList();
+		List<TrafficStationBean> listStationsSearch = Collections.<TrafficStationBean>emptyList();
 		try {
 			Map<String, Object> params = new HashMap<>();
 
@@ -92,6 +92,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				params.put("reseau", criteria.getReseau());				
 			}
 			
+			if (!StringUtils.isBlank(criteria.getStation())){
+				listWhereVariable.add("TRAF_STAT like :station");
+				params.put("station", criteria.getStation());				
+				
+			}
+			
 			StringBuilder requestSql = new StringBuilder(64);
 			requestSql.append(REQUEST_ALL_SQL);
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
@@ -99,16 +105,18 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
 				requestSql.append(" ORDER BY TRAF_IDEN ASC");
 			}
+			
+			LOGGER.info("Request SQL search  :" + requestSql.toString());
 
 
-			listAccountOperation = jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
+			listStationsSearch = jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
 			LOGGER.info("END of the method retrieveOperations of the class " + StationDemoDaoImpl.class.getName());
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 
-		return listAccountOperation;
+		return listStationsSearch;
 	}
 
 }
