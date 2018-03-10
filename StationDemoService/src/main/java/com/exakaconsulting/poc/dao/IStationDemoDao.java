@@ -57,4 +57,11 @@ public interface IStationDemoDao {
 	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id);
 
 
+	/**
+	 * Method to delete a traffic station.<br/>
+	 * 
+	 * @param id The id parameter.<br/>
+	 */
+	void deleteTrafficStation(final Integer id);
+
 }

@@ -187,8 +187,22 @@ public class TestStationDemoService {
 		assertNotNull(trafficJustUpdate);
 		assertEquals(trafficJustUpdate.getId(), trafficUnicBean.getId());
 		assertEquals(trafficJustUpdate.getTraffic(), newTraffic);
-		assertEquals(StringUtils.join(trafficJustUpdate.getListCorrespondance() , ","), newCorr);
+		assertEquals(StringUtils.join(trafficJustUpdate.getListCorrespondance() , ","), newCorr);	
+	}
+	
+	@Test
+	public void testDeleteUpdateTrafficStation(){
+
+		// Update a unic trafficStation
+		final String STATION = "PORTE DE CHOI";	
+		final TrafficStationBean trafficUnicBean =  this.getUnicTrafficStation(STATION);
+
+		// Delete it
+		this.stationDemoService.deleteTrafficStation(trafficUnicBean.getId());
 		
+		// Test that it does not exists anymore
+		TrafficStationBean trafficDeleted = this.stationDemoService.findStationById(trafficUnicBean.getId());
+		assertNull(trafficDeleted);
 		
 	}
 	
@@ -207,5 +221,6 @@ public class TestStationDemoService {
 		assertTrue(listStations.size() == 1);
 		return listStations.get(0);
 	}
+	
 	
 }

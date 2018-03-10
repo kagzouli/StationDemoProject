@@ -93,4 +93,12 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		
 	}
 
+	@Override
+	public void deleteTrafficStation(Integer id) {
+		Assert.notNull(id , "The id has to be set");
+		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoServiceImpl.class.getName());
+		stationDemoDao.deleteTrafficStation(id);
+		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoServiceImpl.class.getName());
+	}
+
 }

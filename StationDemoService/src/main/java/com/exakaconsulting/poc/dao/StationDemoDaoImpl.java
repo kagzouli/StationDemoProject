@@ -35,7 +35,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 	static final String BEGIN_UPDATE_SQL = "update TRAF_STAT SET ";
 
+	static final String DELETE_TRAFFIC_SQL = "delete from TRAF_STAT WHERE TRAF_IDEN = :id";
 
+	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -223,6 +225,22 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		}
 
 		
+	}
+
+	@Override
+	public void deleteTrafficStation(Integer id) {
+		Assert.notNull(id, "The id must be set");
+
+		try{
+			Map<String, Object> params = new HashMap<>();
+			params.put("id", id);
+			
+			this.jdbcTemplate.update(DELETE_TRAFFIC_SQL, params);
+		}catch(Exception exception){
+			LOGGER.error(exception.getMessage() , exception);
+			throw new TechnicalException(exception);
+		}
+
 	}
 		
 		
