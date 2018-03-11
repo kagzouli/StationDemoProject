@@ -1,3 +1,26 @@
+DROP TABLE IF EXISTS ROLE_STAT;
+
+CREATE TABLE ROLE_STAT(
+	ROLE_IDEN integer primary key not null,
+	ROLE_LABE varchar(64) not null
+);
+
+INSERT INTO ROLE_STAT(ROLE_IDEN , ROLE_LABE) values (1, 'manager');
+INSERT INTO ROLE_STAT(ROLE_IDEN , ROLE_LABE) values (2, 'user');
+
+DROP TABLE IF EXISTS USER_STAT;
+CREATE TABLE USER_STAT(
+	USER_LOGI varchar(32) primary key not null,
+	USER_MAIL varchar(128) not null,
+	USER_PASS varchar(128) not null,
+	USER_ROLE integer not null
+);
+
+INSERT INTO USER_STAT(USER_LOGI,USER_MAIL,USER_PASS, USER_ROLE) values('Karim' , 'karim@exaka.com', '36b8266bc0126922ad13f4d3009e7e4409148bcd', 1)
+INSERT INTO USER_STAT(USER_LOGI,USER_MAIL,USER_PASS, USER_ROLE) values('Didier' , 'didier@exaka.com', '36a1bae1a2effa7201861a3661adb1f149a86a2f', 2)
+
+
+
 DROP TABLE IF EXISTS TRAF_STAT;
 CREATE TABLE TRAF_STAT (
 	TRAF_IDEN integer primary key auto_increment not null,
