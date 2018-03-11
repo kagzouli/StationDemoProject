@@ -19,7 +19,7 @@ import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagd
 })
 export class SearchStationComponent implements OnInit {
 
-  displayedColumns = ['id','reseau', 'station', 'traffic', 'corresp', 'ville', 'arrond'];
+  displayedColumns = ['station', 'reseau', 'traffic', 'corresp', 'ville', 'arrond'];
   
 
   rForm: FormGroup;
@@ -69,8 +69,8 @@ export class SearchStationComponent implements OnInit {
              this.launchAction = true;
            let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
             this.trafficstationService.findTrafficStations(criteriaSearchStation,
-             (listAccountOperation: TrafficStationBean[]) => {
-             this.dataSource.updateValue(listAccountOperation);
+             (listTrafficStation: TrafficStationBean[]) => {
+             this.dataSource.updateValue(listTrafficStation);
              this.launchAction = false;
           }
         );
