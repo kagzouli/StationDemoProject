@@ -9,11 +9,11 @@ export class TrafficStationBean {
 	
 	traffic : number;
 	
-	correspondances : string[];
+	listCorrespondance : string[];
 		
 	ville: string;
 	
-	arrond : number;
+	arrondissement : number;
 
 
 }

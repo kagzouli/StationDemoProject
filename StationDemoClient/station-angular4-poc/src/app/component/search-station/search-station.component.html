@@ -1,7 +1,7 @@
 <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
   <div class="form-container">
     <div class="row columns">
-      <h1>Search traffic stations</h1>
+      <h1>Search traffic stations ( {{numberElementsFound}} found)</h1>
       <label>Reseau
         <input type="text" formControlName="reseau" />
       </label>
@@ -48,9 +48,9 @@
     <mat-header-cell *matHeaderCellDef> traffic</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.traffic}} </mat-cell>
   </ng-container>
-  <ng-container matColumnDef="corresp">
+  <ng-container matColumnDef="listCorrespondance">
       <mat-header-cell *matHeaderCellDef>  Correspond</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.correspond}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.listCorrespondance}} </mat-cell>
     </ng-container>
 
   <ng-container matColumnDef="ville">
@@ -59,7 +59,7 @@
   </ng-container>
   <ng-container matColumnDef="arrond">
     <mat-header-cell *matHeaderCellDef>  Arrond </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.arrond}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.arrondissement}} </mat-cell>
   </ng-container>
  
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

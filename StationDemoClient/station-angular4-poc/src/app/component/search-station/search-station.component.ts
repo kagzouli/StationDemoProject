@@ -19,7 +19,7 @@ import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagd
 })
 export class SearchStationComponent implements OnInit {
 
-  displayedColumns = ['station', 'reseau', 'traffic', 'corresp', 'ville', 'arrond'];
+  displayedColumns = ['station', 'reseau', 'traffic', 'listCorrespondance', 'ville', 'arrond'];
   
 
   rForm: FormGroup;
@@ -27,6 +27,8 @@ export class SearchStationComponent implements OnInit {
   launchAction : boolean = false;
 
   dataSource = new StationWithoutPagDataSource();
+
+  numberElementsFound: number = 0;
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService) { 
@@ -67,10 +69,10 @@ export class SearchStationComponent implements OnInit {
            // Launch the search
            if (this.rForm.valid) {
              this.launchAction = true;
-           let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
-            this.trafficstationService.findTrafficStations(criteriaSearchStation,
+             this.trafficstationService.findTrafficStations(criteriaSearchStation,
              (listTrafficStation: TrafficStationBean[]) => {
              this.dataSource.updateValue(listTrafficStation);
+             this.numberElementsFound = listTrafficStation.length;
              this.launchAction = false;
           }
         );
