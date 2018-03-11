@@ -29,6 +29,7 @@ target/
 .metadata/
 bin/
 Servers/
+node_modules/
 
 # Logs and databases #
 
