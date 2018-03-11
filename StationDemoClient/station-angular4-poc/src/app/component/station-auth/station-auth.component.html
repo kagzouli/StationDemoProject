@@ -15,7 +15,7 @@
         
         <br/>
         <br/>      
-        <input type="submit" class="button expanded" value="Connect" [disabled]="!rForm.valid">
+        <input type="submit" class="button expanded" value="Connect" [disabled]="disableButton(!rForm.valid)">
       </div>
     </div>
   </form>

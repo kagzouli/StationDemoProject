@@ -15,9 +15,13 @@ import { AuthenticateResponse } from '../../bean/authenticateresponse';
 })
 export class StationAuthComponent implements OnInit {
 
+  /** Formulaire **/
   rForm: FormGroup;
   
-    post: any;
+  post: any;
+
+  launchAction : boolean = false;
+  
   
     constructor(private fb: FormBuilder , private userService: UserService , private router: Router) {
       this.rForm = fb.group({
@@ -30,9 +34,16 @@ export class StationAuthComponent implements OnInit {
   ngOnInit() {
   }
 
+  disableButton(invalidform : boolean){
+    return invalidform || this.launchAction; 
+  }
+
+
   authenticate(authenticateForm){
     
         if (this.rForm.valid) {
+          // Launch the action
+          this.launchAction = true;
 
           this.userService.authenticateUser(authenticateForm.login, authenticateForm.password,  
           
@@ -43,6 +54,9 @@ export class StationAuthComponent implements OnInit {
               }else {
                  window.alert('The user has a wrong authentification.');
               }
+
+              // The action has been launched
+              this.launchAction = false;
     
             }
           ); 

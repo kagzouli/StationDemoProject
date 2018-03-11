@@ -20,7 +20,7 @@ export class UserService {
      .set('password', password);
   
      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-     this.http.post<AuthenticateResponse>(this.contextUserUrl + '/authenticate', body.toString(), {headers: headers, withCredentials: true })
+     this.http.post<AuthenticateResponse>(this.contextUserUrl + '/authenticate', body.toString(), {headers: headers, withCredentials: false })
      .subscribe(
       res => {
          console.log("Info token : " + res.user  + "/ success : " + res.success);  
