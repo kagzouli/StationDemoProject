@@ -2,7 +2,7 @@ package com.exakaconsulting.poc.service;
 
 import java.io.Serializable;
 
-public class CriteriaSearchTrafficStation implements Serializable{
+public class CriteriaSearchTrafficStation extends AbstractCriteriaSearch implements Serializable{
 
 	/**
 	 * 

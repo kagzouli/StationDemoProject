@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import org.apache.commons.lang3.StringUtils;
 
+import com.exakaconsulting.poc.service.AbstractCriteriaSearch;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
@@ -126,12 +127,31 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 
 			
-			StringBuilder requestSql = new StringBuilder(64);
+			StringBuilder requestSql = new StringBuilder(128);
 			requestSql.append(REQUEST_ALL_SQL);
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
 				requestSql.append(" WHERE ");
 				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
 				requestSql.append(" ORDER BY TRAF_IDEN ASC");
+			}
+			
+			
+			
+			if (criteria.getPage() != null){
+				
+				// Avoid getting to much data
+				Integer numberMaxElements = criteria.getNumberMaxElements();
+				if (numberMaxElements == null || numberMaxElements < 0 || numberMaxElements > AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS){
+					numberMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS;
+				}
+
+				
+				final int offset = (criteria.getPage() * numberMaxElements) + 1;
+				
+				requestSql.append(" LIMIT ");
+				requestSql.append(numberMaxElements);
+				requestSql.append(" OFFSET ");
+				requestSql.append(offset);
 			}
 			
 			LOGGER.info("Request SQL search  :" + requestSql.toString());

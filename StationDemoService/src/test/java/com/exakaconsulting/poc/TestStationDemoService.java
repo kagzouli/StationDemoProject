@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exakaconsulting.poc.service.AbstractCriteriaSearch;
 import com.exakaconsulting.poc.service.AlreadyStationExistsException;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
@@ -202,6 +203,35 @@ public class TestStationDemoService {
 		// Test that it does not exists anymore
 		TrafficStationBean trafficDeleted = this.stationDemoService.findStationById(trafficUnicBean.getId());
 		assertNull(trafficDeleted);
+	}
+	
+	@Test
+	public void testSearchWithPageAndMax(){
+		
+		// Test without page 
+		final String METRO = "Metro";
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setReseau(METRO);
+		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
+		assertTrue(listStations.size() == 303);
+
+		
+		// Test with page
+		criteria.setPage(1);
+		listStations = this.stationDemoService.findStations(criteria);
+		assertTrue(listStations.size() == AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS);
+		
+		// Fix now the max elements < maxNumberElements
+		int testMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS -5;
+		criteria.setNumberMaxElements(testMaxElements);
+		listStations = this.stationDemoService.findStations(criteria);
+		assertEquals(listStations.size(), testMaxElements);
+		
+		//Fix now the max elements > maxNumberElements
+		testMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS +5;
+		criteria.setNumberMaxElements(testMaxElements);
+		listStations = this.stationDemoService.findStations(criteria);
+		assertTrue(listStations.size() == AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS);
 		
 	}
 	
