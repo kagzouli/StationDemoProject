@@ -1,3 +1,22 @@
-<p>
-  station-auth works!
-</p>
+<div>
+  <form [formGroup] = "rForm" (ngSubmit)="authenticate(rForm.value)">
+    <div class="form-container">
+      <div class="row columns">
+        <h1>Login Page</h1>
+        
+        <label>User
+          <input type="text" formControlName="user" />
+        </label>
+        <br/>
+
+        <label>Password
+          <input type="password" formControlName="password" />
+        </label>
+        
+        <br/>
+        <br/>      
+        <input type="submit" class="button expanded" value="Connect" [disabled]="!rForm.valid">
+      </div>
+    </div>
+  </form>
+</div>
