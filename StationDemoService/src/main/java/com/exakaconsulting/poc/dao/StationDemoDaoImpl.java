@@ -146,7 +146,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				}
 
 				
-				final int offset = (criteria.getPage() * numberMaxElements) + 1;
+				final int offset = (criteria.getPage() - 1) * numberMaxElements ;
 				
 				requestSql.append(" LIMIT ");
 				requestSql.append(numberMaxElements);
