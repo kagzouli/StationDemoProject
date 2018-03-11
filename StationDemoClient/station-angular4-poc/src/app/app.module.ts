@@ -2,10 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { StationAuthComponent } from './component/station-auth/station-auth.component';
+import { UserComponent } from './service/user/user.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StationAuthComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule
