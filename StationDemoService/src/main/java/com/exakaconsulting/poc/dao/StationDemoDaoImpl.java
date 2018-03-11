@@ -132,7 +132,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
 				requestSql.append(" WHERE ");
 				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
-				requestSql.append(" ORDER BY TRAF_IDEN ASC");
+				requestSql.append(" ORDER BY TRAF_TRAF DESC");
 			}
 			
 			
