@@ -10,6 +10,9 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 
 import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagdatasource';
 
+import {StringMapEntry} from '../../bean/stringmapentry';
+
+
 
 @Component({
   selector: 'app-search-station',
@@ -29,6 +32,10 @@ export class SearchStationComponent implements OnInit {
   dataSource = new StationWithoutPagDataSource();
 
   numberElementsFound: number = 0;
+
+  mapReseaux: StringMapEntry[] = [ new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
+
+  reseauChoose: string = '';
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService) { 
@@ -44,6 +51,7 @@ export class SearchStationComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   disableButton(invalidform : boolean){

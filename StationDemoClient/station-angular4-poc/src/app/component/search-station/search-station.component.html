@@ -3,7 +3,9 @@
     <div class="row columns">
       <h1>Search traffic stations ( {{numberElementsFound}} found)</h1>
       <label>Reseau
-        <input type="text" formControlName="reseau" />
+        <select formControlName="reseau" [(ngModel)]="reseauChoose">
+          <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
+       </select>
       </label>
   
       <label>Station

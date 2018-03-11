@@ -2,6 +2,7 @@ package com.exakaconsulting.poc.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		Assert.notNull(criteria , "criteria has to be set");
 		
 		LOGGER.info("BEGIN of the method findStations of the class " + StationDemoServiceImpl.class.getName());
+		
+		// Set the station to Maj to make the test
+		if (criteria.getStation() != null){
+			criteria.setStation(StringUtils.upperCase(criteria.getStation()));
+		}
 				
 
 		List<TrafficStationBean> listTrafficStations = stationDemoDao.findStations(criteria);
