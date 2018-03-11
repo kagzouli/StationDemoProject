@@ -8,7 +8,7 @@ import { AuthenticateResponse } from '../bean/authenticateresponse';
 export class UserService {
 
   // URL 
-  contextUserUrl = 'https://http://54.38.186.137:9080/StationDemoWeb/user'
+  contextUserUrl = 'http://54.38.186.137:9080/StationDemoWeb/user'
        
 
   constructor(private http: HttpClient) { }
