@@ -27,7 +27,7 @@ import { AppRoutingModule, routingComponents } from './app.routing';
     AppRoutingModule 
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CookieService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
