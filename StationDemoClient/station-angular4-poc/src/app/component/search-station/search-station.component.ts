@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
+
 
 import { CriteriaSearchStation } from '../../bean/criteriasearchstation';
 import { TrafficStationBean } from '../../bean/trafficstationbean';
@@ -38,7 +40,7 @@ export class SearchStationComponent implements OnInit {
   reseauChoose: string = '';
     
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -58,6 +60,11 @@ export class SearchStationComponent implements OnInit {
     return invalidform || this.launchAction; 
   }
 
+  /** Method to create a station */
+  createStation(event) {
+     this.router.navigate(['/stationdemo/createstation',{}]);
+  }
+
   searchTrafficStations(form ){
     
     
@@ -72,7 +79,7 @@ export class SearchStationComponent implements OnInit {
            criteriaSearchStation.ville = form.ville;
            // A changer et parametrer
            criteriaSearchStation.page = 1;
-           criteriaSearchStation.numberMaxElements = 25;
+           criteriaSearchStation.numberMaxElements = 15;
            
            // Launch the search
            if (this.rForm.valid) {
@@ -94,4 +101,9 @@ export class SearchStationComponent implements OnInit {
        }
    
    }
+  
+
+  
+
+   
 }

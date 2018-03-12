@@ -12,13 +12,15 @@ import { StationAuthComponent } from './component/station-auth/station-auth.comp
 
 import { AppRoutingModule, routingComponents } from './app.routing';
 import { SearchStationComponent } from './component/search-station/search-station.component';
+import { CreateStationComponent } from './component/create-station/create-station.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     StationAuthComponent,
-    SearchStationComponent
+    SearchStationComponent,
+    CreateStationComponent
   ],
   imports: [
     BrowserModule,
