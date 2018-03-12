@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,7 @@ public class StationDemoController {
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@RequestMapping(value = "/station/findStationById/{id}", method = { RequestMethod.GET}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager')")
 	public TrafficStationBean findTrafficStationById(@PathVariable final Integer id){
 
 		LOGGER.info("BEGIN of the method findTrafficStationById of the class " + StationDemoController.class.getName());
