@@ -1,3 +1,37 @@
-<p>
-  create-station works!
-</p>
+<div>
+  <form [formGroup] = "rForm" (ngSubmit)="creditAccountController(rForm.value)">
+    <div class="form-container">
+      <div class="row columns">
+        <h1>Create station</h1>
+  
+        <label>Reseau
+          <select formControlName="reseau" [(ngModel)]="reseauChoose">
+            <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
+         </select>    
+        </label>
+        <br/>
+        <label>Station
+          <input type="text"  formControlName="station"/>
+        </label>
+        <br/>
+        <label>traffic
+          <input type="number"  formControlName="traffic"/>
+        </label>
+        <br/>
+        <label>Correspondance
+          <input type="text"  formControlName="correspondance"/>
+        </label>
+        <br/>   
+        <label>Ville
+          <input type="text"  formControlName="ville"/>
+        </label>
+        <br/>   
+        <label>Arrondissement
+          <input type="text"  formControlName="arrondissement"/>
+        </label>
+
+        <input type="submit" class="button expanded" value="Create" [disabled]="disableButton(!rForm.valid)">
+      </div>
+    </div>
+  </form>
+</div>
