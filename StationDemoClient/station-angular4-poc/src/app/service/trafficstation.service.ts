@@ -5,6 +5,8 @@ import { HttpClient , HttpHeaders , HttpParams} from '@angular/common/http';
 import { CriteriaSearchStation } from '../bean/criteriasearchstation';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 
+import { CreateStationResponse } from '../bean/createstationresponse';
+
 
 @Injectable()
 export class TrafficstationService {
@@ -30,6 +32,23 @@ export class TrafficstationService {
       console.log('Error occured --> ' + err);
     }
   );
+ }
+
+ /**
+  * Create station 
+
+  */
+  createStation(trafficStationBean : TrafficStationBean , callback: (createStationResponse: CreateStationResponse) => void){
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  this.http.put<CreateStationResponse>(this.contextTrafficServiceUrl + '/insertStation', trafficStationBean, {headers: headers})
+ .subscribe(
+  res => {
+    callback(res);
+  },
+  err => {
+    console.log('Error occured --> ' + err);
+  }
+);
 }
 
 }
