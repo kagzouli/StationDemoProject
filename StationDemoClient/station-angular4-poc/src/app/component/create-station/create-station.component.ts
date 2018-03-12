@@ -29,7 +29,7 @@ export class CreateStationComponent implements OnInit {
 
   
   
-  mapReseaux: StringMapEntry[] = [ new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
+  mapReseaux: StringMapEntry[] = [ new StringMapEntry('' , ' ----------'), new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
   
   reseauChoose: string = '';
   
@@ -62,7 +62,10 @@ export class CreateStationComponent implements OnInit {
      trafficStationBean.reseau  = form.reseau;
      trafficStationBean.station = form.station;
      trafficStationBean.traffic = form.traffic;
-     trafficStationBean.listCorrespondance = form.correspondance;
+     if (form.correspondance != null){
+      trafficStationBean.listCorrespondance = form.correspondance.split(",");
+      
+     }
      trafficStationBean.ville = form.ville;
      trafficStationBean.arrondissement = form.arrondissement;
 
