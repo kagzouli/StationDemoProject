@@ -1,9 +1,9 @@
 <div>
     
-<div ng-if="!trafficStationBean">
+<div *ngIf="isDataAvailable">
    <div class="form-container">
       <div class="row columns">
-        <h1>Information about traffic station</h1>
+        <h1>Information traffic station</h1>
   
         <ul>
           <li><span class="pocbold">ID                : </span>{{trafficStationBean.id}}</li>               
@@ -19,7 +19,18 @@
       </div>
     </div>
   </div>
+
+  <br/>
+  <br/>
+  <table>
+    <tr>
+      <td item-width="150"></td>
+      <td item-width="150"><button class="button" (click)="callUpdateStation($event)">Update</button></td>
+      <td item-width="150"><button class="button" (click)="callDeleteStation($event)">Delete</button></td>      
+    </tr>
+
+  </table>
   
-  <button class="button" (click)="callUpdateStation($event)">Update</button>
-  <button class="button" (click)="callDeleteStation($event)">Delete</button>
+  
+  
 </div>

@@ -7,9 +7,6 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { Params } from '@angular/router/src/shared';
 
-
-
-
 @Component({
   selector: 'app-select-station',
   templateUrl: './select-station.component.html',
@@ -18,12 +15,12 @@ import { Params } from '@angular/router/src/shared';
 })
 export class SelectStationComponent implements OnInit {
 
-  stationId: number = 0;
-
   /** Traffic station bean */
   trafficStationBean : TrafficStationBean;
 
-  constructor(private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService) { 
+  isDataAvailable : boolean;
+
+  constructor(private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
 
   }
 
@@ -31,15 +28,16 @@ export class SelectStationComponent implements OnInit {
 
       // Get the selected traffic station
       this.parentRoute.params.subscribe(params => {   
-        this.stationId = params['stationId']; 
+        this.trafficstationService.selectStationById(params['stationId'],
+          (trafficParam: TrafficStationBean) => {
+            this.trafficStationBean = trafficParam;
+            this.isDataAvailable = true;
+          }
+        );         
+    
       });
   
       
-      this.trafficstationService.selectStationById(this.stationId,
-        (trafficParam: TrafficStationBean) => {
-          this.trafficStationBean = trafficParam;
-        }
-      );         
   }
 
 
@@ -50,8 +48,7 @@ export class SelectStationComponent implements OnInit {
    * 
    */
   callUpdateStation(event) {
-    let identifierUser = '';
-   // this.router.navigate(['/operation/creditbanqueaccountuser',{userCodeSelected: identifierUser}]);
+    this.router.navigate(['/stationdemo/updatestation', this.trafficStationBean.id]);
   }
 
   /**

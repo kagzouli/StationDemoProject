@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'stationdemo/searchstations', component: SearchStationComponent},
     { path: 'stationdemo/createstation', component: CreateStationComponent },    
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent },    
-    { path: 'stationdemo/updatestation', component: SelectStationComponent }    
+    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent }    
     
   ];
   
