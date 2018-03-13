@@ -1,3 +1,32 @@
-<p>
-  update-station works!
-</p>
+<div>
+  <div *ngIf="isDataAvailable">
+    <div> 
+       <form [formGroup] = "rForm" (ngSubmit)="updateStation(rForm.value)">
+         <div class="form-container">
+         <div class="row columns">
+           <h1>Update station</h1>
+           <br/>
+           <br/>
+  
+           <span class="pocbold">Reseau</span>  :    {{trafficStationBeanUpdate.reseau}}
+           <br/>
+           <span class="pocbold">Station</span> :    {{trafficStationBeanUpdate.station}}
+           <br/>
+           <span class="pocbold">Traffic</span> :    <input type="number"  formControlName="traffic" value="{{trafficStationBeanUpdate.traffic}}"/>
+        
+           <br/>
+           <span class="pocbold">Correspondance</span> :   <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/>
+           <br/>   
+           <span class="pocbold">Ville </span> :  {{trafficStationBeanUpdate.ville}}
+       
+           <br/>   
+           <span class="pocbold">Arrondissemen></span> :  {{trafficStationBeanUpdate.arrondissement}}
+
+           <br/>
+           <br/>
+           <input type="submit" class="button expanded" value="Update" [disabled]="disableButton(!rForm.valid)">
+      </div>
+    </div>
+   </form>
+ </div>
+</div>
