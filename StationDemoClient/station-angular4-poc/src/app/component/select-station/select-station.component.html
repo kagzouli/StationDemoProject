@@ -1,0 +1,25 @@
+<div>
+    
+<div ng-if="!trafficStationBean">
+   <div class="form-container">
+      <div class="row columns">
+        <h1>Information about traffic station</h1>
+  
+        <ul>
+          <li><span class="pocbold">ID                : </span>{{trafficStationBean.id}}</li>               
+          <li><span class="pocbold">Reseau            : </span>{{trafficStationBean.reseau}}</li>     
+          <li><span class="pocbold">Station           : </span>{{trafficStationBean.station}}</li>   
+          <li><span class="pocbold">Traffic           : </span>{{trafficStationBean.traffic}}</li>  
+          <li><span class="pocbold">Correspondance(s) : </span>{{trafficStationBean.listCorrespondance}}</li>    
+          <li><span class="pocbold">Ville             : </span>{{trafficStationBean.ville}}</li>    
+          <li><span class="pocbold">Arrondissement    : </span>{{trafficStationBean.arrondissement}}</li>    
+          
+        </ul>
+       
+      </div>
+    </div>
+  </div>
+  
+  <button class="button" (click)="callUpdateStation($event)">Update</button>
+  <button class="button" (click)="callDeleteStation($event)">Delete</button>
+</div>

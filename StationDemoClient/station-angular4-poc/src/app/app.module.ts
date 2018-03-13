@@ -13,6 +13,8 @@ import { StationAuthComponent } from './component/station-auth/station-auth.comp
 import { AppRoutingModule, routingComponents } from './app.routing';
 import { SearchStationComponent } from './component/search-station/search-station.component';
 import { CreateStationComponent } from './component/create-station/create-station.component';
+import { SelectStationComponent } from './component/select-station/select-station.component';
+import { UpdateStationComponent } from './component/update-station/update-station.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { CreateStationComponent } from './component/create-station/create-statio
     AppComponent,
     StationAuthComponent,
     SearchStationComponent,
-    CreateStationComponent
+    CreateStationComponent,
+    SelectStationComponent,
+    UpdateStationComponent
   ],
   imports: [
     BrowserModule,

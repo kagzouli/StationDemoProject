@@ -5,6 +5,9 @@ import { StationAuthComponent } from './component/station-auth/station-auth.comp
 import { SearchStationComponent } from './component/search-station/search-station.component';
 
 import { CreateStationComponent } from './component/create-station/create-station.component';
+import { SelectStationComponent } from './component/select-station/select-station.component';
+import { UpdateStationComponent } from './component/update-station/update-station.component';
+
 
 
 
@@ -14,7 +17,8 @@ const routes: Routes = [
     { path: 'stationdemo/home', component: StationAuthComponent },
     { path: 'stationdemo/searchstations', component: SearchStationComponent},
     { path: 'stationdemo/createstation', component: CreateStationComponent },    
-  
+    { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent },    
+    { path: 'stationdemo/updatestation', component: SelectStationComponent }    
     
   ];
   

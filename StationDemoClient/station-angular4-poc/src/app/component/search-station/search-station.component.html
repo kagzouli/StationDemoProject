@@ -38,7 +38,7 @@
 
   <ng-container matColumnDef="station">
     <mat-header-cell *matHeaderCellDef> Station </mat-header-cell>
-    <mat-cell *matCellDef="let element"><a (click)="clickSecuritiesConf(element.id)"> {{element.station}} </a> </mat-cell>
+    <mat-cell *matCellDef="let element"><a (click)="selectStation(element.id)"> {{element.station}} </a> </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="reseau">
