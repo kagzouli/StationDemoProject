@@ -77,11 +77,12 @@ export class TrafficstationService {
   updateStation(traffic : number, correspondance: string ,stationId: number, callback: (updateStationResponse: UpdateStationResponse) => void){
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-    let body = new HttpParams()
-    .set('newTraffic', traffic.toString())
-    .set('newCorr', correspondance);
+    let params = new HttpParams()
+    .append('newTraffic', traffic.toString())
+    .append('newCorr', correspondance);
+    
 
-    this.http.patch<CreateStationResponse>(this.contextTrafficServiceUrl + '/updateStation/' + stationId, body.toString(), {headers: headers})
+    this.http.patch<CreateStationResponse>(this.contextTrafficServiceUrl + '/updateStation/' + stationId + "?"+ params.toString() , {headers: headers})
      .subscribe(
       res => {
        callback(res);

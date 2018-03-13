@@ -28,33 +28,34 @@ export class UpdateStationComponent implements OnInit {
 
   constructor(private fb: FormBuilder , private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
 
-    this.rForm = fb.group({
-      'traffic' : [null, Validators.compose([Validators.required])],
-      'correspondance' : [null,  Validators.maxLength(150)]
-    });
+     // Get the selected traffic station
+     this.parentRoute.params.subscribe(params => {   
+    this.trafficstationService.selectStationById(params['stationId'],
+      (trafficParam: TrafficStationBean) => {
+         this.trafficStationBeanUpdate = trafficParam;
+         this.isDataAvailable = true;
+
+          // Initialise the form
+         this.rForm = fb.group({
+         'traffic' : [this.trafficStationBeanUpdate.traffic, Validators.compose([Validators.required])],
+         'correspondance' : [this.trafficStationBeanUpdate.listCorrespondance,  Validators.maxLength(150)]
+         });
+      }
+     );         
+   });
+
+   
 
   }
 
   ngOnInit() {
 
-      // Get the selected traffic station
-      this.parentRoute.params.subscribe(params => {   
-        this.trafficstationService.selectStationById(params['stationId'],
-         (trafficParam: TrafficStationBean) => {
-            this.trafficStationBeanUpdate = trafficParam;
-            this.isDataAvailable = true;
-         }
-       );         
-      
-     });
+   
 
   }
 
   disableButton(invalidform : boolean){
-    console.log('InvalidForm ' + invalidform);
     return this.isDataAvailable ?  (invalidform || this.launchAction) : false; 
-   
-
   }
 
   updateStation(form){
