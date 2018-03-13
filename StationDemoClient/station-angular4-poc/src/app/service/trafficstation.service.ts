@@ -6,6 +6,7 @@ import { CriteriaSearchStation } from '../bean/criteriasearchstation';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 
 import { CreateStationResponse } from '../bean/createstationresponse';
+import { UpdateStationResponse } from '../bean/updatestationresponse';
 
 
 @Injectable()
@@ -67,6 +68,28 @@ export class TrafficstationService {
        }
      );
    
+  }
+
+  /**
+  * Update station 
+
+  */
+  updateStation(traffic : number, correspondance: string ,stationId: number, callback: (updateStationResponse: UpdateStationResponse) => void){
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+    let body = new HttpParams()
+    .set('newTraffic', traffic.toString())
+    .set('newCorr', correspondance);
+
+    this.http.patch<CreateStationResponse>(this.contextTrafficServiceUrl + '/updateStation/' + stationId, body.toString(), {headers: headers})
+     .subscribe(
+      res => {
+       callback(res);
+      },
+      err => {
+       console.log('Error occured --> ' + err);
+      }
+    );
   }
 
 
