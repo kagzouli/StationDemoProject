@@ -36,7 +36,7 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
 @Api(value = "/", description = "This REST API is use to have informations about the traffic on the station.<br/>")
 public class StationDemoController {
@@ -77,7 +77,7 @@ public class StationDemoController {
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@RequestMapping(value = "/station/findStationById/{id}", method = { RequestMethod.GET}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	@PreAuthorize("hasRole('manager')")
+	//@PreAuthorize("hasRole('manager')")
 	public TrafficStationBean findTrafficStationById(@PathVariable final Integer id){
 
 		LOGGER.info("BEGIN of the method findTrafficStationById of the class " + StationDemoController.class.getName());
