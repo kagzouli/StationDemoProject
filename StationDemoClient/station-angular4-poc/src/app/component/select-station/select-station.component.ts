@@ -6,6 +6,7 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { Params } from '@angular/router/src/shared';
+import { DeleteStationResponse } from '../../bean/deletestationresponse';
 
 @Component({
   selector: 'app-select-station',
@@ -48,7 +49,7 @@ export class SelectStationComponent implements OnInit {
    * 
    */
   callUpdateStation(event) {
-    this.router.navigate(['/stationdemo/updatestation', this.trafficStationBean.id]);
+     this.router.navigate(['/stationdemo/updatestation', this.trafficStationBean.id]);
   }
 
   /**
@@ -57,7 +58,22 @@ export class SelectStationComponent implements OnInit {
    * @param event 
    */
   callDeleteStation(event){
-
+    if (confirm("Are you sure to delete  the station '" + this.trafficStationBean.station + "'?")) {
+ 
+        this.trafficstationService.deleteStation(this.trafficStationBean.id,
+          (jsonResult: DeleteStationResponse) => {
+              const success = jsonResult.success;
+              if (success) {
+                 window.alert('The station has been delete with success');
+                 this.router.navigate(['/stationdemo/searchstations',{}]);               
+               }else {
+                 let messageError = jsonResult.errors[0];
+                 window.alert('Error --> ' + messageError);
+              }  
+            }
+          );
+    
+    }
 
   }
 

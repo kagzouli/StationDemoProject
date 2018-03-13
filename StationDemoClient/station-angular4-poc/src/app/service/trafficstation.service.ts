@@ -7,6 +7,7 @@ import { TrafficStationBean } from '../bean/trafficstationbean';
 
 import { CreateStationResponse } from '../bean/createstationresponse';
 import { UpdateStationResponse } from '../bean/updatestationresponse';
+import { DeleteStationResponse } from '../bean/deletestationresponse';
 
 
 @Injectable()
@@ -91,6 +92,23 @@ export class TrafficstationService {
        console.log('Error occured --> ' + err);
       }
     );
+  }
+
+  deleteStation(stationId : number, callback: (updateStationResponse: DeleteStationResponse) => void){
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    
+        let params = new HttpParams();
+        
+    
+        this.http.delete<DeleteStationResponse>(this.contextTrafficServiceUrl + '/deleteStation/' + stationId  , {headers: headers})
+         .subscribe(
+          res => {
+           callback(res);
+          },
+          err => {
+           console.log('Error occured --> ' + err);
+          }
+        );
   }
 
 
