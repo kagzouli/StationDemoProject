@@ -1,1 +1,1 @@
-ng build --prod --env=prod
+ng build --prod --env=prod --base-href=/angular/
