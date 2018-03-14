@@ -11,11 +11,21 @@ export class CriteriaSearchStation {
 	trafficMax : number;
 	
 	//Starts with
-      ville : string;
+    ville : string;
 
-      page: number;
+    page: number;
 
-      numberMaxElements: number;
+	numberMaxElements: number;
+	
 
-    
+	constructor(reseau? : string, station?: string, trafficMin? : number, trafficMax? : number , ville? : string, page? : number , numberMaxElements? : number){
+		this.reseau     = reseau;
+		this.station    = station;
+		this.trafficMin = trafficMin;
+		this.trafficMax = trafficMax;
+		this.ville      = ville;
+		this.page       = page;
+		this.numberMaxElements = numberMaxElements;
+
+	}
  }

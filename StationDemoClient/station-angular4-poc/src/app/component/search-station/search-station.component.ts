@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
@@ -14,6 +14,8 @@ import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagd
 
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
+import { tap } from 'rxjs/operators/tap';
+import { MatPaginator } from '@angular/material';
 
 
 
@@ -40,7 +42,12 @@ export class SearchStationComponent implements OnInit {
 
   reseauChoose: string = '';
 
+  /** Store the actual search **/
+  criteriaSearch : CriteriaSearchStation;
+
   NUMBER_MAX_ELEMENTS_TAB = 15;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router) { 
@@ -63,8 +70,17 @@ export class SearchStationComponent implements OnInit {
     let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
     criteriaSearchStation.page = 1;
     criteriaSearchStation.numberMaxElements = 15;
+    this.criteriaSearch = criteriaSearchStation;
     this.dataSource.findStations(criteriaSearchStation);
 
+  }
+
+  ngAfterViewInit() {
+    this.paginator.page
+        .pipe(
+            tap(() => this.loadStationsPage())
+        )
+        .subscribe();
   }
 
   disableButton(invalidform : boolean){
@@ -81,21 +97,17 @@ export class SearchStationComponent implements OnInit {
     
     if (this.rForm.valid) {
       this.launchAction = true;
-           // Create the criteria
-           let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
-           criteriaSearchStation.reseau = form.reseau;
-           criteriaSearchStation.station = form.station;
-           criteriaSearchStation.trafficMin = form.trafficMin;
-           criteriaSearchStation.trafficMax = form.trafficMax;
-           criteriaSearchStation.ville = form.ville;
-           // A changer et parametrer
-           criteriaSearchStation.page = 1;
-           criteriaSearchStation.numberMaxElements = 15;
+           
            
            // Launch the search
            if (this.rForm.valid) {
+             // Create the criteria for the search
+            let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
+              form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
+
              this.launchAction = true;
              this.dataSource.findStations(criteriaSearchStation);
+             this.criteriaSearch = criteriaSearchStation;
              this.launchAction = false;
         }else {
            window.alert('There is a mistake in your input.');
@@ -103,8 +115,19 @@ export class SearchStationComponent implements OnInit {
            this.rForm.reset();
            this.launchAction = false;
          }
-       }
-   
+       } 
+   }
+
+   /**
+    * Load to load the stations for pagination
+    */
+   loadStationsPage() {
+     
+     // Change the criteria pageIndex and pageSize
+     this.criteriaSearch.page = this.paginator.pageIndex + 1;
+     this.criteriaSearch.numberMaxElements = this.paginator.pageSize;
+
+     this.dataSource.findStations(this.criteriaSearch);
    }
   
 
@@ -114,6 +137,8 @@ export class SearchStationComponent implements OnInit {
 
    onStationClicked(trafficStation){
     //TODO : Put your code here
+   
+  
   }
   
 
