@@ -8,6 +8,10 @@ import { TrafficStationBean } from '../bean/trafficstationbean';
 import { CreateStationResponse } from '../bean/createstationresponse';
 import { UpdateStationResponse } from '../bean/updatestationresponse';
 import { DeleteStationResponse } from '../bean/deletestationresponse';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError } from 'rxjs/operators/catchError';
+
 
 
 @Injectable()
@@ -17,24 +21,21 @@ export class TrafficstationService {
     contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoWeb/station'
     
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient , private httpNew:HttpClient) { }
 
    /**
    * Method to find all traffic stations
    * 
    */  
-  findTrafficStations(criteriaSearchStation : CriteriaSearchStation, callback: (listTrafficStations: TrafficStationBean[]) => void){
+  findTrafficStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<TrafficStationBean[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http.post<TrafficStationBean[]>(this.contextTrafficServiceUrl + '/findStationsByCrit', criteriaSearchStation, {headers: headers})
-    .subscribe(
-     res => {
-       callback(res);
-     },
-     err => {
-        console.log('Error occured --> ' + err);
-     }
-   );
+    return this.http.post<TrafficStationBean[]>(this.contextTrafficServiceUrl + '/findStationsByCrit', criteriaSearchStation, {headers: headers})
+    .pipe(catchError(this.formatErrors));
  }
+
+ private formatErrors(error: any) {
+  return new ErrorObservable(error.error);
+}
 
  /**
   * Create station 

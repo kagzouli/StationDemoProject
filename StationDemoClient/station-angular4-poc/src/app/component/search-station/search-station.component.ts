@@ -13,6 +13,7 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagdatasource';
 
 import {StringMapEntry} from '../../bean/stringmapentry';
+import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
 
 
 
@@ -31,13 +32,15 @@ export class SearchStationComponent implements OnInit {
 
   launchAction : boolean = false;
 
-  dataSource = new StationWithoutPagDataSource();
+  dataSource : StationWithPagDataSource;
 
   numberElementsFound: number = 0;
 
   mapReseaux: StringMapEntry[] = [ new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
 
   reseauChoose: string = '';
+
+  NUMBER_MAX_ELEMENTS_TAB = 15;
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router) { 
@@ -53,6 +56,14 @@ export class SearchStationComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.dataSource = new StationWithPagDataSource(this.trafficstationService);
+   
+    // Call the service findStations using the datasource.
+    let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
+    criteriaSearchStation.page = 1;
+    criteriaSearchStation.numberMaxElements = 15;
+    this.dataSource.findStations(criteriaSearchStation);
 
   }
 
@@ -84,14 +95,8 @@ export class SearchStationComponent implements OnInit {
            // Launch the search
            if (this.rForm.valid) {
              this.launchAction = true;
-             this.trafficstationService.findTrafficStations(criteriaSearchStation,
-             (listTrafficStation: TrafficStationBean[]) => {
-             this.dataSource.updateValue(listTrafficStation);
-             this.numberElementsFound = listTrafficStation.length;
+             this.dataSource.findStations(criteriaSearchStation);
              this.launchAction = false;
-          }
-        );
-
         }else {
            window.alert('There is a mistake in your input.');
            // Invalid data on form - we reset.
@@ -108,8 +113,8 @@ export class SearchStationComponent implements OnInit {
    }
 
    onStationClicked(trafficStation){
-      console.log("Traffic station : " + trafficStation.station);
-   }
+    //TODO : Put your code here
+  }
   
 
    
