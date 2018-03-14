@@ -27,7 +27,7 @@
           				<phase>validate</phase>
        				    <goals><goal>copy-resources</goal></goals>
           				<configuration>
-             				<outputDirectory>${basedir}/</outputDirectory >
+             				<outputDirectory>${basedir}/src/main/webapp</outputDirectory >
               				<resources>
                  			   <resource>
                       			  <directory>${basedir}/dist</directory >
