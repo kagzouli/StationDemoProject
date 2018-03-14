@@ -21,11 +21,6 @@ export class StationWithPagDataSource extends DataSource<TrafficStationBean> {
          constructor(private trafficStationService: TrafficstationService)  {
           super();
         }
-    
-        updateValue(value : any){
-            this.stationTrafficBehavior.next(value);
-        }
-        
         
         /** Connect function called by the table to retrieve one stream containing the data to render. */
         connect(collectionViewer: CollectionViewer): Observable<TrafficStationBean[]> {
