@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
-import {MatTableModule} from '@angular/material';
+import {MatTableModule, MatPaginatorModule} from '@angular/material';
 
 
 import { AppComponent } from './app.component';
@@ -32,10 +31,11 @@ import { UpdateStationComponent } from './component/update-station/update-statio
     ReactiveFormsModule,
     HttpClientModule,
     MatTableModule,
+    MatPaginatorModule,
     AppRoutingModule 
 
   ],
-  providers: [CookieService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

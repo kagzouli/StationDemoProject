@@ -106,6 +106,10 @@ export class SearchStationComponent implements OnInit {
    selectStation(id){
        this.router.navigate(['/stationdemo/selectstation' , id]);
    }
+
+   onStationClicked(trafficStation){
+      console.log("Traffic station : " + trafficStation.station);
+   }
   
 
    
