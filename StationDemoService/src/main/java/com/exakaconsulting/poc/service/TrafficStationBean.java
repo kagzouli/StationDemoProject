@@ -3,6 +3,9 @@ package com.exakaconsulting.poc.service;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class TrafficStationBean implements Serializable{
 
 	/**
@@ -12,14 +15,18 @@ public class TrafficStationBean implements Serializable{
 	
 	private Integer id;
 	
+	@NotBlank(message="The reseau must be set")
 	private String reseau;
 	
+	@NotBlank(message="The station must be set")
 	private String station;
 	
+	@NotNull(message="The traffic must be set")
 	private Long traffic;
 	
 	private List<String> listCorrespondance;
-		
+	
+	@NotBlank(message="The ville must be set")
 	private String ville;
 	
 	private Integer arrondissement;
