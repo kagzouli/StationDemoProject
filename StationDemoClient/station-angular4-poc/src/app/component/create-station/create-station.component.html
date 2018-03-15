@@ -2,7 +2,22 @@
   <form [formGroup] = "rForm" (ngSubmit)="createStation(rForm.value)">
     <div class="form-container">
       <div class="row columns">
-        <h1>Create station</h1>
+        <h2>Create station</h2>
+
+        <br/>
+        
+        <div *ngIf="errors != null && errors.length != 0">
+          <TABLE BORDER="0">
+            <tr *ngFor="let error of errors">
+                        
+              <td class="tdmessagelogin"> 
+                <span class="messageerreur"> {{error}} </span>  
+                     
+              </td>
+             </tr>
+        </TABLE>
+        <br/>        
+        </div>        
   
         <label>Reseau
           <select formControlName="reseau" [(ngModel)]="reseauChoose">

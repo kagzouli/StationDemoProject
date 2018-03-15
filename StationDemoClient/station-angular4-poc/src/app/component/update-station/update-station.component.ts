@@ -75,7 +75,7 @@ export class UpdateStationComponent implements OnInit {
             (jsonResult: UpdateStationResponse) => {
               const success = jsonResult.success;
               if (success) {
-                 window.alert('The station has been created with success');
+                 window.alert('The station has been updated  with success');
                  this.router.navigate(['/stationdemo/searchstations',{}]);               
                }else {
                  let messageError = jsonResult.errors[0];

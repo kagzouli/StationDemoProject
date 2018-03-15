@@ -33,7 +33,7 @@ export class CreateStationComponent implements OnInit {
   
   reseauChoose: string = '';
   
-  
+  errors : Array<String> = [];
 
   constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router) { 
 
@@ -72,6 +72,10 @@ export class CreateStationComponent implements OnInit {
      // Call the service crediting bank
      if (this.rForm.valid) {
       //Before the credit disable the button.
+
+        // Make the tab empty
+       this.errors.length = 0;
+               
       
         // Method to create a station
         this.trafficstationService.createStation(trafficStationBean).subscribe(
@@ -81,8 +85,8 @@ export class CreateStationComponent implements OnInit {
                window.alert('The station has been created with success');
                this.router.navigate(['/stationdemo/searchstations',{}]);               
              }else {
-               let messageError = jsonResult.errors[0];
-               window.alert('Error --> ' + messageError);
+               this.errors.push(jsonResult.errors[0]);
+               
             }
             this.launchAction = false;
         }
