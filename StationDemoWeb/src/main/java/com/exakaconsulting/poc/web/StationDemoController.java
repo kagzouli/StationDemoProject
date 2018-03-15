@@ -85,13 +85,13 @@ public class StationDemoController {
 		try {
 			Assert.notNull(criteria, "The criteria must be set");
 			
-			countStation = this.stationDemoService.countStations(criteria);
+			countStations = this.stationDemoService.countStations(criteria);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 		LOGGER.info("END of the method countSearchStations of the class " + StationDemoController.class.getName());
-		return countStation;
+		return countStations;
 	}
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
