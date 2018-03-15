@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders , HttpParams} from '@angular/common/http';
 
 import { AuthenticateResponse } from '../bean/authenticateresponse';
+import { Observable } from 'rxjs/Observable';
+
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError } from 'rxjs/operators/catchError';
+
 
 @Injectable()
 export class UserService {
@@ -13,27 +18,20 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  authenticateUser(login: string, password: string , callback: (jsonResult: AuthenticateResponse) => void){
+  authenticateUser(login: string, password: string) : Observable<AuthenticateResponse>{
     
      let body = new HttpParams()
      .set('login', login)
      .set('password', password);
   
      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-     this.http.post<AuthenticateResponse>(this.contextUserUrl + '/authenticate', body.toString(), {headers: headers, withCredentials: false })
-     .subscribe(
-      res => {
-         console.log("Info token : " + res.user  + "/ success : " + res.success);  
-         localStorage.setItem('currentUser' , JSON.stringify(res.user));    
-         callback(res);
-        
-      },
-      err => {
-        console.log('Error occured --> ' + err);
-      }
-    );
- 
+     return this.http.post(this.contextUserUrl + '/authenticate', body.toString(), {headers: headers, withCredentials: false })
+     .pipe(catchError(this.formatErrors));
    }
+
+   private formatErrors(error: any) {
+    return new ErrorObservable(error.error);
+  }
  
 
 }

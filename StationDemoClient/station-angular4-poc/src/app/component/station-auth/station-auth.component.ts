@@ -41,12 +41,12 @@ export class StationAuthComponent implements OnInit {
 
   authenticate(authenticateForm){
     
-        if (this.rForm.valid) {
+      if (this.rForm.valid) {
           // Launch the action
           this.launchAction = true;
 
-          this.userService.authenticateUser(authenticateForm.login, authenticateForm.password,  
-          
+          //  Method to authenticate
+          this.userService.authenticateUser(authenticateForm.login, authenticateForm.password).subscribe(
             (authenticateResponse: AuthenticateResponse) => {
               const success = authenticateResponse.success;
               if (success) {
@@ -59,7 +59,8 @@ export class StationAuthComponent implements OnInit {
               this.launchAction = false;
     
             }
-          ); 
-        }
+        );
+
       }
+  }
 }
