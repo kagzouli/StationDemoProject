@@ -29,22 +29,27 @@ export class UpdateStationComponent implements OnInit {
   constructor(private fb: FormBuilder , private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
 
      // Get the selected traffic station
+     let stationId = 0;
+     
+     // Get the station id from parameter
      this.parentRoute.params.subscribe(params => {   
-      this.trafficstationService.selectStationById(params['stationId'](
-        (trafficParam: TrafficStationBean) => {
-         this.trafficStationBeanUpdate = trafficParam;
-         this.isDataAvailable = true;
+        stationId = params['stationId'];
+     });
 
-          // Initialise the form
+    
+     // Call the select station id.
+     this.trafficstationService.selectStationById(stationId).subscribe(
+       (trafficParam: TrafficStationBean) => {
+          this.trafficStationBeanUpdate = trafficParam;
+          this.isDataAvailable = true;
+
+         // Initialise the form
          this.rForm = fb.group({
-         'traffic' : [this.trafficStationBeanUpdate.traffic, Validators.compose([Validators.required])],
-         'correspondance' : [this.trafficStationBeanUpdate.listCorrespondance,  Validators.maxLength(150)]
-         });
-      }));
-   });
-
-   
-
+          'traffic' : [this.trafficStationBeanUpdate.traffic, Validators.compose([Validators.required])],
+          'correspondance' : [this.trafficStationBeanUpdate.listCorrespondance,  Validators.maxLength(150)]
+          });
+     });
+  
   }
 
   ngOnInit() {

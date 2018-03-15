@@ -27,20 +27,19 @@ export class SelectStationComponent implements OnInit {
 
   ngOnInit() {
 
-      // Get the selected traffic station
+      // Get the parameter for stationId
+      let stationId = 0;
       this.parentRoute.params.subscribe(params => {   
-        this.trafficstationService.selectStationById(params['stationId'](
-          (trafficParam: TrafficStationBean) => {
-            this.trafficStationBean = trafficParam;
-            this.isDataAvailable = true;
-         }));
-        }
-      );
+         stationId = params['stationId'];
+      });
 
-                
-         
-  
-      
+      // Call the select station id.
+      this.trafficstationService.selectStationById(stationId).subscribe(
+        (trafficParam: TrafficStationBean) => {
+          this.trafficStationBean = trafficParam;
+          this.isDataAvailable = true;
+       });
+   
   }
 
 
