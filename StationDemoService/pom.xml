@@ -59,7 +59,11 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 		
-		
+		<!-- Hibernate validator -->
+		<dependency>
+       		 	<groupId>org.hibernate</groupId>
+       			<artifactId>hibernate-validator</artifactId>
+    		</dependency>
 	
 	  
 				
