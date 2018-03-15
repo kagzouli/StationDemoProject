@@ -57,7 +57,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			
 			Map<String, Object> params = new HashMap<>();
 			params.put("reseau", trafficStationBean.getReseau());
-			params.put("station", trafficStationBean.getStation());
+			if (trafficStationBean.getStation() != null){
+			   params.put("station", StringUtils.upperCase(trafficStationBean.getStation()));
+			}
 			params.put("traffic", trafficStationBean.getTraffic());
 			if (trafficStationBean.getListCorrespondance() != null){
 				params.put("corres", StringUtils.join(trafficStationBean.getListCorrespondance(),","));
