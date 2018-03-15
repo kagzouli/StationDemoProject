@@ -19,6 +19,7 @@
 	   <h2database.version>1.4.196</h2database.version>
 	   <junit.version>4.12</junit.version>
 	   <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
+	   <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
 	</properties>
 	
 	
@@ -218,10 +219,13 @@
 			<version>${springsecurity.version}</version>
 		</dependency>
 
-		 
+		 <!-- Hibernate validator -->
+		<dependency>
+       		 	<groupId>org.hibernate</groupId>
+       			<artifactId>hibernate-validator</artifactId>
+       			<version>${hibernate-validator.version}</version>
+    		</dependency>
 
-
-		 
 		</dependencies>
 	</dependencyManagement>
 
