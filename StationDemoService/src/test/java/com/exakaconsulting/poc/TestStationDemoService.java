@@ -125,6 +125,27 @@ public class TestStationDemoService extends AbstractServiceTest{
 		List<TrafficStationBean> listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == 19);
 	}
+
+	@Test
+	public void testCountNumberElementsWithoutCrit(){
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		
+		Integer count = this.stationDemoService.countStations(criteria);
+		assertTrue(count == 369);
+	}
+
+	
+	@Test
+	public void testCountNumberElementsWithCrit(){
+		final Integer ARRONDISS = 15;
+
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setArrondiss(ARRONDISS);
+		
+		Integer count = this.stationDemoService.countStations(criteria);
+		assertTrue(count == 19);
+	}
 	
 	@Test
 	public void insertStationAlreadyExists(){

@@ -19,6 +19,15 @@ public interface IStationDemoService {
 	List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria);
 	
 	/**
+	 * Method to count the stations.<br/>
+	 * 
+	 * @param criteria Criteria of the search.<br/>
+	 * @return Return the number of stations.<br/>
+	 */
+	Integer countStations(CriteriaSearchTrafficStation criteria);
+
+	
+	/**
 	 * Method to insert a traffic station in the database.<br/>
 	 * 
 	 * @param trafficStationBean The traffic stationBean.<br/>

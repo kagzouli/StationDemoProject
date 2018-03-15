@@ -48,6 +48,27 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		
 		return listTrafficStations;
 	}
+	
+	@Override
+	public Integer countStations(CriteriaSearchTrafficStation criteria) {
+		Assert.notNull(criteria , "criteria has to be set");
+		
+		LOGGER.info("BEGIN of the method countStations of the class " + StationDemoServiceImpl.class.getName());
+		
+		// Set the station to Maj to make the test
+		if (criteria.getStation() != null){
+			criteria.setStation(StringUtils.upperCase(criteria.getStation()));
+		}
+				
+
+		Integer countStations = stationDemoDao.countStations(criteria);
+
+		LOGGER.info("END of the method countStations of the class " + StationDemoServiceImpl.class.getName());
+		
+		return countStations;
+
+	}
+
 
 	@Override
 	@Transactional(rollbackFor=Throwable.class, propagation = Propagation.REQUIRED, transactionManager=TRANSACTIONAL_DATASOURCE_STATION)
@@ -106,5 +127,6 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		stationDemoDao.deleteTrafficStation(id);
 		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoServiceImpl.class.getName());
 	}
+
 
 }

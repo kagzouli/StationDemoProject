@@ -32,6 +32,8 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	
 	private static final String REQUEST_ALL_SQL = "select * from TRAF_STAT";
 	
+	private static final String COUNT_ALL_SQL = "select count(1) from TRAF_STAT";
+	
 	static final String INSERT_TRAFFIC_SQL = "INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values (:reseau , :station , :traffic , :corres , :ville , :arron)";
 
 	static final String BEGIN_UPDATE_SQL = "update TRAF_STAT SET ";
@@ -89,46 +91,13 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 		List<TrafficStationBean> listStationsSearch = Collections.<TrafficStationBean>emptyList();
 		try {
-			Map<String, Object> params = new HashMap<>();
-
-			List<String> listWhereVariable = new ArrayList<>();
 			
-			if (!StringUtils.isBlank(criteria.getReseau())){
-				listWhereVariable.add("TRAF_RESE = :reseau");
-				params.put("reseau", criteria.getReseau());				
-			}
-			
-			if (!StringUtils.isBlank(criteria.getStation())){
-				listWhereVariable.add("TRAF_STAT like :station");
-				params.put("station", criteria.getStation() + "%");				
-				
-			}
-			
-			if (criteria.getTrafficMin() != null){
-				listWhereVariable.add("TRAF_TRAF >= :trafficMin");
-				params.put("trafficMin", criteria.getTrafficMin());				
-				
-			}
-			
-			if (criteria.getTrafficMax() != null){
-				listWhereVariable.add("TRAF_TRAF <= :trafficMax");
-				params.put("trafficMax", criteria.getTrafficMax());				
-			}
-			
-			if (criteria.getVille() != null){
-				listWhereVariable.add("upper(TRAF_VILL) like :trafficVille");
-				params.put("trafficVille", StringUtils.upperCase(criteria.getVille()) + "%");				
-			}
-			
-			if (criteria.getArrondiss() != null){
-				listWhereVariable.add("TRAF_ARRO = :arrondiss");
-				params.put("arrondiss", criteria.getArrondiss());				
-			}
-
-
+			WhereParamSql whereParamSql =  this.createWhereParamSql(criteria);
 			
 			StringBuilder requestSql = new StringBuilder(128);
 			requestSql.append(REQUEST_ALL_SQL);
+			final List<String> listWhereVariable = whereParamSql.getListWhereClause();
+			final Map<String, Object> params = whereParamSql.getParams();
 			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
 				requestSql.append(" WHERE ");
 				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
@@ -158,13 +127,51 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 
 			listStationsSearch = this.jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
-			LOGGER.info("END of the method retrieveOperations of the class " + StationDemoDaoImpl.class.getName());
+			LOGGER.info("END of the method searchStations of the class " + StationDemoDaoImpl.class.getName());
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 
 		return listStationsSearch;
+	}
+	
+	@Override
+	public Integer countStations(CriteriaSearchTrafficStation criteria) {
+		
+		Assert.notNull(criteria, "The criteria must be set");
+
+		LOGGER.info("BEGIN of the method countStations  of the class " + StationDemoDaoImpl.class.getName());
+
+		Integer countStations = 0;
+		try {
+			
+			WhereParamSql whereParamSql =  this.createWhereParamSql(criteria);
+			
+			StringBuilder requestSql = new StringBuilder(128);
+			requestSql.append(COUNT_ALL_SQL);
+			final List<String> listWhereVariable = whereParamSql.getListWhereClause();
+			final Map<String, Object> params = whereParamSql.getParams();
+			if (listWhereVariable != null && !listWhereVariable.isEmpty()) {
+				requestSql.append(" WHERE ");
+				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
+			}
+			
+			
+			
+			LOGGER.info("Request SQL search  :" + requestSql.toString());
+
+
+			countStations = this.jdbcTemplate.queryForObject(requestSql.toString(), params, Integer.class);
+			LOGGER.info("END of the method countStations of the class " + StationDemoDaoImpl.class.getName());
+		} catch(EmptyResultDataAccessException exception){
+			LOGGER.warn(exception.getMessage());
+		}catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		return countStations;
+
 	}
 
 	@Override
@@ -262,6 +269,61 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		}
 
 	}
+	
+	/**
+	 * Method to create the where param sql.<br/>
+	 * 
+	 * @param criteria The criteria.<br/>
+	 * @return Return the where param sql.<br/>
+	 */
+	private WhereParamSql createWhereParamSql(final CriteriaSearchTrafficStation criteria){
+		Assert.notNull(criteria, "The criteria must be set");
+
+		WhereParamSql whereParamSql = new WhereParamSql();
+		
+		Map<String, Object> params = new HashMap<>();
+
+		List<String> listWhereVariable = new ArrayList<>();
+		
+		if (!StringUtils.isBlank(criteria.getReseau())){
+			listWhereVariable.add("TRAF_RESE = :reseau");
+			params.put("reseau", criteria.getReseau());				
+		}
+		
+		if (!StringUtils.isBlank(criteria.getStation())){
+			listWhereVariable.add("TRAF_STAT like :station");
+			params.put("station", criteria.getStation() + "%");				
+			
+		}
+		
+		if (criteria.getTrafficMin() != null){
+			listWhereVariable.add("TRAF_TRAF >= :trafficMin");
+			params.put("trafficMin", criteria.getTrafficMin());				
+			
+		}
+		
+		if (criteria.getTrafficMax() != null){
+			listWhereVariable.add("TRAF_TRAF <= :trafficMax");
+			params.put("trafficMax", criteria.getTrafficMax());				
+		}
+		
+		if (criteria.getVille() != null){
+			listWhereVariable.add("upper(TRAF_VILL) like :trafficVille");
+			params.put("trafficVille", StringUtils.upperCase(criteria.getVille()) + "%");				
+		}
+		
+		if (criteria.getArrondiss() != null){
+			listWhereVariable.add("TRAF_ARRO = :arrondiss");
+			params.put("arrondiss", criteria.getArrondiss());				
+		}
+		
+		whereParamSql.setListWhereClause(listWhereVariable);
+		whereParamSql.setParams(params);
+		
+		return whereParamSql;
+	}
+
+
 		
 		
 

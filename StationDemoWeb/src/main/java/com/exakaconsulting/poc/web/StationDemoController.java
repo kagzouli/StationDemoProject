@@ -74,6 +74,26 @@ public class StationDemoController {
 		return listStationBean;
 	}
 	
+	@ApiOperation(value = "This method is use to count the number of traffic stations by criteria", response = Integer.class)
+	@RequestMapping(value = "/station/countStationsByCrit", method = { RequestMethod.POST}, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	public Integer countSearchStations(@RequestBody CriteriaSearchTrafficStation criteria){	
+		LOGGER.info("BEGIN of the method countSearchStations of the class " + StationDemoController.class.getName());
+
+		Integer countStations = 0;
+		try {
+			Assert.notNull(criteria, "The criteria must be set");
+			
+			countStation = this.stationDemoService.countStations(criteria);
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		LOGGER.info("END of the method countSearchStations of the class " + StationDemoController.class.getName());
+		return countStation;
+	}
+	
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@RequestMapping(value = "/station/findStationById/{id}", method = { RequestMethod.GET}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody

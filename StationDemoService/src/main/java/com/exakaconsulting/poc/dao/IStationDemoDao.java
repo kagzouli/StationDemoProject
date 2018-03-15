@@ -14,9 +14,17 @@ public interface IStationDemoDao {
 	 * 
 	 * @param criteria Criteria to search.<br/>
 	 * @return Return the list of station found.<br/>
-	 * @throws TechnicalException
 	 */
-	List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) throws TechnicalException;
+	List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria);
+
+	/**
+	 * Method to count the number of stations by criteria.<br/>
+	 * 
+	 * @param criteria Criteria to search.<br/>
+	 * @return Return the number of stations found by criteria.<br/>
+	 */
+
+	public Integer countStations(CriteriaSearchTrafficStation criteria); 	
 	
 	/**
 	 * Method to insert the trafficStation into database.<br/>
