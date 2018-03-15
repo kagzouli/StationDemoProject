@@ -53,42 +53,27 @@ export class TrafficstationService {
   * Create station 
 
   */
-  createStation(trafficStationBean : TrafficStationBean , callback: (createStationResponse: CreateStationResponse) => void){
+  createStation(trafficStationBean : TrafficStationBean)  : Observable<CreateStationResponse>{
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http.put<CreateStationResponse>(this.contextTrafficServiceUrl + '/insertStation', trafficStationBean, {headers: headers})
-     .subscribe(
-      res => {
-       callback(res);
-      },
-      err => {
-       console.log('Error occured --> ' + err);
-      }
-    );
+    return this.http.put(this.contextTrafficServiceUrl + '/insertStation', trafficStationBean, {headers: headers})
+    .pipe(catchError(this.formatErrors));
   }
 
 
   // Method to select the station by id.
-  selectStationById(id: number , callback: (createStationResponse: TrafficStationBean) => void){
+  selectStationById(id: number) : Observable<TrafficStationBean>{
       const relativeUrl = '/findStationById/' + id;
 
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-      this.http.get<TrafficStationBean>(this.contextTrafficServiceUrl + relativeUrl, {headers: headers})
-      .subscribe(
-       res => {
-         callback(res);
-       },
-       err => {
-          console.log('Error occured --> ' + err);
-       }
-     );
-   
+      return this.http.get<TrafficStationBean>(this.contextTrafficServiceUrl + relativeUrl, {headers: headers})
+      .pipe(catchError(this.formatErrors));
   }
 
   /**
   * Update station 
 
   */
-  updateStation(traffic : number, correspondance: string ,stationId: number, callback: (updateStationResponse: UpdateStationResponse) => void){
+  updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<CreateStationResponse>{
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
     let params = new HttpParams()
@@ -96,32 +81,17 @@ export class TrafficstationService {
     .append('newCorr', correspondance);
     
 
-    this.http.patch<CreateStationResponse>(this.contextTrafficServiceUrl + '/updateStation/' + stationId + "?"+ params.toString() , {headers: headers})
-     .subscribe(
-      res => {
-       callback(res);
-      },
-      err => {
-       console.log('Error occured --> ' + err);
-      }
-    );
+    return this.http.patch(this.contextTrafficServiceUrl + '/updateStation/' + stationId + "?"+ params.toString() , {headers: headers})
+      .pipe(catchError(this.formatErrors));
   }
 
-  deleteStation(stationId : number, callback: (updateStationResponse: DeleteStationResponse) => void){
+  deleteStation(stationId : number) : Observable<DeleteStationResponse>{
       const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     
-        let params = new HttpParams();
-        
+      let params = new HttpParams();
     
-        this.http.delete<DeleteStationResponse>(this.contextTrafficServiceUrl + '/deleteStation/' + stationId  , {headers: headers})
-         .subscribe(
-          res => {
-           callback(res);
-          },
-          err => {
-           console.log('Error occured --> ' + err);
-          }
-        );
+      return this.http.delete(this.contextTrafficServiceUrl + '/deleteStation/' + stationId  , {headers: headers})
+       .pipe(catchError(this.formatErrors));
   }
 
 

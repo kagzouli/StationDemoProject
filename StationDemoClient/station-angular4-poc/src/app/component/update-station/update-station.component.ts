@@ -30,8 +30,8 @@ export class UpdateStationComponent implements OnInit {
 
      // Get the selected traffic station
      this.parentRoute.params.subscribe(params => {   
-    this.trafficstationService.selectStationById(params['stationId'],
-      (trafficParam: TrafficStationBean) => {
+      this.trafficstationService.selectStationById(params['stationId'](
+        (trafficParam: TrafficStationBean) => {
          this.trafficStationBeanUpdate = trafficParam;
          this.isDataAvailable = true;
 
@@ -40,8 +40,7 @@ export class UpdateStationComponent implements OnInit {
          'traffic' : [this.trafficStationBeanUpdate.traffic, Validators.compose([Validators.required])],
          'correspondance' : [this.trafficStationBeanUpdate.listCorrespondance,  Validators.maxLength(150)]
          });
-      }
-     );         
+      }));
    });
 
    
@@ -65,20 +64,21 @@ export class UpdateStationComponent implements OnInit {
       
         // Method of callback to credit account number
         this.launchAction = true;
-        this.trafficstationService.updateStation(form.traffic, form.correspondance,this.trafficStationBeanUpdate.id,
-        (jsonResult: UpdateStationResponse) => {
-            const success = jsonResult.success;
-            if (success) {
-               window.alert('The station has been update with success');
-               this.router.navigate(['/stationdemo/searchstations',{}]);               
-             }else {
-               let messageError = jsonResult.errors[0];
-               window.alert('Error --> ' + messageError);
-            }
-            this.launchAction = false;
 
+          // Method to create a station
+          this.trafficstationService.updateStation(form.traffic, form.correspondance,this.trafficStationBeanUpdate.id).subscribe(
+            (jsonResult: UpdateStationResponse) => {
+              const success = jsonResult.success;
+              if (success) {
+                 window.alert('The station has been created with success');
+                 this.router.navigate(['/stationdemo/searchstations',{}]);               
+               }else {
+                 let messageError = jsonResult.errors[0];
+                 window.alert('Error --> ' + messageError);
+              }
+              this.launchAction = false;
           }
-        );
+          );
         
 
    }else {

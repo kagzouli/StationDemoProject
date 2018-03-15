@@ -29,14 +29,16 @@ export class SelectStationComponent implements OnInit {
 
       // Get the selected traffic station
       this.parentRoute.params.subscribe(params => {   
-        this.trafficstationService.selectStationById(params['stationId'],
+        this.trafficstationService.selectStationById(params['stationId'](
           (trafficParam: TrafficStationBean) => {
             this.trafficStationBean = trafficParam;
             this.isDataAvailable = true;
-          }
-        );         
-    
-      });
+         }));
+        }
+      );
+
+                
+         
   
       
   }
@@ -60,18 +62,19 @@ export class SelectStationComponent implements OnInit {
   callDeleteStation(event){
     if (confirm("Are you sure to delete  the station '" + this.trafficStationBean.station + "'?")) {
  
-        this.trafficstationService.deleteStation(this.trafficStationBean.id,
+           // Method to create a station
+        this.trafficstationService.deleteStation(this.trafficStationBean.id).subscribe(
           (jsonResult: DeleteStationResponse) => {
-              const success = jsonResult.success;
-              if (success) {
-                 window.alert('The station has been delete with success');
-                 this.router.navigate(['/stationdemo/searchstations',{}]);               
-               }else {
-                 let messageError = jsonResult.errors[0];
-                 window.alert('Error --> ' + messageError);
-              }  
-            }
-          );
+            const success = jsonResult.success;
+            if (success) {
+               window.alert('The station has been delete with success');
+               this.router.navigate(['/stationdemo/searchstations',{}]);               
+             }else {
+               let messageError = jsonResult.errors[0];
+               window.alert('Error --> ' + messageError);
+            }  
+        }
+        );
     
     }
 

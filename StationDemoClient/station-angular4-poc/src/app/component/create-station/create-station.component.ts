@@ -73,10 +73,9 @@ export class CreateStationComponent implements OnInit {
      if (this.rForm.valid) {
       //Before the credit disable the button.
       
-        // Method of callback to credit account number
-        this.launchAction = true;
-        this.trafficstationService.createStation(trafficStationBean,
-        (jsonResult: CreateStationResponse) => {
+        // Method to create a station
+        this.trafficstationService.createStation(trafficStationBean).subscribe(
+          (jsonResult: CreateStationResponse) => {
             const success = jsonResult.success;
             if (success) {
                window.alert('The station has been created with success');
@@ -86,8 +85,7 @@ export class CreateStationComponent implements OnInit {
                window.alert('Error --> ' + messageError);
             }
             this.launchAction = false;
-
-          }
+        }
         );
         
 

@@ -38,7 +38,7 @@ export class SearchStationComponent implements OnInit {
 
   numberElementsFound: number = 0;
 
-  mapReseaux: StringMapEntry[] = [ new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
+  mapReseaux: StringMapEntry[] = [ new StringMapEntry('' , ' ----------'), new StringMapEntry('Metro' , 'Metro') , new StringMapEntry('RER' , 'RER')];
 
   reseauChoose: string = '';
 
