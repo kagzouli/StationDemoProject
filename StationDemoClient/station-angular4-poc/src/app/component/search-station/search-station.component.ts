@@ -73,6 +73,9 @@ export class SearchStationComponent implements OnInit {
     this.criteriaSearch = criteriaSearchStation;
     this.dataSource.findStations(criteriaSearchStation);
 
+    // Count the number of stations of the pagination
+    this.countStationsByCrit(criteriaSearchStation);
+
   }
 
   ngAfterViewInit() {
@@ -105,9 +108,15 @@ export class SearchStationComponent implements OnInit {
             let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
               form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
 
+             // Launch the search
              this.launchAction = true;
              this.dataSource.findStations(criteriaSearchStation);
              this.criteriaSearch = criteriaSearchStation;
+
+             // Count the number of stations of the pagination
+             this.countStationsByCrit(criteriaSearchStation);
+    
+
              this.launchAction = false;
         }else {
            window.alert('There is a mistake in your input.');
@@ -128,6 +137,14 @@ export class SearchStationComponent implements OnInit {
      this.criteriaSearch.numberMaxElements = this.paginator.pageSize;
 
      this.dataSource.findStations(this.criteriaSearch);
+   }
+
+   countStationsByCrit(criteria : CriteriaSearchStation){
+    this.trafficstationService.countStations(criteria).subscribe(
+      (countStation : number) => {
+         this.numberElementsFound = countStation;
+      }
+    );
    }
   
 

@@ -24,18 +24,30 @@ export class TrafficstationService {
   constructor(private http: HttpClient , private httpNew:HttpClient) { }
 
    /**
-   * Method to find all traffic stations
+   * Method to find all traffic stations by criteria.<br/>
    * 
    */  
   findTrafficStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<TrafficStationBean[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<TrafficStationBean[]>(this.contextTrafficServiceUrl + '/findStationsByCrit', criteriaSearchStation, {headers: headers})
+    return this.http.post(this.contextTrafficServiceUrl + '/findStationsByCrit', criteriaSearchStation, {headers: headers})
     .pipe(catchError(this.formatErrors));
  }
 
  private formatErrors(error: any) {
   return new ErrorObservable(error.error);
 }
+
+/**
+   * Method to count all traffic stations by criteria.<br/>
+   * 
+   */  
+  countStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<number> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(this.contextTrafficServiceUrl + '/countStationsByCrit', criteriaSearchStation, {headers: headers})
+    .pipe(catchError(this.formatErrors));
+ }
+
+
 
  /**
   * Create station 
