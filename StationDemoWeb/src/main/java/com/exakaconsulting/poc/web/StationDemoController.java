@@ -32,6 +32,8 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREA
 import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_NOT_EXISTS;
 import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_DATABASE;
 
+import javax.validation.Valid;
+
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -121,7 +123,7 @@ public class StationDemoController {
 	@RequestMapping(value = "/station/insertStation", method = { RequestMethod.PUT}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	public JsonResult<Boolean> insertTrafficStation(@RequestBody final TrafficStationBean trafficStationBean){
+	public JsonResult<Boolean> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
 		
 		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoController.class.getName());
 		JsonResult<Boolean> jsonResult = new JsonResult<>();
