@@ -10,8 +10,6 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 
 import { TrafficstationService } from '../../service/trafficstation.service';
 
-import { StationWithoutPagDataSource } from '../../datasource/stationwithoutpagdatasource';
-
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
 import { tap } from 'rxjs/operators/tap';

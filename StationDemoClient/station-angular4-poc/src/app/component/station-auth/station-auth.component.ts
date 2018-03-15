@@ -21,6 +21,8 @@ export class StationAuthComponent implements OnInit {
   post: any;
 
   launchAction : boolean = false;
+
+  errors : Array<String> = [];
   
   
     constructor(private fb: FormBuilder , private userService: UserService , private router: Router) {
@@ -42,17 +44,22 @@ export class StationAuthComponent implements OnInit {
   authenticate(authenticateForm){
     
       if (this.rForm.valid) {
+  
           // Launch the action
           this.launchAction = true;
 
-          //  Method to authenticate
+          // Make the tab empty
+          this.errors.length = 0;
+          
+          // Launch the authenticate
           this.userService.authenticateUser(authenticateForm.login, authenticateForm.password).subscribe(
             (authenticateResponse: AuthenticateResponse) => {
               const success = authenticateResponse.success;
               if (success) {
                  this.router.navigate(['/stationdemo/searchstations',{}]);
               }else {
-                 window.alert('The user has a wrong authentification.');
+                 this.errors
+                 this.errors.push('The user has a wrong authentification.');
               }
 
               // The action has been launched

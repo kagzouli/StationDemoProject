@@ -1,8 +1,26 @@
+
+
 <div>
   <form [formGroup] = "rForm" (ngSubmit)="authenticate(rForm.value)">
     <div class="form-container">
       <div class="row columns">
-        <h1>Login Page</h1>
+        <h2>Hello to TrafficStationDemo</h2>
+
+        <br/>
+  
+        <div *ngIf="errors != null && errors.length != 0">
+          <TABLE BORDER="0">
+            <tr *ngFor="let error of errors">
+                  
+              <td class="tdmessagelogin"> 
+                  <span class="messageerreur"> {{error}} </span>  
+               
+             </td>
+            </tr>
+          </TABLE>
+          <br/>        
+        </div>        
+       
         
         <label>User
           <input type="text" formControlName="login" />
