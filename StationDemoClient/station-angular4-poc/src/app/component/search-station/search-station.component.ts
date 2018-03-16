@@ -71,7 +71,7 @@ export class SearchStationComponent implements OnInit {
     // Call the service findStations using the datasource.
     let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
     criteriaSearchStation.page = 1;
-    criteriaSearchStation.numberMaxElements = 15;
+    criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
     this.criteriaSearch = criteriaSearchStation;
     this.dataSource.findStations(criteriaSearchStation);
 
@@ -110,8 +110,13 @@ export class SearchStationComponent implements OnInit {
            // Launch the search
            if (this.rForm.valid) {
              // Create the criteria for the search
+            this.paginator.pageIndex = 0;
             let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
               form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
+
+             // Ajout critere recherche
+             criteriaSearchStation.orders.length = 0;
+             criteriaSearchStation.orders.push(new OrderBean(this.sort.active , this.sort.direction));
 
              // Launch the search
              this.launchAction = true;
@@ -143,7 +148,7 @@ export class SearchStationComponent implements OnInit {
      
      this.criteriaSearch.orders.length = 0;
      this.criteriaSearch.orders.push(new OrderBean(this.sort.active , this.sort.direction));
-
+     
      this.dataSource.findStations(this.criteriaSearch);
    }
 
