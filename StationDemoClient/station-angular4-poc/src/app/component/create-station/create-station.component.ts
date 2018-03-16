@@ -35,6 +35,8 @@ export class CreateStationComponent implements OnInit {
   
   errors : Array<String> = [];
 
+  displayArron : boolean = false;
+
   constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router) { 
 
     this.rForm = fb.group({
@@ -97,8 +99,23 @@ export class CreateStationComponent implements OnInit {
         // Invalid data on form - we reset.
         this.rForm.reset();
     }
+  }
 
-
+  /**
+   * Change ville
+   * 
+   */
+  changeVille(event){
+    
+    let villeUpperCase =  event.toUpperCase();
+    
+    // Display the arrondissement
+    if (villeUpperCase == 'PARIS' || villeUpperCase == 'LYON' || villeUpperCase == 'TOULOUSE' || villeUpperCase == 'MARSEILLE'){
+        this.displayArron = true
+    }else{
+        this.displayArron = false;
+    }
+   
   }
 
 }

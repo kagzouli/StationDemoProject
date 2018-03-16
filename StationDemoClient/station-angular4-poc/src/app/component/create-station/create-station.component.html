@@ -26,7 +26,7 @@
         </label>
         <br/>
         <label>Station
-          <input type="text"  formControlName="station"/>
+          <input type="text"  formControlName="station" />
         </label>
         <br/>
         <label>traffic
@@ -38,10 +38,10 @@
         </label>
         <br/>   
         <label>Ville
-          <input type="text"  formControlName="ville"/>
+          <input type="text"  formControlName="ville" (ngModelChange)="changeVille($event)"/>
         </label>
         <br/>   
-        <label>Arrondissement
+        <label *ngIf="displayArron">Arrondissement
           <input type="number"  formControlName="arrondissement"/>
         </label>
 
