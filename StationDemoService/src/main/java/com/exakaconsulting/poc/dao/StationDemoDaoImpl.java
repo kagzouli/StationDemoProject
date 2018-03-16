@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.exakaconsulting.poc.service.AbstractCriteriaSearch;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
+import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
@@ -104,7 +105,14 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				requestSql.append(" WHERE ");
 				requestSql.append(StringUtils.join(listWhereVariable, " AND "));
 			}
-			requestSql.append(" ORDER BY TRAF_TRAF DESC");
+			
+			final List<OrderBean> listOrderBean = criteria.getOrders();
+			
+			if (listOrderBean != null && !listOrderBean.isEmpty()){
+				requestSql.append(this.createListOrder(listOrderBean));
+			}else{
+				requestSql.append(" ORDER BY TRAF_TRAF DESC");				
+			}
 			
 			
 			
@@ -325,7 +333,55 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		return whereParamSql;
 	}
 
-
+	
+	private String createListOrder(List<OrderBean> listOrder){
+		
+		StringBuilder builder = new StringBuilder(64);
+		
+		boolean firstElement = true;
+		if (listOrder != null && !listOrder.isEmpty()){
+			
+			// Order by
+			builder.append(" ORDER BY ");
+			
+			for (OrderBean orderBean : listOrder){
+				String order = "";
+				switch(orderBean.getColumn()){
+					case "station":
+						order = "TRAF_STAT ";
+						break;
+					case "reseau":
+						order = "TRAF_RESE ";
+						break;
+					case "ville":
+						order = "TRAF_VILL ";
+						break;
+					default:
+						order = "TRAF_TRAF ";
+						break;
+						
+				}
+				order = order + " " + StringUtils.upperCase(orderBean.getDirection());	
+				
+				// Order
+				if (!firstElement){
+					builder.append(" , ");
+				}
+				builder.append(order);
+				firstElement = false;
+			}
+			
+			
+			
+		
+			
+		}
+		
+		
+		
+		return builder.toString();
+		
+	}
 		
 		
 

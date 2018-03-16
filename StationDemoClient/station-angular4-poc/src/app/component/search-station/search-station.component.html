@@ -36,23 +36,23 @@
      <mat-spinner></mat-spinner>
   </div>
 
-<mat-table #table [dataSource]="dataSource">
+<mat-table #table [dataSource]="dataSource"  matSort matSortActive="traffic" matSortDirection="desc" matSortDisableClear>
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
   <ng-container matColumnDef="station">
-    <mat-header-cell *matHeaderCellDef> Station </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Station </mat-header-cell>
     <mat-cell *matCellDef="let element"><a (click)="selectStation(element.id)"> {{element.station}} </a> </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="reseau">
-    <mat-header-cell *matHeaderCellDef> Reseau </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Reseau </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.reseau}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="traffic">
-    <mat-header-cell *matHeaderCellDef> traffic</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> traffic</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.traffic}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="listCorrespondance">
@@ -61,7 +61,7 @@
     </ng-container>
 
   <ng-container matColumnDef="ville">
-    <mat-header-cell *matHeaderCellDef>  Ville </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>  Ville </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.ville}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="arrond">

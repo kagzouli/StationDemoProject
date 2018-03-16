@@ -1,6 +1,7 @@
 package com.exakaconsulting.poc.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CriteriaSearchTrafficStation extends AbstractCriteriaSearch implements Serializable{
 
@@ -26,6 +27,8 @@ public class CriteriaSearchTrafficStation extends AbstractCriteriaSearch impleme
 	
 	//Equals
 	private Integer arrondiss;
+	
+	private List<OrderBean> orders;
 
 	public String getReseau() {
 		return reseau;
@@ -74,8 +77,16 @@ public class CriteriaSearchTrafficStation extends AbstractCriteriaSearch impleme
 	public void setArrondiss(Integer arrondiss) {
 		this.arrondiss = arrondiss;
 	}
+
+	public List<OrderBean> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<OrderBean> orders) {
+		this.orders = orders;
+	}
+
 	
-	
-	
+
 
 }

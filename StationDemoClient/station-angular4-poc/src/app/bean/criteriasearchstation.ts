@@ -1,3 +1,5 @@
+import { OrderBean } from "./orderbean";
+
 
 export class CriteriaSearchStation {
     	
@@ -16,6 +18,8 @@ export class CriteriaSearchStation {
     page: number;
 
 	numberMaxElements: number;
+
+	orders : Array<OrderBean> = [];
 	
 
 	constructor(reseau? : string, station?: string, trafficMin? : number, trafficMax? : number , ville? : string, page? : number , numberMaxElements? : number){
@@ -26,6 +30,5 @@ export class CriteriaSearchStation {
 		this.ville      = ville;
 		this.page       = page;
 		this.numberMaxElements = numberMaxElements;
-
 	}
  }

@@ -13,8 +13,10 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
 import { tap } from 'rxjs/operators/tap';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
+import { OrderBean } from '../../bean/orderbean';
 
+import {merge} from "rxjs/observable/merge";
 
 
 @Component({
@@ -46,6 +48,8 @@ export class SearchStationComponent implements OnInit {
   NUMBER_MAX_ELEMENTS_TAB = 15;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild(MatSort) sort: MatSort;
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router) { 
@@ -77,11 +81,14 @@ export class SearchStationComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.paginator.page
-        .pipe(
-            tap(() => this.loadStationsPage())
-        )
-        .subscribe();
+      // reset the paginator after sorting
+      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+      
+      merge(this.sort.sortChange, this.paginator.page)
+          .pipe(
+              tap(() => this.loadStationsPage())
+          )
+          .subscribe();
   }
 
   disableButton(invalidform : boolean){
@@ -133,6 +140,9 @@ export class SearchStationComponent implements OnInit {
      // Change the criteria pageIndex and pageSize
      this.criteriaSearch.page = this.paginator.pageIndex + 1;
      this.criteriaSearch.numberMaxElements = this.paginator.pageSize;
+     
+     this.criteriaSearch.orders.length = 0;
+     this.criteriaSearch.orders.push(new OrderBean(this.sort.active , this.sort.direction));
 
      this.dataSource.findStations(this.criteriaSearch);
    }
