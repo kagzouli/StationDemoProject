@@ -2,11 +2,13 @@ package com.exakaconsulting.poc.web;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,6 +56,9 @@ public class StationDemoController {
 	@Autowired
 	@Qualifier(USER_SERVICE_DATABASE)
 	private IUserService userService;
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by criteria", response = TrafficStationBean.class, responseContainer = "List")
 	@RequestMapping(value = FIND_STAT_CRIT, method = { RequestMethod.POST}, consumes = {
@@ -134,7 +139,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());
-			jsonResult.addError(STATION_ALREADY_EXISTS);
+			jsonResult.addError(messageSource.getMessage(STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, Locale.FRENCH));
 			jsonResult.setSuccess(false);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);

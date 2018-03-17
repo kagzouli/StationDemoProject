@@ -4,9 +4,11 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_ST
 
 import javax.sql.DataSource;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -34,5 +36,14 @@ public class Application extends AbstractApplication{
 		JndiDataSourceLookup jndiBanqueDatasourceLookup = new JndiDataSourceLookup();
 		return jndiBanqueDatasourceLookup.getDataSource("java:comp/env/jdbc/StationDemoDb");
 	}
+	
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:/message");
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
 	
 }
