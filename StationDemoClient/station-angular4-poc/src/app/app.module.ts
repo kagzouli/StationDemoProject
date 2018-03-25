@@ -16,6 +16,9 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
+import { OAuthModule } from 'angular-oauth2-oidc';
+
+
 
 @NgModule({
   declarations: [
@@ -37,7 +40,6 @@ import { UpdateStationComponent } from './component/update-station/update-statio
     MatSortModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule
-
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -6,12 +6,16 @@ import { UserService } from '../../service/user.service';
 
 import { AuthenticateResponse } from '../../bean/authenticateresponse';
 
+import { OAuthService } from 'angular-oauth2-oidc';
+
+
+
 
 @Component({
   selector: 'app-station-auth',
   templateUrl: './station-auth.component.html',
   styleUrls: ['./station-auth.component.css'],
-  providers: [UserService]
+  providers: []
 })
 export class StationAuthComponent implements OnInit {
 
@@ -25,49 +29,38 @@ export class StationAuthComponent implements OnInit {
   errors : Array<String> = [];
   
   
-    constructor(private fb: FormBuilder , private userService: UserService , private router: Router) {
+   /* constructor(private fb: FormBuilder , private userService: UserService , private router: Router) {
       this.rForm = fb.group({
         'login' : [null, Validators.compose([Validators.required, Validators.maxLength(150)])],
         'password' : [null, Validators.compose([Validators.required, Validators.maxLength(150)])],
       });
      }
+  */
+
+  constructor(private oauthService: OAuthService){
+
+  }
+
   
 
   ngOnInit() {
   }
 
-  disableButton(invalidform : boolean){
-    return invalidform || this.launchAction; 
+
+  login() {
+    this.oauthService.initImplicitFlow();
+  }
+
+  logout() {
+    this.oauthService.logOut();
   }
 
 
-  authenticate(authenticateForm){
-    
-      if (this.rForm.valid) {
-  
-          // Launch the action
-          this.launchAction = true;
-
-          // Make the tab empty
-          this.errors.length = 0;
-          
-          // Launch the authenticate
-          this.userService.authenticateUser(authenticateForm.login, authenticateForm.password).subscribe(
-            (authenticateResponse: AuthenticateResponse) => {
-              const success = authenticateResponse.success;
-              if (success) {
-                 this.router.navigate(['/stationdemo/searchstations',{}]);
-              }else {
-                 this.errors
-                 this.errors.push('The user has a wrong authentification.');
-              }
-
-              // The action has been launched
-              this.launchAction = false;
-    
-            }
-        );
-
-      }
+  get givenName() {
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    return claims['name'];
   }
 }

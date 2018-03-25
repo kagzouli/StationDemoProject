@@ -9,16 +9,19 @@ import { SelectStationComponent } from './component/select-station/select-statio
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
 
+import { AuthGuard } from './shared/auth/auth.guard.service';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 
 
 const routes: Routes = [
     { path: '',redirectTo: '/stationdemo/home',  pathMatch: 'full' },
+    {path: '**', redirectTo: '/stationdemo/home'}
     { path: 'stationdemo/home', component: StationAuthComponent },
-    { path: 'stationdemo/searchstations', component: SearchStationComponent},
-    { path: 'stationdemo/createstation', component: CreateStationComponent },    
-    { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent },    
-    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent }    
+    { path: 'stationdemo/searchstations', component: SearchStationComponent, canActivate: [AuthGuard]},
+    { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard]},    
+    { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard]},    
+    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard]}    
     
   ];
   
@@ -26,8 +29,10 @@ const routes: Routes = [
     // Je me mets en HashLocalStrategy au lieu de PathLocalStrategy car lors du F5, la page reloade est en 404.
     // Le PathLocalStrategy necessite un parametrage cote serveur , mais est plus performant mais il faut parametrer
     // Dans le cas du POC, je vais partir sur une hash strategy plus simple a mettre en place.
-    imports: [RouterModule.forRoot(routes,{useHash: true})],
+    imports: [RouterModule.forRoot(routes,{useHash: true}), OAuthModule.forRoot() ],
     exports: [RouterModule],
+    providers: [AuthGuard]
+    
   })
   export class AppRoutingModule { }
  
