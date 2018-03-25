@@ -18,6 +18,9 @@ import { OrderBean } from '../../bean/orderbean';
 
 import {merge} from "rxjs/observable/merge";
 
+import { OAuthService } from 'angular-oauth2-oidc';
+
+
 
 @Component({
   selector: 'app-search-station',
@@ -52,7 +55,7 @@ export class SearchStationComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
     
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router, private oauthService: OAuthService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -81,6 +84,7 @@ export class SearchStationComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    if (this.givenName != null) {
       // reset the paginator after sorting
       this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
       
@@ -89,6 +93,7 @@ export class SearchStationComponent implements OnInit {
               tap(() => this.loadStationsPage())
           )
           .subscribe();
+    }
   }
 
   disableButton(invalidform : boolean){
@@ -171,6 +176,25 @@ export class SearchStationComponent implements OnInit {
   
   }
   
+
+  login() {
+    this.oauthService.initImplicitFlow();
+  }
+
+  logout() {
+    this.oauthService.logOut();
+  }
+
+
+  get givenName() {
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    return claims['name'];
+  }
+}
+
 
    
 }

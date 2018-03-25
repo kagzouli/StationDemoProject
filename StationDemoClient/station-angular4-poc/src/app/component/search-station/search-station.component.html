@@ -1,4 +1,10 @@
-<form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
+<div *ngIf="!givenName">
+  <button class="button" (click)="login()">Login</button>
+</div>`
+
+<div *ngIf="givenName">
+  
+ <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
   <div class="form-container">
     <div class="row columns">
       <h1>Search traffic stations</h1>
@@ -78,15 +84,17 @@
 
 </div>
 
-<br/>
-<br/>
-<table>
+ <br/>
+ <br/>
+ <table>
   <tr>
     <td item-width="350"></td>
     <td item-width="150"><button class="button" (click)="createStation($event)">Create station</button></td>
   </tr>
+ </table>
 
 
+ <br/>
+ <br/>
+ </div>
 
-<br/>
-<br/>

@@ -12,18 +12,21 @@ import { UpdateStationComponent } from './component/update-station/update-statio
 import { AuthGuard } from './shared/auth/auth.guard.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
+import {OktaCallbackComponent} from '@okta/okta-angular';
 
 
 const routes: Routes = [
-    { path: '',redirectTo: '/stationdemo/home',  pathMatch: 'full' },
-    {path: '**', redirectTo: '/stationdemo/home'}
-    { path: 'stationdemo/home', component: StationAuthComponent },
-    { path: 'stationdemo/searchstations', component: SearchStationComponent, canActivate: [AuthGuard]},
+    { path: '',redirectTo: '/stationdemo/searchstations',  pathMatch: 'full' },
+    {path: '**', redirectTo: '/stationdemo/searchstations'},
+    { path: 'implicit/callback', component: OktaCallbackComponent},
+    { path: 'stationdemo/searchstations', component: SearchStationComponent},
     { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard]},    
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard]},    
     { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard]}    
     
   ];
+
+  
   
   @NgModule({
     // Je me mets en HashLocalStrategy au lieu de PathLocalStrategy car lors du F5, la page reloade est en 404.

@@ -17,6 +17,9 @@ import { SelectStationComponent } from './component/select-station/select-statio
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
+import {
+  OktaCallbackComponent,
+} from '@okta/okta-angular';
 
 
 
@@ -27,7 +30,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     SearchStationComponent,
     CreateStationComponent,
     SelectStationComponent,
-    UpdateStationComponent
+    UpdateStationComponent,
+    OktaCallbackComponent
   ],
   imports: [
     BrowserModule,
