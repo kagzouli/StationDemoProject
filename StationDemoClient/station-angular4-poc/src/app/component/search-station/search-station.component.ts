@@ -195,6 +195,3 @@ export class SearchStationComponent implements OnInit {
   }
 }
 
-
-   
-}
