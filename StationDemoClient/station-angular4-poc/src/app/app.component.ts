@@ -18,7 +18,6 @@ export class AppComponent {
     this.oauthService.setStorage(sessionStorage);
     this.oauthService.issuer = 'https://dev-884254.oktapreview.com';
     this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
-    console.log('Toto:' + window.location.pathname);
     //this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
     this.oauthService.oidc= true,
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
