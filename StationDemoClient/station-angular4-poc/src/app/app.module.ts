@@ -16,10 +16,11 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
+import { AuthGuard } from './shared/auth/auth.guard.service';
+
+
+
 import { OAuthModule } from 'angular-oauth2-oidc';
-import {
-  OktaCallbackComponent,
-} from '@okta/okta-angular';
 
 
 
@@ -30,8 +31,7 @@ import {
     SearchStationComponent,
     CreateStationComponent,
     SelectStationComponent,
-    UpdateStationComponent,
-    OktaCallbackComponent
+    UpdateStationComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +43,10 @@ import {
     AppRoutingModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

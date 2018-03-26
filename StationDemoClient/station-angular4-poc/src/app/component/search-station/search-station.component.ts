@@ -84,7 +84,7 @@ export class SearchStationComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (!this.givenName) {
+    if (this.givenName != null) {
       // reset the paginator after sorting
       this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
       
@@ -177,13 +177,8 @@ export class SearchStationComponent implements OnInit {
   }
   
 
-  login() {
-    const claims = this.oauthService.hasValidAccessToken();
-    console.log('Claims before : ' + claims);
-    this.oauthService.initImplicitFlow();
-
-    const claims2 = this.oauthService.hasValidAccessToken();
-    console.log('Claims After : ' + claims2);
+  async login() {
+    await this.oauthService.initImplicitFlow();
   }
 
   logout() {
@@ -192,8 +187,11 @@ export class SearchStationComponent implements OnInit {
 
 
   get givenName() {
-    const claims = this.oauthService.hasValidAccessToken();
-    return claims;
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    return claims['name'];
   }
 }
 

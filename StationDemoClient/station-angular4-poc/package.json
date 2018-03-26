@@ -23,7 +23,6 @@
     "@angular/platform-browser": "^5.2.4",
     "@angular/platform-browser-dynamic": "^5.2.4",
     "@angular/router": "^5.2.4",
-    "@okta/okta-angular": "^0.1.0",
     "angular-oauth2-oidc": "^3.1.4",
     "core-js": "^2.4.1",
     "rxjs": "^5.4.2",
