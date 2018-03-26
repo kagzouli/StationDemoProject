@@ -17,8 +17,9 @@ export class AppComponent {
     this.oauthService.scope = 'openid profile email';
     this.oauthService.setStorage(sessionStorage);
     this.oauthService.issuer = 'https://dev-884254.oktapreview.com';
-    this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
-    //this.oauthService.redirectUri = 'http://54.38.186.137:9080/station-angular4-poc/',
+    this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
+    console.log('Toto:' + window.location.pathname);
+    //this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
     this.oauthService.oidc= true,
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     // Load Discovery Document and then try to login the user
