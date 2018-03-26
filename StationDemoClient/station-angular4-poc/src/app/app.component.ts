@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -11,7 +12,7 @@ import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 export class AppComponent {
   title = 'app';
 
-  constructor(private oauthService: OAuthService) {
+  constructor(private oauthService: OAuthService, private router : Router) {
     this.oauthService.clientId = '0oaeg3yghaL9mQalz0h7';
     this.oauthService.scope = 'openid profile email';
     this.oauthService.setStorage(sessionStorage);
@@ -21,8 +22,9 @@ export class AppComponent {
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     // Load Discovery Document and then try to login the user
     this.oauthService.loadDiscoveryDocument().then((doc) => {
-      this.oauthService.tryLogin();
-      console.debug('discovery succeeded', doc);
+      this.oauthService.tryLogin().then(_ => {
+        this.router.navigate(['/']);
+    })
     });
    }
   }
