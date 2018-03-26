@@ -23,7 +23,7 @@ export class AppComponent {
     // Load Discovery Document and then try to login the user
     this.oauthService.loadDiscoveryDocument().then((doc) => {
       this.oauthService.tryLogin().then(_ => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/stationdemo/searchstations']);
     })
     });
    }
