@@ -7,7 +7,7 @@
  <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
   <div class="form-container">
     <div class="row columns">
-      <h1>Search traffic stations</h1>
+      <h1>Search traffic stations (User : {{givenName}})</h1>
       <label>Reseau
         <select formControlName="reseau" [(ngModel)]="reseauChoose">
           <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
