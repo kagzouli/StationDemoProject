@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
     if (this.oauthService.hasValidIdToken()) {
       return true;
     }
-    this.router.navigate(['/stationdemo/home']);
+    this.router.navigate(['/stationdemo/searchstations']);
     return false;
   }
 }
