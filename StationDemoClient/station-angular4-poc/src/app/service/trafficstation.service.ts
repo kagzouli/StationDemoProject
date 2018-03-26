@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
 
+import { OAuthService } from 'angular-oauth2-oidc';
 
 
 @Injectable()
@@ -21,14 +22,15 @@ export class TrafficstationService {
     contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoWeb/station'
     
 
-  constructor(private http: HttpClient , private httpNew:HttpClient) { }
+  constructor(private http: HttpClient, private oauthService : OAuthService) { }
 
    /**
    * Method to find all traffic stations by criteria.<br/>
    * 
    */  
   findTrafficStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<TrafficStationBean[]> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+   // const headers = new Headers({ Authorization: 'Bearer ' + oktaAuth.getAccessToken().accessToken });
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
     return this.http.post(this.contextTrafficServiceUrl + '/findStationsByCrit', criteriaSearchStation, {headers: headers})
     .pipe(catchError(this.formatErrors));
  }
@@ -42,7 +44,7 @@ export class TrafficstationService {
    * 
    */  
   countStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<number> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
     return this.http.post(this.contextTrafficServiceUrl + '/countStationsByCrit', criteriaSearchStation, {headers: headers})
     .pipe(catchError(this.formatErrors));
  }
@@ -54,7 +56,7 @@ export class TrafficstationService {
 
   */
   createStation(trafficStationBean : TrafficStationBean)  : Observable<CreateStationResponse>{
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
     return this.http.put(this.contextTrafficServiceUrl + '/insertStation', trafficStationBean, {headers: headers})
     .pipe(catchError(this.formatErrors));
   }
@@ -64,7 +66,7 @@ export class TrafficstationService {
   selectStationById(id: number) : Observable<TrafficStationBean>{
       const relativeUrl = '/findStationById/' + id;
 
-      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken())
       return this.http.get<TrafficStationBean>(this.contextTrafficServiceUrl + relativeUrl, {headers: headers})
       .pipe(catchError(this.formatErrors));
   }
@@ -74,7 +76,7 @@ export class TrafficstationService {
 
   */
   updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<CreateStationResponse>{
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
 
     let params = new HttpParams()
     .append('newTraffic', traffic.toString())
@@ -86,7 +88,7 @@ export class TrafficstationService {
   }
 
   deleteStation(stationId : number) : Observable<DeleteStationResponse>{
-      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+      const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
     
       let params = new HttpParams();
     
