@@ -14,8 +14,8 @@ import { AuthGuard } from './shared/auth/auth.guard.service';
 
 
 const routes: Routes = [
-    { path: '',redirectTo: 'stationdemo/searchstations',  pathMatch: 'full' },
-    {path: '*', redirectTo: 'stationdemo/searchstations'},
+    { path: '',redirectTo: '/stationdemo/searchstations',  pathMatch: 'full' },
+    {path: '*', redirectTo: '/stationdemo/searchstations'},
     { path: 'stationdemo/searchstations', component: SearchStationComponent},
     { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard]},    
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard]},    
