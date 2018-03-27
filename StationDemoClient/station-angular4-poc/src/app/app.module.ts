@@ -16,12 +16,8 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
-import { AuthGuard } from './shared/auth/auth.guard.service';
-
-
 
 import { OAuthModule } from 'angular-oauth2-oidc';
-
 
 
 @NgModule({
@@ -46,7 +42,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserAnimationsModule,
     OAuthModule.forRoot()
   ],
-  providers: [AuthGuard],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

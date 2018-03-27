@@ -16,7 +16,6 @@ import { AuthGuard } from './shared/auth/auth.guard.service';
 const routes: Routes = [
     { path: '',redirectTo: '/stationdemo/searchstations',  pathMatch: 'full' },
     {path: '*', redirectTo: '/stationdemo/searchstations'},
-    {path: '**', redirectTo: '/stationdemo/searchstations'},
     { path: 'stationdemo/searchstations', component: SearchStationComponent},
     { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard]},    
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard]},    
@@ -32,7 +31,7 @@ const routes: Routes = [
     // Dans le cas du POC, je vais partir sur une hash strategy plus simple a mettre en place.
     imports: [RouterModule.forRoot(routes,{useHash: true , initialNavigation: false}) ],
     exports: [RouterModule],
-    providers: []
+    providers: [AuthGuard]
     
   })
   export class AppRoutingModule { }
