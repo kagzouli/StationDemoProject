@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import com.exakaconsulting.poc.security.StationSecurityConfig;
 
@@ -21,7 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@Import(StationSecurityConfig.class)
+// @Import(StationSecurityConfig.class)
 public class Application extends AbstractApplication{
 	
 	/** For swagger-ui **/
@@ -48,5 +50,7 @@ public class Application extends AbstractApplication{
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
+    
+    
 	
 }
