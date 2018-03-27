@@ -1,6 +1,7 @@
 package com.exakaconsulting.poc.security;
 
 import java.io.IOException;
+import java.security.Key;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -8,11 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.nimbusds.oauth2.sdk.ParseException;
-import com.okta.jwt.JoseException;
-import com.okta.jwt.Jwt;
-import com.okta.jwt.JwtHelper;
-import com.okta.jwt.JwtVerifier;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 
 @Component
 public class JwtTokenValidator {
@@ -43,26 +43,19 @@ public class JwtTokenValidator {
         JwtUserDto u = null;
 
         try {
-         	JwtVerifier jwtVerifier = new JwtHelper()
-        		    .setIssuerUrl(this.issuerUrl)
-        		    .setConnectionTimeout(3000)    // defaults to 1000ms
-        		    .setReadTimeout(3000)          // defaults to 1000ms
-        		    .setClientId(this.oktaClientId) // optional
-        		    .build();
-         	
-         	Jwt jwt = jwtVerifier.decodeAccessToken(token);
-         	if (jwt == null){
-         		throw new JwtTokenMalformedException("The token is wrong");
-         	}
-         	
-         	Map<String, Object> claims = jwt.getClaims();
+        	
+        	DecodedJWT jwt = JWT.decode(token);
+            
+        	final Map<String, Claim> claims = jwt.getClaims();
+        	
+        	LOGGER.info(claims.toString());
 
-            /*u = new JwtUserDto();
-            u.setUsername(body.getSubject());
-            u.setId(Long.parseLong((String) body.get("userId")));
-            u.setRole((String) body.get("role")); */
+            u = new JwtUserDto();
+            u.setUsername(claims.get("uid").asString());
+            u.setId(Long.parseLong(claims.get("uid").asString()));
+           // u.setRole((String) claims.get("role")); 
 
-        } catch (JwtTokenMalformedException | ParseException | IOException | JoseException exception) {
+        } catch (Exception exception) {
         	LOGGER.error(exception.getMessage(), exception);
             
         }
