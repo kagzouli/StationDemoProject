@@ -21,8 +21,7 @@
 	   <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
 	   <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
 	   <springjwt.version>1.0.9.RELEASE</springjwt.version>
-	   <jjwt.version>0.6.0</jjwt.version>
-	   <okta-jwt.version>0.3.0</okta-jwt.version>
+	   <java-jwt.version>3.3.0</java-jwt.version>
 	</properties>
 	
 	
@@ -230,9 +229,9 @@
     	</dependency>
 
 		<dependency>
-			<groupId>com.okta.jwt</groupId>
-			<artifactId>okta-jwt-verifier</artifactId>
-			<version>${okta-jwt.version}</version>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${java-jwt.version}</version>
 		</dependency>
 
 			
