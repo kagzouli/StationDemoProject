@@ -1,7 +1,6 @@
 package com.exakaconsulting.poc.security;
 
-import java.io.IOException;
-import java.security.Key;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -51,8 +50,7 @@ public class JwtTokenValidator {
         	LOGGER.info(claims.toString());
 
             u = new JwtUserDto();
-            u.setUsername(claims.get("uid").asString());
-            u.setId(Long.parseLong(claims.get("uid").asString()));
+            u.setUsername(claims.get("sub").asString());
            // u.setRole((String) claims.get("role")); 
 
         } catch (Exception exception) {
