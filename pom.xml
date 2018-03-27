@@ -20,6 +20,9 @@
 	   <junit.version>4.12</junit.version>
 	   <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
 	   <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
+	   <springjwt.version>1.0.9.RELEASE</springjwt.version>
+	   <jjwt.version>0.6.0</jjwt.version>
+	   <okta-jwt.version>0.3.0</okta-jwt.version>
 	</properties>
 	
 	
@@ -221,11 +224,20 @@
 
 		 <!-- Hibernate validator -->
 		<dependency>
-       		 	<groupId>org.hibernate</groupId>
-       			<artifactId>hibernate-validator</artifactId>
-       			<version>${hibernate-validator.version}</version>
-    		</dependency>
+       		<groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-validator</artifactId>
+       		<version>${hibernate-validator.version}</version>
+    	</dependency>
 
+		<dependency>
+			<groupId>com.okta.jwt</groupId>
+			<artifactId>okta-jwt-verifier</artifactId>
+			<version>${okta-jwt.version}</version>
+		</dependency>
+
+			
+			
+			
 		</dependencies>
 	</dependencyManagement>
 

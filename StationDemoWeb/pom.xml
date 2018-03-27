@@ -103,6 +103,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 		 </dependency>	
+
+		<!-- JWT -->		 
+		<dependency>
+			<groupId>com.okta.jwt</groupId>
+			<artifactId>okta-jwt-verifier</artifactId>
+		</dependency>
+
 		 
 		 <!-- Security -->
 		 <dependency>
