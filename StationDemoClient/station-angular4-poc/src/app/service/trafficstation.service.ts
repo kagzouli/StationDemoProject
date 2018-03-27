@@ -19,9 +19,9 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class TrafficstationService {
 
     // URL 
-    contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoWeb/station'
+ //   contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoWeb/station'
 
-    // contextTrafficServiceUrl = 'http://localhost:8080/StationDemoWeb/station'
+     contextTrafficServiceUrl = 'http://localhost:8080/StationDemoWeb/station'
     
 
   constructor(private http: HttpClient, private oauthService : OAuthService) { }
