@@ -26,7 +26,7 @@ public class UserDaoImpl implements IUserDao{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
 	
-	private static final String SQL = "SELECT user.USER_LOGI, user.USER_MAIL, role.ROLE_LABE FROM USER_STAT user, ROLE_STAT role WHERE user.USER_ROLE = role.ROLE_IDEN and user.USER_LOGI = :login AND user.USER_PASS = :password";
+	private static final String SQL = "SELECT user.USER_LOGI, role.ROLE_LABE FROM USER_STAT user, ROLE_STAT role WHERE user.USER_ROLE = role.ROLE_IDEN and user.USER_LOGI = :login";
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -37,14 +37,12 @@ public class UserDaoImpl implements IUserDao{
 	}
 	
 	@Override
-	public User authenticate(String login, String password) {
+	public User findUserByLogin(String login) {
 		Assert.hasLength(login, "The login must be set");
-		Assert.hasLength(password, "The password must be set");
 		
 		//parameters
 		Map<String, Object> params = new HashMap<>();
 		params.put("login", login);
-		params.put("password", password);
 		
 		User user = null;		
 		try{

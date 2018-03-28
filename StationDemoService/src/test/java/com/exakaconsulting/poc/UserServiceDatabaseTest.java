@@ -28,8 +28,8 @@ public class UserServiceDatabaseTest {
 	private static final String ROLE_MANAGER = "manager";
 	private static final String ROLE_USER = "user";
 	
-	private static final String USER_MANAGER = "Karim";
-	private static final String USER_USER = "Didier";
+	private static final String USER_MANAGER = "karim@exaka.com";
+	private static final String USER_USER = "didier@exaka.com";
 	private static final String USER_NOT_EXISTS = "NotExists";
 	
 	@Autowired
@@ -40,7 +40,7 @@ public class UserServiceDatabaseTest {
 	public void testUserManager(){
 		
 		try{
-			User manager = this.userService.authenticate(USER_MANAGER, USER_MANAGER);
+			User manager = this.userService.findUserByLogin(USER_MANAGER);
 			assertNotNull(manager);
 			assertEquals(manager.getLogin(), USER_MANAGER);
 			assertEquals(manager.getRole(), ROLE_MANAGER);
@@ -52,7 +52,7 @@ public class UserServiceDatabaseTest {
 	@Test
 	public void testUserUser(){
 		try{
-			User user = this.userService.authenticate(USER_USER , USER_USER);
+			User user = this.userService.findUserByLogin(USER_USER);
 			assertNotNull(user);
 			assertEquals(user.getLogin(), USER_USER);
 			assertEquals(user.getRole(), ROLE_USER);
@@ -64,22 +64,12 @@ public class UserServiceDatabaseTest {
 	@Test
 	public void testUserNotExists(){
 		try{
-			User userNotExists = this.userService.authenticate(USER_NOT_EXISTS, USER_NOT_EXISTS);
+			User userNotExists = this.userService.findUserByLogin(USER_NOT_EXISTS);
 			assertNull(userNotExists);
 		}catch(Exception exception){
 			assertTrue(false);
 		}	
 	}
-	
-	@Test
-	public void testUserWrongPassword(){
-		try{
-			User wrongPassword = this.userService.authenticate(USER_MANAGER, USER_NOT_EXISTS);
-			assertNull(wrongPassword);
-		}catch(Exception exception){
-			assertTrue(false);
-		}
-		
-	}
+
 
 }

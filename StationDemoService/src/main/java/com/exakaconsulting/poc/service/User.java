@@ -9,8 +9,6 @@ public class User implements Serializable{
 	/** login **/
 	private String login;
 	
-	/** Mail **/
-	private String mail;
 	
 	/** Role **/
 	private String role;
@@ -21,14 +19,6 @@ public class User implements Serializable{
 
 	public void setLogin(String login) {
 		this.login = login;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
 	}
 
 	public String getRole() {

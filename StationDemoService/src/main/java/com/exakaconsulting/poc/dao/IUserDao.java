@@ -5,13 +5,12 @@ import com.exakaconsulting.poc.service.User;
 public interface IUserDao {
 	
 	/** 
-	 * Method to know if a user is authenticated.<br/>
+	 * Method to find a user by login.<br/>
 	 * 
 	 * @param login The login to authenticate.<br/>
-	 * @param password The password to authenticate.<br/>
 	 * @return Return the user authenticated, null otherwise.<br/>
 	 */
-	public User authenticate(final String login, final String password);
+	public User findUserByLogin(final String login);
 
 
 }

@@ -36,15 +36,14 @@ public class UserServiceDatabaseImpl implements IUserService{
 	private IUserDao userDao;
 
 	@Override
-	public User authenticate(String login, String password) {
+	public User findUserByLogin(String login) {
 		
 		Assert.hasLength(login, "The login must be set");
-		Assert.hasLength(password , "The password must be set");
 		
 		User user = null;
 		try {
-			final String encryptedPassword = this.getPasswordCrypted(password, ENCRYPTION_SHA_1);
-			user = userDao.authenticate(login, encryptedPassword);
+			//final String encryptedPassword = this.getPasswordCrypted(password, ENCRYPTION_SHA_1);
+			user = userDao.findUserByLogin(login);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);

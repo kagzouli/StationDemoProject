@@ -28,10 +28,8 @@ import com.exakaconsulting.poc.service.IUserService;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
-import com.exakaconsulting.poc.service.User;
 
 import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_NOT_EXISTS;
 import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_DATABASE;
 
 import javax.validation.Valid;
@@ -189,33 +187,6 @@ public class StationDemoController {
 		
 	}
 
-	@ApiOperation(value = "This method is use to test the authenticate of the user" , response = User.class , responseContainer = "JsonResult")
-	@RequestMapping(value = "/user/authenticate", method = { RequestMethod.POST}, consumes = {
-			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ResponseBody
-	public JsonResult<User> authenticate(@RequestParam(required=true) final String login, @RequestParam(required= true ) final String password){
-		LOGGER.info("BEGIN of the method authenticate of the class " + StationDemoController.class.getName());
-
-		JsonResult<User> jsonResult = new JsonResult<>();
-		try {
-			User user = this.userService.authenticate(login, password);
-			
-			if (user != null){
-				jsonResult.setResult(user);
-				jsonResult.setSuccess(true);
-			}else{
-				jsonResult.addError(USER_NOT_EXISTS);
-				jsonResult.setSuccess(false);
-			}
-		
-		
-		} catch (Exception exception) {
-			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
-		}
-		LOGGER.info("END of the method authenticate of the class " + StationDemoController.class.getName());	
-		return jsonResult;
-	}
 	
 	
 	
