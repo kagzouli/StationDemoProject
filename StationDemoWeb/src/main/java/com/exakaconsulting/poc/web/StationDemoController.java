@@ -59,10 +59,12 @@ public class StationDemoController {
 	@Autowired
 	private MessageSource messageSource;
 	
+	
 	@ApiOperation(value = "This method is use to search a traffic stations by criteria", response = TrafficStationBean.class, responseContainer = "List")
 	@RequestMapping(value = FIND_STAT_CRIT, method = { RequestMethod.POST}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager') OR hasRole('user')")
 	public List<TrafficStationBean> listSearchStations(@RequestBody CriteriaSearchTrafficStation criteria){	
 		LOGGER.info("BEGIN of the method listSearchStations of the class " + StationDemoController.class.getName());
 
@@ -83,6 +85,7 @@ public class StationDemoController {
 	@RequestMapping(value = "/station/countStationsByCrit", method = { RequestMethod.POST}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager') OR hasRole('user')")
 	public Integer countSearchStations(@RequestBody CriteriaSearchTrafficStation criteria){	
 		LOGGER.info("BEGIN of the method countSearchStations of the class " + StationDemoController.class.getName());
 
@@ -102,7 +105,7 @@ public class StationDemoController {
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@RequestMapping(value = "/station/findStationById/{id}", method = { RequestMethod.GET}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
-	@PreAuthorize("hasRole('manager')")
+	@PreAuthorize("hasRole('manager') OR hasRole('user')")
 	public TrafficStationBean findTrafficStationById(@PathVariable final Integer id){
 
 		LOGGER.info("BEGIN of the method findTrafficStationById of the class " + StationDemoController.class.getName());
@@ -126,6 +129,7 @@ public class StationDemoController {
 	@RequestMapping(value = "/station/insertStation", method = { RequestMethod.PUT}, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager')")
 	public JsonResult<Boolean> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
 		
 		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoController.class.getName());
@@ -152,6 +156,7 @@ public class StationDemoController {
 	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@RequestMapping(value = "/station/updateStation/{id}", method = { RequestMethod.PATCH}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager')")
 	public JsonResult<Void> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
 		LOGGER.info("BEGIN of the method updateTrafficStation of the class " + StationDemoController.class.getName());
 		JsonResult<Void> jsonResult = new JsonResult<>();
@@ -171,6 +176,7 @@ public class StationDemoController {
 	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@RequestMapping(value = "/station/deleteStation/{id}", method = { RequestMethod.DELETE}, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
+	@PreAuthorize("hasRole('manager')")
 	public JsonResult<Void>  deleteTrafficStation(@PathVariable final Integer id){
 		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoController.class.getName());
 		JsonResult<Void> jsonResult = new JsonResult<>();
