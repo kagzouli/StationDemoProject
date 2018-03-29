@@ -1,4 +1,4 @@
-<Context path="/StationDemoWeb" docBase="StationDemoWeb" crossContext="true" antiJARLocking="true"> 
+<Context path="/StationDemoSecureWeb" docBase="StationDemoWeb" crossContext="true" antiJARLocking="true"> 
 
             <Resource name="jdbc/StationDemoDb" auth="Container" type="javax.sql.DataSource" 
                           maxActive="7" maxIdle="-1" maxWait="10000" 
