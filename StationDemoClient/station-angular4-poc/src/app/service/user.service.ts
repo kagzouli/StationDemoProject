@@ -13,7 +13,7 @@ import { catchError } from 'rxjs/operators/catchError';
 export class UserService {
 
   // URL 
-  contextUserUrl = 'http://54.38.186.137:9080/StationDemoWeb/user'
+  contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
        
 
   constructor(private http: HttpClient) { }

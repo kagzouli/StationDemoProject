@@ -19,7 +19,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class TrafficstationService {
 
     // URL 
-   contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoWeb/station'
+   contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/station'
 
   // contextTrafficServiceUrl = 'http://localhost:8080/StationDemoWeb/station'
     
@@ -80,12 +80,13 @@ export class TrafficstationService {
   updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<CreateStationResponse>{
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
 
+   
     let params = new HttpParams()
     .append('newTraffic', traffic.toString())
     .append('newCorr', correspondance);
     
 
-    return this.http.patch(this.contextTrafficServiceUrl + '/updateStation/' + stationId + "?"+ params.toString() , {headers: headers})
+    return this.http.patch(this.contextTrafficServiceUrl + '/updateStation/' + stationId + "?"+ params.toString() ,{}, {headers: headers})
       .pipe(catchError(this.formatErrors));
   }
 

@@ -245,11 +245,10 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			params.put("newTraffic", newTrafficValue);				
 		}
 		
-		if (!StringUtils.isBlank(newCorr)){
-			listUpdateVariable.add("TRAF_CORR = :newCorr");
-			params.put("newCorr", newCorr);				
+		// Update the correspondance
+		listUpdateVariable.add("TRAF_CORR = :newCorr");
+		params.put("newCorr", newCorr);				
 			
-		}
 		params.put("id", id);
 		
 		final String SQL= BEGIN_UPDATE_SQL + StringUtils.join(listUpdateVariable , " ,") + " WHERE TRAF_IDEN = :id";

@@ -140,7 +140,7 @@
 	</dependencies>
 
 	<build>
-	  <finalName>StationDemoWebSecure</finalName>
+	  <finalName>StationDemoSecureWeb</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
