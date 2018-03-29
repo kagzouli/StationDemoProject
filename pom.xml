@@ -242,7 +242,7 @@
 
 	<modules>
 		<module>StationDemoService</module>
-		<module>StationDemoSecureWeb</module>
+		<module>StationDemoWeb</module>
 		<module>StationDemoBatch</module>
 		<module>StationDemoClient/station-angular4-poc</module>
 	</modules>
