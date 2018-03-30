@@ -7,31 +7,31 @@
  <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
   <div class="form-container">
     <div class="row columns">
-      <h1>Search traffic stations (User : {{givenName}}) - <a (click)="logout()">Logout</a></h1>
+      <h2 translate="HELLO_MESSAGE" [translateParams]="paramsHelloMessage"> --  <a (click)="logout()" translate="LOGOUT"></a></h2>
       <br/>
-      Role  : {{roleStore}}
+      Role  : {{roleStore}} - <button (click)="switchLanguage('en')">en</button><button (click)="switchLanguage('fr')">fr</button>
       <br/>
       <br/>
-      <label>Reseau
+      <label><span translate="NETWORK_SEARCH"></span>
         <select formControlName="reseau" [(ngModel)]="reseauChoose">
           <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
        </select>
       </label>
   
-      <label>Station
+      <label><span translate="STATION_SEARCH"></span>
         <input type="text" formControlName="station"/>
       </label>
       
        <label>
-        Traffic min <input type="number"  formControlName="trafficMin" /> 
+        <span translate="TRAFFIC_MIN_SEARCH"></span><input type="number"  formControlName="trafficMin" /> 
       </label>
       <label>
-        Traffic max <input type="number"  formControlName="trafficMax" />
+        <span translate="TRAFFIC_MAX_SEARCH"></span> <input type="number"  formControlName="trafficMax" />
       </label>
       <label>
-        Ville <input type="text"  formControlName="ville" />
+        <span translate="TRAFFIC_CITY_SEARCH"></span> <input type="text"  formControlName="ville" />
       </label>
-      <input type="submit" class="button expanded" value="Search" [disabled]="disableButton(!rForm.valid)">
+      <input type="submit" value="{{'SEARCH_BUTTON' | translate}}" class="button expanded" PLA [disabled]="disableButton(!rForm.valid)">
     </div>
   </div>
 </form>

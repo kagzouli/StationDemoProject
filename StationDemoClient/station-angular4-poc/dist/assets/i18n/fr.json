@@ -1,0 +1,14 @@
+{
+    "HELLO_MESSAGE": "Recherche station (Utilisateur : {{givenName}}) -- ",
+    "LOGOUT": "Déconnexion",
+    "NETWORK_SEARCH": "Réseau",
+    "STATION_SEARCH": "Station",
+    "TRAFFIC_MIN_SEARCH": "Traffic min",
+    "TRAFFIC_MAX_SEARCH": "Traffic max",
+    "TRAFFIC_CITY_SEARCH": "Ville",
+    "SEARCH_BUTTON": "Rechercher"
+    
+    
+    
+
+}

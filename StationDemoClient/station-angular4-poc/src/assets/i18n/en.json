@@ -1,0 +1,12 @@
+{
+    "HELLO_MESSAGE": "Search station (User : {{givenName}}) -- ",
+    "LOGOUT": "Logout",
+    "NETWORK_SEARCH": "Network",
+    "STATION_SEARCH": "Station",
+    "TRAFFIC_MIN_SEARCH": "Min traffic",
+    "TRAFFIC_MAX_SEARCH": "Max traffic",
+    "TRAFFIC_CITY_SEARCH": "City",
+    "SEARCH_BUTTON": "Search"
+    
+    
+}
