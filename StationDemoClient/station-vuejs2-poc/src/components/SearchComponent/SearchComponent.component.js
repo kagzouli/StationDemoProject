@@ -38,7 +38,7 @@ export default {
         },
         {
           label: 'Traffic',
-          field: 'Traffic',
+          field: 'traffic',
           type: 'number'
         },
         {
@@ -48,7 +48,7 @@ export default {
           label: 'Ville',
           field: 'ville'
         },{
-          label: 'Arrondissement',
+          label: 'arrondissement',
           field: 'arrond'
         }
         
