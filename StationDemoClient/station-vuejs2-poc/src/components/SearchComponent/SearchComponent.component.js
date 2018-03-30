@@ -48,8 +48,8 @@ export default {
           label: 'Ville',
           field: 'ville'
         },{
-          label: 'arrondissement',
-          field: 'arrond'
+          label: 'Arrond',
+          field: 'arrondissement'
         }
         
       ],
