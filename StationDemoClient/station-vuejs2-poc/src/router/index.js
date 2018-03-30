@@ -21,6 +21,6 @@ export default new Router({
     {
       path: '/selectStation/:id',
       component: SelectComponent
-    }
+    } 
   ]
 })
