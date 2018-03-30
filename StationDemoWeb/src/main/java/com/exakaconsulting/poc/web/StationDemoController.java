@@ -28,6 +28,7 @@ import com.exakaconsulting.poc.service.IUserService;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+import com.exakaconsulting.poc.service.User;
 
 import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
 import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_DATABASE;
@@ -191,6 +192,26 @@ public class StationDemoController {
 		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoController.class.getName());	
 		return jsonResult;
 		
+	}
+	
+	@ApiOperation(value = "This method is use to get the role of the user" , response = String.class )
+	@RequestMapping(value = "/user/retrieveRole", method = { RequestMethod.GET}, consumes = {
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ResponseBody
+	@PreAuthorize("hasRole('manager') OR hasRole('user')")
+	public User findRoleByLogin(@RequestParam(required=true) final String login ){
+		LOGGER.info("BEGIN of the method findRoleByLogin of the class " + StationDemoController.class.getName());
+		User user = null;
+		try {
+			user = this.userService.findUserByLogin(login);
+			
+		
+		} catch (Exception exception) {
+			LOGGER.error(exception.getMessage(), exception);
+			throw new TechnicalException(exception);
+		}
+		LOGGER.info("END of the method findRoleByLogin of the class " + StationDemoController.class.getName());	
+		return user;
 	}
 
 	

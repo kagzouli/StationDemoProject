@@ -8,6 +8,7 @@
   <div class="form-container">
     <div class="row columns">
       <h1>Search traffic stations (User : {{givenName}}) - <a (click)="logout()">Logout</a></h1>
+      <br/>
       <label>Reseau
         <select formControlName="reseau" [(ngModel)]="reseauChoose">
           <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
@@ -49,7 +50,9 @@
 
   <ng-container matColumnDef="station">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Station </mat-header-cell>
-    <mat-cell *matCellDef="let element"><a (click)="selectStation(element.id)"> {{element.station}} </a> </mat-cell>
+    <mat-cell *matCellDef="let element"> <div *ngIf="roleStore != null && roleStore == 'manager'"><a (click)="selectStation(element.id)"> {{element.station}} </a></div>
+       <div *ngIf="roleStore == null || roleStore != 'manager'">{{element.station}} </div>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="reseau">
@@ -86,12 +89,14 @@
 
  <br/>
  <br/>
- <table>
-  <tr>
-    <td item-width="350"></td>
-    <td item-width="150"><button class="button" (click)="createStation($event)">Create station</button></td>
-  </tr>
- </table>
+ <div *ngIf="roleStore != null && roleStore == 'manager'">
+  <table>
+    <tr>
+      <td item-width="350"></td>
+      <td item-width="150"><button class="button" (click)="createStation($event)">Create station</button></td>
+    </tr>
+  </table>
+</div>
 
 
  <br/>

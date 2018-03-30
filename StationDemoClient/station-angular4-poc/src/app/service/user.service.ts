@@ -8,25 +8,29 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
 
+import { OAuthService } from 'angular-oauth2-oidc';
+import { UserBean } from '../bean/user';
+
 
 @Injectable()
 export class UserService {
 
   // URL 
   contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
+
+ // contextUserUrl = 'http://localhost:8080/StationDemoSecureWeb/user'
+  
        
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient , private oauthService : OAuthService) { }
 
-  authenticateUser(login: string, password: string) : Observable<AuthenticateResponse>{
+  retrieveRole(login: string) : Observable<UserBean>{
     
-     let body = new HttpParams()
-     .set('login', login)
-     .set('password', password);
-  
-     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-     return this.http.post(this.contextUserUrl + '/authenticate', body.toString(), {headers: headers, withCredentials: false })
-     .pipe(catchError(this.formatErrors));
+     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
+     return this.http.get(this.contextUserUrl + '/retrieveRole?login='+ login,  {headers: headers })
+     .pipe(
+       catchError(this.formatErrors)
+      );
    }
 
    private formatErrors(error: any) {

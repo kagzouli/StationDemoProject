@@ -19,6 +19,8 @@ import { OrderBean } from '../../bean/orderbean';
 import {merge} from "rxjs/observable/merge";
 
 import { OAuthService } from 'angular-oauth2-oidc';
+import { UserService } from '../../service/user.service';
+import { UserBean } from '../../bean/user';
 
 
 
@@ -26,7 +28,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
   selector: 'app-search-station',
   templateUrl: './search-station.component.html',
   styleUrls: ['./search-station.component.css'],
-  providers: [TrafficstationService]
+  providers: [TrafficstationService, UserService]
 })
 export class SearchStationComponent implements OnInit {
 
@@ -50,12 +52,14 @@ export class SearchStationComponent implements OnInit {
 
   NUMBER_MAX_ELEMENTS_TAB = 15;
 
+  roleStore: string = '';
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
     
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private router: Router, private oauthService: OAuthService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -94,6 +98,19 @@ export class SearchStationComponent implements OnInit {
           )
           .subscribe();
     }
+
+    // Role store
+    this.roleStore = localStorage.getItem('roleStore');
+    const claims = this.oauthService.getIdentityClaims();
+    if (claims && claims['name'] != null) {
+        this.userService.retrieveRole(claims['email']).subscribe(
+          (userBean : UserBean) => {
+             this.roleStore = userBean.role;
+             localStorage.setItem('roleStore', this.roleStore);
+          }
+        );
+
+    } 
   }
 
   disableButton(invalidform : boolean){
@@ -195,5 +212,6 @@ export class SearchStationComponent implements OnInit {
     }
     return claims['name'];
   }
+
 }
 
