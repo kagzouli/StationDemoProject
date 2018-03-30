@@ -16,9 +16,9 @@ import { UserBean } from '../bean/user';
 export class UserService {
 
   // URL 
- // contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
+  contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
 
-  contextUserUrl = 'http://localhost:8080/StationDemoSecureWeb/user'
+// contextUserUrl = 'http://localhost:8080/StationDemoSecureWeb/user'
   
        
 
