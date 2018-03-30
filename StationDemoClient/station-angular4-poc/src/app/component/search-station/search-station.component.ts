@@ -59,7 +59,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  paramsHelloMessage = {givenName: ' '};
+  paramsHelloMessage = {givenName: 'Undefined '};
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 

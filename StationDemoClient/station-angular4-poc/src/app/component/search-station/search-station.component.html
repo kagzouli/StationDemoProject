@@ -12,26 +12,26 @@
       Role  : {{roleStore}} - <button (click)="switchLanguage('en')">en</button><button (click)="switchLanguage('fr')">fr</button>
       <br/>
       <br/>
-      <label><span translate="NETWORK_SEARCH"></span>
+      <label><span translate="NETWORK_LABEL"></span>
         <select formControlName="reseau" [(ngModel)]="reseauChoose">
           <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
        </select>
       </label>
   
-      <label><span translate="STATION_SEARCH"></span>
+      <label><span translate="STATION_LABEL"></span>
         <input type="text" formControlName="station"/>
       </label>
       
        <label>
-        <span translate="TRAFFIC_MIN_SEARCH"></span><input type="number"  formControlName="trafficMin" /> 
+        <span translate="TRAFFIC_MIN_LABEL"></span><input type="number"  formControlName="trafficMin" /> 
       </label>
       <label>
-        <span translate="TRAFFIC_MAX_SEARCH"></span> <input type="number"  formControlName="trafficMax" />
+        <span translate="TRAFFIC_MAX_LABEL"></span> <input type="number"  formControlName="trafficMax" />
       </label>
       <label>
-        <span translate="TRAFFIC_CITY_SEARCH"></span> <input type="text"  formControlName="ville" />
+        <span translate="CITY_LABEL"></span> <input type="text"  formControlName="ville" />
       </label>
-      <input type="submit" value="{{'SEARCH_BUTTON' | translate}}" class="button expanded" PLA [disabled]="disableButton(!rForm.valid)">
+      <input type="submit" value="Search" class="button expanded" [disabled]="disableButton(!rForm.valid)">
     </div>
   </div>
 </form>
@@ -52,32 +52,32 @@
         The actual rendered columns are set as a property on the row definition" -->
 
   <ng-container matColumnDef="station">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Station </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <span translate="STATION_LABEL"></span> </mat-header-cell>
     <mat-cell *matCellDef="let element"> <div *ngIf="roleStore != null && roleStore == 'manager'"><a (click)="selectStation(element.id)"> {{element.station}} </a></div>
        <div *ngIf="roleStore == null || roleStore != 'manager'">{{element.station}} </div>
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="reseau">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Reseau </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <span translate="NETWORK_LABEL"></span> </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.reseau}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="traffic">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> traffic</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <span translate="TRAFFIC_LABEL"></span> </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.traffic}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="listCorrespondance">
-      <mat-header-cell *matHeaderCellDef>  Correspond</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>  <span translate="CORRESPOND_LABEL"></span></mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.listCorrespondance}} </mat-cell>
     </ng-container>
 
   <ng-container matColumnDef="ville">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>  Ville </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>  <span translate="CITY_LABEL"></span> </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.ville}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="arrond">
-    <mat-header-cell *matHeaderCellDef>  Arrond </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>  <span translate="ARRONDISS_LABEL"></span> </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.arrondissement}} </mat-cell>
   </ng-container>
  
