@@ -9,7 +9,8 @@
     <div class="row columns">
       <h2 translate="HELLO_MESSAGE" [translateParams]="paramsHelloMessage"> --  <a (click)="logout()" translate="LOGOUT"></a></h2>
       <br/>
-      Role  : {{roleStore}} - <button (click)="switchLanguage('en')">en</button><button (click)="switchLanguage('fr')">fr</button>
+      Role  : {{roleStore}} - 
+      <img (click)="switchLanguage('en')" src="/assets/drap_GB.gif"><img (click)="switchLanguage('fr')" src="/assets/drap_fr.gif"> 
       <br/>
       <br/>
       <label><span translate="NETWORK_LABEL"></span>
