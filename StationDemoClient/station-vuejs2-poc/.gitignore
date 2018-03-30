@@ -15,3 +15,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# To avoid vuejs compile file
+src/main/webapp/index.html
+src/main/webapp/static/
