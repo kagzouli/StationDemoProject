@@ -100,13 +100,11 @@ export class SearchStationComponent implements OnInit {
     }
 
     // Role store
-    this.roleStore = localStorage.getItem('roleStore');
     const claims = this.oauthService.getIdentityClaims();
     if (claims && claims['name'] != null) {
         this.userService.retrieveRole(claims['email']).subscribe(
           (userBean : UserBean) => {
              this.roleStore = userBean.role;
-             localStorage.setItem('roleStore', this.roleStore);
           }
         );
 
