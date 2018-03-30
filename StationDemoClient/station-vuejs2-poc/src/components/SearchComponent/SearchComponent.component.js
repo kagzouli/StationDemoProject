@@ -49,7 +49,8 @@ export default {
           field: 'ville'
         },{
           label: 'Arrond',
-          field: 'arrondissement'
+          field: 'arrondissement',
+          type: 'number'
         }
         
       ],
