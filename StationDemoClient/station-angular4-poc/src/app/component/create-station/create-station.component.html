@@ -20,25 +20,25 @@
         </div>        
   
         <label>Reseau
-          <select formControlName="reseau" [(ngModel)]="reseauChoose">
+          <select formControlName="reseau" [(ngModel)]="reseauChoose" required>
             <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
          </select>    
         </label>
         <br/>
         <label>Station
-          <input type="text"  formControlName="station" />
+          <input type="text"  formControlName="station" required maxlength="128" />
         </label>
         <br/>
         <label>traffic
-          <input type="number"  formControlName="traffic"/>
+          <input type="number"  formControlName="traffic" required/>
         </label>
         <br/>
         <label>Correspondance
-          <input type="text"  formControlName="correspondance"/>
+          <input type="text"  formControlName="correspondance" maxlength="150"/>
         </label>
         <br/>   
         <label>Ville
-          <input type="text"  formControlName="ville" (ngModelChange)="changeVille($event)"/>
+          <input type="text"  formControlName="ville" (ngModelChange)="changeVille($event)" required maxlength="150"/>
         </label>
         <br/>   
         <label *ngIf="displayArron">Arrondissement
