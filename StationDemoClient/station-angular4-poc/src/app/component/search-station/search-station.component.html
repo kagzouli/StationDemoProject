@@ -9,6 +9,8 @@
     <div class="row columns">
       <h1>Search traffic stations (User : {{givenName}}) - <a (click)="logout()">Logout</a></h1>
       <br/>
+      Role : {{roleStore}}
+      <br/>
       <br/>
       <label>Reseau
         <select formControlName="reseau" [(ngModel)]="reseauChoose">
