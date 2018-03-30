@@ -1,0 +1,15 @@
+{
+    "HELLO_MESSAGE": "Search station (User : {{givenName}}) -- ",
+    "LOGOUT": "Logout",
+    "NETWORK_LABEL": "Network",
+    "STATION_LABEL": "Station",
+    "TRAFFIC_MIN_LABEL": "Min traffic",
+    "TRAFFIC_LABEL": "Traffic",
+    "TRAFFIC_MAX_LABEL": "Max traffic",
+    "CORRESPOND_LABEL": "Correspond",  
+    "CITY_LABEL": "City",
+    "SEARCH_BUTTON": "Search",
+    "ARRONDISS_LABEL": "Arrond"
+    
+    
+}
