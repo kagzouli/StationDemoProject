@@ -39,3 +39,11 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# To avoid Angular compile file
+src/main/webapp/*.css
+src/main/webapp/*.js
+src/main/webapp/*.ico
+src/main/webapp/*.html
+src/main/webapp/*.txt
+
