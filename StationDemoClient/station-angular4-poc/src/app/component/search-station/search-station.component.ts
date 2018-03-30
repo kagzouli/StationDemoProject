@@ -85,6 +85,16 @@ export class SearchStationComponent implements OnInit {
     // Count the number of stations of the pagination
     this.countStationsByCrit(criteriaSearchStation);
 
+    // Role store
+    const claims = this.oauthService.getIdentityClaims();
+    if (claims && claims['name'] != null) {
+        this.userService.retrieveRole(claims['email']).subscribe(
+          (userBean : UserBean) => {
+             this.roleStore = userBean.role;
+          }
+        );
+    } 
+
   }
 
   ngAfterViewInit() {
@@ -98,17 +108,6 @@ export class SearchStationComponent implements OnInit {
           )
           .subscribe();
     }
-
-    // Role store
-    const claims = this.oauthService.getIdentityClaims();
-    if (claims && claims['name'] != null) {
-        this.userService.retrieveRole(claims['email']).subscribe(
-          (userBean : UserBean) => {
-             this.roleStore = userBean.role;
-          }
-        );
-
-    } 
   }
 
   disableButton(invalidform : boolean){
