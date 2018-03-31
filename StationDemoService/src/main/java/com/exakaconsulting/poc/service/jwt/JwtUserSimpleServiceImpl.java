@@ -17,7 +17,7 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_SIMP
 
 
 @Service(JWT_USER_SIMPLE_SERVICE)
-@Profile({JWT_USER_SIMPLE_PROFILE, "default"})
+@Profile({JWT_USER_SIMPLE_PROFILE})
 public class JwtUserSimpleServiceImpl implements IJwtUserService {
 	
 	/** Logger **/

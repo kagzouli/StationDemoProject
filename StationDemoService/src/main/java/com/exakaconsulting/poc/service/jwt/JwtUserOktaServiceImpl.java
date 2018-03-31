@@ -22,7 +22,7 @@ import org.springframework.util.Assert;
 
 
 @Service(JWT_USER_OKTA_SERVICE)
-@Profile(JWT_USER_OKTA_PROFILE)
+@Profile({JWT_USER_OKTA_PROFILE, "default"})
 public class JwtUserOktaServiceImpl implements IJwtUserService {
 	
 	/** Logger **/
