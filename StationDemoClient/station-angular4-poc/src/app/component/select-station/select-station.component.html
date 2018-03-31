@@ -1,34 +1,50 @@
 <div>
-    
-<div *ngIf="isDataAvailable">
-   <div class="form-container">
-      <div class="row columns">
-        <br/>
-        <ul>
-          <li><span class="pocbold" translate="NETWORK_LABEL"></span>      : {{trafficStationBean.reseau}}</li>     
-          <li><span class="pocbold" translate="STATION_LABEL"></span>      : {{trafficStationBean.station}}</li>   
-          <li><span class="pocbold" translate="TRAFFIC_LABEL"></span>      : {{trafficStationBean.traffic}}</li>  
-          <li><span class="pocbold" translate="CORRESPOND_LABEL"></span>   : {{trafficStationBean.listCorrespondance}}</li>    
-          <li><span class="pocbold" translate="CITY_LABEL"></span>         : {{trafficStationBean.ville}}</li>    
-          <li><span class="pocbold" translate="ARRONDISS_LABEL"></span>    : {{trafficStationBean.arrondissement}}</li>    
-          
-        </ul>
+  <div *ngIf="isDataAvailable">
        
-      </div>
-    </div>
+    <br/>
+
+    <table>
+      <tr>
+         <th></th>
+         <th></th>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="NETWORK_LABEL"></span>  :</td>
+        <td> {{trafficStationBean.reseau}}</td>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="STATION_LABEL"></span>  :</td>
+        <td> {{trafficStationBean.station}}</td>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="TRAFFIC_LABEL">         :</span></td>
+        <td> {{trafficStationBean.traffic}}</td>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="CORRESPOND_LABEL">      :</span></td> 
+        <td>{{trafficStationBean.listCorrespondance}}</td>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="CITY_LABEL">            :</span></td> 
+        <td>{{trafficStationBean.ville}}</td>
+      </tr>
+      <tr>
+        <td><span class="pocbold" translate="ARRONDISS_LABEL">       :</span> </td> 
+        <td>{{trafficStationBean.arrondissement}}</td>
+      </tr>
+    </table>
+
+    <br/>
+    <br/>
+    <table>
+      <tr>
+        <td item-width="150"></td>
+        <td item-width="150"><button class="button" (click)="callUpdateStation($event)" translate="UPDATE_STATION_BUTTON"></button></td>
+        <td item-width="150"><button class="button" (click)="callDeleteStation($event)" translate="DELETE_STATION_BUTTON"></button></td>      
+      </tr>
+    </table>
+    
+   
   </div>
-
-  <br/>
-  <br/>
-  <table>
-    <tr>
-      <td item-width="150"></td>
-      <td item-width="150"><button class="button" (click)="callUpdateStation($event)" translate="UPDATE_STATION_BUTTON"></button></td>
-      <td item-width="150"><button class="button" (click)="callDeleteStation($event)" translate="DELETE_STATION_BUTTON"></button></td>      
-    </tr>
-
-  </table>
-  
-  
-  
 </div>
+  

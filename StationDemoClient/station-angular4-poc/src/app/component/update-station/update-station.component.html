@@ -3,27 +3,41 @@
     <div> 
        <form [formGroup] = "rForm" (ngSubmit)="updateStation(rForm.value)">
          <div class="form-container">
-         <div class="row columns">
-           <br/>
-  
-           <span class="pocbold" translate="NETWORK_LABEL"></span>  :    {{trafficStationBeanUpdate.reseau}}
-           <br/>
-           <span class="pocbold" translate="STATION_LABEL"></span> :    {{trafficStationBeanUpdate.station}}
-           <br/>
-           <span class="pocbold" translate="TRAFFIC_LABEL"></span> :    <input type="number"  formControlName="traffic" />
-        
-           <br/>
-           <span class="pocbold" translate="CORRESPOND_LABEL"></span> :   <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/>
-           <br/>   
-           <span class="pocbold" translate="CITY_LABEL"></span> :  {{trafficStationBeanUpdate.ville}}
-       
-           <br/>   
-           <span class="pocbold" translate="ARRONDISS_LABEL"></span> :  {{trafficStationBeanUpdate.arrondissement}}
+           <table>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
 
+              <tr>
+                <td><span class="pocbold" translate="NETWORK_LABEL">       : </span></td>
+                <td>{{trafficStationBeanUpdate.reseau}}</td>
+              </tr>
+              <tr>
+                <td><span class="pocbold" translate="STATION_LABEL">        : </span></td>
+                <td>{{trafficStationBeanUpdate.station}}</td>
+              </tr>
+              <tr>
+                <td><span class="pocbold" translate="TRAFFIC_LABEL">        : </span></td>
+                <td> <input type="number"  formControlName="traffic" /></td>
+              </tr>
+              <tr>
+                <td><span class="pocbold" translate="CORRESPOND_LABEL">     : </span></td>
+                <td> <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/></td>
+              </tr>
+              <tr>
+                <td><span class="pocbold" translate="CITY_LABEL">     : </span></td>
+                <td>{{trafficStationBeanUpdate.ville}}</td>
+              </tr>
+              <tr>
+                <td><span class="pocbold" translate="ARRONDISS_LABEL">     : </span></td>
+                <td>{{trafficStationBeanUpdate.arrondissement}}</td>
+              </tr>
+           </table>
+       
            <br/>
            <br/>
            <input type="submit" class="button expanded" [value]="'UPDATE_BUTTON' | translate" [disabled]="disableButton(!rForm.valid)">
-      </div>
     </div>
    </form>
  </div>
