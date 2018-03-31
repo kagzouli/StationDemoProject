@@ -43,11 +43,9 @@ export class UserService {
    
      if (this.translateService.currentLang != null){
        headers = headers.set('Content-Language', this.translateService.currentLang);
+       headers = headers.set('Accept-Language', this.translateService.currentLang);
      }
 
-     if (this.translateService.getLangs() != null){
-      headers = headers.set('Accept-Language', this.translateService.getLangs());
-     }
 
      return headers;
 

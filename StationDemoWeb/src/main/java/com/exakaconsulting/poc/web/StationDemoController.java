@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
@@ -143,7 +144,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());
-			jsonResult.addError(messageSource.getMessage(STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, Locale.FRENCH));
+			jsonResult.addError(messageSource.getMessage(STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, LocaleContextHolder.getLocale()));
 			jsonResult.setSuccess(false);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);

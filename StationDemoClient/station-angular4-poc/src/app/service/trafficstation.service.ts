@@ -22,7 +22,7 @@ export class TrafficstationService {
     // URL 
   contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/station'
 
- //  contextTrafficServiceUrl = 'http://localhost:8080/StationDemoSecureWeb/station'
+ // contextTrafficServiceUrl = 'http://localhost:8080/StationDemoSecureWeb/station'
     
 
   constructor(private http: HttpClient, private oauthService : OAuthService, private translateService : TranslateService) { }
@@ -103,12 +103,9 @@ export class TrafficstationService {
      
        if (this.translateService.currentLang != null){
          headers = headers.set('Content-Language', this.translateService.currentLang);
-       }
-
-       if (this.translateService.getLangs() != null){
-        headers = headers.set('Accept-Language', this.translateService.getLangs());
-       }
-
+         headers = headers.set('Accept-Language', this.translateService.currentLang);
+       }       
+  
        return headers;
 
   }
