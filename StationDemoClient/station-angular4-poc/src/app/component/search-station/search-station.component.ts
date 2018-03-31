@@ -72,7 +72,7 @@ export class SearchStationComponent implements OnInit {
     // Role store
     const claims = this.oauthService.getIdentityClaims();
     if (claims) {
-      this.userService.retrieveRole(claims['email']).subscribe(
+      this.userService.retrieveRole().subscribe(
         (userBean : UserBean) => {
           this.roleStore = userBean.role;
         }

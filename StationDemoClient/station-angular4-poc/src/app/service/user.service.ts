@@ -17,18 +17,18 @@ import { TranslateService } from '@ngx-translate/core';
 export class UserService {
 
   // URL 
-  contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
+ contextUserUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/user'
 
-// contextUserUrl = 'http://localhost:8080/StationDemoSecureWeb/user'
+ // contextUserUrl = 'http://localhost:8080/StationDemoSecureWeb/user'
   
        
 
   constructor(private http: HttpClient , private oauthService : OAuthService, private translateService : TranslateService) { }
 
-  retrieveRole(login: string) : Observable<UserBean>{
+  retrieveRole() : Observable<UserBean>{
     
      const headers = this.createHttpHeader('application/x-www-form-urlencoded');
-     return this.http.get(this.contextUserUrl + '/retrieveRole?login='+ login,  {headers: headers })
+     return this.http.get(this.contextUserUrl + '/retrieveRole',  {headers: headers })
      .pipe(
        catchError(this.formatErrors)
       );
@@ -48,7 +48,6 @@ export class UserService {
 
 
      return headers;
-
 }
 
  

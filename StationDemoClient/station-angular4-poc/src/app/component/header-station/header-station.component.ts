@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../service/user.service';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -25,7 +26,7 @@ export class HeaderStationComponent implements OnInit {
      // Role store
      const claims = this.oauthService.getIdentityClaims();
      if (claims) {
-       this.userService.retrieveRole(claims['email']).subscribe(
+       this.userService.retrieveRole().subscribe(
          (userBean : UserBean) => {
            this.roleStore = userBean.role;
  
