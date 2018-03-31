@@ -173,14 +173,12 @@ export class SearchStationComponent implements OnInit {
    }
   
 
-   selectStation(id){
-       this.router.navigate(['/stationdemo/selectstation' , id]);
-   }
-
    onStationClicked(trafficStation){
-    //TODO : Put your code here
-   
+    if (this.roleStore != null && this.roleStore == 'manager'){
+        this.router.navigate(['/stationdemo/selectstation' , trafficStation.id]);   
+    }   
   
+
   }
   
 }
