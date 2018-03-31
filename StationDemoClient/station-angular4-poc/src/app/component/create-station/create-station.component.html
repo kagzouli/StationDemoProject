@@ -45,7 +45,7 @@
           <input type="number"  formControlName="arrondissement"/>
         </label>
 
-        <input type="submit" class="button expanded" value="Create" [disabled]="disableButton(!rForm.valid)">
+        <input type="submit" class="button expanded" [value]="'CREATE_BUTTON' | translate" [disabled]="disableButton(!rForm.valid)">
       </div>
     </div>
   </form>

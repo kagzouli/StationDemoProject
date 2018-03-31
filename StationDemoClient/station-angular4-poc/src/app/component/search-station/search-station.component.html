@@ -32,7 +32,7 @@
     <label>
       <span translate="CITY_LABEL"></span> <input type="text"  formControlName="ville" />
     </label>
-    <input type="submit" value="Search" class="button expanded" [disabled]="disableButton(!rForm.valid)">
+    <input type="submit" [value]="'SEARCH_BUTTON' | translate" class="button expanded" [disabled]="disableButton(!rForm.valid)">
   </div>
 </div>
 </form>
