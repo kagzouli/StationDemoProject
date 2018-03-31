@@ -22,6 +22,7 @@ export class HeaderStationComponent implements OnInit {
 
   constructor(private oauthService: OAuthService,private router : Router, private translateService : TranslateService) {
       this.roleStore = sessionStorage.getItem('Role');
+      this.paramsRoleMessage = {roleStore: this.roleStore};
   } 
 
 
