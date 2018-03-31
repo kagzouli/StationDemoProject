@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc.security;
+package com.exakaconsulting.poc.security.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

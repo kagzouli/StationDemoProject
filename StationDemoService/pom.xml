@@ -61,10 +61,20 @@
 		
 		<!-- Hibernate validator -->
 		<dependency>
-       		 	<groupId>org.hibernate</groupId>
-       			<artifactId>hibernate-validator</artifactId>
-    		</dependency>
-	
+       		 <groupId>org.hibernate</groupId>
+       		<artifactId>hibernate-validator</artifactId>
+    	</dependency>
+    	
+    	<!-- JWT -->		 
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+		</dependency>
+    	<dependency>
+			<groupId>com.okta.jwt</groupId>
+			<artifactId>okta-jwt-verifier</artifactId>
+		</dependency>
+    	
 	  
 				
 	</dependencies>

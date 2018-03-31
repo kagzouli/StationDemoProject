@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc.security;
+package com.exakaconsulting.poc.service.jwt;
 
 public class JwtUserDto {
 

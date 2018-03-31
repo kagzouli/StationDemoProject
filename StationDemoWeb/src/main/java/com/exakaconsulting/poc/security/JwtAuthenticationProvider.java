@@ -3,6 +3,7 @@ package com.exakaconsulting.poc.security;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
@@ -11,11 +12,20 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.exakaconsulting.poc.security.exception.JwtTokenMalformedException;
+import com.exakaconsulting.poc.service.jwt.IJwtUserService;
+import com.exakaconsulting.poc.service.jwt.JwtUserDto;
+
+import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_SIMPLE_SERVICE;
+
+
 @Component
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
-    @Autowired
-    private JwtTokenValidator jwtTokenValidator;
+   
+	@Autowired
+	@Qualifier(JWT_USER_SIMPLE_SERVICE)
+	private IJwtUserService jwtUserService;
 
     @Override
     public boolean supports(Class<?> authentication) {
@@ -31,7 +41,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
         JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
         String token = jwtAuthenticationToken.getToken();
 
-        JwtUserDto parsedUser = jwtTokenValidator.parseToken(token);
+        JwtUserDto parsedUser = this.jwtUserService.parseToken(token);
 
         if (parsedUser == null) {
             throw new JwtTokenMalformedException("JWT token is not valid");
