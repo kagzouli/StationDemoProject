@@ -1,20 +1,19 @@
 package com.exakaconsulting.poc.web;
 
+import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,21 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exakaconsulting.poc.security.AuthenticatedUser;
 import com.exakaconsulting.poc.service.AlreadyStationExistsException;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
-import com.exakaconsulting.poc.service.IUserService;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
-import com.exakaconsulting.poc.service.User;
-
-import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_DATABASE;
-
-import javax.validation.Valid;
-
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,9 +48,6 @@ public class StationDemoController {
 	@Autowired
 	private IStationDemoService stationDemoService;
 	
-	@Autowired
-	@Qualifier(USER_SERVICE_DATABASE)
-	private IUserService userService;
 	
 	@Autowired
 	private MessageSource messageSource;
@@ -198,41 +185,5 @@ public class StationDemoController {
 		return jsonResult;
 		
 	}
-	
-	@ApiOperation(value = "This method is use to get the role of the user" , response = String.class )
-	@RequestMapping(value = "/user/retrieveRole", method = { RequestMethod.GET}, consumes = {
-			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ResponseBody
-	@PreAuthorize("hasRole('manager') OR hasRole('user')")
-	public User findRoleByLogin(){
-		LOGGER.info("BEGIN of the method findRoleByLogin of the class " + StationDemoController.class.getName());
-		User user = null;
-		try {
-			
-			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			
-			if (authentication != null && authentication instanceof UsernamePasswordAuthenticationToken){
-				final UsernamePasswordAuthenticationToken userPasswordToke = (UsernamePasswordAuthenticationToken) authentication;
-				AuthenticatedUser authenticatedUser = (AuthenticatedUser) userPasswordToke.getPrincipal();
-				if (authenticatedUser != null){
-					user = this.userService.findUserByLogin(authenticatedUser.getUsername());					
-				}
-				
-			}
-			
-		
-		} catch (Exception exception) {
-			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
-		}
-		LOGGER.info("END of the method findRoleByLogin of the class " + StationDemoController.class.getName());	
-		return user;
-	}
-
-	
-	
-	
-
-	
 
 }

@@ -1,23 +1,17 @@
 package com.exakaconsulting.poc.security;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.exakaconsulting.poc.service.IUserService;
-import com.exakaconsulting.poc.service.User;
-
-import static com.exakaconsulting.poc.service.IConstantStationDemo.USER_SERVICE_DATABASE;
-
 
 
 @Component
@@ -34,11 +28,7 @@ public class JwtTokenValidator {
   
     @Value("${okta.clientId}")
     private String oktaClientId;
-    
-    @Autowired
-    @Qualifier(USER_SERVICE_DATABASE)
-    private IUserService userService;
-    
+       
    /**
      * Tries to parse specified String as a JWT token. If successful, returns User object with username, id and role prefilled (extracted from token).
      * If unsuccessful (token is invalid or not containing all required user properties), simply returns null.
@@ -66,10 +56,11 @@ public class JwtTokenValidator {
             u = new JwtUserDto();
             u.setUsername(login);
             
-            User user = this.userService.findUserByLogin(login);
-            if (user != null){
-            	u.setRole(user.getRole());
+            final List<String> listGroup = claims.get("groups").asList(String.class);
+            if (listGroup != null && !listGroup.isEmpty()){
+                u.setRole(listGroup.get(0));           	
             }
+           
             
            // u.setRole((String) claims.get("role")); 
 
