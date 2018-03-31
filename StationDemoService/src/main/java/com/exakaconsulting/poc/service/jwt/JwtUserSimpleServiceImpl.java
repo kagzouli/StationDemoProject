@@ -33,8 +33,7 @@ public class JwtUserSimpleServiceImpl implements IJwtUserService {
 
 			final Map<String, Claim> claims = jwt.getClaims();
 
-			LOGGER.info(claims.toString());
-
+			
 			// Normallement recuperer par OAUTH - Va etre fait en base pour les
 			// tests.
 			final String login = claims.get("sub").asString();
