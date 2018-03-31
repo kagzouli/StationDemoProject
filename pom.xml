@@ -250,6 +250,12 @@
 			<groupId>com.okta.jwt</groupId>
 			<artifactId>okta-jwt-verifier</artifactId>
 			<version>${okta-jwt.version}</version>
+			<exclusions>
+				<exclusion>
+				   <groupId>javax.mail</groupId>
+				   <artifactId>mail</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 			
