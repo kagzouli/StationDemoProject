@@ -25,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 // @Import(StationSecurityConfig.class)
-@PropertySource("classpath:config.properties")
+@PropertySource("classpath:configServices.properties")
 public class Application extends AbstractApplication{
 	
 	/** For swagger-ui **/

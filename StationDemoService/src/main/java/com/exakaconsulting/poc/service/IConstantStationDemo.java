@@ -16,8 +16,10 @@ public interface IConstantStationDemo {
 	
 	/** JWT User simple service */
 	static final String JWT_USER_SIMPLE_SERVICE = "jwt.user.simple.service";
+	static final String JWT_USER_SIMPLE_PROFILE = "jwtSimple";
 	
 	/** JWT User okta service **/
 	static final String JWT_USER_OKTA_SERVICE = "jwt.user.okta.service";
+	static final String JWT_USER_OKTA_PROFILE = "jwtOkta";
 
 }

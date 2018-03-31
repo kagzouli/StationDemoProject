@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -12,9 +13,11 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_SIMPLE_SERVICE;
+import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_SIMPLE_PROFILE;
 
 
 @Service(JWT_USER_SIMPLE_SERVICE)
+@Profile(JWT_USER_SIMPLE_PROFILE)
 public class JwtUserSimpleServiceImpl implements IJwtUserService {
 	
 	/** Logger **/

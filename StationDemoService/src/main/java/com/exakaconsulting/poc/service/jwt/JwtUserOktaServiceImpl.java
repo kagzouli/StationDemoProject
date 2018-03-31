@@ -3,25 +3,26 @@ package com.exakaconsulting.poc.service.jwt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.nimbusds.oauth2.sdk.ParseException;
-import com.okta.jwt.JoseException;
 import com.okta.jwt.Jwt;
-import com.okta.jwt.JwtHelper;
 import com.okta.jwt.JwtVerifier;
 
 import net.minidev.json.JSONArray;
 
 import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_OKTA_SERVICE;
+import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_OKTA_PROFILE;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.util.Assert;
 
 
-@Service
+
+
+@Service(JWT_USER_OKTA_SERVICE)
+@Profile(JWT_USER_OKTA_PROFILE)
 public class JwtUserOktaServiceImpl implements IJwtUserService {
 	
 	/** Logger **/
