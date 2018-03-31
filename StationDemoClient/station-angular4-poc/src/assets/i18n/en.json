@@ -19,7 +19,7 @@
     "UPDATE_STATION_BUTTON": "Update",
     "DELETE_STATION_BUTTON": "Delete",
     "STATION_CREATE_SUCCESS": "The station has been created with success",
-    "STATION_UPDATE_SUCESSS": "The station has been updated with success"
-    
-    
+    "STATION_UPDATE_SUCESSS": "The station has been updated with success",
+    "STATION_DELETE_SUCCESS": "The station has been delete with success",
+    "STATION_DELETE_SUCCESS_CONFIRM": "Are you sure to delete  the station {{stationName}}?"   
 }

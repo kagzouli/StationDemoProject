@@ -7,6 +7,7 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { Params } from '@angular/router/src/shared';
 import { DeleteStationResponse } from '../../bean/deletestationresponse';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select-station',
@@ -21,7 +22,7 @@ export class SelectStationComponent implements OnInit {
 
   isDataAvailable : boolean;
 
-  constructor(private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
+  constructor(private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router, private translateService : TranslateService) { 
 
   }
 
@@ -59,14 +60,17 @@ export class SelectStationComponent implements OnInit {
    * @param event 
    */
   callDeleteStation(event){
-    if (confirm("Are you sure to delete  the station '" + this.trafficStationBean.station + "'?")) {
+    let paramsDelete = { stationName: this.trafficStationBean.station };
+   //let paramsDelete = "{}";
+   
+    if (confirm(this.translateMessage("STATION_DELETE_SUCCESS_CONFIRM", paramsDelete))) {
  
            // Method to create a station
         this.trafficstationService.deleteStation(this.trafficStationBean.id).subscribe(
           (jsonResult: DeleteStationResponse) => {
             const success = jsonResult.success;
             if (success) {
-               window.alert('The station has been delete with success');
+               window.alert(this.translateMessage('STATION_DELETE_SUCCESS' , "{}"));
                this.router.navigate(['/stationdemo/searchstations',{}]);               
              }else {
                let messageError = jsonResult.errors[0];
@@ -78,5 +82,13 @@ export class SelectStationComponent implements OnInit {
     }
 
   }
+
+  translateMessage(key : string, params : any): string{
+    let value = "";
+    this.translateService.get(key, params).subscribe((res: string) => {
+       value = res;
+    });
+    return value;  
+ }
 
 }
