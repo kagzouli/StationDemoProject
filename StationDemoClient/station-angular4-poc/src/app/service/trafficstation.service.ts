@@ -15,15 +15,15 @@ import { catchError } from 'rxjs/operators/catchError';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { TranslateService } from '@ngx-translate/core';
 
+import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class TrafficstationService {
 
-    // URL 
-  contextTrafficServiceUrl = 'http://54.38.186.137:9080/StationDemoSecureWeb/station'
-
-  //contextTrafficServiceUrl = 'http://localhost:8080/StationDemoSecureWeb/station'
-    
+  // Contexte  
+  contextTrafficServiceUrl = environment.contextPathTrafStation + '/station';
+   
 
   constructor(private http: HttpClient, private oauthService : OAuthService, private translateService : TranslateService) { }
 
