@@ -12,6 +12,10 @@
     "ARRONDISS_LABEL": "Arrond",
     "CREATE_STATION_TITLE": "Créer station",
     "SELECT_STATION_TITLE": "Information sur la station",
-    "UPDATE_STATION_LABEL": "Mise à jour station" 
+    "UPDATE_STATION_LABEL": "Mise à jour station",
+    "UPDATE_STATION_BUTTON": "Mise à jour",
+    "DELETE_STATION_BUTTON": "Suppression"
+    
+    
  
 }
