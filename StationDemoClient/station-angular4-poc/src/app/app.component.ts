@@ -42,7 +42,14 @@ export class AppComponent {
         }
 
         // Set the lang of the user
-        this.translateService.use('en');
+        const locale =  decodedToken['locale'];
+
+        if (locale != null){
+          // On doit utiliser une classe Locale mais pour le POC, je fais simple.
+          let substr = locale.substring(0,2);
+          this.translateService.use(substr);
+        }
+        
         
         this.router.navigate(['/stationdemo/searchstations']);
     })
