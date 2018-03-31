@@ -13,6 +13,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
 
 import { OAuthService } from 'angular-oauth2-oidc';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -24,7 +25,7 @@ export class TrafficstationService {
  //  contextTrafficServiceUrl = 'http://localhost:8080/StationDemoSecureWeb/station'
     
 
-  constructor(private http: HttpClient, private oauthService : OAuthService) { }
+  constructor(private http: HttpClient, private oauthService : OAuthService, private translateService : TranslateService) { }
 
    /**
    * Method to find all traffic stations by criteria.<br/>
@@ -98,6 +99,14 @@ export class TrafficstationService {
       return this.http.delete(this.contextTrafficServiceUrl + '/deleteStation/' + stationId  , {headers: headers})
        .pipe(catchError(this.formatErrors));
   }
+
+  translateMessage(key : string, params : any): string{
+    let value = "";
+    this.translateService.get(key, params).subscribe((res: string) => {
+       value = res;
+    });
+    return value;  
+ }
 
 
 }

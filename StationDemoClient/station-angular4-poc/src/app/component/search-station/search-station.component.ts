@@ -30,7 +30,7 @@ import { of } from 'rxjs/observable/of';
   selector: 'app-search-station',
   templateUrl: './search-station.component.html',
   styleUrls: ['./search-station.component.css'],
-  providers: [TrafficstationService, UserService, TranslateService]
+  providers: [TrafficstationService, UserService]
 })
 export class SearchStationComponent implements OnInit {
 

@@ -6,8 +6,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UpdateStationResponse } from '../../bean/updatestationresponse';
-import { TranslateService } from '@ngx-translate/core';
-
 
 
 @Component({
@@ -27,7 +25,7 @@ export class UpdateStationComponent implements OnInit {
 
   launchAction : boolean = false;
 
-  constructor(private fb: FormBuilder , private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router, private translateService : TranslateService) { 
+  constructor(private fb: FormBuilder , private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
 
      // Get the selected traffic station
      let stationId = 0;
@@ -76,7 +74,7 @@ export class UpdateStationComponent implements OnInit {
             (jsonResult: UpdateStationResponse) => {
               const success = jsonResult.success;
               if (success) {
-                 window.alert(this.translateMessage("STATION_UPDATE_SUCESSS", "{}"));
+                 window.alert(this.trafficstationService.translateMessage("STATION_UPDATE_SUCESSS", {}));
                  this.router.navigate(['/stationdemo/searchstations',{}]);               
                }else {
                  let messageError = jsonResult.errors[0];
@@ -92,13 +90,5 @@ export class UpdateStationComponent implements OnInit {
         this.rForm.reset();
     }
   }
-
-  translateMessage(key : string, params : string): string{
-    let value = "";
-    this.translateService.get(key, params).subscribe((res: string) => {
-       value = res;
-    });
-    return value;  
- }
 
 }
