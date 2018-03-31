@@ -61,6 +61,8 @@ export class SearchStationComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   paramsHelloMessage = {name: this.givenName};
+
+  paramsRoleMessage = {roleStore: this.roleStore};
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
@@ -82,6 +84,9 @@ export class SearchStationComponent implements OnInit {
       this.userService.retrieveRole(claims['email']).subscribe(
         (userBean : UserBean) => {
           this.roleStore = userBean.role;
+
+          this.paramsRoleMessage = {roleStore: this.roleStore};
+
           // this language will be used as a fallback when a translation isn't found in the current language
           //translateService.setDefaultLang('en');
           this.switchLanguage('en');

@@ -11,6 +11,7 @@ import { CreateStationResponse } from '../../bean/createstationresponse';
 
 
 import { Router } from "@angular/router";
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -37,7 +38,7 @@ export class CreateStationComponent implements OnInit {
 
   displayArron : boolean = false;
 
-  constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router) { 
+  constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router, private translateService : TranslateService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.required])],
@@ -84,7 +85,7 @@ export class CreateStationComponent implements OnInit {
           (jsonResult: CreateStationResponse) => {
             const success = jsonResult.success;
             if (success) {
-               window.alert('The station has been created with success');
+               window.alert(this.translateMessage("STATION_CREATE_SUCCESS" , "{}"));
                this.router.navigate(['/stationdemo/searchstations',{}]);               
              }else {
                this.errors.push(jsonResult.errors[0]);
@@ -116,6 +117,14 @@ export class CreateStationComponent implements OnInit {
         this.displayArron = false;
     }
    
+  }
+
+  translateMessage(key : string, params : string): string{
+     let value = "";
+     this.translateService.get(key, params).subscribe((res: string) => {
+        value = res;
+     });
+     return value;  
   }
 
 }

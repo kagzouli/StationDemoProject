@@ -1,5 +1,6 @@
 {
     "HELLO_MESSAGE": "Recherche station (Utilisateur : {{name}}) -- ",
+    "ROLE_MESSAGE": "Role  : {{roleStore}}",
     "LOGOUT": "Déconnexion",
     "NETWORK_LABEL": "Réseau",
     "STATION_LABEL": "Station",
@@ -16,8 +17,9 @@
     "SELECT_STATION_TITLE": "Information sur la station",
     "UPDATE_STATION_LABEL": "Mise à jour station",
     "UPDATE_STATION_BUTTON": "Mise à jour",
-    "DELETE_STATION_BUTTON": "Suppression"
-    
+    "DELETE_STATION_BUTTON": "Suppression",
+    "STATION_CREATE_SUCCESS": "La station a été crée avec succès",
+    "STATION_UPDATE_SUCESSS": "La station a été mis à jour avec succès"   
     
  
 }
