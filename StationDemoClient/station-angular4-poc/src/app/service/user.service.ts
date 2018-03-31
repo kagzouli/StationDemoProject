@@ -10,6 +10,7 @@ import { catchError } from 'rxjs/operators/catchError';
 
 import { OAuthService } from 'angular-oauth2-oidc';
 import { UserBean } from '../bean/user';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -22,11 +23,11 @@ export class UserService {
   
        
 
-  constructor(private http: HttpClient , private oauthService : OAuthService) { }
+  constructor(private http: HttpClient , private oauthService : OAuthService, private translateService : TranslateService) { }
 
   retrieveRole(login: string) : Observable<UserBean>{
     
-     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization','Bearer ' + this.oauthService.getAccessToken());
+     const headers = this.createHttpHeader('application/x-www-form-urlencoded');
      return this.http.get(this.contextUserUrl + '/retrieveRole?login='+ login,  {headers: headers })
      .pipe(
        catchError(this.formatErrors)
@@ -36,6 +37,22 @@ export class UserService {
    private formatErrors(error: any) {
     return new ErrorObservable(error.error);
   }
+
+  createHttpHeader(contentType: string):  HttpHeaders{
+    let headers : HttpHeaders = new HttpHeaders().set('Content-Type', contentType).set('Authorization','Bearer ' + this.oauthService.getAccessToken());
+   
+     if (this.translateService.currentLang != null){
+       headers = headers.set('Content-Language', this.translateService.currentLang);
+     }
+
+     if (this.translateService.getLangs() != null){
+      headers = headers.set('Accept-Language', this.translateService.getLangs());
+     }
+
+     return headers;
+
+}
+
  
 
 }
