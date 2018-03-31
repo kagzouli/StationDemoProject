@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
-import { StationAuthComponent } from './component/station-auth/station-auth.component';
 
 import { AppRoutingModule, routingComponents } from './app.routing';
 import { SearchStationComponent } from './component/search-station/search-station.component';
@@ -32,7 +31,6 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    StationAuthComponent,
     SearchStationComponent,
     CreateStationComponent,
     SelectStationComponent,

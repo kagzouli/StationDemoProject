@@ -19,7 +19,6 @@ import { OrderBean } from '../../bean/orderbean';
 import {merge} from "rxjs/observable/merge";
 
 import { OAuthService } from 'angular-oauth2-oidc';
-import { UserService } from '../../service/user.service';
 import { UserBean } from '../../bean/user';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -29,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-search-station',
   templateUrl: './search-station.component.html',
   styleUrls: ['./search-station.component.css'],
-  providers: [TrafficstationService, UserService]
+  providers: [TrafficstationService]
 })
 export class SearchStationComponent implements OnInit {
 
@@ -59,7 +58,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;    
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService,  private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -68,16 +67,10 @@ export class SearchStationComponent implements OnInit {
       'trafficMax' : [null,  ],
       'ville' : [null, ],
     });
+
+    this.roleStore = sessionStorage.getItem('Role');
     
-    // Role store
-    const claims = this.oauthService.getIdentityClaims();
-    if (claims) {
-      this.userService.retrieveRole().subscribe(
-        (userBean : UserBean) => {
-          this.roleStore = userBean.role;
-        }
-      );
-    } 
+    
   }
 
   ngOnInit() {

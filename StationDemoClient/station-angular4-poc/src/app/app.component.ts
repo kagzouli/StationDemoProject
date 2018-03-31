@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 
 import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { TranslateService } from '@ngx-translate/core';
+
 
 
 @Component({
@@ -12,7 +15,9 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'app';
 
-  constructor(private oauthService: OAuthService, private router : Router) {
+  jwtHelper = new JwtHelperService();
+
+  constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService) {
     this.oauthService.clientId = '0oaeg3yghaL9mQalz0h7';
     this.oauthService.scope = 'openid profile email';
   //  this.oauthService.setStorage(sessionStorage);
@@ -21,9 +26,24 @@ export class AppComponent {
     //this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
     this.oauthService.oidc= true,
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+
+
     // Load Discovery Document and then try to login the user
     this.oauthService.loadDiscoveryDocument().then((doc) => {
       this.oauthService.tryLogin().then(_ => {
+
+        const decodedToken = this.jwtHelper.decodeToken(this.oauthService.getAccessToken());  
+        
+        if (decodedToken['groups'] != null){
+            let groups : string[]  =  decodedToken['groups'];
+            if (groups.length > 0){
+              sessionStorage.setItem('Role', groups[0]);
+            }
+        }
+
+        // Set the lang of the user
+        this.translateService.use('en');
+        
         this.router.navigate(['/stationdemo/searchstations']);
     })
     });
