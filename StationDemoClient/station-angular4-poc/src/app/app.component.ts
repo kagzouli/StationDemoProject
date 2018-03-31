@@ -24,8 +24,6 @@ export class AppComponent {
     // Load Discovery Document and then try to login the user
     this.oauthService.loadDiscoveryDocument().then((doc) => {
       this.oauthService.tryLogin().then(_ => {
-        console.log('Origin: ' + window.location.origin);
-        
         this.router.navigate(['/stationdemo/searchstations']);
     })
     });

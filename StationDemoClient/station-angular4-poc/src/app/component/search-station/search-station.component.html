@@ -7,9 +7,10 @@
 <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
 <div class="form-container">
   <div class="row columns">
-    <h2 translate="HELLO_MESSAGE" [translateParams]="paramsHelloMessage"> </h2> --   <a (click)="logout()" translate="LOGOUT"></a>
+    <h2 translate="HELLO_MESSAGE" [translateParams]="paramsHelloMessage">  --   <a (click)="logout()" translate="LOGOUT"></a></h2>
     <br/>
-    Role  : {{roleStore}} - <button (click)="switchLanguage('en')">en</button><button (click)="switchLanguage('fr')">fr</button>
+    Role  : {{roleStore}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img (click)="switchLanguage('en')" src="/assets/drap_GB.gif">&nbsp;&nbsp;&nbsp;<img (click)="switchLanguage('fr')" src="/assets/drap_fr.gif">     
     <br/>
     <br/>
     <label><span translate="NETWORK_LABEL"></span>
