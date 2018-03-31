@@ -60,7 +60,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  paramsHelloMessage = {name: 'Undefined '};
+  paramsHelloMessage = {name: this.givenName};
     
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
@@ -86,7 +86,6 @@ export class SearchStationComponent implements OnInit {
           //translateService.setDefaultLang('en');
           this.switchLanguage('en');
 
-          this.paramsHelloMessage = {name: this.givenName };           
         }
       );
     } 
@@ -94,17 +93,20 @@ export class SearchStationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataSource = new StationWithPagDataSource(this.trafficstationService);
+    if (this.givenName){
+      this.dataSource = new StationWithPagDataSource(this.trafficstationService);
+      
+       // Call the service findStations using the datasource.
+       let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
+       criteriaSearchStation.page = 1;
+       criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
+       this.criteriaSearch = criteriaSearchStation;
+       this.dataSource.findStations(criteriaSearchStation);
    
-    // Call the service findStations using the datasource.
-    let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
-    criteriaSearchStation.page = 1;
-    criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
-    this.criteriaSearch = criteriaSearchStation;
-    this.dataSource.findStations(criteriaSearchStation);
-
-    // Count the number of stations of the pagination
-    this.countStationsByCrit(criteriaSearchStation);
+       // Count the number of stations of the pagination
+       this.countStationsByCrit(criteriaSearchStation);
+    }
+  
   }
 
   ngAfterViewInit() {

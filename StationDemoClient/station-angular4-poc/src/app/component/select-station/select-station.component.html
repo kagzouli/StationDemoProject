@@ -3,15 +3,15 @@
 <div *ngIf="isDataAvailable">
    <div class="form-container">
       <div class="row columns">
-        <h1>Information traffic station</h1>
+        <h1 translate="SELECT_STATION_TITLE"></h1>
   
         <ul>
-          <li><span class="pocbold">Reseau            : </span>{{trafficStationBean.reseau}}</li>     
-          <li><span class="pocbold">Station           : </span>{{trafficStationBean.station}}</li>   
-          <li><span class="pocbold">Traffic           : </span>{{trafficStationBean.traffic}}</li>  
-          <li><span class="pocbold">Correspondance(s) : </span>{{trafficStationBean.listCorrespondance}}</li>    
-          <li><span class="pocbold">Ville             : </span>{{trafficStationBean.ville}}</li>    
-          <li><span class="pocbold">Arrondissement    : </span>{{trafficStationBean.arrondissement}}</li>    
+          <li><span class="pocbold" translate="NETWORK_LABEL"></span>      : {{trafficStationBean.reseau}}</li>     
+          <li><span class="pocbold" translate="STATION_LABEL"></span>      : {{trafficStationBean.station}}</li>   
+          <li><span class="pocbold" translate="TRAFFIC_LABEL"></span>      : {{trafficStationBean.traffic}}</li>  
+          <li><span class="pocbold" translate="CORRESPOND_LABEL"></span>   : {{trafficStationBean.listCorrespondance}}</li>    
+          <li><span class="pocbold" translate="CITY_LABEL"></span>         : {{trafficStationBean.ville}}</li>    
+          <li><span class="pocbold" translate="ARRONDISS_LABEL"></span>    : {{trafficStationBean.arrondissement}}</li>    
           
         </ul>
        

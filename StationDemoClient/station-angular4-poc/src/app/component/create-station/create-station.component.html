@@ -2,7 +2,7 @@
   <form [formGroup] = "rForm" (ngSubmit)="createStation(rForm.value)">
     <div class="form-container">
       <div class="row columns">
-        <h2>Create station</h2>
+        <h2 translate="CREATE_STATION_TITLE"></h2>
 
         <br/>
         
@@ -19,29 +19,29 @@
         <br/>        
         </div>        
   
-        <label>Reseau
+        <label><span translate="NETWORK_LABEL"></span>
           <select formControlName="reseau" [(ngModel)]="reseauChoose" required>
             <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
          </select>    
         </label>
         <br/>
-        <label>Station
+        <label><span translate="STATION_LABEL"></span>
           <input type="text"  formControlName="station" required maxlength="128" />
         </label>
         <br/>
-        <label>traffic
+        <label><span translate="TRAFFIC_LABEL"></span>
           <input type="number"  formControlName="traffic" required/>
         </label>
         <br/>
-        <label>Correspondance
+        <label><span translate="CORRESPOND_LABEL"></span>
           <input type="text"  formControlName="correspondance" maxlength="150"/>
         </label>
         <br/>   
-        <label>Ville
+        <label><span translate="CITY_LABEL"></span>
           <input type="text"  formControlName="ville" (ngModelChange)="changeVille($event)" required maxlength="150"/>
         </label>
         <br/>   
-        <label *ngIf="displayArron">Arrondissement
+        <label *ngIf="displayArron"> <span translate="ARRONDISS_LABEL"></span>
           <input type="number"  formControlName="arrondissement"/>
         </label>
 

@@ -4,23 +4,23 @@
        <form [formGroup] = "rForm" (ngSubmit)="updateStation(rForm.value)">
          <div class="form-container">
          <div class="row columns">
-           <h1>Update station</h1>
+           <h2 translate="UPDATE_STATION_LABEL" ></h2>
            <br/>
            <br/>
   
-           <span class="pocbold">Reseau</span>  :    {{trafficStationBeanUpdate.reseau}}
+           <span class="pocbold" translate="NETWORK_LABEL"></span>  :    {{trafficStationBeanUpdate.reseau}}
            <br/>
-           <span class="pocbold">Station</span> :    {{trafficStationBeanUpdate.station}}
+           <span class="pocbold" translate="STATION_LABEL"></span> :    {{trafficStationBeanUpdate.station}}
            <br/>
-           <span class="pocbold">Traffic</span> :    <input type="number"  formControlName="traffic" />
+           <span class="pocbold" translate="TRAFFIC_LABEL"></span> :    <input type="number"  formControlName="traffic" />
         
            <br/>
-           <span class="pocbold">Correspondance</span> :   <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/>
+           <span class="pocbold" translate="CORRESPOND_LABEL"></span> :   <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/>
            <br/>   
-           <span class="pocbold">Ville </span> :  {{trafficStationBeanUpdate.ville}}
+           <span class="pocbold" translate="CITY_LABEL"></span> :  {{trafficStationBeanUpdate.ville}}
        
            <br/>   
-           <span class="pocbold">Arrondissement</span> :  {{trafficStationBeanUpdate.arrondissement}}
+           <span class="pocbold" translate="ARRONDISS_LABEL"></span> :  {{trafficStationBeanUpdate.arrondissement}}
 
            <br/>
            <br/>

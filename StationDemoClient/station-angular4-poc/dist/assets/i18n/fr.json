@@ -9,7 +9,9 @@
     "CORRESPOND_LABEL": "Correspond",
     "CITY_LABEL": "Ville",
     "SEARCH_BUTTON": "Rechercher",
-    "ARRONDISS_LABEL": "Arrond"
-    
-
+    "ARRONDISS_LABEL": "Arrond",
+    "CREATE_STATION_TITLE": "Créer station",
+    "SELECT_STATION_TITLE": "Information sur la station",
+    "UPDATE_STATION_LABEL": "Mise à jour station" 
+ 
 }
