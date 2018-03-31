@@ -21,6 +21,8 @@ import {merge} from "rxjs/observable/merge";
 import { OAuthService } from 'angular-oauth2-oidc';
 import { UserService } from '../../service/user.service';
 import { UserBean } from '../../bean/user';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs/observable/of';
 
 
 
@@ -28,7 +30,7 @@ import { UserBean } from '../../bean/user';
   selector: 'app-search-station',
   templateUrl: './search-station.component.html',
   styleUrls: ['./search-station.component.css'],
-  providers: [TrafficstationService, UserService]
+  providers: [TrafficstationService, UserService, TranslateService]
 })
 export class SearchStationComponent implements OnInit {
 
@@ -57,9 +59,11 @@ export class SearchStationComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
+
+  paramsHelloMessage = {name: 'Undefined '};
     
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -69,6 +73,23 @@ export class SearchStationComponent implements OnInit {
       'ville' : [null, ],
     });
 
+    let a : string = 'toto';
+    of(a);
+    
+    // Role store
+    const claims = this.oauthService.getIdentityClaims();
+    if (claims) {
+      this.userService.retrieveRole(claims['email']).subscribe(
+        (userBean : UserBean) => {
+          this.roleStore = userBean.role;
+          // this language will be used as a fallback when a translation isn't found in the current language
+          //translateService.setDefaultLang('en');
+          this.switchLanguage('en');
+
+          this.paramsHelloMessage = {name: this.givenName };           
+        }
+      );
+    } 
   }
 
   ngOnInit() {
@@ -84,17 +105,6 @@ export class SearchStationComponent implements OnInit {
 
     // Count the number of stations of the pagination
     this.countStationsByCrit(criteriaSearchStation);
-
-    // Role store
-    const claims = this.oauthService.getIdentityClaims();
-    if (claims) {
-        this.userService.retrieveRole(claims['email']).subscribe(
-          (userBean : UserBean) => {
-             this.roleStore = userBean.role;
-          }
-        );
-    } 
-
   }
 
   ngAfterViewInit() {
@@ -112,6 +122,10 @@ export class SearchStationComponent implements OnInit {
 
   disableButton(invalidform : boolean){
     return invalidform || this.launchAction; 
+  }
+
+  switchLanguage(lang : string){
+      this.translateService.use(lang);
   }
 
   /** Method to create a station */
@@ -199,7 +213,6 @@ export class SearchStationComponent implements OnInit {
     this.oauthService.logOut();
   }
 
-
   get givenName() {
     let value = this.oauthService.authorizationHeader;
 
@@ -210,5 +223,5 @@ export class SearchStationComponent implements OnInit {
     return claims['name'];
   }
 
-}
 
+}
