@@ -1,18 +1,7 @@
-<div *ngIf="!givenName">
-<button class="button" (click)="login()">Login</button>
-</div>`
-
-<div *ngIf="givenName">
-
 <form [formGroup] = "rForm" (ngSubmit)="searchTrafficStations(rForm.value)">
 <div class="form-container">
   <div class="row columns">
-    <h2 translate="HELLO_MESSAGE" [translateParams]="paramsHelloMessage">  --   <a (click)="logout()" translate="LOGOUT"></a></h2>
-    <br/>
-     <span translate="ROLE_MESSAGE" [translateParams]="paramsRoleMessage"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img (click)="switchLanguage('en')" src="assets/drap_GB.gif">&nbsp;&nbsp;&nbsp;<img (click)="switchLanguage('fr')" src="assets/drap_fr.gif">     
-    <br/>
-    <br/>
+ 
     <label><span translate="NETWORK_LABEL"></span>
       <select formControlName="reseau" [(ngModel)]="reseauChoose">
         <option *ngFor="let reseauSelect of mapReseaux" [ngValue]="reseauSelect.key">{{reseauSelect.value}}</option>	  
@@ -100,9 +89,4 @@
     <td item-width="150"><button class="button" (click)="createStation($event)" translate="CREATE_STATION_TITLE"></button></td>
   </tr>
 </table>
-</div>
-
-
-<br/>
-<br/>
 </div>

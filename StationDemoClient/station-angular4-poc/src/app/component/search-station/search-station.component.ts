@@ -22,7 +22,6 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { UserService } from '../../service/user.service';
 import { UserBean } from '../../bean/user';
 import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs/observable/of';
 
 
 
@@ -58,12 +57,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  paramsHelloMessage = {name: this.givenName};
-
-  paramsRoleMessage = {roleStore: this.roleStore};
-    
+  @ViewChild(MatSort) sort: MatSort;    
 
   constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService, private userService : UserService, private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
 
@@ -74,9 +68,6 @@ export class SearchStationComponent implements OnInit {
       'trafficMax' : [null,  ],
       'ville' : [null, ],
     });
-
-    let a : string = 'toto';
-    of(a);
     
     // Role store
     const claims = this.oauthService.getIdentityClaims();
@@ -84,13 +75,6 @@ export class SearchStationComponent implements OnInit {
       this.userService.retrieveRole(claims['email']).subscribe(
         (userBean : UserBean) => {
           this.roleStore = userBean.role;
-
-          this.paramsRoleMessage = {roleStore: this.roleStore};
-
-          // this language will be used as a fallback when a translation isn't found in the current language
-          //translateService.setDefaultLang('en');
-          this.switchLanguage('en');
-
         }
       );
     } 
@@ -98,41 +82,32 @@ export class SearchStationComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.givenName){
-      this.dataSource = new StationWithPagDataSource(this.trafficstationService);
+    this.dataSource = new StationWithPagDataSource(this.trafficstationService);
       
-       // Call the service findStations using the datasource.
-       let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
-       criteriaSearchStation.page = 1;
-       criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
-       this.criteriaSearch = criteriaSearchStation;
-       this.dataSource.findStations(criteriaSearchStation);
+    // Call the service findStations using the datasource.
+    let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
+    criteriaSearchStation.page = 1;
+    criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
+    this.criteriaSearch = criteriaSearchStation;
+    this.dataSource.findStations(criteriaSearchStation);
    
-       // Count the number of stations of the pagination
-       this.countStationsByCrit(criteriaSearchStation);
-    }
+    // Count the number of stations of the pagination
+    this.countStationsByCrit(criteriaSearchStation); 
   
   }
 
   ngAfterViewInit() {
-    if (this.givenName != null) {
-      // reset the paginator after sorting
-      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+     // reset the paginator after sorting
+     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
       
-      merge(this.sort.sortChange, this.paginator.page)
-          .pipe(
-              tap(() => this.loadStationsPage())
-          )
-          .subscribe();
-    }
+     merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+       tap(() => this.loadStationsPage())
+     ).subscribe();
   }
 
   disableButton(invalidform : boolean){
     return invalidform || this.launchAction; 
-  }
-
-  switchLanguage(lang : string){
-      this.translateService.use(lang);
   }
 
   /** Method to create a station */
@@ -192,6 +167,10 @@ export class SearchStationComponent implements OnInit {
      this.dataSource.findStations(this.criteriaSearch);
    }
 
+   /**
+    * Count the number of station total
+    * @param criteria 
+    */
    countStationsByCrit(criteria : CriteriaSearchStation){
     this.trafficstationService.countStations(criteria).subscribe(
       (countStation : number) => {
@@ -211,24 +190,4 @@ export class SearchStationComponent implements OnInit {
   
   }
   
-
-  async login() {
-    await this.oauthService.initImplicitFlow();
-  }
-
-  logout() {
-    this.oauthService.logOut();
-  }
-
-  get givenName() {
-    let value = this.oauthService.authorizationHeader;
-
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    return claims['name'];
-  }
-
-
 }

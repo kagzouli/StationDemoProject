@@ -28,5 +28,30 @@ export class AppComponent {
     })
     });
    }
+
+
+   /**
+    * Login to the application 
+    *
+    */
+   login() {
+      this.oauthService.initImplicitFlow();
+   }
+
+
+  /**
+   * Get the given name
+   * 
+   */
+  get givenName() {
+    let value = this.oauthService.authorizationHeader;
+
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    return claims['name'];
+  }
+
   }
   

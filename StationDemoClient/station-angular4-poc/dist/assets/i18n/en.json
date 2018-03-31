@@ -1,5 +1,5 @@
 {
-    "HELLO_MESSAGE": "Search station (User : {{name}}) -- ",
+    "HELLO_MESSAGE": "StationDemoWeb (User : {{name}}) -- ",
     "ROLE_MESSAGE": "Role  : {{roleStore}}",
     "LOGOUT": "Logout",
     "NETWORK_LABEL": "Network",

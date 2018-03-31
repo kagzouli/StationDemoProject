@@ -1,3 +1,14 @@
-<div class=”container”>
-  <router-outlet></router-outlet>
+<div *ngIf="!givenName">
+  <button class="button" (click)="login()">Login</button>
+</div>`
+
+<div *ngIf="givenName">
+    
+  <div class=”container”>
+    <!-- Header -->
+    <app-header-station></app-header-station>
+
+    <!-- Body -->
+    <router-outlet></router-outlet>
+  </div>
 </div>
