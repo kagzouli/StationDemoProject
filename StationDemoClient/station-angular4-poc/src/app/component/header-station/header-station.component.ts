@@ -56,6 +56,10 @@ export class HeaderStationComponent implements OnInit {
     if (!claims) {
       return null;
     }
+
+    console.log('Test : ' + claims['sub']);
+    console.log('Test2 : ' + claims['groups']);
+
     return claims['name'];
   }
 

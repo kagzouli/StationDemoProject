@@ -15,8 +15,8 @@ export class AppComponent {
   constructor(private oauthService: OAuthService, private router : Router) {
     this.oauthService.clientId = '0oaeg3yghaL9mQalz0h7';
     this.oauthService.scope = 'openid profile email';
-    this.oauthService.setStorage(sessionStorage);
-    this.oauthService.issuer = 'https://dev-884254.oktapreview.com';
+  //  this.oauthService.setStorage(sessionStorage);
+    this.oauthService.issuer = 'https://dev-884254.oktapreview.com/oauth2/default';
     this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
     //this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
     this.oauthService.oidc= true,
