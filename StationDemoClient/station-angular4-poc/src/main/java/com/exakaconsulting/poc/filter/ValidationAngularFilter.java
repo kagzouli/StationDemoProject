@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ValidationAngularFilter implements Filter{
 	
@@ -35,7 +34,8 @@ public class ValidationAngularFilter implements Filter{
 		final String uri = httpRequest.getRequestURI();
 		
 		if (uri != null && !LIST_STATIC_CONTENT.stream().anyMatch(staticContent -> uri.endsWith(staticContent))){
-			 ((HttpServletResponse) response).sendRedirect(uri);
+			 RequestDispatcher requestDispatcher=request.getRequestDispatcher(uri.substring(request.getServletContext().getContextPath().length()));  
+			 requestDispatcher.forward(request, response);  			
 		}else{
 			 chain.doFilter(request, response);			
 		}
