@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  *
  * @author pascal alma
  */
-public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken {
+public class JwtAuthenticationTokenBean extends UsernamePasswordAuthenticationToken {
 
 
     /**
@@ -18,7 +18,7 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
 	private static final long serialVersionUID = 8454892849384115949L;
 	private String token;
 
-    public JwtAuthenticationToken(String token) {
+    public JwtAuthenticationTokenBean(String token) {
         super(null, null);
         this.token = token;
     }
@@ -53,7 +53,7 @@ public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken 
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JwtAuthenticationToken other = (JwtAuthenticationToken) obj;
+		JwtAuthenticationTokenBean other = (JwtAuthenticationTokenBean) obj;
 		if (token == null) {
 			if (other.token != null)
 				return false;
