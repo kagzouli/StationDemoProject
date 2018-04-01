@@ -27,10 +27,16 @@ public class ValidationAngularFilter implements Filter{
 			throws IOException, ServletException {
 		
 		 // Make to avoid loosing angular context when hashStrategy=false (PathStrategy)
-		 RequestDispatcher requestDispatcher=request.getRequestDispatcher(INDEX_HTML);  
-		 requestDispatcher.include(request, response);  
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		final String uri = httpRequest.getRequestURI();
 		
-		 chain.doFilter(request, response);
+		if (uri != null && !uri.endsWith(INDEX_HTML)){
+			 RequestDispatcher requestDispatcher=request.getRequestDispatcher(INDEX_HTML);  
+			 requestDispatcher.include(request, response);  			
+		}else{
+			 chain.doFilter(request, response);			
+		}
+		
 		
 	}
 	
