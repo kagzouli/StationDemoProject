@@ -363,11 +363,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 						break;
 					case "ville":
 						order = "TRAF_VILL ";
-						break;
-					default:
-						order = "TRAF_TRAF ";
-						break;
-						
+						break;						
 				}
 				order = order + " " + StringUtils.upperCase(orderBean.getDirection());	
 				

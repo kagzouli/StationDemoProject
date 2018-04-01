@@ -24,6 +24,7 @@
 	   <java-jwt.version>3.3.0</java-jwt.version>
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
+	   <mockito.version>2.13.0</mockito.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
@@ -222,7 +223,13 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>test</scope>
-		 </dependency>				
+		 </dependency>
+		 <dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>		 
 
 		<!-- Security -->
 		<dependency>

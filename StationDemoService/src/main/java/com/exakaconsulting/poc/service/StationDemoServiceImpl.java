@@ -24,7 +24,7 @@ import static com.exakaconsulting.poc.service.ConstantStationDemo.TRANSACTIONAL_
 @Service
 public class StationDemoServiceImpl implements IStationDemoService{
 	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
+	 private static final Logger LOGGER = LoggerFactory.getLogger(IStationDemoService.class);
 	 
 	 @Autowired
 	 private IStationDemoDao stationDemoDao;

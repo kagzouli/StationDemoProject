@@ -39,10 +39,7 @@ public class TestStationDemoDao extends AbstractServiceTest{
 		criteria.setTrafficMin(1L);
 		criteria.setPage(1);
 		criteria.setNumberMaxElements(100);
-		OrderBean stationOrder = new OrderBean();
-		stationOrder.setColumn("station");
-		stationOrder.setDirection("asc");
-		criteria.setOrders(Arrays.asList(stationOrder));
+		criteria.setOrders(Arrays.asList(new OrderBean("station" , "asc") , new OrderBean("reseau" , "asc") , new OrderBean("ville" , "desc")));
 		criteria.setTrafficMax(5000000000L);
 		criteria.setVille(VILLE_PORTE_CHOISY);
 		criteria.setArrondiss(ARROND_PORTE_CHOISY);

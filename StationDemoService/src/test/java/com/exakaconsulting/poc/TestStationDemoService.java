@@ -21,8 +21,14 @@ import com.exakaconsulting.poc.service.TrafficStationBean;
 
 public class TestStationDemoService extends AbstractServiceTest{
 	
+	
 	@Autowired
 	private IStationDemoService stationDemoService;
+	
+	/**
+	 * Test the LOGGER with a mock
+	 * 
+	 */
 
 	
 	@Test
@@ -146,6 +152,16 @@ public class TestStationDemoService extends AbstractServiceTest{
 		Integer count = this.stationDemoService.countStations(criteria);
 		assertTrue(count == 19);
 	}
+	
+	@Test
+	public void testCountNumberWithStationCrit(){
+		CriteriaSearchTrafficStation criteria = new CriteriaSearchTrafficStation();
+		criteria.setStation(STATION_PORTE_CHOISY);
+		
+		Integer count = this.stationDemoService.countStations(criteria);
+		assertTrue(count == 1);
+	}
+
 	
 	@Test
 	public void insertStationAlreadyExists(){

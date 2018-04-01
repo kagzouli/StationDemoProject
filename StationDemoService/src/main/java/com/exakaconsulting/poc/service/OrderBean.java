@@ -12,6 +12,15 @@ public class OrderBean implements Serializable{
 	private String column;
 	
 	private String direction;
+	
+	public OrderBean(){
+		super();
+	}
+	
+	public OrderBean(final String column, final String direction){
+		this.column     = column;
+		this.direction  = direction;
+	}
 
 	public String getColumn() {
 		return column;

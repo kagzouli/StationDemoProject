@@ -6,8 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -27,6 +29,14 @@ public abstract class AbstractServiceTest {
 	static final List<String> CORRESPOND_PORTE_CHOISY = Arrays.asList("7");
 	static final String VILLE_PORTE_CHOISY = "Paris"; 
 	static final Integer ARROND_PORTE_CHOISY = 13;
+	
+	@Before
+	public void beforeTest(){
+		
+		Logger logger = Mockito.mock(Logger.class);
+        Mockito.when(logger.isInfoEnabled()).thenReturn(true);
+	}
+
 	
 	protected void controlPorteChoisy(final TrafficStationBean trafficStationBean){
 		assertNotNull(trafficStationBean);
