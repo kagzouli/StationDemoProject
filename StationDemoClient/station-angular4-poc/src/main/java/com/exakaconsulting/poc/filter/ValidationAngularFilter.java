@@ -18,7 +18,7 @@ public class ValidationAngularFilter implements Filter{
 	private static final String INDEX_HTML = "/index.html";
 	
 	// All the static 
-	private static final List<String> LIST_STATIC_CONTENT = Arrays.asList(".css", ".js" , ".gif" , ".jpeg" , ".png", ".html", ".html");
+	private static final List<String> LIST_STATIC_CONTENT = Arrays.asList(".css", ".js" , ".gif" , ".jpeg" , ".png", ".html", ".html" , ".json");
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
