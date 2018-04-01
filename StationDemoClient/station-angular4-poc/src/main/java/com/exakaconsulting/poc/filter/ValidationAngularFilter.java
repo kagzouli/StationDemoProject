@@ -10,6 +10,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 public class ValidationAngularFilter implements Filter{
+	
+	private static final String INDEX_HTML = "/index.html";
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -20,6 +22,10 @@ public class ValidationAngularFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		
+		// Make to avoid loosing angular context when hashStrategy=false (PathStrategy)
+		request.getRequestDispatcher(INDEX_HTML).forward(request, response);
+		
 		 chain.doFilter(request, response);
 		
 	}
