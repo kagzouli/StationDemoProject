@@ -40,6 +40,13 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	static final String BEGIN_UPDATE_SQL = "update TRAF_STAT SET ";
 
 	static final String DELETE_TRAFFIC_SQL = "delete from TRAF_STAT WHERE TRAF_IDEN = :id";
+	
+	static final String ERROR_CRITERIA_MUSTSET = "The criteria must be set";
+	static final String ERROR_ID_MUSTBESET     = "The id must be set";
+	
+	static final String RESEAU_PARAM  = "reseau";
+	static final String STATION_PARAM = "station";
+	static final String TRAFFIC_PARAM = "traffic";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -51,17 +58,17 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 	
 	@Override
-	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) throws TechnicalException {
+	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) {
 		Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
 
 		try {
 			
 			Map<String, Object> params = new HashMap<>();
-			params.put("reseau", trafficStationBean.getReseau());
+			params.put(RESEAU_PARAM, trafficStationBean.getReseau());
 			if (trafficStationBean.getStation() != null){
-			   params.put("station", StringUtils.upperCase(trafficStationBean.getStation()));
+			   params.put(STATION_PARAM, StringUtils.upperCase(trafficStationBean.getStation()));
 			}
-			params.put("traffic", trafficStationBean.getTraffic());
+			params.put(TRAFFIC_PARAM, trafficStationBean.getTraffic());
 			if (trafficStationBean.getListCorrespondance() != null){
 				params.put("corres", StringUtils.join(trafficStationBean.getListCorrespondance(),","));
 			}else{
@@ -86,9 +93,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) throws TechnicalException {
+	public List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria){
 
-		Assert.notNull(criteria, "The criteria must be set");
+		Assert.notNull(criteria, ERROR_CRITERIA_MUSTSET);
 
 		LOGGER.info("BEGIN of the method searchStations  of the class " + StationDemoDaoImpl.class.getName());
 
@@ -133,7 +140,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				requestSql.append(offset);
 			}
 			
-			LOGGER.info("Request SQL search  :" + requestSql.toString());
+			if (LOGGER.isInfoEnabled()){
+				LOGGER.info("Request SQL search  :" + requestSql.toString());				
+			}
 
 
 			listStationsSearch = this.jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
@@ -149,7 +158,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	@Override
 	public Integer countStations(CriteriaSearchTrafficStation criteria) {
 		
-		Assert.notNull(criteria, "The criteria must be set");
+		Assert.notNull(criteria, ERROR_CRITERIA_MUSTSET);
 
 		LOGGER.info("BEGIN of the method countStations  of the class " + StationDemoDaoImpl.class.getName());
 
@@ -168,9 +177,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			}
 			
 			
-			
-			LOGGER.info("Request SQL search  :" + requestSql.toString());
-
+			if (LOGGER.isInfoEnabled()){
+				LOGGER.info("Request SQL search  :" + requestSql.toString());				
+			}
 
 			countStations = this.jdbcTemplate.queryForObject(requestSql.toString(), params, Integer.class);
 			LOGGER.info("END of the method countStations of the class " + StationDemoDaoImpl.class.getName());
@@ -185,14 +194,14 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public TrafficStationBean findStationByName(String name) throws TechnicalException {
+	public TrafficStationBean findStationByName(String name)  {
 		Assert.notNull(name, "The name must be set");
 		
 		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_STAT = :station";
 		
 		//parameters
 		Map<String, Object> params = new HashMap<>();
-		params.put("station", name);	
+		params.put(STATION_PARAM, name);	
 		
 		TrafficStationBean trafficStation = null;
 		
@@ -208,8 +217,8 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public TrafficStationBean findStationById(Integer id) throws TechnicalException {
-		Assert.notNull(id, "The id must be set");
+	public TrafficStationBean findStationById(Integer id)  {
+		Assert.notNull(id, ERROR_ID_MUSTBESET);
 
 		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_IDEN = :id";		
 		//parameters
@@ -233,7 +242,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 	@Override
 	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) {
-		Assert.notNull(id, "The id must be set");
+		Assert.notNull(id, ERROR_ID_MUSTBESET);
 		
 		Map<String, Object> params = new HashMap<>();
 
@@ -265,7 +274,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 	@Override
 	public void deleteTrafficStation(Integer id) {
-		Assert.notNull(id, "The id must be set");
+		Assert.notNull(id, ERROR_ID_MUSTBESET);
 
 		try{
 			Map<String, Object> params = new HashMap<>();
@@ -286,7 +295,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	 * @return Return the where param sql.<br/>
 	 */
 	private WhereParamSql createWhereParamSql(final CriteriaSearchTrafficStation criteria){
-		Assert.notNull(criteria, "The criteria must be set");
+		Assert.notNull(criteria, ERROR_CRITERIA_MUSTSET);
 
 		WhereParamSql whereParamSql = new WhereParamSql();
 		
@@ -296,12 +305,12 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		
 		if (!StringUtils.isBlank(criteria.getReseau())){
 			listWhereVariable.add("TRAF_RESE = :reseau");
-			params.put("reseau", criteria.getReseau());				
+			params.put(RESEAU_PARAM, criteria.getReseau());				
 		}
 		
 		if (!StringUtils.isBlank(criteria.getStation())){
 			listWhereVariable.add("TRAF_STAT like :station");
-			params.put("station", criteria.getStation() + "%");				
+			params.put(STATION_PARAM, criteria.getStation() + "%");				
 			
 		}
 		
@@ -346,10 +355,10 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			for (OrderBean orderBean : listOrder){
 				String order = "";
 				switch(orderBean.getColumn()){
-					case "station":
+					case STATION_PARAM:
 						order = "TRAF_STAT ";
 						break;
-					case "reseau":
+					case RESEAU_PARAM:
 						order = "TRAF_RESE ";
 						break;
 					case "ville":
