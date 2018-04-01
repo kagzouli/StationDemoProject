@@ -11,15 +11,20 @@ import org.slf4j.LoggerFactory;
 
 public class Application {
 	
-	static final File file = new File("D:\\Karim\\dev\\workspace\\StationDemoProject\\StationDemoBatch\\src\\main\\resources\\trafic-annuel-entrant-par-station-du-reseau-ferre.csv");
+	private static final String STR_FILE_READER = "D:\\Karim\\dev\\workspace\\StationDemoProject\\StationDemoBatch\\src\\main\\resources\\trafic-annuel-entrant-par-station-du-reseau-ferre.csv";
+	
+	static final File file = new File(STR_FILE_READER);
 
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+	
+	private static final String SEPARATOR_VALUE_INSERT = "' , '";
 
+	private static final String STR_FILE_WRITTER = "D:\\Karim\\dev\\workspace\\Swriter.txt";
 	
 	public static void main(String[] args){
-		
-		try(FileWriter fileWriter = new FileWriter(new File("D:\\Karim\\dev\\workspace\\Swriter.txt"));
+				
+		try(FileWriter fileWriter = new FileWriter(new File(STR_FILE_WRITTER));
 				BufferedReader fileReader = new BufferedReader(new FileReader(file))
 				){
 			
@@ -32,11 +37,11 @@ public class Application {
 				fileWriter.append("INSERT INTO TRAF_STAT(TRAF_RESE, TRAF_STAT, TRAF_TRAF, TRAF_CORR, TRAF_VILL, TRAF_ARRO) values ")
 				.append("('")
 				.append(StringUtils.replace(values[1] , "Métro" , "Metro"))
-				.append("' , '")
+				.append(SEPARATOR_VALUE_INSERT)
 				.append(StringUtils.replace(values[2], "'", "''"))
-				.append("' , '")
+				.append(SEPARATOR_VALUE_INSERT)
 				.append(values[3])
-				.append("' , '");
+				.append(SEPARATOR_VALUE_INSERT);
 				
 				String corrs = "";
 				

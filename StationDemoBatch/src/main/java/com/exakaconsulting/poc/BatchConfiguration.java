@@ -1,8 +1,6 @@
 package com.exakaconsulting.poc;
 
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.h2.Driver;
@@ -41,7 +39,7 @@ public class BatchConfiguration {
 	
 	@Bean(DATASOURCE_STATION)
     @Primary
-    public DataSource dataSource() throws SQLException {
+    public DataSource dataSource() {
 		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
 		banqueDatasource.setDriverClassName(Driver.class.getName());
 		banqueDatasource.setUrl("jdbc:h2:~/data/trafstats1;INIT=create schema if not exists users1\\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'");
@@ -59,7 +57,7 @@ public class BatchConfiguration {
         
         // Create a delimitedLineTokenizer
         DelimitedLineTokenizer delimitterLine =  new DelimitedLineTokenizer();
-        delimitterLine.setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" });
+        delimitterLine.setNames("rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" );
             delimitterLine.setDelimiter(";");
        
         
