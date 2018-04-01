@@ -56,15 +56,23 @@ public class BatchConfiguration {
         FlatFileItemReader<TrafficStationCsvBean> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("trafic-annuel-entrant-par-station-du-reseau-ferre.csv"));
         reader.setLinesToSkip(1);
-        reader.setLineMapper(new DefaultLineMapper<TrafficStationCsvBean>() {{
-            setLineTokenizer(new DelimitedLineTokenizer() {{
-                setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" });
-                setDelimiter(";");
-            }});
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<TrafficStationCsvBean>() {{
-                setTargetType(TrafficStationCsvBean.class);
-            }});
-        }});
+        
+        // Create a delimitedLineTokenizer
+        DelimitedLineTokenizer delimitterLine =  new DelimitedLineTokenizer();
+        delimitterLine.setNames(new String[] { "rang", "reseau", "station", "traffic" , "correspondance1", "correspondance2" , "correspondance3"  , "correspondance4" , "correspondance5" , "ville" , "arrondissement" , "column12" , "column13" , "column14" , "column15" });
+            delimitterLine.setDelimiter(";");
+       
+        
+        // Create a BeanWrapperFieldSetMapper
+        BeanWrapperFieldSetMapper<TrafficStationCsvBean> beanWrapper =  new BeanWrapperFieldSetMapper<>(); 
+        beanWrapper.setTargetType(TrafficStationCsvBean.class);
+        
+        // Create a DefaultLineMapper
+        DefaultLineMapper<TrafficStationCsvBean> defaultLineMapper = new DefaultLineMapper<>();
+        defaultLineMapper.setLineTokenizer(delimitterLine);
+        defaultLineMapper.setFieldSetMapper(beanWrapper);
+        
+        reader.setLineMapper(defaultLineMapper);
         return reader;
     }
     
