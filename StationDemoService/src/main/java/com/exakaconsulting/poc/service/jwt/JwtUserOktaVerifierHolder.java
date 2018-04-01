@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.exakaconsulting.poc.service.TechnicalException;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.okta.jwt.JwtHelper;
 import com.okta.jwt.JwtVerifier;
@@ -15,6 +19,9 @@ import com.okta.jwt.JwtVerifier;
  *
  */
 public class JwtUserOktaVerifierHolder {
+	
+	 private static final Logger LOGGER = LoggerFactory.getLogger(JwtUserOktaVerifierHolder.class);
+
 	
 	private static final JwtUserOktaVerifierHolder INSTANCE = new JwtUserOktaVerifierHolder();
 
@@ -36,23 +43,26 @@ public class JwtUserOktaVerifierHolder {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	protected synchronized JwtVerifier getInstanceJwtVerifier(final String issuerUrl , final String oktaClientId) throws ParseException, IOException{
+	protected synchronized JwtVerifier getInstanceJwtVerifier(final String issuerUrl , final String oktaClientId){
 		
 		// Generate the key associated to this 2 parameters
 		final String keyCache = issuerUrl + "/" + oktaClientId;
 		
-		JwtVerifier jwtVerifier = mapJwtVerifiers.get(keyCache);
-		if (jwtVerifier == null){
-			jwtVerifier = new JwtHelper()
-				    .setIssuerUrl(issuerUrl)
-				    .setAudience("api://default")  
-				    .setConnectionTimeout(1000)    
-				    .setReadTimeout(1000)          
-				    .setClientId(oktaClientId) 
-				    .build();
-			mapJwtVerifiers.put(keyCache, jwtVerifier);
-
-		}
-		return jwtVerifier;
+		
+		return mapJwtVerifiers.computeIfAbsent(keyCache, jwtVerifier->  {
+				try {
+					return new JwtHelper()
+						    .setIssuerUrl(issuerUrl)
+						    .setAudience("api://default")  
+						    .setConnectionTimeout(1000)    
+						    .setReadTimeout(1000)          
+						    .setClientId(oktaClientId) 
+						    .build();
+				} catch (ParseException | IOException exception) {
+					LOGGER.error(exception.getMessage());
+					throw new TechnicalException(exception);
+				}
+		});
+		
 	}
 }
