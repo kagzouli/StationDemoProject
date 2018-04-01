@@ -23,9 +23,20 @@
 	   <springjwt.version>1.0.9.RELEASE</springjwt.version>
 	   <java-jwt.version>3.3.0</java-jwt.version>
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
+	   <jacoco.version>0.7.6.201602180812</jacoco.version>
+	   
+	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
 	   <sonar.inclusions>**/*Service*.java, **/*Dao*.java, **/*Controller*.java</sonar.inclusions>
-
+	   <sonar.sources>src/main</sonar.sources>
+	   <!-- Below property indicates the pattern of the test suite -->
+	   <runSuite>**/*Test.class</runSuite>
+	   <!-- Sonar-JaCoCo properties -->
+	   <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+	   <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+	   <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+	   <sonar.language>java</sonar.language>
+	   
 	   </properties>
 	
 	<distributionManagement>
@@ -291,7 +302,32 @@
         		   <version>3.3.0.603</version>
       			</plugin>
 				
+				<plugin>
+				  <groupId>org.jacoco</groupId>
+				  <artifactId>jacoco-maven-plugin</artifactId>
+				  <version>${jacoco.version}</version>
+			  </plugin>				
 			</plugins>
 		</pluginManagement>
+		<plugins>
+		   <plugin>
+			 <groupId>org.jacoco</groupId>
+			 <artifactId>jacoco-maven-plugin</artifactId>
+			 <version>${jacoco.version}</version>
+			 <configuration>
+			    <destFile>${sonar.jacoco.reportPath}</destFile>
+				<append>true</append>
+			 </configuration>
+		     <executions>
+				<execution>
+				  <id>agent</id>
+					<goals>
+					   <goal>prepare-agent</goal>
+					</goals>
+				</execution>
+			 </executions>
+		   </plugin>
+		</plugins>
+		
 	</build>
 </project>
