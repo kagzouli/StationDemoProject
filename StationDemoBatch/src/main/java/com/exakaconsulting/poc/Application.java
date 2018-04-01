@@ -6,10 +6,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Application {
 	
 	static final File file = new File("D:\\Karim\\dev\\workspace\\StationDemoProject\\StationDemoBatch\\src\\main\\resources\\trafic-annuel-entrant-par-station-du-reseau-ferre.csv");
+
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
 	
 	public static void main(String[] args){
@@ -18,8 +23,7 @@ public class Application {
 				BufferedReader fileReader = new BufferedReader(new FileReader(file))
 				){
 			
-			String chaine = "";
-			fileReader.readLine();
+			String chaine = fileReader.readLine();
 			while ((chaine = fileReader.readLine()) != null){
 				final String utf8 =new String(chaine.getBytes(),"UTF-8");
 				
@@ -81,7 +85,7 @@ public class Application {
 			 
 			
 		}catch(Exception exception){
-			exception.printStackTrace();
+			LOGGER.error(exception.getMessage() , exception);
 		}
 	}
 }
