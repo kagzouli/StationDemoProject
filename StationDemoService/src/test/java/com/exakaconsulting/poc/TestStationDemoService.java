@@ -45,7 +45,7 @@ public class TestStationDemoService extends AbstractServiceTest{
 			int value = this.stationDemoService.insertTrafficStation(trafficStation);
 			assertTrue(value > 0);
 		}catch(AlreadyStationExistsException exception){
-			assertEquals(false, true);
+			assertTrue(false);
 		}
 		
 		listStations = this.stationDemoService.findStations(emptyCriteria);
@@ -159,7 +159,7 @@ public class TestStationDemoService extends AbstractServiceTest{
 			
 		try{
 			this.stationDemoService.insertTrafficStation(trafficStation);
-			assertEquals(false,true);
+			assertTrue(false);
 		}catch(AlreadyStationExistsException exception){
 			assertTrue(true);
 		}

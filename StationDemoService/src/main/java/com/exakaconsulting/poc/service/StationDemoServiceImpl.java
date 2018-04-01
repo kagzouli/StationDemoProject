@@ -94,13 +94,17 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	@Override
 	public TrafficStationBean findStationById(Integer id) {
 		Assert.notNull(id , "The id station must be set");
-		
-		LOGGER.info("BEGIN of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");
+
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info("BEGIN of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");			
+		}
 		
 
 		TrafficStationBean trafficStation = stationDemoDao.findStationById(id);
 
-		LOGGER.info("END of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info("END of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");			
+		}
 		
 		return trafficStation;
 	}

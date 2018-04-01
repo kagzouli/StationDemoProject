@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
-@Api(value = "/", description = "This REST API is use to have informations about the traffic on the station.<br/>")
+@Api(value = "/")
 public class StationDemoController {
 	
 	

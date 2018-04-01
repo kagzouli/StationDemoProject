@@ -16,7 +16,7 @@ public class JsonResult<T> implements Serializable{
 	private static final long serialVersionUID = 4558043804188367882L;
 
 	@ApiModelProperty(value="The data to return")
-	private T result;
+	private transient T result;
 	
 	@ApiModelProperty(value="The list of informations")
 	private List<String> infos = new ArrayList<>();
