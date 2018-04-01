@@ -14,6 +14,13 @@
 	</properties>
 
 	<dependencies>	
+	
+		<!--  Add it to the Add a validation filter to this "web.xml" of sonar -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+	
 	</dependencies>
 
 	<build>
