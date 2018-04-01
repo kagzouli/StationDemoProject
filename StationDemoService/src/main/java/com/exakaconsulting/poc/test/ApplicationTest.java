@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -17,6 +18,7 @@ import com.exakaconsulting.poc.service.ConstantStationDemo;
 
 @Configuration
 @ComponentScan({"com.exakaconsulting.poc.service" ,  "com.exakaconsulting.poc.dao"})
+@PropertySource("classpath:configServices.properties")
 public class ApplicationTest {
 	
 	@Bean(ConstantStationDemo.DATASOURCE_STATION)
