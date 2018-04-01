@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ValidationAngularFilter implements Filter{
 	
-	private static final String INDEX_HTML = "/index.html";
 	
 	// All the static 
 	private static final List<String> LIST_STATIC_CONTENT = Arrays.asList(".css", ".js" , ".gif" , ".jpeg" , ".png", ".html", ".html");
@@ -35,7 +34,7 @@ public class ValidationAngularFilter implements Filter{
 		final String uri = httpRequest.getRequestURI();
 		
 		if (uri != null && !LIST_STATIC_CONTENT.stream().anyMatch(staticContent -> uri.endsWith(staticContent))){
-			 RequestDispatcher requestDispatcher=request.getRequestDispatcher(INDEX_HTML);  
+			 RequestDispatcher requestDispatcher=request.getRequestDispatcher(uri);  
 			 requestDispatcher.include(request, response);  			
 		}else{
 			 chain.doFilter(request, response);			
