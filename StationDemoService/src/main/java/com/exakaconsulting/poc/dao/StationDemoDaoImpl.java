@@ -197,7 +197,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	public TrafficStationBean findStationByName(String name)  {
 		Assert.notNull(name, "The name must be set");
 		
-		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_STAT = :station";
+		final String REQUEST_SQL = REQUEST_ALL_SQL + "  WHERE TRAF_STAT = :station";
 		
 		//parameters
 		Map<String, Object> params = new HashMap<>();
@@ -206,7 +206,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		TrafficStationBean trafficStation = null;
 		
 		try{
-			trafficStation = this.jdbcTemplate.queryForObject(SQL, params, new TrafficStationRowMapper());
+			trafficStation = this.jdbcTemplate.queryForObject(REQUEST_SQL, params, new TrafficStationRowMapper());
 		}catch(EmptyResultDataAccessException exception){
 			LOGGER.warn("No traffic has been found for name = ['"+ name + "']");
 		}catch(Exception exception){
@@ -220,7 +220,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	public TrafficStationBean findStationById(Integer id)  {
 		Assert.notNull(id, ERROR_ID_MUSTBESET);
 
-		final String SQL = REQUEST_ALL_SQL + "  WHERE TRAF_IDEN = :id";		
+		final String REQUEST_SQL = REQUEST_ALL_SQL + "  WHERE TRAF_IDEN = :id";		
 		//parameters
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);	
@@ -228,7 +228,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		
 		TrafficStationBean trafficStation = null;
 		try{
-			trafficStation = this.jdbcTemplate.queryForObject(SQL, params, new TrafficStationRowMapper());
+			trafficStation = this.jdbcTemplate.queryForObject(REQUEST_SQL, params, new TrafficStationRowMapper());
 		}catch(EmptyResultDataAccessException exception){
 			LOGGER.warn("No traffic has been found for id = ['"+ id + "']");
 		}catch(Exception exception){
@@ -260,10 +260,10 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			
 		params.put("id", id);
 		
-		final String SQL= BEGIN_UPDATE_SQL + StringUtils.join(listUpdateVariable , " ,") + " WHERE TRAF_IDEN = :id";
+		final String REQUEST_SQL= BEGIN_UPDATE_SQL + StringUtils.join(listUpdateVariable , " ,") + " WHERE TRAF_IDEN = :id";
 		
 		try{
-			this.jdbcTemplate.update(SQL, params);
+			this.jdbcTemplate.update(REQUEST_SQL, params);
 		}catch(Exception exception){
 			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
