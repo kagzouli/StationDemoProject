@@ -28,8 +28,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.INSERT_TRAFFIC_SQL;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 
 
 
@@ -37,7 +36,7 @@ import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_ST
 @EnableBatchProcessing
 public class BatchConfiguration {
 	
-	@Bean(DATASOURCE_STATION)
+	@Bean(ConstantStationDemo.DATASOURCE_STATION)
     @Primary
     public DataSource dataSource() {
 		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
@@ -108,7 +107,7 @@ public class BatchConfiguration {
         databaseItemWriter.setDataSource(dataSource);
         databaseItemWriter.setJdbcTemplate(jdbcTemplate);
  
-        databaseItemWriter.setSql(INSERT_TRAFFIC_SQL);
+        databaseItemWriter.setSql(ConstantStationDemo.INSERT_TRAFFIC_SQL);
  
         ItemPreparedStatementSetter<TrafficStationBean> valueSetter = 
                 new TrafficStationPreparedStatement();

@@ -1,7 +1,6 @@
 package com.exakaconsulting.poc;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 
 import javax.sql.DataSource;
 
@@ -28,9 +27,9 @@ public class AbstractApplication implements WebMvcConfigurer{
 	}
 	
 	
-	@Bean(TRANSACTIONAL_DATASOURCE_STATION)
+	@Bean(ConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION)
 	public PlatformTransactionManager transactionBanqueBean(final ApplicationContext appContext){
-		return new DataSourceTransactionManager(appContext.getBean(DATASOURCE_STATION, DataSource.class));
+		return new DataSourceTransactionManager(appContext.getBean(ConstantStationDemo.DATASOURCE_STATION, DataSource.class));
 	}
 
 

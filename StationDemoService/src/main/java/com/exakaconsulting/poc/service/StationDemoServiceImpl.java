@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 
 import com.exakaconsulting.poc.dao.IStationDemoDao;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
+import static com.exakaconsulting.poc.service.ConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
 
 
 /**

@@ -1,7 +1,5 @@
 package com.exakaconsulting.poc.web;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.STATION_ALREADY_EXISTS;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.exakaconsulting.poc.service.AlreadyStationExistsException;
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
@@ -137,7 +136,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());
-			jsonResult.addError(messageSource.getMessage(STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, LocaleContextHolder.getLocale()));
+			jsonResult.addError(messageSource.getMessage(ConstantStationDemo.STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, LocaleContextHolder.getLocale()));
 			jsonResult.setSuccess(false);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);

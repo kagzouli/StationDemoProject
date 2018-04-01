@@ -1,6 +1,6 @@
 package com.exakaconsulting.poc;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 
 import javax.sql.DataSource;
 
@@ -33,7 +33,7 @@ public class Application extends AbstractApplication{
 	}
 	
 		
-	@Bean(DATASOURCE_STATION)
+	@Bean(ConstantStationDemo.DATASOURCE_STATION)
 	@Primary
 	public DataSource datasource(){
 		JndiDataSourceLookup jndiBanqueDatasourceLookup = new JndiDataSourceLookup();

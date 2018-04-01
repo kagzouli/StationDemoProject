@@ -6,6 +6,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exakaconsulting.poc.test.ApplicationTest;
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
 @Transactional

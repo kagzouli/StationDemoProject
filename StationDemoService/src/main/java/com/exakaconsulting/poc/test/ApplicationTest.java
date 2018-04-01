@@ -1,7 +1,5 @@
-package com.exakaconsulting.poc;
+package com.exakaconsulting.poc.test;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
 
 import javax.sql.DataSource;
 
@@ -15,11 +13,13 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.exakaconsulting.poc.service.ConstantStationDemo;
+
 @Configuration
 @ComponentScan({"com.exakaconsulting.poc.service" ,  "com.exakaconsulting.poc.dao"})
 public class ApplicationTest {
 	
-	@Bean(DATASOURCE_STATION)
+	@Bean(ConstantStationDemo.DATASOURCE_STATION)
 	@Primary
 	public DataSource datasource(){
 		DriverManagerDataSource banqueDatasource = new DriverManagerDataSource();
@@ -31,9 +31,9 @@ public class ApplicationTest {
 
 	}
 	
-	@Bean(TRANSACTIONAL_DATASOURCE_STATION)
+	@Bean(ConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION)
 	public PlatformTransactionManager transactionBanqueBean(final ApplicationContext appContext){
-		return new DataSourceTransactionManager(appContext.getBean(DATASOURCE_STATION, DataSource.class));
+		return new DataSourceTransactionManager(appContext.getBean(ConstantStationDemo.DATASOURCE_STATION, DataSource.class));
 	}
 
 

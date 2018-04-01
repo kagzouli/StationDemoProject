@@ -19,12 +19,12 @@ import org.springframework.util.Assert;
 import org.apache.commons.lang3.StringUtils;
 
 import com.exakaconsulting.poc.service.AbstractCriteriaSearch;
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
-import static com.exakaconsulting.poc.service.IConstantStationDemo.DATASOURCE_STATION;
 
 @Repository
 public class StationDemoDaoImpl implements IStationDemoDao{
@@ -52,7 +52,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Autowired
-	@Qualifier(DATASOURCE_STATION)
+	@Qualifier(ConstantStationDemo.DATASOURCE_STATION)
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}

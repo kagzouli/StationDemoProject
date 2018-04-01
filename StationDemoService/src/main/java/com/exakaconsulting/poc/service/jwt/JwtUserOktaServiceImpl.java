@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.okta.jwt.Jwt;
 import com.okta.jwt.JwtVerifier;
 
 import net.minidev.json.JSONArray;
-
-import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_OKTA_SERVICE;
-import static com.exakaconsulting.poc.service.IConstantStationDemo.JWT_USER_OKTA_PROFILE;
 
 import java.util.Map;
 
@@ -21,8 +19,8 @@ import org.springframework.util.Assert;
 
 
 
-@Service(JWT_USER_OKTA_SERVICE)
-@Profile({JWT_USER_OKTA_PROFILE, "default"})
+@Service(ConstantStationDemo.JWT_USER_OKTA_SERVICE)
+@Profile({ConstantStationDemo.JWT_USER_OKTA_PROFILE, "default"})
 public class JwtUserOktaServiceImpl implements IJwtUserService {
 	
 	/** Logger **/
