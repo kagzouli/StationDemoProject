@@ -52,6 +52,8 @@ public class StationDemoController {
 	@Autowired
 	private MessageSource messageSource;
 	
+	private static final String ERROR_ID_MUST_BE_SET = "The id must be set";
+	
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by criteria", response = TrafficStationBean.class, responseContainer = "List")
 	@RequestMapping(value = FIND_STAT_CRIT, method = { RequestMethod.POST}, consumes = {
@@ -104,7 +106,7 @@ public class StationDemoController {
 		LOGGER.info("BEGIN of the method findTrafficStationById of the class " + StationDemoController.class.getName());
 		TrafficStationBean trafficStationBean =  null;
 		try {
-			Assert.notNull(id, "The id must be set");
+			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			
 			trafficStationBean = this.stationDemoService.findStationById(id);
 		} catch (Exception exception) {
@@ -154,7 +156,7 @@ public class StationDemoController {
 		LOGGER.info("BEGIN of the method updateTrafficStation of the class " + StationDemoController.class.getName());
 		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
-			Assert.notNull(id, "The id must be set");
+			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			
 			this.stationDemoService.updateTrafficStation(newTraffic, newCorr, id);
 			jsonResult.setSuccess(true);
@@ -174,7 +176,7 @@ public class StationDemoController {
 		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoController.class.getName());
 		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
-			Assert.notNull(id, "The id must be set");
+			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			this.stationDemoService.deleteTrafficStation(id);
 			jsonResult.setSuccess(true);
 		} catch (Exception exception) {

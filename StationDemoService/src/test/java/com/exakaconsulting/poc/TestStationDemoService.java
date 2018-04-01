@@ -45,7 +45,7 @@ public class TestStationDemoService extends AbstractServiceTest{
 			int value = this.stationDemoService.insertTrafficStation(trafficStation);
 			assertTrue(value > 0);
 		}catch(AlreadyStationExistsException exception){
-			assertEquals(true, false);
+			assertEquals(false, true);
 		}
 		
 		listStations = this.stationDemoService.findStations(emptyCriteria);
@@ -74,8 +74,8 @@ public class TestStationDemoService extends AbstractServiceTest{
 		final String STATION = "PORTE DE CHOI";	
 		final TrafficStationBean trafficUnicSta = this.getUnicTrafficStation(STATION);
 		
-		assertEquals(trafficUnicSta.getReseau(), "Metro");
-		assertEquals(trafficUnicSta.getStation() , "PORTE DE CHOISY");
+		assertEquals("Metro" , trafficUnicSta.getReseau());
+		assertEquals("PORTE DE CHOISY" , trafficUnicSta.getStation());
 	}
 	
 	@Test
@@ -159,9 +159,9 @@ public class TestStationDemoService extends AbstractServiceTest{
 			
 		try{
 			this.stationDemoService.insertTrafficStation(trafficStation);
-			assertEquals(true, false);
+			assertEquals(false,true);
 		}catch(AlreadyStationExistsException exception){
-			assertEquals(true, true);
+			assertTrue(true);
 		}
 	}
 	
@@ -184,7 +184,7 @@ public class TestStationDemoService extends AbstractServiceTest{
 		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(trafficUnicBean.getId());
 		assertNotNull(trafficStationBean);
 		
-		assertEquals(trafficStationBean.getStation(), "PORTE DE CHOISY");
+		assertEquals("PORTE DE CHOISY", trafficStationBean.getStation());
 		assertTrue(trafficStationBean.getTraffic()  > 0);
 	}
 	
