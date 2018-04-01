@@ -28,8 +28,10 @@ public class ValidationAngularFilter implements Filter{
 		
 		 // Make to avoid loosing angular context when hashStrategy=false (PathStrategy)
 		 RequestDispatcher requestDispatcher=request.getRequestDispatcher(INDEX_HTML);  
-		 requestDispatcher.forward(request, response);  
-				
+		 requestDispatcher.include(request, response);  
+		
+		 chain.doFilter(request, response);
+		
 	}
 	
 	@Override
