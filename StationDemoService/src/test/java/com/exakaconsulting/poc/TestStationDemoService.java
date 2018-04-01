@@ -184,8 +184,7 @@ public class TestStationDemoService extends AbstractServiceTest{
 		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(trafficUnicBean.getId());
 		assertNotNull(trafficStationBean);
 		
-		assertEquals("PORTE DE CHOISY", trafficStationBean.getStation());
-		assertTrue(trafficStationBean.getTraffic()  > 0);
+		controlPorteChoisy(trafficStationBean);
 	}
 	
 	@Test
