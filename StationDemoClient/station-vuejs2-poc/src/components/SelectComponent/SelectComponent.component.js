@@ -8,7 +8,7 @@ export default {
   data () {
     return {
       test: 'aaaa',
-      contextTrafficServiceUrl: process.env.process.env.contextPathTrafStation + '/station',
+      contextTrafficServiceUrl: 'http://54.38.186.137:9080/StationDemoWeb/station',
       id: 0,
       reseau: '', 
       station: '',
@@ -31,7 +31,7 @@ export default {
   methods: {
      selectStation: function(id){
       const relativeUrl = '/findStationById/' + this.id;
-
+ 
       axios.get(this.contextTrafficServiceUrl + relativeUrl,
       {
       },{

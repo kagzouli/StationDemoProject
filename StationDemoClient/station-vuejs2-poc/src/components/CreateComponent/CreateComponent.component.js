@@ -13,7 +13,7 @@ export default {
       correspondance: '',
       ville: '',
       arrondissement: '',
-      contextTrafficServiceUrl: process.env.process.env.contextPathTrafStation + '/station',
+      contextTrafficServiceUrl: 'http://54.38.186.137:9080/StationDemoWeb/station',
       errors: [] = {},
       displayArron: false,
       listeReseauxDispo: [
