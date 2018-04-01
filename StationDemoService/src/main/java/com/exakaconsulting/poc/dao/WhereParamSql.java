@@ -11,7 +11,7 @@ public class WhereParamSql implements Serializable{
 	 */
 	private static final long serialVersionUID = 6957394731538007682L;
 
-	private Map<String, Object> params;
+	private transient Map<String, Object> params;
 	
 	private List<String> listWhereClause;
 
