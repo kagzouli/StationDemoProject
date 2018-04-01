@@ -28,7 +28,6 @@
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
-	   <sonar.inclusions>**/*Service*.java, **/*Dao*.java, **/*Controller*.java</sonar.inclusions>
 	   <sonar.sources>src/main</sonar.sources>
 	   <!-- Below property indicates the pattern of the test suite -->
 	   <runSuite>**/*Test.class</runSuite>
