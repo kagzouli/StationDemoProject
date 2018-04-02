@@ -1,21 +1,16 @@
 package com.exakaconsulting.poc.dao;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
 public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(TrafficStationRowMapper.class);
 
 	
 	@Override
