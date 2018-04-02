@@ -27,7 +27,7 @@ const routes: Routes = [
     // Je me mets en HashLocalStrategy au lieu de PathLocalStrategy car lors du F5, la page reloade est en 404.
     // Le PathLocalStrategy necessite un parametrage cote serveur , mais est plus performant mais il faut parametrer
     // Dans le cas du POC, je vais partir sur une hash strategy plus simple a mettre en place.
-    imports: [RouterModule.forRoot(routes,{useHash: false , initialNavigation: false}) ],
+    imports: [RouterModule.forRoot(routes,{useHash: true , initialNavigation: false}) ],
     exports: [RouterModule],
     providers: [AuthGuard]
     
