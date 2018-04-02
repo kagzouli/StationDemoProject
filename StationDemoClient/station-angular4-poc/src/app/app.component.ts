@@ -34,21 +34,21 @@ export class AppComponent {
 
         const decodedToken = this.jwtHelper.decodeToken(this.oauthService.getAccessToken());  
         
-        if (decodedToken['groups'] != null){
+        if (decodedToken != null){
             let groups : string[]  =  decodedToken['groups'];
-            if (groups.length > 0){
+            if (groups != null && groups.length > 0){
               sessionStorage.setItem('Role', groups[0]);
+            }
+
+           // Set the lang of the user
+            const locale =  decodedToken['locale'];
+            if (locale != null && locale.length >= 2){
+               // On doit utiliser une classe Locale mais pour le POC, je fais simple.
+               let substr = locale.substring(0,2);
+               this.translateService.use(substr);
             }
         }
 
-        // Set the lang of the user
-        const locale =  decodedToken['locale'];
-
-        if (locale != null){
-          // On doit utiliser une classe Locale mais pour le POC, je fais simple.
-          let substr = locale.substring(0,2);
-          this.translateService.use(substr);
-        }
         
         
         this.router.navigate([this.router.url]);
