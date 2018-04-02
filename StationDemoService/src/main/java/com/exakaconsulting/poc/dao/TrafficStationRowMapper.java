@@ -38,11 +38,8 @@ public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
 		if (!StringUtils.isBlank(correspondance)){
 			trafficStationBean.setListCorrespondance(Arrays.asList(correspondance.split(",")));
 		}
-		try {
-			trafficStationBean.setVille(new String(rs.getString("TRAF_VILL").getBytes(), "UTF-8"));
-		} catch (UnsupportedEncodingException exception) {
-			LOGGER.warn(exception.getMessage() , exception);
-		}
+		
+		trafficStationBean.setVille(rs.getString("TRAF_VILL"));
 		
 		final int arrondissement = rs.getInt("TRAF_ARRO");
 		trafficStationBean.setArrondissement(arrondissement != 0 ? arrondissement : null);		
