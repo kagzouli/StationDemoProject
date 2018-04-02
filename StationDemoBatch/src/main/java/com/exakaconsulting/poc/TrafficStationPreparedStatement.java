@@ -27,6 +27,8 @@ public class TrafficStationPreparedStatement implements ItemPreparedStatementSet
         
         if (trafficStationBean.getArrondissement() != null){
         	preparedStatement.setInt(6, trafficStationBean.getArrondissement());
+        }else{
+        	preparedStatement.setNull(6, 0);        	
         }
         
     	
