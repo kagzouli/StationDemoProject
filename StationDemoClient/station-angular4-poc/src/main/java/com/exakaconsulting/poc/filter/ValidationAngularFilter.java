@@ -34,7 +34,7 @@ public class ValidationAngularFilter implements Filter{
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		final String uri = httpRequest.getRequestURI();
 		
-		if (uri != null && !LIST_STATIC_CONTENT.stream().anyMatch(staticContent -> uri.endsWith(staticContent))){
+		if (uri != null && !uri.contains("#")  && !LIST_STATIC_CONTENT.stream().anyMatch(staticContent -> uri.endsWith(staticContent))){
 			 RequestDispatcher requestDispatcher=request.getRequestDispatcher(INDEX_HTML);  
 			 requestDispatcher.forward(request, response);  			
 		}else{

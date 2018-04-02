@@ -51,7 +51,8 @@ export class AppComponent {
         }
         
         
-        this.router.navigate(['/stationdemo/searchstations']);
+        this.router.navigate([this.router.url]);
+        
     })
     });
    }
