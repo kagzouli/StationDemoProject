@@ -15,7 +15,7 @@ export default {
       trafficMin: '',
       trafficMax: '',
       ville: '',
-      contextTrafficServiceUrl: process.env.contextPathTrafStation + '/StationDemoWeb/station',
+      contextTrafficServiceUrl: process.env.contextPathTrafStation + '/station',
       resultSearchs : [],
 
       NUMBER_PAGE_MAX: 25,

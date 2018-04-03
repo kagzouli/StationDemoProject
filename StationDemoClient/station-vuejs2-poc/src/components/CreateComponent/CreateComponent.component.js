@@ -13,7 +13,7 @@ export default {
       correspondance: '',
       ville: '',
       arrondissement: '',
-      contextTrafficServiceUrl: process.env.contextPathTrafStation + '/StationDemoWeb/station',
+      contextTrafficServiceUrl: process.env.contextPathTrafStation + '/station',
       errors: [] = {},
       displayArron: false,
       listeReseauxDispo: [
