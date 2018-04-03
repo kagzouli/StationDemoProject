@@ -4,6 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  contextPathTrafStation: 'http://localhost:8080/StationDemoWeb',
+  contextPathTrafStation: '"http://localhost:8080/StationDemoWeb"',
   
 })

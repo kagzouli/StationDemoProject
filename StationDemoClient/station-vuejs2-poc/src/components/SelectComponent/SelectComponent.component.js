@@ -8,7 +8,7 @@ export default {
   data () {
     return {
       test: 'aaaa',
-      contextTrafficServiceUrl: 'http://54.38.186.137:9080/StationDemoWeb/station',
+      contextTrafficServiceUrl: process.env.contextPathTrafStation + '/station',
       id: 0,
       reseau: '', 
       station: '',
