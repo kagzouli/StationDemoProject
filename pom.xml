@@ -25,6 +25,7 @@
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
 	   <mockito.version>2.13.0</mockito.version>
+	   <gitflow.version>1.0-m5.1</gitflow.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
@@ -357,6 +358,14 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+		   <plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<version>${gitflow.version}</version>
+				<configuration>
+					<!-- see goals wiki page for configuration options -->
+				</configuration>
+           </plugin>
 		   <plugin>
 			 <groupId>org.jacoco</groupId>
 			 <artifactId>jacoco-maven-plugin</artifactId>
