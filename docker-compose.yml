@@ -4,7 +4,6 @@ services:
   station_db:
     image: mysql:latest
     restart: always
-    container_name: mysql
     ports:
       - "3306:3306"
     environment:
@@ -14,20 +13,20 @@ services:
       - MYSQL_PASSWORD=stationpwd
     volumes:
       - /db:/docker-entrypoint-initdb.d
-
+      
   station_back:
     depends_on:
       - station_db
     image: tomcat:latest
     environment:
-      - JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0&amp;socketTimeout=0;ampautoReconnect=true
-      - JDBC_USER: stationuser
-      - JDBC_PASS: stationpwd
+      JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
+      JDBC_USER: stationuser
+      JDBC_PASS: stationpwd
     ports:
       - "4000:8080"
     volumes: 
-      - ./tomcat_back/webapps:/usr/local/tomcat/webapps
-      
+      - ./tomcat_back/webapps:/usr/local/tomcat/webapps   
+ 
   station_front_tomcat:
     depends_on:
       - station_back
