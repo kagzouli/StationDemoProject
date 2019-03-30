@@ -7,7 +7,6 @@ services:
     container_name: mysql
     ports:
       - "3306:3306"
-    hostname: mysqlmachine
     environment:
       - MYSQL_ROOT_PASSWORD=root123
       - MYSQL_DATABASE=StationDemoDb
@@ -23,7 +22,7 @@ services:
   station_back:
     image: tomcat:latest
     environment:
-      - JDBC_URL: jdbc:mysql://mysqlmachine:3306/StationDemoDb?connectTimeout=0&amp;socketTimeout=0;ampautoReconnect=true
+      - JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0&amp;socketTimeout=0;ampautoReconnect=true
       - JDBC_USER: stationuser
       - JDBC_PASS: stationpwd
     ports:
