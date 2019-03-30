@@ -29,6 +29,20 @@ services:
       - "4000:8080"
     volumes: 
       - ./tomcat/webapps:/usr/local/tomcat/webapps
-   links:
+    links:
       - station_db
       
+   station_front_tomcat:
+    image: tomcat:latest
+    ports:
+      - "4300:8080"
+    volumes: 
+      - ./tomcat/webapps:/usr/local/tomcat/webapps
+    links:
+      - station_back
+      
+   station_front_nginx:
+     image: nginx:latest
+     ports:
+      - "4500:80"
+     
