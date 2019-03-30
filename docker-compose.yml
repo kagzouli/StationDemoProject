@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   station_db:
@@ -12,14 +12,12 @@ services:
       - MYSQL_DATABASE=StationDemoDb
       - MYSQL_USER=stationuser
       - MYSQL_PASSWORD=stationpwd
-    expose:
-      # Opens port 3306 on the container
-      - '3306'
-      # Where our data will be persisted
     volumes:
       - /db:/docker-entrypoint-initdb.d
 
   station_back:
+    depends_on:
+      - station_db
     image: tomcat:latest
     environment:
       - JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0&amp;socketTimeout=0;ampautoReconnect=true
@@ -28,21 +26,14 @@ services:
     ports:
       - "4000:8080"
     volumes: 
-      - ./tomcat/webapps:/usr/local/tomcat/webapps
-    links:
-      - station_db
+      - ./tomcat_back/webapps:/usr/local/tomcat/webapps
       
-   station_front_tomcat:
+  station_front_tomcat:
+    depends_on:
+      - station_back
     image: tomcat:latest
     ports:
       - "4300:8080"
     volumes: 
-      - ./tomcat/webapps:/usr/local/tomcat/webapps
-    links:
-      - station_back
-      
-   station_front_nginx:
-     image: nginx:latest
-     ports:
-      - "4500:80"
+      - ./tomcat_front/webapps:/usr/local/tomcat/webapps
      
