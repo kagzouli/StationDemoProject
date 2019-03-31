@@ -17,7 +17,7 @@ services:
   station_back:
     depends_on:
       - station_db
-    image: tomcat:latest
+    image: station_back:latest
     environment:
       JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
       JDBC_USER: stationuser
