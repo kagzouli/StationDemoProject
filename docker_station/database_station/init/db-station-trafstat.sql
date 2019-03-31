@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS StationDemoDb
+CREATE DATABASE IF NOT EXISTS StationDemoDb;
 
+use StationDemoDb;
 DROP TABLE IF EXISTS TRAF_STAT;
 CREATE TABLE TRAF_STAT (
 	TRAF_IDEN integer primary key auto_increment not null,
