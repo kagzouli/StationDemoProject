@@ -31,11 +31,19 @@ services:
       - ./tomcat_back/webapps:/usr/local/tomcat/webapps   
  
   station_front_tomcat:
-    depends_on:
-      - station_back
     image: tomcat:latest
     ports:
       - "4300:8080"
     volumes: 
       - ./tomcat_front/webapps:/usr/local/tomcat/webapps
      
+
+  station_front_nginx:
+    image: nginx:latest
+    ports:
+        - "5000:80"
+    volumes:
+      - ./nginx_front/html:/usr/share/nginx/html:ro
+      - ./nginx_front/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx_front/logs:/var/log/nginx/
+ 

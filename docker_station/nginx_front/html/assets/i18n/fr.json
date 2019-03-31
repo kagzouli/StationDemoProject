@@ -1,0 +1,26 @@
+{
+    "HELLO_MESSAGE": "StationDemoWeb (Utilisateur : {{name}}) -- ",
+    "ROLE_MESSAGE": "Role  : {{roleStore}}",
+    "LOGOUT": "Déconnexion",
+    "NETWORK_LABEL": "Réseau",
+    "STATION_LABEL": "Station",
+    "TRAFFIC_MIN_LABEL": "Traffic min",
+    "TRAFFIC_LABEL": "Traffic",
+    "TRAFFIC_MAX_LABEL": "Traffic max",
+    "CORRESPOND_LABEL": "Correspond",
+    "CITY_LABEL": "Ville",
+    "SEARCH_BUTTON": "Rechercher",
+    "CREATE_BUTTON": "Créer",    
+    "UPDATE_BUTTON": "Mise à jour",
+    "ARRONDISS_LABEL": "Arrond",
+    "CREATE_STATION_TITLE": "Créer station",
+    "SELECT_STATION_TITLE": "Information sur la station",
+    "UPDATE_STATION_LABEL": "Mise à jour station",
+    "UPDATE_STATION_BUTTON": "Mise à jour",
+    "DELETE_STATION_BUTTON": "Suppression",
+    "STATION_CREATE_SUCCESS": "La station a été crée avec succès",
+    "STATION_UPDATE_SUCESSS": "La station a été mis à jour avec succès", 
+    "STATION_DELETE_SUCCESS": "La station a été supprimée avec succès",
+    "STATION_DELETE_SUCCESS_CONFIRM": "Etes vous sur de vouloir supprimer la station {{stationName}}?"
+ 
+}
