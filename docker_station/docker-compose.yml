@@ -13,6 +13,8 @@ services:
       - MYSQL_PASSWORD=stationpwd
     volumes:
       - ./database_station/init:/docker-entrypoint-initdb.d
+      - ./database_station/logs:/var/log/mysql
+      - ./database_station/conf/test.cnf:/etc/mysql/mysql.conf.d/test.cnf
       
   station_back:
     depends_on:
