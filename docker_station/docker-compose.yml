@@ -12,7 +12,7 @@ services:
       - MYSQL_USER=stationuser
       - MYSQL_PASSWORD=stationpwd
     volumes:
-      - /db:/docker-entrypoint-initdb.d
+      - ./database_station/init:/docker-entrypoint-initdb.d
       
   station_back:
     depends_on:
