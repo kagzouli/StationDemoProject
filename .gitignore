@@ -25,6 +25,7 @@
 *.settings
 *.project
 target/
+dist/
 .recommenders/
 .metadata/
 bin/

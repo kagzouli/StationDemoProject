@@ -26,12 +26,81 @@
 	<build>
 	  <finalName>station-angular4-poc</finalName>
 	  <plugins>
+	  
+	    <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<configuration>
+				<failOnMissingWebXml>false</failOnMissingWebXml>
+			</configuration>
+		</plugin>
+	  
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>exec-maven-plugin</artifactId>
+			<executions>
+				<!-- Required: The following will ensure `npm install` is called
+					before anything else during the 'Default Lifecycle' -->
+				<execution>
+					<id>npm install (initialize)</id>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					<phase>initialize</phase>
+					<configuration>
+						<executable>${npm.executable}</executable>
+						<arguments>
+							<argument>install</argument>
+							<argument>-g</argument>
+						</arguments>
+					</configuration>
+				</execution>
+				
+				<!-- Required: The following will ensure `npm install` is called
+				     before anything else during the 'Clean Lifecycle' -->
+				<execution>
+					<id>npm install (clean)</id>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					<phase>pre-clean</phase>
+					<configuration>
+						<executable>${npm.executable}</executable>
+						<arguments>
+							<argument>install</argument>
+						</arguments>
+					</configuration>
+				</execution>
+				
+				<!-- Required: This following calls `npm run build` where 'build' is
+					    the script name I used in my project, change this if yours is
+							different -->
+				<execution>
+					<id>npm run-script prod</id>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					<phase>prepare-package</phase>
+					<configuration>
+						<executable>${npm.executable}</executable>
+						<arguments>
+						    <argument>run-script</argument>
+							<argument>prod</argument>
+						</arguments>
+					</configuration>
+				</execution>
+				
+			</executions>
+	    </plugin>
+
+	  
+	  
 	    <plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
       				<execution>
           				<id>copy-resources</id>
-          				<phase>validate</phase>
+          				<phase>prepare-package</phase>
        				    <goals><goal>copy-resources</goal></goals>
           				<configuration>
              				<outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory >
@@ -46,7 +115,33 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
+	<profiles>
+        <profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- Override the executable names for Windows -->
+				<npm.executable>npm.cmd</npm.executable>
+			</properties>
+		</profile>
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<properties>
+            <!-- Override the executable names for Linux -->
+				<npm.executable>npm</npm.executable>
+			</properties>
+		</profile>
+ 	</profiles>
 
 
 </project>
