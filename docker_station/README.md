@@ -6,7 +6,7 @@ You must first of all construct an image for station_back with the command : doc
 To start all the docker container
 ---------------------------------
 
-docker-compose up
+docker-compose up -d
 
 To stop all the docker container
 --------------------------------
