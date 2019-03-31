@@ -2,4 +2,5 @@ FROM tomcat:latest
 
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
-COPY lib/h2-1.4.196.jar /usr/local/tomcat/lib/h2-1.4.196.jar
+COPY lib/mysql-connector-java-8.0.15.jar /usr/local/tomcat/lib/mysql-connector-java-8.0.15.jar
+COPY conf/context.xml /usr/local/tomcat/conf/context.xml
