@@ -26,6 +26,7 @@
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
 	   <mockito.version>2.13.0</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
+	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
@@ -312,6 +313,13 @@
 			<groupId>com.okta.jwt</groupId>
 			<artifactId>okta-jwt-verifier</artifactId>
 			<version>${okta-jwt.version}</version>
+		</dependency>
+		
+		<!-- Tuckey -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>${urlrewriterfilter.version}</version>
 		</dependency>
 
 			
