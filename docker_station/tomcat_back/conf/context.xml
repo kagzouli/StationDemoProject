@@ -20,10 +20,10 @@
 
     <Resource
         name="jdbc/StationDemoDb" type="javax.sql.DataSource"
-        maxActive="100" maxIdle="30" maxWait="10000" 
-        url="jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0"
-        driverClassName="com.mysql.jdbc.Driver"
-        username="stationuser" password="stationpwd"
+        maxActive="${DB_TRAFSTAT_MAXACTIVE}" maxIdle="30" maxWait="10000" 
+        url="${DB_TRAFSTAT_URL}"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        username="${DB_TRAFSTAT_USERNAME}" password="${DB_TRAFSTAT_PASSWORD}"
     />
 
     <!-- Default set of monitored resources. If one of these changes, the    -->
