@@ -50,7 +50,7 @@ services:
       - "10000:10000"
 
   station_front_nginx:
-    image: nginx:latest
+    image: station_front_nginx:latest
     deploy:
       replicas: 1
       restart_policy:
@@ -58,7 +58,5 @@ services:
     ports:
         - "5000:80"
     volumes:
-      - ./nginx_front/html:/usr/share/nginx/html:ro
-      - ./nginx_front/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx_front/logs:/var/log/nginx/
  
