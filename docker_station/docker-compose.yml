@@ -1,11 +1,15 @@
-version: '3.3'
+version: '3.2'
 
 services:
   station_db:
     image: mysql:latest
+    deploy:
+      replicas: 1 
+      restart_policy:
+        condition: on-failure
     restart: always
     ports:
-      - "3306:3306"
+      - "33060:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root123
       - MYSQL_DATABASE=StationDemoDb
@@ -21,25 +25,39 @@ services:
     depends_on:
       - station_db
     image: station_back:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     environment:
-      JDBC_URL: jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
-      JDBC_USER: stationuser
-      JDBC_PASS: stationpwd
+      - DB_TRAFSTAT_URL=jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
+      - DB_TRAFSTAT_MAXACTIVE=100
+      - DB_TRAFSTAT_USERNAME=stationuser  
+      - DB_TRAFSTAT_PASSWORD=stationpwd   
     ports:
       - "4000:8080"
-    volumes: 
-      - ./tomcat_back/webapps:/usr/local/tomcat/webapps   
  
   station_front_tomcat:
     image: tomcat:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,address=10000,server=y,suspend=n"
     ports:
       - "4300:8080"
+      - "10000:10000"
     volumes: 
       - ./tomcat_front/webapps:/usr/local/tomcat/webapps
      
 
   station_front_nginx:
     image: nginx:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     ports:
         - "5000:80"
     volumes:
