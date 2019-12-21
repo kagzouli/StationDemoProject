@@ -38,19 +38,16 @@ services:
       - "4000:8080"
  
   station_front_tomcat:
-    image: tomcat:latest
+    image: station_front_tomcat:latest
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
     environment:
-      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,address=10000,server=y,suspend=n"
+      - JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=10000,server=y,suspend=n"
     ports:
       - "4300:8080"
       - "10000:10000"
-    volumes: 
-      - ./tomcat_front/webapps:/usr/local/tomcat/webapps
-     
 
   station_front_nginx:
     image: nginx:latest
