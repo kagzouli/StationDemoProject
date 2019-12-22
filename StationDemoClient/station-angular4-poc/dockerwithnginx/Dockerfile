@@ -1,8 +1,8 @@
-FROM tomcat:latest
+FROM nginx:latest
 
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 
-ADD dist/* /usr/share/nginx/html/
-
+WORKDIR /usr/share/nginx/html/station-angular4-poc
+ADD dist/* /usr/share/nginx/html/station-angular4-poc/
