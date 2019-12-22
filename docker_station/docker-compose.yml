@@ -36,6 +36,8 @@ services:
       - DB_TRAFSTAT_PASSWORD=stationpwd   
     ports:
       - "4000:8080"
+    volumes:
+      - logstationback:/usr/local/tomcat/logs
  
   station_front_tomcat:
     image: station_front_tomcat:latest
@@ -48,6 +50,8 @@ services:
     ports:
       - "4300:8080"
       - "10000:10000"
+    volumes:
+      - logstationtomcatfront:/usr/local/tomcat/logs
 
   station_front_nginx:
     image: station_front_nginx:latest
@@ -58,5 +62,25 @@ services:
     ports:
         - "5000:80"
     volumes:
-      - ./nginx_front/logs:/var/log/nginx/
- 
+      - logstationnginxfront:/var/log/nginx/
+
+volumes:
+   logstationback:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${PWD}/logs/stationback 
+   logstationtomcatfront:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${PWD}/logs/stationtomcatfront
+   logstationnginxfront:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${PWD}/logs/stationnginxfront
+
