@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateService } from '@ngx-translate/core';
 
+import { environment } from '../environments/environment';
+
 
 
 @Component({
@@ -18,12 +20,10 @@ export class AppComponent {
   jwtHelper = new JwtHelperService();
 
   constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService) {
-    this.oauthService.clientId = '0oaeg3yghaL9mQalz0h7';
+    this.oauthService.clientId = environment.clientIdTrafStat;
     this.oauthService.scope = 'openid profile email';
-  //  this.oauthService.setStorage(sessionStorage);
-    this.oauthService.issuer = 'https://dev-884254.oktapreview.com/oauth2/default';
+    this.oauthService.issuer = environment.oktaUrl + '/oauth2/default';
     this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
-    //this.oauthService.redirectUri = window.location.origin +  "/station-angular4-poc",
     this.oauthService.oidc= true,
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 

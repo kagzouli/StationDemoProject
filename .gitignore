@@ -31,6 +31,7 @@ dist/
 bin/
 Servers/
 node_modules/
+.vscode
 
 # Logs and databases #
 
