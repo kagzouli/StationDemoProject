@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
 
       return authorized;
     }
-    this.router.navigate(['/stationdemo/searchstations']);
     return false;
   }
 
