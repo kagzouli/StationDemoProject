@@ -18,7 +18,7 @@
 	   <springboot.version>2.0.0.RELEASE</springboot.version>
 	   <h2database.version>1.4.196</h2database.version>
 	   <junit.version>4.12</junit.version>
-	   <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
+	   <springsecurity.version>5.2.1.RELEASE</springsecurity.version>
 	   <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
 	   <springjwt.version>1.0.9.RELEASE</springjwt.version>
 	   <java-jwt.version>3.3.0</java-jwt.version>
