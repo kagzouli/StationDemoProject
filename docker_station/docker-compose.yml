@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   station_db:
-    image: mysql:latest
+    image: mariadb:10.4
     deploy:
       replicas: 1 
       restart_policy:

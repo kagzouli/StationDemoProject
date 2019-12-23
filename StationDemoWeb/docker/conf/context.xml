@@ -22,7 +22,7 @@
         name="jdbc/StationDemoDb" type="javax.sql.DataSource"
         maxActive="${DB_TRAFSTAT_MAXACTIVE}" maxIdle="30" maxWait="10000" 
         url="${DB_TRAFSTAT_URL}"
-        driverClassName="com.mysql.cj.jdbc.Driver"
+        driverClassName="org.mariadb.jdbc.Driver"
         username="${DB_TRAFSTAT_USERNAME}" password="${DB_TRAFSTAT_PASSWORD}"
     />
 
