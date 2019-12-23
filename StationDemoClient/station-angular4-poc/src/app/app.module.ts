@@ -21,6 +21,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HeaderStationComponent } from './component/header-station/header-station.component';
+import { Error403ComponentComponent } from './component/error403-component/error403-component.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -35,7 +36,8 @@ export function createTranslateLoader(http: HttpClient) {
     CreateStationComponent,
     SelectStationComponent,
     UpdateStationComponent,
-    HeaderStationComponent
+    HeaderStationComponent,
+    Error403ComponentComponent
   ],
   imports: [
     BrowserModule,

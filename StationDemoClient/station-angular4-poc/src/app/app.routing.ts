@@ -8,6 +8,7 @@ import { SelectStationComponent } from './component/select-station/select-statio
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
 import { AuthGuard } from './shared/auth/auth.guard.service';
+import { Error403ComponentComponent } from './component/error403-component/error403-component.component';
 
 
 
@@ -17,7 +18,8 @@ const routes: Routes = [
     { path: 'stationdemo/searchstations', component: SearchStationComponent, canActivate: [AuthGuard] ,  data: { roles: ["user","manager"] }},
     { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard],  data: { roles: ["manager"]} },  
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard] , data: { roles: ["user" , "manager"]} },    
-    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard], data: { roles: ["manager"]} }   
+    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard], data: { roles: ["manager"]} } ,  
+    { path: 'error/403', component: Error403ComponentComponent , canActivate: [AuthGuard] }   
     
   ];
 

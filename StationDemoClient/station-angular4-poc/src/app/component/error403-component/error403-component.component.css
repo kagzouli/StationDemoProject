@@ -1,0 +1,8 @@
+.error-component {
+    align-content: center;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    color: red;
+    font-size: 34px;
+ }
