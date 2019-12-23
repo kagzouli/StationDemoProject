@@ -33,6 +33,8 @@ Servers/
 node_modules/
 .vscode
 
+**/package-lock.json
+
 # Logs and databases #
 
 ######################
