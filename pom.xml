@@ -13,7 +13,7 @@
 	   <log4j.version>1.2.17</log4j.version>
 	   <jackson.version>2.9.4</jackson.version>
 	   <servletapi.version>3.1.0</servletapi.version>
-	   <springbatch.version>4.0.1.RELEASE</springbatch.version>
+	   <springbatch.version>4.2.1.RELEASE</springbatch.version>
 	   <commons-lang3.version>3.7</commons-lang3.version>
 	   <springboot.version>2.0.0.RELEASE</springboot.version>
 	   <h2database.version>1.4.196</h2database.version>
