@@ -14,10 +14,10 @@ import { AuthGuard } from './shared/auth/auth.guard.service';
 
 const routes: Routes = [
     { path: '', component: SearchStationComponent},
-    { path: 'stationdemo/searchstations', component: SearchStationComponent, canActivate: [AuthGuard]},
-    { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard]},    
-    { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard]},    
-    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard]}    
+    { path: 'stationdemo/searchstations', component: SearchStationComponent, canActivate: [AuthGuard] ,  data: { roles: ["user","manager"] }},
+    { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard],  data: { roles: ["manager"]} },  
+    { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard] , data: { roles: ["user" , "manager"]} },    
+    { path: 'stationdemo/updatestation/:stationId', component: UpdateStationComponent , canActivate: [AuthGuard], data: { roles: ["manager"]} }   
     
   ];
 
