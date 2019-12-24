@@ -255,13 +255,13 @@ public class TestStationDemoService extends AbstractServiceTest{
 		
 		// Fix now the max elements < maxNumberElements
 		int testMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS -5;
-		criteria.setNumberMaxElements(testMaxElements);
+		criteria.setPerPage(testMaxElements);
 		listStations = this.stationDemoService.findStations(criteria);
 		assertEquals(listStations.size(), testMaxElements);
 		
 		//Fix now the max elements > maxNumberElements
 		testMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS +5;
-		criteria.setNumberMaxElements(testMaxElements);
+		criteria.setPerPage(testMaxElements);
 		listStations = this.stationDemoService.findStations(criteria);
 		assertTrue(listStations.size() == AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS);
 		

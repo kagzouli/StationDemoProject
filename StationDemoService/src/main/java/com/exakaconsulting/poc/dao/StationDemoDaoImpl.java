@@ -126,7 +126,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			if (criteria.getPage() != null){
 				
 				// Avoid getting to much data
-				Integer numberMaxElements = criteria.getNumberMaxElements();
+				Integer numberMaxElements = criteria.getPerPage();
 				if (numberMaxElements == null || numberMaxElements < 0 || numberMaxElements > AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS){
 					numberMaxElements = AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS;
 				}

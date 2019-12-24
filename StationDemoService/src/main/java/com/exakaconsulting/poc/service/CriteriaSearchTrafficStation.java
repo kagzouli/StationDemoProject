@@ -29,6 +29,14 @@ public class CriteriaSearchTrafficStation extends AbstractCriteriaSearch impleme
 	private Integer arrondiss;
 	
 	private List<OrderBean> orders;
+	
+	public CriteriaSearchTrafficStation(){
+		super();
+	}
+	
+	public CriteriaSearchTrafficStation(final Integer page, final Integer perPage){
+		super(page, perPage);	
+	}
 
 	public String getReseau() {
 		return reseau;

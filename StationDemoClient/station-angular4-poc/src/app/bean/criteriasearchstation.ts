@@ -17,18 +17,18 @@ export class CriteriaSearchStation {
 
     page: number;
 
-	numberMaxElements: number;
+	perPage: number;
 
 	orders : Array<OrderBean> = [];
 	
 
-	constructor(reseau? : string, station?: string, trafficMin? : number, trafficMax? : number , ville? : string, page? : number , numberMaxElements? : number){
+	constructor(reseau? : string, station?: string, trafficMin? : number, trafficMax? : number , ville? : string, page? : number , perPage? : number){
 		this.reseau     = reseau;
 		this.station    = station;
 		this.trafficMin = trafficMin;
 		this.trafficMax = trafficMax;
 		this.ville      = ville;
 		this.page       = page;
-		this.numberMaxElements = numberMaxElements;
+		this.perPage = perPage;
 	}
  }

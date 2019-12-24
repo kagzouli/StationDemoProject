@@ -80,7 +80,7 @@ export class SearchStationComponent implements OnInit {
     // Call the service findStations using the datasource.
     let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation();
     criteriaSearchStation.page = 1;
-    criteriaSearchStation.numberMaxElements = this.NUMBER_MAX_ELEMENTS_TAB;
+    criteriaSearchStation.perPage = this.NUMBER_MAX_ELEMENTS_TAB;
     this.criteriaSearch = criteriaSearchStation;
     this.dataSource.findStations(criteriaSearchStation);
    
@@ -152,7 +152,7 @@ export class SearchStationComponent implements OnInit {
      
      // Change the criteria pageIndex and pageSize
      this.criteriaSearch.page = this.paginator.pageIndex + 1;
-     this.criteriaSearch.numberMaxElements = this.paginator.pageSize;
+     this.criteriaSearch.perPage = this.paginator.pageSize;
      
      this.criteriaSearch.orders.length = 0;
      this.criteriaSearch.orders.push(new OrderBean(this.sort.active , this.sort.direction));

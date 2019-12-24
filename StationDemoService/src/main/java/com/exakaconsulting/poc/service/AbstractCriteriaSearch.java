@@ -15,23 +15,34 @@ public abstract class AbstractCriteriaSearch implements Serializable{
 	private Integer page;
 	
 	/** Number of max elements **/
-	private Integer numberMaxElements;
+	private Integer perPage;
 
 	public Integer getPage() {
 		return page;
+	}
+	
+	public AbstractCriteriaSearch(){
+		super();
+	}
+	
+	public AbstractCriteriaSearch(final Integer page, final Integer perPage){
+		this.page = page;
+		this.perPage = perPage;
 	}
 
 	public void setPage(Integer page) {
 		this.page = page;
 	}
 
-	public Integer getNumberMaxElements() {
-		return numberMaxElements;
+	public Integer getPerPage() {
+		return perPage;
 	}
 
-	public void setNumberMaxElements(Integer numberMaxElements) {
-		this.numberMaxElements = numberMaxElements;
+	public void setPerPage(Integer perPage) {
+		this.perPage = perPage;
 	}
+
+	
 	
 	
 	
