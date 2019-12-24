@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   station_db:
-    image: mariadb:10.4
+    image: station_db:latest
     deploy:
       replicas: 1 
       restart_policy:
@@ -16,10 +16,8 @@ services:
       - MYSQL_USER=stationuser
       - MYSQL_PASSWORD=stationpwd
     volumes:
-      - ./database_station/init:/docker-entrypoint-initdb.d
       - ./database_station/logs:/var/log/mysql
       - ./database_station/data:/var/lib/mysql
-      - ./database_station/conf/test.cnf:/etc/mysql/mysql.conf.d/test.cnf
       
   station_back:
     depends_on:
