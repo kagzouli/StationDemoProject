@@ -81,7 +81,7 @@ export class TrafficstationService {
   // Method to select the station by id.
   selectStationById(id: number) : Observable<TrafficStationBean>{
       const headers = this.createHttpHeader('application/x-www-form-urlencoded');     
-      return this.http.get<TrafficStationBean>(`${this.contextTrafficServiceUrl}/stations`, {headers: headers})
+      return this.http.get<TrafficStationBean>(`${this.contextTrafficServiceUrl}/stations/${id}`, {headers: headers})
       .pipe(catchError(this.formatErrors));
   }
 
