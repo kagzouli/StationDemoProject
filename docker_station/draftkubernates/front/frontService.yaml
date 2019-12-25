@@ -4,9 +4,15 @@ metadata:
   name: stationfrontservice 
 spec:
   ports:
-  - port: 8080 
+  - port: 5000
+    name: stationfronttomcat 
     nodePort: 32600
     targetPort: 8080 
+    protocol: TCP
+  - port: 4300 
+    name: stationfrontnginx
+    nodePort: 32601
+    targetPort: 80 
     protocol: TCP
   selector:
     app: stationfront
