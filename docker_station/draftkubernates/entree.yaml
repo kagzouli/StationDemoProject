@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: stationfrontservice 
+subsets:
+  - addresses:
+      - ip: 51.254.36.120
+    ports:
+      - port: 8080

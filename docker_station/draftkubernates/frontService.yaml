@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stationfrontpod 
+  name: stationfrontservice 
   labels:
-    run: stationfrontpod
+    run: stationfront 
 spec:
   ports:
-  - port: 14000
-    targetPort: 8080
-    nodePort: 30062
+  - port: 8080 
+    nodePort: 32600
+    targetPort: 8080 
     protocol: TCP
   selector:
-    run: stationfrontpod
+    run: stationfront
   type: LoadBalancer
+  externalIPs:
+  - 51.254.36.120

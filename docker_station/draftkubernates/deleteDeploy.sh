@@ -1,1 +1,1 @@
-kubectl delete deploy stationfront-deployment 
+kubectl delete deploy stationfront

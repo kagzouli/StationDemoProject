@@ -1,1 +1,1 @@
-kubectl delete service stationfrontpod 
+kubectl delete service stationfront 
