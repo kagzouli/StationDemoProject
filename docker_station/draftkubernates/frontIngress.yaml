@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: stationfrontingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: vps620705.ovh.net 
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: stationfrontservice 
+          servicePort: 8080
