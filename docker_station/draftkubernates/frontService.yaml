@@ -8,6 +8,7 @@ spec:
   ports:
   - port: 14000
     targetPort: 8080
+    nodePort: 30062
     protocol: TCP
   selector:
     run: stationfrontpod
