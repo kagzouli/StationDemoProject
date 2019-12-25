@@ -1,1 +1,1 @@
-kubectl delete service stationfront 
+kubectl delete service stationfrontservice
