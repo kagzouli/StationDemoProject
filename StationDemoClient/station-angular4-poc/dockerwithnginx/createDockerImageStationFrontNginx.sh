@@ -1,1 +1,1 @@
-docker build -t station_front_nginx . 
+docker build -t station-front-nginx . 

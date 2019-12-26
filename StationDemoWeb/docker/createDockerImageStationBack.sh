@@ -1,1 +1,1 @@
-docker build -t station_back . 
+docker build -t station-back . 
