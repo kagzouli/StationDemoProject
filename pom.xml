@@ -333,7 +333,6 @@
 		<module>StationDemoWeb</module>
 		<module>StationDemoBatch</module>
 		<module>StationDemoClient/station-angular4-poc</module>
-		<module>StationDemoClient/station-vuejs2-poc</module>
 	</modules>
 
 
