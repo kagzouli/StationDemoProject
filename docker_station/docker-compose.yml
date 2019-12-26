@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   station_db:
-    image: station_db:latest
+    image: station-db:latest
     deploy:
       replicas: 1 
       restart_policy:
@@ -16,13 +16,13 @@ services:
       - MYSQL_USER=stationuser
       - MYSQL_PASSWORD=stationpwd
     volumes:
-      - ./database_station/logs:/var/log/mysql
+      - ./logs/stationdb:/var/log/mysql
       - ./database_station/data:/var/lib/mysql
       
   station_back:
     depends_on:
       - station_db
-    image: station_back:latest
+    image: station-back:latest
     deploy:
       replicas: 1
       restart_policy:
@@ -38,7 +38,7 @@ services:
       - logstationback:/usr/local/tomcat/logs
  
   station_front_tomcat:
-    image: station_front_tomcat:latest
+    image: station-front-tomcat:latest
     deploy:
       replicas: 1
       restart_policy:
@@ -52,7 +52,7 @@ services:
       - logstationtomcatfront:/usr/local/tomcat/logs
 
   station_front_nginx:
-    image: station_front_nginx:latest
+    image: station-front-nginx:latest
     deploy:
       replicas: 1
       restart_policy:
