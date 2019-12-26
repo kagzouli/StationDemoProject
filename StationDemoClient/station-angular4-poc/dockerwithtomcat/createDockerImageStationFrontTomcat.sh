@@ -1,1 +1,1 @@
-docker build -t station_front_tomcat . 
+docker build -t station-front-tomcat . 
