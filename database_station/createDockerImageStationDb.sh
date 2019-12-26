@@ -1,1 +1,1 @@
-docker build -t station_db . 
+docker build -t station-db . 
