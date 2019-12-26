@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stationback-deploy
+  namespace: default
+spec:
+  # A deployment's specification really only 
+  # has a few useful options
+  
+  # 1. How many copies of each pod do we want?
+  replicas: 2
+
+  # 2. Which pods are managed by this deployment?
+  selector:
+    # This must match the labels we set on the pod!
+    matchLabels:
+      app:  stationback
+  
+  # This template field is a regular pod configuration 
+  # nested inside the deployment spec
+  template:
+    metadata:
+      # Set labels on the pod.
+      # This is used in the deployment selector.
+      labels:
+        app: stationback
+    spec:
+      volumes:
+      - name: datastationdb 
+        hostPath:
+          path: /root/docker_station/database_station/data
+          type: Directory
+      - name: logstationdb 
+        hostPath:
+          path: /root/docker_station/logs/stationdb
+          type: Directory
+      - name: logstationback 
+        hostPath:
+          path: /root/docker_station/logs/stationback
+          type: Directory
+      containers:
+        - name: stationdb
+          image: kagzouli/station-db:1.0.0
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "root123"
+          - name: MYSQL_DATABASE
+            value: "StationDemoDb"
+          - name: MYSQL_USER
+            value: "stationuser"
+          - name: MYSQL_PASSWORD
+            value: "stationpwd"
+          volumeMounts:
+          - name: datastationdb  
+            mountPath: /var/lib/mysql
+          - name: logstationdb  
+            mountPath: /var/log/mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+        - name: stationback
+          image: kagzouli/station-back:1.0.0
+          env: 
+          - name: DB_TRAFSTAT_URL
+            value: "jdbc:mysql://localhost:3306/StationDemoDb?connectTimeout=0"
+          - name: DB_TRAFSTAT_MAXACTIVE
+            value: "30"
+          - name: DB_TRAFSTAT_USERNAME
+            value: "stationuser"
+          - name: DB_TRAFSTAT_PASSWORD
+            value: "stationpwd"
+          volumeMounts:
+          - name: logstationback 
+            mountPath: /usr/local/tomcat/logs 
+          ports:
+          - containerPort: 8080
+            protocol: TCP

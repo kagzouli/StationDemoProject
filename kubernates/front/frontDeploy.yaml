@@ -27,9 +27,13 @@ spec:
     spec:
       volumes:
       - name: logstationfrontnginx 
-        emptyDir: {}
+        hostPath:
+         path: /root/docker_station/logs/stationnginxfront
+         type: Directory
       - name: logstationfronttomcat
-        emptyDir: {}
+        hostPath:
+         path: /root/docker_station/logs/stationtomcatfront
+         type: Directory
       containers:
         - name: stationfront-nginx
           image: kagzouli/station-front-nginx:1.0.0
