@@ -1,0 +1,36 @@
+pipeline {
+   agent { label 'stationslave' }
+   
+   tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+   
+    stages {
+		
+        stage ("PullFromRegistry") {
+            steps {
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-db:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-front-tomcat:${VERSION}"
+            }
+        }
+
+        stage ("PullFromRegistry") {
+            steps {
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-db:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
+                sh "docker pull ${REPO_NEXUS_URL}kagzouli/station-front-tomcat:${VERSION}"
+            }
+        }
+
+     }
+
+     post { 
+	always { 
+		cleanWs()
+	}
+     }
+}
