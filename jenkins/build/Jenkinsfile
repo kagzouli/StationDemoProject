@@ -31,19 +31,19 @@ pipeline {
 		
         stage ("TagDockerImage") {
             steps {
-                sh "docker tag kagzouli/station-db:latest kagzouli/station-db:$VERSION"
-                sh "docker tag kagzouli/station-back:latest kagzouli/station-back:$VERSION"
-                sh "docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:$VERSION"
-                sh "docker tag kagzouli/station-front-tomcat:latest kagzouli/station-front-tomcat:$VERSION"
+                sh "docker tag kagzouli/station-db:latest kagzouli/station-db:${VERSION}"
+                sh "docker tag kagzouli/station-back:latest kagzouli/station-back:${VERSION}"
+                sh "docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:${VERSION}"
+                sh "docker tag kagzouli/station-front-tomcat:latest kagzouli/station-front-tomcat:${VERSION}"
             }
         }
 
         stage ("PushToRegistry") {
             steps {
-                sh "docker push kagzouli/station-db:$VERSION"
-                sh "docker push kagzouli/station-back:$VERSION"
-                sh "docker push kagzouli/station-front-nginx:$VERSION"
-                sh "docker push kagzouli/station-front-tomcat:$VERSION"
+                sh "docker push ${REPO_NEXUS_URL}kagzouli/station-db:${VERSION}"
+                sh "docker push ${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
+                sh "docker push ${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
+                sh "docker push ${REPO_NEXUS_URL}kagzouli/station-front-tomcat:${VERSION}"
             }
         }
 
