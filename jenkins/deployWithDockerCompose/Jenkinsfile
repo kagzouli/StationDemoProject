@@ -30,6 +30,7 @@ pipeline {
         stage ("LaunchDockerCompose") {
             steps {
                 sh "cd jenkins/deployWithDockerCompose"
+		sh "ls -lrt"
                 sh "docker-compose up -d"
 		sh "cd ../.."
             }
