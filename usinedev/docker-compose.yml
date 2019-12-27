@@ -37,5 +37,5 @@ volumes:
       driver_opts:
         type: none
         o: bind
-        device: /root/tools/sonatype-work3120/nexus3
+        device: ${NEXUS_WORK}/nexus3
 
