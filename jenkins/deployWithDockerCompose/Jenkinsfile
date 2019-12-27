@@ -20,16 +20,18 @@ pipeline {
 
         stage ("WriteEnvFile") {
             steps {
-                sh "echo MY_LOGS=${MY_LOGS} >> .env"
-                sh "echo DATABASE_DATA=${DATABASE_DATA} >> .env"
-                sh "echo VERSION=${VERSION} >> .env"
-                sh "cat .env" 
+                sh "echo MY_LOGS=${MY_LOGS} >> jenkins/deployWithDockerCompose/.env"
+                sh "echo DATABASE_DATA=${DATABASE_DATA} >> jenkins/deployWithDockerCompose/.env"
+                sh "echo VERSION=${VERSION} >> jenkins/deployWithDockerCompose/.env"
+                sh "cat jenkins/deployWithDockerCompose/.env" 
             }
         }
 
         stage ("LaunchDockerCompose") {
             steps {
-                sh "jenkins/deployWithDockerCompose/docker-compose up -d"
+                sh "cd jenkins/deployWithDockerCompose"
+                sh "docker-compose up -d"
+		sh "cd ../.."
             }
         }
 
