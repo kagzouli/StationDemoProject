@@ -1,0 +1,96 @@
+version: '3.2'
+
+services:
+  station_db:
+    image: "station-db:${VERSION}"
+    deploy:
+      replicas: 1 
+      restart_policy:
+        condition: on-failure
+    restart: always
+    ports:
+      - "33060:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=StationDemoDb
+      - MYSQL_USER=stationuser
+      - MYSQL_PASSWORD=stationpwd
+    volumes:
+      - logstationdb:/var/log/mysql
+      - databasedata:/var/lib/mysql
+      
+  station_back:
+    depends_on:
+      - station_db
+    image: "station-back:${VERSION}"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      - DB_TRAFSTAT_URL=jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
+      - DB_TRAFSTAT_MAXACTIVE=100
+      - DB_TRAFSTAT_USERNAME=stationuser  
+      - DB_TRAFSTAT_PASSWORD=stationpwd   
+    ports:
+      - "4000:8080"
+    volumes:
+      - logstationback:/usr/local/tomcat/logs
+ 
+  station_front_tomcat:
+    image: "station-front-tomcat:${VERSION}"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      - JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=10000,server=y,suspend=n"
+    ports:
+      - "4300:8080"
+      - "10000:10000"
+    volumes:
+      - logstationtomcatfront:/usr/local/tomcat/logs
+
+  station_front_nginx:
+    image: "station-front-nginx:${VERSION}"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+        - "5000:80"
+    volumes:
+      - logstationnginxfront:/var/log/nginx/
+
+volumes:
+   databasedata:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${DATABASE_DATA} 
+   logstationdb:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${MY_LOGS}/stationdb
+   logstationback:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${MY_LOGS}/stationback 
+   logstationtomcatfront:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${MY_LOGS}/stationtomcatfront
+   logstationnginxfront:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${MY_LOGS}/stationnginxfront
+

@@ -17,9 +17,9 @@ pipeline {
             }
         }
 
-        stage ("PullFromRegistry2") {
+        stage ("LaunchDockerCompose") {
             steps {
-                sh "ls -lrt"
+                sh "docker-compose up -d"
             }
         }
 
