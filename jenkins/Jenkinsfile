@@ -1,0 +1,37 @@
+pipeline {
+   agent { label 'stationslave' }
+   
+   tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+   
+   stages {
+        stage ("buildProject") {
+            steps {
+              // Use instead mvn clean deploy in real environment 
+              sh "${M2_HOME}/bin/mvn clean install"
+            }
+        }
+		
+        stage ("CreateDockerImage") {
+            steps {
+                sh "docker build -t kagzouli/station-db StationDemoDb"
+                sh "docker build -t kagzouli/station-back StationDemoWeb/docker"
+                sh "docker build -t kagzouli/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx"
+                sh "docker build -t kagzouli/station-front-tomcat StationDemoClient/station-angular4-poc/dockerwithtomcat"
+            }
+        }
+		
+        stage ("TagDockerImage") {
+            steps {
+                sh "docker tag kagzouli/station-db:latest kagzouli/station-db:$VERSION"
+                sh "docker tag kagzouli/station-back:latest kagzouli/station-back:$VERSION"
+                sh "docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:$VERSION"
+                sh "docker tag kagzouli/station-front-tomcat:latest kagzouli/station-front-tomcat:$VERSION"
+            }
+        }
+
+
+	}
+}
