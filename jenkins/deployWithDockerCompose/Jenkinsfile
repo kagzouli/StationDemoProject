@@ -23,6 +23,7 @@ pipeline {
                 sh "echo MY_LOGS=${MY_LOGS} >> jenkins/deployWithDockerCompose/.env"
                 sh "echo DATABASE_DATA=${DATABASE_DATA} >> jenkins/deployWithDockerCompose/.env"
                 sh "echo VERSION=${VERSION} >> jenkins/deployWithDockerCompose/.env"
+                sh "echo REPO_NEXUS_URL=${REPO_NEXUS_URL} >> jenkins/deployWithDockerCompose/.env"
                 sh "cat jenkins/deployWithDockerCompose/.env" 
             }
         }
