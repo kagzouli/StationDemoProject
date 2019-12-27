@@ -1,0 +1,25 @@
+pipeline {
+   agent { label 'stationslave' }
+   
+   tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+   
+    stages {
+		
+        stage ("stopDockerCompose") {
+            steps {
+		sh "ls -lrt"
+                sh "cd jenkins/deployWithDockerCompose;ls -lrt;docker-compose up -d"
+            }
+        }
+
+     }
+
+     post { 
+	always { 
+		cleanWs()
+	}
+     }
+}
