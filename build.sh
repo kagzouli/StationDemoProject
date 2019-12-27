@@ -1,6 +1,6 @@
 /usr/local/maven/apache-maven-3.3.9/bin/mvn clean install
 echo "Build maven install successful"
-docker build -t kagzouli/station-db StationDemoDb/docker
+docker build -t kagzouli/station-db StationDemoDb
 echo "Lancement image stationdb"
 cp StationDemoWeb/target/StationDemoSecureWeb.war StationDemoWeb/docker/StationDemoSecureWeb.war
 docker build -t kagzouli/station-back StationDemoWeb/docker
