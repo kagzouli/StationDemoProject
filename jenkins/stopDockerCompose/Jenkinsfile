@@ -11,7 +11,7 @@ pipeline {
         stage ("stopDockerCompose") {
             steps {
 		sh "ls -lrt"
-                sh "cd jenkins/deployWithDockerCompose;ls -lrt;docker-compose up -d"
+                sh "cd jenkins/deployWithDockerCompose;ls -lrt;docker-compose down" 
             }
         }
 
