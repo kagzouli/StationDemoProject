@@ -38,6 +38,14 @@ pipeline {
             }
         }
 
+        stage ("PushToRegistry") {
+            steps {
+                sh "docker push kagzouli/station-db:$VERSION"
+                sh "docker push kagzouli/station-back:$VERSION"
+                sh "docker push kagzouli/station-front-nginx:$VERSION"
+                sh "docker push kagzouli/station-front-tomcat:$VERSION"
+            }
+        }
 
      }
 
