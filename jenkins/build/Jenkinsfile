@@ -6,7 +6,7 @@ pipeline {
         jdk 'jdk8' 
     }
    
-   stages {
+    stages {
         stage ("buildProject") {
             steps {
               // Use instead mvn clean deploy in real environment 
@@ -33,5 +33,11 @@ pipeline {
         }
 
 
+     }
+
+     post { 
+	always { 
+		cleanWs()
 	}
+     }
 }
