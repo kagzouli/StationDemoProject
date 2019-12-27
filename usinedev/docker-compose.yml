@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts 
+    deploy:
+      replicas: 1 
+      restart_policy:
+        condition: on-failure
+    restart: always
+    ports:
+      - "8083:8080"
+      - "50000:50000"
+    volumes:
+      - jenkinsHome:/var/jenkins_home
+ 
+  nexus:
+    image: sonatype/nexus3:latest 
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8084:8081"
+    volumes:
+      - nexusHome:/nexus-data
+
+volumes:
+   jenkinsHome:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${PWD}/jenkinsHome 
+   nexusHome:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: /root/tools/sonatype-work3120/nexus3
+
