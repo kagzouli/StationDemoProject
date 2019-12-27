@@ -71,6 +71,7 @@
 						<executable>${npm.executable}</executable>
 						<arguments>
 							<argument>install</argument>
+							<argument>--no-optional</argument>
 						</arguments>
 					</configuration>
 				</execution>
