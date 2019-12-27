@@ -17,6 +17,16 @@ pipeline {
             }
         }
 
+
+        stage ("WriteEnvFile") {
+            steps {
+                sh "echo MY_LOGS=${MY_LOGS} >> .env"
+                sh "echo DATABASE_DATA=${DATABASE_DATA} >> .env"
+                sh "echo VERSION=${VERSION} >> .env"
+                sh "cat .env" 
+            }
+        }
+
         stage ("LaunchDockerCompose") {
             steps {
                 sh "docker-compose up -d"
