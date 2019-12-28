@@ -22,6 +22,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HeaderStationComponent } from './component/header-station/header-station.component';
 import { Error403ComponentComponent } from './component/error403-component/error403-component.component';
+import { ConfigurationLoaderService } from './service/configuration-loader.service';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -60,7 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     })
   ],
-  providers: [],
+  providers: [ConfigurationLoaderService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -15,18 +15,19 @@ import { catchError } from 'rxjs/operators/catchError';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { TranslateService } from '@ngx-translate/core';
 
-import { environment } from '../../environments/environment';
 import { OrderBean } from '../bean/orderbean';
+import { ConfigurationLoaderService } from './configuration-loader.service';
 
 
 @Injectable()
 export class TrafficstationService {
 
   // Contexte  
-  contextTrafficServiceUrl = environment.contextPathTrafStation + '/station';
+  contextTrafficServiceUrl = this.getContextTrafficServiceURL() + '/station';
    
 
-  constructor(private http: HttpClient, private oauthService : OAuthService, private translateService : TranslateService) { }
+  constructor(private readonly http: HttpClient, private readonly oauthService : OAuthService, 
+    private readonly translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) { }
 
    /**
    * Method to find all traffic stations by criteria.<br/>
@@ -46,6 +47,15 @@ export class TrafficstationService {
 
  private formatErrors(error: any) {
   return new ErrorObservable(error.error);
+}
+
+
+private getContextTrafficServiceURL() : string{
+    let contextTrafficServiceURL: string = '';
+    this.configurationLoaderService.loadConfigurations().subscribe(
+        configuration => contextTrafficServiceURL = configuration.contextPathTrafStation
+    )
+    return contextTrafficServiceURL;
 }
 
 /**

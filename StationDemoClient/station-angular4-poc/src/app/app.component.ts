@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateService } from '@ngx-translate/core';
 
-import { environment } from '../environments/environment';
+import { ConfigurationLoaderService } from './service/configuration-loader.service';
 
 
 
@@ -19,43 +19,45 @@ export class AppComponent {
 
   jwtHelper = new JwtHelperService();
 
-  constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService) {
-    this.oauthService.clientId = environment.clientIdTrafStat;
-    this.oauthService.scope = 'openid profile email';
-    this.oauthService.issuer = environment.oktaUrl + '/oauth2/default';
-    this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
-    this.oauthService.oidc= true,
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+  constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
+    this.configurationLoaderService.loadConfigurations().subscribe(configuration =>
+    {
+      this.oauthService.clientId = configuration.clientIdTrafStat;
+      this.oauthService.scope = 'openid profile email';
+      this.oauthService.issuer = configuration.oktaUrl + '/oauth2/default';
+      this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
+      this.oauthService.oidc= true,
+      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
+      // Load Discovery Document and then try to login the user
+      this.oauthService.loadDiscoveryDocument().then((doc) => {
+        this.oauthService.tryLogin().then(_ => {
 
-    // Load Discovery Document and then try to login the user
-    this.oauthService.loadDiscoveryDocument().then((doc) => {
-      this.oauthService.tryLogin().then(_ => {
-
-        const decodedToken = this.jwtHelper.decodeToken(this.oauthService.getAccessToken());  
+          const decodedToken = this.jwtHelper.decodeToken(this.oauthService.getAccessToken());  
         
-        if (decodedToken != null){
+          if (decodedToken != null){
             let groups : string[]  =  decodedToken['groups'];
             if (groups != null && groups.length > 0){
               sessionStorage.setItem('Role', groups[0]);
-            }
+          }
 
-           // Set the lang of the user
-            const locale =  decodedToken['locale'];
-            if (locale != null && locale.length >= 2){
-               // On doit utiliser une classe Locale mais pour le POC, je fais simple.
-               let substr = locale.substring(0,2);
-               this.translateService.use(substr);
-            }
+          // Set the lang of the user
+          const locale =  decodedToken['locale'];
+          if (locale != null && locale.length >= 2){
+            // On doit utiliser une classe Locale mais pour le POC, je fais simple.
+            let substr = locale.substring(0,2);
+            this.translateService.use(substr);
+          }
         }
-
-        
-        
         this.router.navigate([this.router.url]);
-        
-    })
+      })
     });
-   }
+
+    });
+ }
+
+ ngOnInit() {
+}
 
 
    /**
