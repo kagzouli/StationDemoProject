@@ -11,7 +11,6 @@ pipeline {
         stage ("startBack") {
             steps {
 		sh "ls -lrt"
-		sh "cat kubernates/back/backDeployTemplate.yaml"
 		sh "sed -i 's/{{VERSION}}/${VERSION}/g' kubernates/back/backDeployTemplate.yaml" 
 		sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/back/backDeployTemplate.yaml"
 		sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/back/backDeployTemplate.yaml"
@@ -24,7 +23,6 @@ pipeline {
 
         stage ("stopFront") {
             steps {
-		sh "cat kubernates/front/frontDeployTemplate.yaml"
 		sh "sed -i 's+{{VERSION}}+${VERSION}+g' kubernates/front/frontDeployTemplate.yaml"
 		sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/front/frontDeployTemplate.yaml"
 		sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/front/frontDeployTemplate.yaml"
