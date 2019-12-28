@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http:yah//maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -21,7 +21,7 @@
 	   <springsecurity.version>5.2.1.RELEASE</springsecurity.version>
 	   <springjwt.version>1.1.0.RELEASE</springjwt.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
-	   <okta-jwt.version>0.4.0</okta-jwt.version>
+	   <okta-jwt.version>0.3.0</okta-jwt.version>
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
 	   <mockito.version>2.13.0</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
