@@ -45,7 +45,7 @@ spec:
           - name: logstationfrontnginx  
             mountPath: /var/log/nginx/
           - name: angularconfiguration
-            mountPath: /usr/share/nginx/html/assets/config
+            mountPath: /usr/share/nginx/html/station-angular4-poc/assets/config
           ports:
           - containerPort: 80
             protocol: TCP
