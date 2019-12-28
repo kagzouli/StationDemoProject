@@ -1,28 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-dependencies</artifactId>
+		<version>2.2.2.RELEASE</version>
+	</parent>
 	<groupId>com.exakaconsulting.poc</groupId>
 	<artifactId>StationDemoProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 	   <java.version>1.8</java.version>
-	   <spring.version>5.0.4.RELEASE</spring.version>
+	   <spring.version>5.2.2.RELEASE</spring.version>
 	   <springfox.swagger.version>2.8.0</springfox.swagger.version>
-	   <slf4j.version>1.7.25</slf4j.version>
 	   <log4j.version>1.2.17</log4j.version>
-	   <jackson.version>2.9.4</jackson.version>
 	   <servletapi.version>3.1.0</servletapi.version>
-	   <springbatch.version>4.0.1.RELEASE</springbatch.version>
-	   <commons-lang3.version>3.7</commons-lang3.version>
-	   <springboot.version>2.0.0.RELEASE</springboot.version>
-	   <h2database.version>1.4.196</h2database.version>
-	   <junit.version>4.12</junit.version>
-	   <springsecurity.version>5.0.3.RELEASE</springsecurity.version>
-	   <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
-	   <springjwt.version>1.0.9.RELEASE</springjwt.version>
-	   <java-jwt.version>3.3.0</java-jwt.version>
-	   <okta-jwt.version>0.3.0</okta-jwt.version>
+	   <springbatch.version>4.2.1.RELEASE</springbatch.version>
+	   <springboot.version>2.2.2.RELEASE</springboot.version>
+	   <springsecurity.version>5.2.1.RELEASE</springsecurity.version>
+	   <springjwt.version>1.1.0.RELEASE</springjwt.version>
+	   <java-jwt.version>3.8.3</java-jwt.version>
+	   <okta-jwt.version>0.4.0</okta-jwt.version>
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
 	   <mockito.version>2.13.0</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
@@ -250,7 +249,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2database.version}</version>
+			<version>${h2.version}</version>
 		</dependency>
 		
 		<!-- Test -->
