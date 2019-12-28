@@ -1,0 +1,32 @@
+pipeline {
+   agent { label 'stationslave' }
+   
+   tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+   
+    stages {
+		
+        stage ("startBack") {
+            steps {
+		sh "ls -lrt"
+		sh "kubectl apply -f kubernates/back/backDeploy.yaml"
+                sh "kubectl apply -f kubernates/back/backService.yaml" 
+            }
+        }
+
+        stage ("stopFront") {
+            steps {
+                sh "kubectl apply -f kubernates/front/frontDeploy.yaml" 
+                sh "kubectl apply -f kubernates/front/frontService.yaml" 
+            }
+        }
+     }
+
+     post { 
+	always { 
+		cleanWs()
+	}
+     }
+}
