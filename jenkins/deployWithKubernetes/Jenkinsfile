@@ -15,7 +15,7 @@ pipeline {
 		sh "sed -i 's/{{VERSION}}/${VERSION}/g' kubernates/back/backDeployTemplate.yaml" 
 		sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/back/backDeployTemplate.yaml"
 		sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/back/backDeployTemplate.yaml"
-		sh "sed -i 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernates/front/frontDeployTemplate.yaml"
+		sh "sed -i 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernates/back/backDeployTemplate.yaml"
 		sh "cat kubernates/back/backDeployTemplate.yaml"
 		sh "kubectl apply -f kubernates/back/backDeployTemplate.yaml"
                 sh "kubectl apply -f kubernates/back/backService.yaml" 
