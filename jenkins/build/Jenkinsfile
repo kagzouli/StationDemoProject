@@ -21,11 +21,13 @@ pipeline {
 		sh "cp StationDemoWeb/target/StationDemoSecureWeb.war StationDemoWeb/docker/StationDemoSecureWeb.war"
                 sh "docker build -t kagzouli/station-back StationDemoWeb/docker"
                 
+		sh "cp  StationDemoClient/station-angular4-poc/target/station-angular4-poc.war StationDemoClient/station-angular4-poc/dockerwithtomcat/station-angular4-poc.war"
+		sh "docker build -t kagzouli/station-front-tomcat StationDemoClient/station-angular4-poc/dockerwithtomcat"
+	
+		sh "npm run-script prod-zip"	
 		sh "cp -rf StationDemoClient/station-angular4-poc/dist StationDemoClient/station-angular4-poc/dockerwithnginx/"
 		sh "docker build -t kagzouli/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx"
                 
-		sh "cp  StationDemoClient/station-angular4-poc/target/station-angular4-poc.war StationDemoClient/station-angular4-poc/dockerwithtomcat/station-angular4-poc.war"
-		sh "docker build -t kagzouli/station-front-tomcat StationDemoClient/station-angular4-poc/dockerwithtomcat"
             }
         }
 		
