@@ -11,9 +11,9 @@ pipeline {
         stage ("startBack") {
             steps {
 		sh "ls -lrt"
-		sh 'cat "kubernates/back/backDeploy.yaml.template" | sed "s/{{VERSION}}/${VERSION}}/g" > kubernates/back/backDeployTransform.yaml'
-		sh 'cat "kubernates/back/backDeploy.yaml.template" | sed "s/{{REPO_NEXUS_URL}}/${REPO_NEXUS_URL}}/g" > kubernates/back/backDeployTransform.yaml'
-		sh 'cat "kubernates/back/backDeploy.yaml.template" | sed "s/{{MY_LOGS}}/${MY_LOGS}}/g" > kubernates/back/backDeployTransform.yaml'
+		sh "cat 'kubernates/back/backDeploy.yaml.template' | sed 's/{{VERSION}}/${VERSION}}/g' > kubernates/back/backDeployTransform.yaml"
+		sh "cat 'kubernates/back/backDeploy.yaml.template' | sed 's/{{REPO_NEXUS_URL}}/${REPO_NEXUS_URL}}/g' > kubernates/back/backDeployTransform.yaml"
+		sh "cat 'kubernates/back/backDeploy.yaml.template' | sed 's/{{MY_LOGS}}/${MY_LOGS}}/g' > kubernates/back/backDeployTransform.yaml"
 		sh "kubectl apply -f kubernates/back/backDeployTransform.yaml"
                 sh "kubectl apply -f kubernates/back/backService.yaml" 
             }
@@ -21,10 +21,10 @@ pipeline {
 
         stage ("stopFront") {
             steps {
-		sh 'cat "kubernates/front/frontDeploy.yaml.template" | sed "s/{{VERSION}}/${VERSION}}/g" > kubernates/front/frontDeployTransform.yaml'
-		sh 'cat "kubernates/front/frontDeploy.yaml.template" | sed "s/{{REPO_NEXUS_URL}}/${REPO_NEXUS_URL}}/g" > kubernates/front/frontDeployTransform.yaml'
-		sh 'cat "kubernates/front/frontDeploy.yaml.template" | sed "s/{{MY_LOGS}}/${MY_LOGS}}/g" > kubernates/front/frontDeployTransform.yaml'
-		sh 'cat "kubernates/front/frontDeploy.yaml.template" | sed "s/{{DATABASE_DATA}}/${DATABASE_DATA}}/g" > kubernates/front/frontDeployTransform.yaml'
+		sh "cat 'kubernates/front/frontDeploy.yaml.template' | sed 's/{{VERSION}}/${VERSION}}/g' > kubernates/front/frontDeployTransform.yaml"
+		sh "cat 'kubernates/front/frontDeploy.yaml.template' | sed 's/{{REPO_NEXUS_URL}}/${REPO_NEXUS_URL}}/g' > kubernates/front/frontDeployTransform.yaml"
+		sh "cat 'kubernates/front/frontDeploy.yaml.template' | sed 's/{{MY_LOGS}}/${MY_LOGS}}/g' > kubernates/front/frontDeployTransform.yaml"
+		sh "cat 'kubernates/front/frontDeploy.yaml.template' | sed 's/{{DATABASE_DATA}}/${DATABASE_DATA}}/g' > kubernates/front/frontDeployTransform.yaml"
                 sh "kubectl apply -f kubernates/front/frontDeployTransform.yaml" 
                 sh "kubectl apply -f kubernates/front/frontService.yaml" 
             }
