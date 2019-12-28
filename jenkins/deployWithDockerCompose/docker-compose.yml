@@ -62,7 +62,7 @@ services:
         - "5000:80"
     volumes:
       - logstationnginxfront:/var/log/nginx/
-      - angularconfiguration: /usr/share/nginx/html/assets/config
+      - angularconfiguration:/usr/share/nginx/html/assets/config
 
 volumes:
    databasedata:
