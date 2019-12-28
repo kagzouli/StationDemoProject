@@ -50,6 +50,7 @@ services:
       - "10000:10000"
     volumes:
       - logstationtomcatfront:/usr/local/tomcat/logs
+      - angularconfiguration:/usr/local/tomcat/webapps/station-angular4-poc/assets/config
 
   station_front_nginx:
     image: "${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
@@ -61,6 +62,7 @@ services:
         - "5000:80"
     volumes:
       - logstationnginxfront:/var/log/nginx/
+      - angularconfiguration: /usr/share/nginx/html/assets/config
 
 volumes:
    databasedata:
@@ -69,6 +71,12 @@ volumes:
         type: none
         o: bind
         device: ${DATABASE_DATA} 
+   angularconfiguration:
+      driver: local 
+      driver_opts:
+        type: none
+        o: bind
+        device: ${ANGULAR_CONFIG} 
    logstationdb:
       driver: local 
       driver_opts:

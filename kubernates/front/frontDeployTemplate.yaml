@@ -34,12 +34,18 @@ spec:
         hostPath:
          path: {{MY_LOGS}}/stationtomcatfront
          type: Directory
+      - name: angularconfiguration
+        hostPath:
+         path: {{ANGULAR_CONFIG}}
+         type: Directory
       containers:
         - name: stationfront-nginx
           image: {{REPO_NEXUS_URL}}kagzouli/station-front-nginx:{{VERSION}}
           volumeMounts:
           - name: logstationfrontnginx  
             mountPath: /var/log/nginx/
+          - name: angularconfiguration
+            mountPath: /usr/share/nginx/html/assets/config
           ports:
           - containerPort: 80
             protocol: TCP
@@ -47,7 +53,9 @@ spec:
           image: {{REPO_NEXUS_URL}}kagzouli/station-front-tomcat:{{VERSION}}
           volumeMounts:
           - name: logstationfronttomcat 
-            mountPath: /usr/local/tomcat/logs 
+            mountPath: /usr/local/tomcat/logs
+          - name: angularconfiguration
+            mountPath: /usr/local/tomcat/webapps/station-angular4-poc/assets/config
           ports:
           - containerPort: 8080
             protocol: TCP
