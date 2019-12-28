@@ -12,7 +12,7 @@ pipeline {
             steps {
 		sh "ls -lrt"
 		sh "cat kubernates/back/backDeployTemplate.yaml"
-		sh "sed 's/{{VERSION}}/${VERSION}/g'" 
+		sh "sed 's/{{VERSION}}/${VERSION}/g' > kubernates/back/backDeployTemplate.yaml" 
 		sh "sed 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g'"
 		sh "sed 's+{{MY_LOGS}}+${MY_LOGS}+g'"
 		sh "cat kubernates/back/backDeployTemplate.yaml"
