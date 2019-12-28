@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "staging": "ng build --staging --env=staging --base-href=/station-angular4-poc/ --output-path=dist",
+    "staging": "ng build --staging --env=staging --base-href=/station-angular4-poc/ --output-path=distTomcat",
     "staging-zip": "ng build --staging --env=staging --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
     "prod": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=distTomcat",
     "prod-zip": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/ ; gzip -r generatedsite/station-angular4-poc.zip dist;"
