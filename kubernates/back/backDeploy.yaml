@@ -40,7 +40,7 @@ spec:
           type: Directory
       containers:
         - name: stationdb
-          image: kagzouli/station-db:1.0.0
+          image: kagzouli/station-db:1.0.2
           env:
           - name: MYSQL_ROOT_PASSWORD
             value: "root123"
@@ -59,7 +59,7 @@ spec:
           - containerPort: 3306
             protocol: TCP
         - name: stationback
-          image: kagzouli/station-back:1.0.0
+          image: kagzouli/station-back:1.0.2
           env: 
           - name: DB_TRAFSTAT_URL
             value: "jdbc:mysql://localhost:3306/StationDemoDb?connectTimeout=0"

@@ -36,7 +36,7 @@ spec:
          type: Directory
       containers:
         - name: stationfront-nginx
-          image: kagzouli/station-front-nginx:1.0.0
+          image: kagzouli/station-front-nginx:1.0.2
           volumeMounts:
           - name: logstationfrontnginx  
             mountPath: /var/log/nginx/
@@ -44,7 +44,7 @@ spec:
           - containerPort: 80
             protocol: TCP
         - name: stationfront-tomcat
-          image: kagzouli/station-front-tomcat:1.0.0
+          image: kagzouli/station-front-tomcat:1.0.2
           volumeMounts:
           - name: logstationfronttomcat 
             mountPath: /usr/local/tomcat/logs 
