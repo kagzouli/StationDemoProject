@@ -12,9 +12,9 @@ pipeline {
             steps {
 		sh "ls -lrt"
 		sh "cat kubernates/back/backDeployTemplate.yaml"
-		sh "sed 's/{{VERSION}}/${VERSION}/g' kubernates/back/backDeployTemplate.yaml > kubernates/back/backDeployTemplate.yaml" 
-		sh "sed 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/back/backDeployTemplate.yaml"
-		sh "sed 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/back/backDeployTemplate.yaml"
+		sh "sed -i 's/{{VERSION}}/${VERSION}/g' kubernates/back/backDeployTemplate.yaml" 
+		sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/back/backDeployTemplate.yaml"
+		sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/back/backDeployTemplate.yaml"
 		sh "cat kubernates/back/backDeployTemplate.yaml"
 		sh "kubectl apply -f kubernates/back/backDeployTemplate.yaml"
                 sh "kubectl apply -f kubernates/back/backService.yaml" 
@@ -24,10 +24,10 @@ pipeline {
         stage ("stopFront") {
             steps {
 		sh "cat kubernates/front/frontDeployTemplate.yaml"
-		sh "sed 's+{{VERSION}}+${VERSION}+g' kubernates/front/frontDeployTemplate.yaml"
-		sh "sed 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/front/frontDeployTemplate.yaml"
-		sh "sed 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/front/frontDeployTemplate.yaml"
-		sh "sed 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernates/front/frontDeployTemplate.yaml"
+		sh "sed -i 's+{{VERSION}}+${VERSION}+g' kubernates/front/frontDeployTemplate.yaml"
+		sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/front/frontDeployTemplate.yaml"
+		sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/front/frontDeployTemplate.yaml"
+		sh "sed -i 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernates/front/frontDeployTemplate.yaml"
 		sh "cat kubernates/front/frontDeployTemplate.yaml"
                 sh "kubectl apply -f kubernates/front/frontDeployTemplate.yaml" 
                 sh "kubectl apply -f kubernates/front/frontService.yaml" 
