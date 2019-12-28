@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
-import { Configuration } from '../bean/Configuration';
+import { Configuration } from '../bean/configuration';
 
 @Injectable()
 export class ConfigurationLoaderService {
