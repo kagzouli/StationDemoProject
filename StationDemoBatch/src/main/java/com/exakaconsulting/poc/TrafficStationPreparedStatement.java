@@ -35,10 +35,6 @@ public class TrafficStationPreparedStatement implements ItemPreparedStatementSet
         	preparedStatement.setInt(6, trafficStationBean.getArrondissement());
         }else{
         	preparedStatement.setNull(6, 0);        	
-        }
-        
-    	
+        }	
     }
-
-
 }
