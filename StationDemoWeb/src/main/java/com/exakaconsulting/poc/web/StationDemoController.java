@@ -178,7 +178,7 @@ public class StationDemoController {
 			trafficStationBean = this.stationDemoService.findStationById(id);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new TrafficStationBean(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
@@ -213,7 +213,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(false);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
@@ -240,7 +240,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
@@ -264,7 +264,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){

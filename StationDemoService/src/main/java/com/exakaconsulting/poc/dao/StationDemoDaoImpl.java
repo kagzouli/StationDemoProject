@@ -197,7 +197,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		} catch(EmptyResultDataAccessException exception){
 			LOGGER.warn(exception.getMessage());
 		}catch (Exception exception) {
-			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 		return countStations;
@@ -223,7 +222,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				LOGGER.warn(String.format("No traffic has been found for name = ['%s']", name));				
 			}
 		}catch(Exception exception){
-			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
 		}
 		return trafficStation;
@@ -247,7 +245,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				LOGGER.warn(String.format("No traffic has been found for id = ['%s']", id));				
 			}
 		}catch(Exception exception){
-			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
 		}
 		return trafficStation;
@@ -280,7 +277,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		try{
 			this.jdbcTemplate.update(requestSql, params);
 		}catch(Exception exception){
-			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
 		}
 
@@ -297,7 +293,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			
 			this.jdbcTemplate.update(DELETE_TRAFFIC_SQL, params);
 		}catch(Exception exception){
-			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
 		}
 
