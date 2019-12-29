@@ -14,7 +14,7 @@ import { Error403ComponentComponent } from './component/error403-component/error
 
 
 const routes: Routes = [
-    { path: '', component: SearchStationComponent  },
+    { path: '', redirectTo: 'stationdemo/searchstations', pathMatch: 'full' },
     { path: 'stationdemo/searchstations', component: SearchStationComponent },
     { path: 'stationdemo/createstation', component: CreateStationComponent , canActivate: [AuthGuard],  data: { roles: ["manager"]} },  
     { path: 'stationdemo/selectstation/:stationId', component: SelectStationComponent , canActivate: [AuthGuard] , data: { roles: ["user" , "manager"]} },    
