@@ -54,8 +54,6 @@ spec:
           volumeMounts:
           - name: logstationfronttomcat 
             mountPath: /usr/local/tomcat/logs
-          - name: angularconfiguration
-            mountPath: /usr/local/tomcat/webapps/station-angular4-poc/assets/config
           ports:
           - containerPort: 8080
             protocol: TCP

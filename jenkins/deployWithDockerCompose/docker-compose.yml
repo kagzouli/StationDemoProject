@@ -50,8 +50,7 @@ services:
       - "10000:10000"
     volumes:
       - logstationtomcatfront:/usr/local/tomcat/logs
-      - angularconfiguration:/usr/local/tomcat/webapps/station-angular4-poc/assets/config
-
+ 
   station_front_nginx:
     image: "${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
     deploy:
