@@ -9,8 +9,9 @@ pipeline {
     stages {
         stage ("buildProject") {
             steps {
-              // Use instead mvn clean deploy in real environment 
-              sh "${M2_HOME}/bin/mvn clean install"
+				sh "${M2_HOME}/bin/mvn versions:set -DnewVersion=${VERSION}"
+				// Use instead mvn clean deploy in real environment 
+				sh "${M2_HOME}/bin/mvn clean install"
             }
         }
 		
@@ -29,6 +30,14 @@ pipeline {
                 
             }
         }
+		
+		stage ("Sonar") {
+            steps {
+
+			  // sh "${M2_HOME}/bin/mvn sonar:sonar"
+            }
+        }
+	
 		
         stage ("TagDockerImage") {
             steps {
