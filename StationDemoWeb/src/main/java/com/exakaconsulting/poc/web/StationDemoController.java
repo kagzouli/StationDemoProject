@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,6 +52,8 @@ public class StationDemoController {
 
 	public static final String FIND_STAT_CRIT = "/station/stations";
 	
+	private static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
+	
 	@Autowired
 	private IStationDemoService stationDemoService;
 	
@@ -65,7 +69,7 @@ public class StationDemoController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager') OR hasRole('user')")
-	public List<TrafficStationBean> listSearchStations(
+	public ResponseEntity<List<TrafficStationBean>> listSearchStations(
 			@RequestParam(value="reseau", required=false) final String reseau,
 			@RequestParam(value="station", required=false) final String station,
 			@RequestParam(value="trafficMin", required=false) final Long trafficMin,
@@ -112,13 +116,13 @@ public class StationDemoController {
 			listStationBean = this.stationDemoService.findStations(criteria);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method listSearchStations of the class %s", StationDemoController.class.getName()));			
 		}
-		return listStationBean;
+		return new ResponseEntity<>(listStationBean,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to count the number of traffic stations by criteria", response = Integer.class)
@@ -126,7 +130,7 @@ public class StationDemoController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager') OR hasRole('user')")
-	public Integer countSearchStations(
+	public ResponseEntity<Integer> countSearchStations(
 			@RequestParam(value="reseau", required=false) final String reseau,
 			@RequestParam(value="station", required=false) final String station,
 			@RequestParam(value="trafficMin", required=false) final Long trafficMin,
@@ -152,20 +156,20 @@ public class StationDemoController {
 			countStations = this.stationDemoService.countStations(criteria);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method countSearchStations of the class %s",StationDemoController.class.getName()));
 			
 		}
-		return countStations;
+		return new ResponseEntity<>(countStations,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
 	@GetMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager') OR hasRole('user')")
-	public TrafficStationBean findTrafficStationById(@PathVariable final Integer id){
+	public ResponseEntity<TrafficStationBean> findTrafficStationById(@PathVariable final Integer id){
 
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method findTrafficStationById of the class %s" ,StationDemoController.class.getName()));			
@@ -177,14 +181,14 @@ public class StationDemoController {
 			trafficStationBean = this.stationDemoService.findStationById(id);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method findTrafficStationById of the class %s", StationDemoController.class.getName()));			
 		}
 
-		return trafficStationBean; 
+		return new ResponseEntity<>(trafficStationBean,HttpStatus.OK);
 		
 	}
 	
@@ -194,7 +198,7 @@ public class StationDemoController {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public JsonResult<Boolean> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
+	public ResponseEntity<JsonResult<Boolean>> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method insertTrafficStation of the class %s" , StationDemoController.class.getName()));			
@@ -212,7 +216,7 @@ public class StationDemoController {
 			jsonResult.setSuccess(false);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
@@ -220,14 +224,14 @@ public class StationDemoController {
 			LOGGER.info(String.format("END of the method insertTrafficStation of the class %s" , StationDemoController.class.getName()));			
 		}
 
-		return jsonResult;
+		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@PatchMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public JsonResult<Void> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
+	public ResponseEntity<JsonResult<Void>> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method updateTrafficStation of the class %s", StationDemoController.class.getName()));			
 		}
@@ -239,20 +243,20 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s" , StationDemoController.class.getName()));					
 		}
-		return jsonResult;
+		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
 	@DeleteMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public JsonResult<Void>  deleteTrafficStation(@PathVariable final Integer id){
+	public ResponseEntity<JsonResult<Void>>  deleteTrafficStation(@PathVariable final Integer id){
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method deleteTrafficStation of the class %s"  , StationDemoController.class.getName()));			
 		}
@@ -263,13 +267,13 @@ public class StationDemoController {
 			jsonResult.setSuccess(true);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method deleteTrafficStation of the class %s" , StationDemoController.class.getName()));				
 		}
-		return jsonResult;
+		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
 		
 	}
 

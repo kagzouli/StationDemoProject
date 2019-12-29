@@ -1,7 +1,7 @@
 package com.exakaconsulting.poc;
 
 import java.io.UnsupportedEncodingException;
-
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -34,7 +34,7 @@ public class TrafficStationPreparedStatement implements ItemPreparedStatementSet
         }
         
         try {
-			preparedStatement.setString(5, new String(trafficStationBean.getVille().getBytes(), "UTF-8"));
+			preparedStatement.setString(5, new String(trafficStationBean.getVille().getBytes(), StandardCharsets.UTF_8));
 		} catch (UnsupportedEncodingException exception) {
 			preparedStatement.setString(5, "");
 			LOGGER.warn(exception.getMessage() , exception);
