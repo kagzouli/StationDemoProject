@@ -87,7 +87,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			throw exception;
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			throw new TechnicalException(exception.getMessage());
+			throw new TechnicalException(exception);
 		}
 
 	}
@@ -97,7 +97,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 
 		Assert.notNull(criteria, ERROR_CRITERIA_MUSTSET);
 
-		LOGGER.info("BEGIN of the method searchStations  of the class " + StationDemoDaoImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method searchStations  of the class %s",StationDemoDaoImpl.class.getName()));			
+		}
 
 		List<TrafficStationBean> listStationsSearch = Collections.<TrafficStationBean>emptyList();
 		try {
@@ -141,12 +143,14 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			}
 			
 			if (LOGGER.isInfoEnabled()){
-				LOGGER.info("Request SQL search  :" + requestSql.toString());				
+				LOGGER.info(String.format("Request SQL search  : %s" , requestSql.toString()));				
 			}
 
 
 			listStationsSearch = this.jdbcTemplate.query(requestSql.toString(), params, new TrafficStationRowMapper());
-			LOGGER.info("END of the method searchStations of the class " + StationDemoDaoImpl.class.getName());
+			if (LOGGER.isInfoEnabled()){
+				LOGGER.info(String.format("END of the method searchStations of the class %s",StationDemoDaoImpl.class.getName()));				
+			}
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
@@ -160,7 +164,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		
 		Assert.notNull(criteria, ERROR_CRITERIA_MUSTSET);
 
-		LOGGER.info("BEGIN of the method countStations  of the class " + StationDemoDaoImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method countStations  of the class %s",StationDemoDaoImpl.class.getName()));			
+		}
 
 		Integer countStations = 0;
 		try {
@@ -178,11 +184,16 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 			
 			
 			if (LOGGER.isInfoEnabled()){
-				LOGGER.info("Request SQL search  :" + requestSql.toString());				
+				LOGGER.info(String.format("Request SQL search  : %s", requestSql.toString()));				
 			}
 
 			countStations = this.jdbcTemplate.queryForObject(requestSql.toString(), params, Integer.class);
-			LOGGER.info("END of the method countStations of the class " + StationDemoDaoImpl.class.getName());
+			
+			if (LOGGER.isInfoEnabled()){
+				LOGGER.info(String.format("END of the method countStations of the class %s", StationDemoDaoImpl.class.getName()));
+				
+			}
+			
 		} catch(EmptyResultDataAccessException exception){
 			LOGGER.warn(exception.getMessage());
 		}catch (Exception exception) {
@@ -208,7 +219,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		try{
 			trafficStation = this.jdbcTemplate.queryForObject(requestSql, params, new TrafficStationRowMapper());
 		}catch(EmptyResultDataAccessException exception){
-			LOGGER.warn("No traffic has been found for name = ['"+ name + "']");
+			if (LOGGER.isWarnEnabled()){
+				LOGGER.warn(String.format("No traffic has been found for name = ['%s']", name));				
+			}
 		}catch(Exception exception){
 			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
@@ -230,7 +243,9 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		try{
 			trafficStation = this.jdbcTemplate.queryForObject(requestSql, params, new TrafficStationRowMapper());
 		}catch(EmptyResultDataAccessException exception){
-			LOGGER.warn("No traffic has been found for id = ['"+ id + "']");
+			if (LOGGER.isWarnEnabled()){
+				LOGGER.warn(String.format("No traffic has been found for id = ['%s']", id));				
+			}
 		}catch(Exception exception){
 			LOGGER.error(exception.getMessage() , exception);
 			throw new TechnicalException(exception);
