@@ -24,6 +24,15 @@ services:
       - "8084:8081"
     volumes:
       - nexusHome:/nexus-data
+  sonarqube:
+    image: sonarqube:lts
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9030:9000"
+
 
 volumes:
    jenkinsHome:
