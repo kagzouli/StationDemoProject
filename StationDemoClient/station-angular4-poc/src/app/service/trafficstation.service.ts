@@ -17,17 +17,18 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { OrderBean } from '../bean/orderbean';
 import { ConfigurationLoaderService } from './configuration-loader.service';
+import { Configuration } from '../bean/configuration';
 
 
 @Injectable()
 export class TrafficstationService {
-
-  // Contexte  
-  contextTrafficServiceUrl = this.getContextTrafficServiceURL() + '/station';
-   
+  
 
   constructor(private readonly http: HttpClient, private readonly oauthService : OAuthService, 
-    private readonly translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) { }
+    private readonly translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
+    }
+
+  
 
    /**
    * Method to find all traffic stations by criteria.<br/>
@@ -41,7 +42,7 @@ export class TrafficstationService {
        params = '?' + params;
     }
 
-    return this.http.get(`${this.contextTrafficServiceUrl}/stations` + params, {headers: headers})
+    return this.http.get(`${this.configurationLoaderService.getURLTrafficService()}/stations` + params, {headers: headers})
     .pipe(catchError(this.formatErrors));
  }
 
@@ -50,13 +51,6 @@ export class TrafficstationService {
 }
 
 
-private getContextTrafficServiceURL() : string{
-    let contextTrafficServiceURL: string = '';
-    this.configurationLoaderService.loadConfigurations().subscribe(
-        configuration => contextTrafficServiceURL = configuration.contextPathTrafStation
-    )
-    return contextTrafficServiceURL;
-}
 
 /**
    * Method to count all traffic stations by criteria.<br/>
@@ -71,7 +65,7 @@ private getContextTrafficServiceURL() : string{
     }
 
 
-    return this.http.get(`${this.contextTrafficServiceUrl }/stations/count` + params, {headers: headers})
+    return this.http.get(`${this.configurationLoaderService.getURLTrafficService()}/stations/count` + params, {headers: headers})
     .pipe(catchError(this.formatErrors));
  }
 
@@ -83,7 +77,7 @@ private getContextTrafficServiceURL() : string{
   */
   createStation(trafficStationBean : TrafficStationBean)  : Observable<CreateStationResponse>{
     const headers = this.createHttpHeader('application/json');   
-    return this.http.put(`${this.contextTrafficServiceUrl}/stations`, trafficStationBean, {headers: headers})
+    return this.http.put(`${this.configurationLoaderService.getURLTrafficService()}/stations`, trafficStationBean, {headers: headers})
     .pipe(catchError(this.formatErrors));
   }
 
@@ -91,7 +85,7 @@ private getContextTrafficServiceURL() : string{
   // Method to select the station by id.
   selectStationById(id: number) : Observable<TrafficStationBean>{
       const headers = this.createHttpHeader('application/x-www-form-urlencoded');     
-      return this.http.get<TrafficStationBean>(`${this.contextTrafficServiceUrl}/stations/${id}`, {headers: headers})
+      return this.http.get<TrafficStationBean>(`${this.configurationLoaderService.getURLTrafficService()}/stations/${id}`, {headers: headers})
       .pipe(catchError(this.formatErrors));
   }
 
@@ -107,7 +101,7 @@ private getContextTrafficServiceURL() : string{
     .append('newCorr', correspondance);
     
 
-    return this.http.patch(`${this.contextTrafficServiceUrl}/stations/${stationId}` + "?"+ params.toString() ,{}, {headers: headers})
+    return this.http.patch(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}` + "?"+ params.toString() ,{}, {headers: headers})
       .pipe(catchError(this.formatErrors));
   }
 
@@ -116,7 +110,7 @@ private getContextTrafficServiceURL() : string{
       
       let params = new HttpParams();
     
-      return this.http.delete(`${this.contextTrafficServiceUrl}/stations/${stationId}`  , {headers: headers})
+      return this.http.delete(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}`  , {headers: headers})
        .pipe(catchError(this.formatErrors));
   }
 
@@ -189,7 +183,7 @@ private getContextTrafficServiceURL() : string{
 
     return paramsArray.join('&');
 
- }
+  }
 
 
 

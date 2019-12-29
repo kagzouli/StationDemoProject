@@ -7,8 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { ConfigurationLoaderService } from './service/configuration-loader.service';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,6 +20,8 @@ export class AppComponent {
   constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
     this.configurationLoaderService.loadConfigurations().subscribe(configuration =>
     {
+      this.configurationLoaderService.setConfiguration(configuration);
+
       this.oauthService.clientId = configuration.clientIdTrafStat;
       this.oauthService.scope = 'openid profile email';
       this.oauthService.issuer = configuration.oktaUrl + '/oauth2/default';
