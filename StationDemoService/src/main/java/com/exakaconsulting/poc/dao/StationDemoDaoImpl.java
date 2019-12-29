@@ -86,7 +86,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		} catch (TechnicalException exception) {
 			throw exception;
 		} catch (Exception exception) {
-			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 
@@ -152,7 +151,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 				LOGGER.info(String.format("END of the method searchStations of the class %s",StationDemoDaoImpl.class.getName()));				
 			}
 		} catch (Exception exception) {
-			LOGGER.error(exception.getMessage(), exception);
 			throw new TechnicalException(exception);
 		}
 
