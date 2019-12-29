@@ -34,7 +34,6 @@ import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.OrderBean;
-import com.exakaconsulting.poc.service.StationDemoServiceImpl;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
 import io.swagger.annotations.Api;
@@ -47,7 +46,7 @@ public class StationDemoController {
 	
 	
 	/** Logger **/
-	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoController.class);
 
 	public static final String FIND_STAT_CRIT = "/station/stations";
 		
@@ -205,7 +204,7 @@ public class StationDemoController {
 			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
 			
 			final Integer returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
-			jsonResult.setResult(returnValue > 0 ? true : false);
+			jsonResult.setResult(returnValue > 0);
 			jsonResult.setSuccess(true);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());

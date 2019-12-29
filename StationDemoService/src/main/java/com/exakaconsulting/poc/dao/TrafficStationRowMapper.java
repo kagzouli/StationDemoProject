@@ -1,5 +1,6 @@
 package com.exakaconsulting.poc.dao;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class TrafficStationRowMapper implements RowMapper<TrafficStationBean>{
 		trafficStationBean.setId(rs.getInt("TRAF_IDEN"));
 		
 		try{
-			trafficStationBean.setReseau(StringUtils.trim(new String(rs.getString("TRAF_RESE").getBytes(), "UTF-8")));
+			trafficStationBean.setReseau(StringUtils.trim(new String(rs.getString("TRAF_RESE").getBytes(), StandardCharsets.UTF_8)));
 		}catch(Exception exception){
 			throw new TechnicalException(exception);
 		}
