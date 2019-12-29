@@ -35,7 +35,6 @@ import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.StationDemoServiceImpl;
-import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 
 import io.swagger.annotations.Api;
@@ -51,9 +50,7 @@ public class StationDemoController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
 
 	public static final String FIND_STAT_CRIT = "/station/stations";
-	
-	private static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
-	
+		
 	@Autowired
 	private IStationDemoService stationDemoService;
 	
