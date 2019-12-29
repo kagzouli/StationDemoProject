@@ -31,9 +31,9 @@ pipeline {
             }
         }
 		
-		stage ("Sonar") {
+        stage ("Sonar") {
             steps {
-
+			   echo "Lancement qualite du code"
 			  // sh "${M2_HOME}/bin/mvn sonar:sonar"
             }
         }
