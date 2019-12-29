@@ -34,7 +34,9 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		
 		Assert.notNull(criteria , "criteria has to be set");
 		
-		LOGGER.info("BEGIN of the method findStations of the class " + StationDemoServiceImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method findStations of the class %s", StationDemoServiceImpl.class.getName()));			
+		}
 		
 		// Set the station to Maj to make the test
 		if (criteria.getStation() != null){
@@ -44,7 +46,9 @@ public class StationDemoServiceImpl implements IStationDemoService{
 
 		List<TrafficStationBean> listTrafficStations = stationDemoDao.findStations(criteria);
 
-		LOGGER.info("END of the method findStations of the class " + StationDemoServiceImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("END of the method findStations of the class %s",StationDemoServiceImpl.class.getName()));
+		}
 		
 		return listTrafficStations;
 	}
@@ -53,8 +57,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	public Integer countStations(CriteriaSearchTrafficStation criteria) {
 		Assert.notNull(criteria , "criteria has to be set");
 		
-		LOGGER.info("BEGIN of the method countStations of the class " + StationDemoServiceImpl.class.getName());
-		
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method countStations of the class %s" , StationDemoServiceImpl.class.getName()));
+		}
+			
 		// Set the station to Maj to make the test
 		if (criteria.getStation() != null){
 			criteria.setStation(StringUtils.upperCase(criteria.getStation()));
@@ -63,7 +69,9 @@ public class StationDemoServiceImpl implements IStationDemoService{
 
 		Integer countStations = stationDemoDao.countStations(criteria);
 
-		LOGGER.info("END of the method countStations of the class " + StationDemoServiceImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("END of the method countStations of the class %s",StationDemoServiceImpl.class.getName()));
+		}
 		
 		return countStations;
 
@@ -76,8 +84,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) throws AlreadyStationExistsException {
 		Assert.notNull(trafficStationBean , "The traffic station must be set");
 		
-		LOGGER.info("BEGIN of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
-		
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method insertTrafficStation of the class %s", StationDemoServiceImpl.class.getName()));
+		}
+			
 		TrafficStationBean trafficSearch = stationDemoDao.findStationByName(trafficStationBean.getStation());
 		if (trafficSearch != null && trafficSearch.getId() != null){
 			throw new AlreadyStationExistsException("The station ['" + trafficStationBean.getStation() + "'] already exists");
@@ -86,8 +96,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
 
 		int returnValue = stationDemoDao.insertTrafficStation(trafficStationBean);
 		
-		LOGGER.info("END of the method insertTrafficStation of the class " + StationDemoServiceImpl.class.getName());
-
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("END of the method insertTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
+		}
+		
 		return returnValue;
 	}
 
@@ -96,14 +108,14 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		Assert.notNull(id , "The id station must be set");
 
 		if (LOGGER.isInfoEnabled()){
-			LOGGER.info("BEGIN of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");			
+			LOGGER.info(String.format("BEGIN of the method findStationById of the class %s [id = '%s']" , StationDemoServiceImpl.class.getName(), id));			
 		}
 		
 
 		TrafficStationBean trafficStation = stationDemoDao.findStationById(id);
 
 		if (LOGGER.isInfoEnabled()){
-			LOGGER.info("END of the method findStationById of the class " + StationDemoServiceImpl.class.getName() + " [id = '" + id + "']");			
+			LOGGER.info(String.format("END of the method findStationById of the class %s [id = '%s']" , StationDemoServiceImpl.class.getName() , id));			
 		}
 		
 		return trafficStation;
@@ -113,13 +125,15 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) {
 		Assert.notNull(id , "The id has to be set");
 		
-		LOGGER.info("BEGIN of the method updateTrafficStation of the class " + StationDemoServiceImpl.class.getName());
-				
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method updateTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
+		}		
 
 		stationDemoDao.updateTrafficStation(newTrafficValue, newCorr , id);
 
-		LOGGER.info("END of the method updateTrafficStation of the class " + StationDemoServiceImpl.class.getName());
-		
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
+		}
 
 		
 	}
@@ -127,9 +141,15 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	@Override
 	public void deleteTrafficStation(Integer id) {
 		Assert.notNull(id , "The id has to be set");
-		LOGGER.info("BEGIN of the method deleteTrafficStation of the class " + StationDemoServiceImpl.class.getName());
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("BEGIN of the method deleteTrafficStation of the class %s"  , StationDemoServiceImpl.class.getName()));
+		}
+		
 		stationDemoDao.deleteTrafficStation(id);
-		LOGGER.info("END of the method deleteTrafficStation of the class " + StationDemoServiceImpl.class.getName());
+		
+		if (LOGGER.isInfoEnabled()){
+			LOGGER.info(String.format("END of the method deleteTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
+		}
 	}
 
 
