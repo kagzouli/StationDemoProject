@@ -33,7 +33,7 @@ export class ConfigurationLoaderService {
      let urlTrafficStation = null;
      const configuration = this.getConfiguration();
      if (configuration != null){
-        urlTrafficStation = configuration.contextPathTrafStation;
+        urlTrafficStation = configuration.contextPathTrafStation + '/station';
      }
      return urlTrafficStation;
   }
