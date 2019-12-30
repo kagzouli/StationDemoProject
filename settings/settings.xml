@@ -114,12 +114,12 @@ under the License.
     <server>
       <id>exaka-releases</id>
       <username>deployment</username>
-      <password>deploy01</password>
+      <password>XXXXX</password>
     </server>
     <server>
       <id>exaka-snapshots</id>
       <username>deployment</username>
-      <password>deploy01</password>
+      <password>XXXXX</password>
     </server>
    
 
