@@ -10,4 +10,5 @@ RUN cp mariadb-java-client-2.5.2.jar /usr/local/tomcat/lib/mariadb-java-client-2
 
 ADD bin/setenv.sh /usr/local/tomcat/bin/setenv.sh
 
+RUN rm -rf /usr/local/tomcat/webapps/*
 ADD StationDemoSecureWeb.war /usr/local/tomcat/webapps/StationDemoSecureWeb.war
