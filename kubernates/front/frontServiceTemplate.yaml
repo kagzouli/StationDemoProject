@@ -18,4 +18,4 @@ spec:
     app: stationfront
   type: LoadBalancer
   externalIPs:
-  - 51.254.36.120
+  - {{SERVICE_EXTERNAL_IP}}
