@@ -15,7 +15,6 @@ ADD conf/web.xml /usr/local/tomcat/conf/web.xml
 RUN rm -rf /usr/local/tomcat/webapps/*
 RUN mkdir /usr/local/tomcat/webapps/ROOT
 COPY page/404.html /usr/local/tomcat/webapps/ROOT/404.html
-COPY page/500.html /usr/local/tomcat/webapps/ROOT/500.html
 
 
 ADD StationDemoSecureWeb.war /usr/local/tomcat/webapps/StationDemoSecureWeb.war
