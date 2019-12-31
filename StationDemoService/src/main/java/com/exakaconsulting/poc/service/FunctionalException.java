@@ -11,12 +11,4 @@ public abstract class FunctionalException extends Exception{
 		super(message);
 	}
 	
-	public FunctionalException(final Exception exception){
-		super(exception);
-	}
-	
-	public FunctionalException(final String message, final Exception exception){
-		super(message , exception);
-	}
-
 }
