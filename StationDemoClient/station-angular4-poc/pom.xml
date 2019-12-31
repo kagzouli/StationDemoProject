@@ -11,6 +11,11 @@
 	</parent>
 
 	<properties>
+		<sonar.sources>src/app</sonar.sources>
+		<sonar.exclusions>src/**/*.spec.ts</sonar.exclusions>
+		<sonar.test.inclusions>src/**/*.spec.ts</sonar.test.inclusions>
+		<sonar.typescript.lcov.reportPaths>coverage/lcov.info</sonar.typescript.lcov.reportPaths>
+
 	</properties>
 
 	<dependencies>	
