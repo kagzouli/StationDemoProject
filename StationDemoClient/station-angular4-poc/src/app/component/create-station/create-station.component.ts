@@ -32,7 +32,7 @@ export class CreateStationComponent implements OnInit {
   
   reseauChoose: string = '';
   
-  errors : Array<String> = [];
+  errors : Array<string> = [];
 
   displayArron : boolean = false;
 
