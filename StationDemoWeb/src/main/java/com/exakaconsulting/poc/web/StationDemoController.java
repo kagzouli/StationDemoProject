@@ -225,7 +225,7 @@ public class StationDemoController {
 	}
 	
 
-	@ApiOperation(value = "This method is use to insert a traffic station", response = Boolean.class , responseContainer= "JsonResult")
+	@ApiOperation(value = "This method is use to insert a traffic station")
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 201, message = "OK", response = Integer.class),
@@ -268,7 +268,7 @@ public class StationDemoController {
 		return new ResponseEntity<>(returnValue,HttpStatus.CREATED);
 	}
 	
-	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class , responseContainer = "JsonResult")
+	@ApiOperation(value = "This method is use to update a traffic station")
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 200, message = "OK", response = Void.class),
@@ -303,7 +303,7 @@ public class StationDemoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
+	@ApiOperation(value = "This method is use to delete a traffic station")
 	@ApiResponses(
 			value = {
 					@ApiResponse(code = 204, message = "No Content", response = Void.class),
