@@ -14,7 +14,6 @@ ADD conf/web.xml /usr/local/tomcat/conf/web.xml
 # Raison de sécurité - On desactive les applications par default et on met une 404.html
 RUN rm -rf /usr/local/tomcat/webapps/*
 RUN mkdir /usr/local/tomcat/webapps/ROOT
-COPY page/401.html /usr/local/tomcat/webapps/ROOT/401.html
 COPY page/404.html /usr/local/tomcat/webapps/ROOT/404.html
 COPY page/500.html /usr/local/tomcat/webapps/ROOT/500.html
 
