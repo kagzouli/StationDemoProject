@@ -70,7 +70,7 @@ public class StationDemoController {
 				@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
 				@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
 				@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-				@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+				@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
 		}
 	)	
 	@GetMapping(value = FIND_STAT_CRIT, consumes = {
@@ -124,7 +124,7 @@ public class StationDemoController {
 			listStationBean = this.stationDemoService.findStations(criteria);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
@@ -140,7 +140,7 @@ public class StationDemoController {
 					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
 					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
 					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
 			}
 	)	
 	@GetMapping(value = "/station/stations/count", consumes = {
@@ -173,7 +173,7 @@ public class StationDemoController {
 			countStations = this.stationDemoService.countStations(criteria);
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method countSearchStations of the class %s",StationDemoController.class.getName()));
@@ -190,7 +190,7 @@ public class StationDemoController {
 					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
 					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
 					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
 			}
 	)
 	@GetMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -210,10 +210,10 @@ public class StationDemoController {
 			if (LOGGER.isWarnEnabled()){
 				LOGGER.warn(String.format("The stationId %s does not exists", id));
 			}
-		}
-		catch (Exception exception) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(new TrafficStationBean(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
