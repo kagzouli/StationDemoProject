@@ -42,8 +42,9 @@ public interface IStationDemoService {
 	 * 
 	 * @param id Technical id<br/>
 	 * @return Return the station corresponding to this id.<br/>
+	 * @throws Traffic does not exists.<br/>
 	 */
-	TrafficStationBean findStationById(final Integer id);
+	TrafficStationBean findStationById(final Integer id) throws TrafficStationNotExists;
 	
 	/**
 	 * Method to update the traffic station by id.<br/>

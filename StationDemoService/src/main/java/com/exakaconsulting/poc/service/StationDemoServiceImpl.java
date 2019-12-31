@@ -104,7 +104,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	}
 
 	@Override
-	public TrafficStationBean findStationById(Integer id) {
+	public TrafficStationBean findStationById(Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id station must be set");
 
 		if (LOGGER.isInfoEnabled()){
@@ -113,6 +113,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		
 
 		TrafficStationBean trafficStation = stationDemoDao.findStationById(id);
+		
+		if (trafficStation == null){
+			throw new TrafficStationNotExists(String.format("The traffic station %s does not exist", id));
+		}
 
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method findStationById of the class %s [id = '%s']" , StationDemoServiceImpl.class.getName() , id));			

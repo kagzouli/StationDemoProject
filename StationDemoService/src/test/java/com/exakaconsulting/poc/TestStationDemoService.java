@@ -2,7 +2,6 @@ package com.exakaconsulting.poc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import com.exakaconsulting.poc.service.AlreadyStationExistsException;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+import com.exakaconsulting.poc.service.TrafficStationNotExists;
 
 
 
@@ -184,8 +184,12 @@ public class TestStationDemoService extends AbstractServiceTest{
 	@Test
 	public void testStationFindByIdNotExists(){
 		final Integer id= 10100101;
-		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(id);
-		assertNull(trafficStationBean);
+		
+		try{
+			this.stationDemoService.findStationById(id);
+		}catch(TrafficStationNotExists exception){
+			assertTrue(true);
+		}
 	}
 
 	
@@ -197,14 +201,19 @@ public class TestStationDemoService extends AbstractServiceTest{
 		final TrafficStationBean trafficUnicBean = this.getUnicTrafficStation(STATION);
 		
 		//Search for a station traffic by id.
-		final TrafficStationBean trafficStationBean = this.stationDemoService.findStationById(trafficUnicBean.getId());
-		assertNotNull(trafficStationBean);
+		TrafficStationBean trafficStationBean = null;
+		try{
+			trafficStationBean = this.stationDemoService.findStationById(trafficUnicBean.getId());
+		}catch(TrafficStationNotExists exception){
+			assertTrue(false);
+		}
+		
 		
 		controlPorteChoisy(trafficStationBean);
 	}
 	
 	@Test
-	public void testUpdateTrafficStation(){
+	public void testUpdateTrafficStation() throws TrafficStationNotExists{
 		
 		// Search for a uniq traffic station and get his id.
 		final String STATION = "PORTE DE CHOI";	
@@ -223,18 +232,38 @@ public class TestStationDemoService extends AbstractServiceTest{
 	}
 	
 	@Test
-	public void testDeleteUpdateTrafficStation(){
+	public void testDeleteUpdateTrafficStationExists(){
 
 		// Update a unic trafficStation
 		final String STATION = "PORTE DE CHOI";	
 		final TrafficStationBean trafficUnicBean =  this.getUnicTrafficStation(STATION);
 
-		// Delete it
-		this.stationDemoService.deleteTrafficStation(trafficUnicBean.getId());
+		// Delete it, exists
+		try{
+			this.stationDemoService.deleteTrafficStation(trafficUnicBean.getId());
+		}catch(TrafficStationNotExists exception){
+			assertTrue(false);
+		}
 		
 		// Test that it does not exists anymore
-		TrafficStationBean trafficDeleted = this.stationDemoService.findStationById(trafficUnicBean.getId());
-		assertNull(trafficDeleted);
+		try{
+			this.stationDemoService.findStationById(trafficUnicBean.getId());
+		}catch(TrafficStationNotExists exception){
+			assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void DeleteTrafficStationNotExists(){
+
+
+		// Delete it, exists
+		try{
+			this.stationDemoService.deleteTrafficStation(100000);
+		}catch(TrafficStationNotExists exception){
+			assertTrue(true);
+		}
+		
 	}
 	
 	@Test
