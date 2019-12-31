@@ -122,7 +122,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	}
 
 	@Override
-	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) {
+	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id has to be set");
 		
 		if (LOGGER.isInfoEnabled()){
@@ -139,7 +139,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	}
 
 	@Override
-	public void deleteTrafficStation(Integer id) {
+	public void deleteTrafficStation(Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id has to be set");
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method deleteTrafficStation of the class %s"  , StationDemoServiceImpl.class.getName()));

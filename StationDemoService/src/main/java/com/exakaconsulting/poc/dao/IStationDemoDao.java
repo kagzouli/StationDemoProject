@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+import com.exakaconsulting.poc.service.TrafficStationNotExists;
 
 public interface IStationDemoDao {
 	
@@ -57,15 +58,17 @@ public interface IStationDemoDao {
 	 * @param newTrafficValue The new traffic value.<br/>
 	 * @param newCorr The new correspondance.<br/>
 	 * @param id The technical id.<br/>
+	 * @throws TrafficStationNotExists The id station does not exists.<br/>
 	 */
-	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id);
+	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id) throws TrafficStationNotExists;
 
 
 	/**
 	 * Method to delete a traffic station.<br/>
 	 * 
 	 * @param id The id parameter.<br/>
+	 * @throws TrafficStationNotExists The id station does not exists.<br/>
 	 */
-	void deleteTrafficStation(final Integer id);
+	void deleteTrafficStation(final Integer id) throws TrafficStationNotExists;
 
 }

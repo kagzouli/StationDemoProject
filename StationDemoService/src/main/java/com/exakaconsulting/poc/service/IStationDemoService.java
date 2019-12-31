@@ -51,14 +51,16 @@ public interface IStationDemoService {
 	 * @param newTrafficValue The new traffic value.<br/>
 	 * @param newCorr The new correspondance.<br/>
 	 * @param id The technical id.<br/>
+	 * @throws The trafficStation does not exists.
 	 */
-	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id);
+	void updateTrafficStation(final Long newTrafficValue, final String newCorr, final Integer id) throws TrafficStationNotExists;
 	
 	/**
 	 * Method to delete a traffic station.<br/>
 	 * 
 	 * @param id The id parameter.<br/>
+	 * @throws The trafficStation does not exists.
 	 */
-	void deleteTrafficStation(final Integer id);
+	void deleteTrafficStation(final Integer id) throws TrafficStationNotExists;
 		
 }

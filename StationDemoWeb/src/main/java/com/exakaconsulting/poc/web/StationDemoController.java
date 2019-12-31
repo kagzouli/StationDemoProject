@@ -35,9 +35,12 @@ import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.IStationDemoService;
 import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+import com.exakaconsulting.poc.service.TrafficStationNotExists;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
@@ -60,7 +63,16 @@ public class StationDemoController {
 	private static final String ERROR_ID_MUST_BE_SET = "The id must be set";
 	
 	
-	@ApiOperation(value = "This method is use to search a traffic stations by criteria", response = TrafficStationBean.class, responseContainer = "List")
+	@ApiOperation(value = "This method is use to search a traffic stations by criteria")
+	@ApiResponses(
+		value = {
+				@ApiResponse(code = 200, message = "OK", response = TrafficStationBean.class , responseContainer="List"),
+				@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+				@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+				@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+				@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+		}
+	)	
 	@GetMapping(value = FIND_STAT_CRIT, consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
@@ -121,7 +133,16 @@ public class StationDemoController {
 		return new ResponseEntity<>(listStationBean,HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to count the number of traffic stations by criteria", response = Integer.class)
+	@ApiOperation(value = "This method is use to count the number of traffic stations by criteria")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK", response = Integer.class),
+					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+			}
+	)	
 	@GetMapping(value = "/station/stations/count", consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
@@ -162,6 +183,16 @@ public class StationDemoController {
 	}
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK", response = TrafficStationBean.class),
+					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+			}
+	)
 	@GetMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager') OR hasRole('user')")
@@ -175,6 +206,12 @@ public class StationDemoController {
 			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			
 			trafficStationBean = this.stationDemoService.findStationById(id);
+			
+			//If the object has not been found
+			if (trafficStationBean == null){
+				new ResponseEntity<>(trafficStationBean,HttpStatus.NOT_FOUND);
+			}
+			
 		} catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			return new ResponseEntity<>(new TrafficStationBean(),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -190,29 +227,38 @@ public class StationDemoController {
 	
 
 	@ApiOperation(value = "This method is use to insert a traffic station", response = Boolean.class , responseContainer= "JsonResult")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 201, message = "OK", response = Integer.class),
+					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 409, message = "Conflict", response = String.class , responseContainer="List"),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+			}
+	)
 	@PutMapping(value = "/station/stations", consumes = {
 			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public ResponseEntity<JsonResult<Boolean>> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
+	public ResponseEntity<Object> insertTrafficStation(@Valid @RequestBody final TrafficStationBean trafficStationBean){
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method insertTrafficStation of the class %s" , StationDemoController.class.getName()));			
 		}
-		JsonResult<Boolean> jsonResult = new JsonResult<>();
+		
+		Integer returnValue = -1;
 		try {
-			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");
-			
-			final Integer returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
-			jsonResult.setResult(returnValue > 0);
-			jsonResult.setSuccess(true);
+			Assert.notNull(trafficStationBean, "The trafficStationBean must be set");			
+			returnValue = this.stationDemoService.insertTrafficStation(trafficStationBean);
 		}catch(AlreadyStationExistsException exception){
 			LOGGER.warn(exception.getMessage());
-			jsonResult.addError(messageSource.getMessage(ConstantStationDemo.STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, LocaleContextHolder.getLocale()));
-			jsonResult.setSuccess(false);
+			List<String> errors = new ArrayList<>();
+			errors.add(messageSource.getMessage(ConstantStationDemo.STATION_ALREADY_EXISTS, new Object[]{ trafficStationBean.getStation()}, LocaleContextHolder.getLocale()));
+			return new ResponseEntity<>(errors,HttpStatus.CONFLICT);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Internal Error",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
@@ -220,56 +266,76 @@ public class StationDemoController {
 			LOGGER.info(String.format("END of the method insertTrafficStation of the class %s" , StationDemoController.class.getName()));			
 		}
 
-		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
+		return new ResponseEntity<>(returnValue,HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "This method is use to update a traffic station", response = Void.class , responseContainer = "JsonResult")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "OK", response = Void.class),
+					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 404, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+			}
+	)
 	@PatchMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public ResponseEntity<JsonResult<Void>> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
+	public ResponseEntity<Void> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable Integer id){
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method updateTrafficStation of the class %s", StationDemoController.class.getName()));			
 		}
-		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			
 			this.stationDemoService.updateTrafficStation(newTraffic, newCorr, id);
-			jsonResult.setSuccess(true);
-		} catch (Exception exception) {
+		}catch(TrafficStationNotExists exception) {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s" , StationDemoController.class.getName()));					
 		}
-		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
+		return new ResponseEntity<>(null,HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 204, message = "No Content", response = Void.class),
+					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
+					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
+					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
+					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+		                    
+	})
 	@DeleteMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public ResponseEntity<JsonResult<Void>>  deleteTrafficStation(@PathVariable final Integer id){
+	public ResponseEntity<Void>  deleteTrafficStation(@PathVariable final Integer id){
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method deleteTrafficStation of the class %s"  , StationDemoController.class.getName()));			
 		}
-		JsonResult<Void> jsonResult = new JsonResult<>();
 		try {
 			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			this.stationDemoService.deleteTrafficStation(id);
-			jsonResult.setSuccess(true);
-		} catch (Exception exception) {
+		}catch(TrafficStationNotExists exception) {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(new JsonResult<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method deleteTrafficStation of the class %s" , StationDemoController.class.getName()));				
 		}
-		return new ResponseEntity<>(jsonResult,HttpStatus.OK);
+		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
 		
 	}
 

@@ -24,6 +24,7 @@ import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TechnicalException;
 import com.exakaconsulting.poc.service.TrafficStationBean;
+import com.exakaconsulting.poc.service.TrafficStationNotExists;
 
 
 @Repository
@@ -251,7 +252,7 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) {
+	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) throws TrafficStationNotExists {
 		Assert.notNull(id, ERROR_ID_MUSTBESET);
 		
 		Map<String, Object> params = new HashMap<>();
@@ -273,7 +274,13 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 		final String requestSql= BEGIN_UPDATE_SQL + StringUtils.join(listUpdateVariable , " ,") + " WHERE TRAF_IDEN = :id";
 		
 		try{
-			this.jdbcTemplate.update(requestSql, params);
+			final int nbrUpdateTrafficStation =  this.jdbcTemplate.update(requestSql, params);
+			if (nbrUpdateTrafficStation == 0){
+				throw new TrafficStationNotExists(String.format("The traffic station %s does not exist", id));
+			}
+			
+		}catch(TrafficStationNotExists exception){
+			throw exception;
 		}catch(Exception exception){
 			throw new TechnicalException(exception);
 		}
@@ -282,14 +289,19 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	}
 
 	@Override
-	public void deleteTrafficStation(Integer id) {
+	public void deleteTrafficStation(Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id, ERROR_ID_MUSTBESET);
 
 		try{
 			Map<String, Object> params = new HashMap<>();
 			params.put("id", id);
 			
-			this.jdbcTemplate.update(DELETE_TRAFFIC_SQL, params);
+			final int nbrDeleteTrafficStation = this.jdbcTemplate.update(DELETE_TRAFFIC_SQL, params);
+			if (nbrDeleteTrafficStation == 0){
+				throw new TrafficStationNotExists(String.format("The traffic station %s does not exist", id));
+			}
+		}catch(TrafficStationNotExists exception){
+			throw exception;
 		}catch(Exception exception){
 			throw new TechnicalException(exception);
 		}
