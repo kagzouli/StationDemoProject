@@ -205,14 +205,13 @@ public class StationDemoController {
 		try {
 			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			
-			trafficStationBean = this.stationDemoService.findStationById(id);
-			
-			//If the object has not been found
-			if (trafficStationBean == null){
-				new ResponseEntity<>(trafficStationBean,HttpStatus.NOT_FOUND);
+			trafficStationBean = this.stationDemoService.findStationById(id);			
+		}catch(TrafficStationNotExists exception){
+			if (LOGGER.isWarnEnabled()){
+				LOGGER.warn(String.format("The stationId %s does not exists", id));
 			}
-			
-		} catch (Exception exception) {
+		}
+		catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
 			return new ResponseEntity<>(new TrafficStationBean(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
