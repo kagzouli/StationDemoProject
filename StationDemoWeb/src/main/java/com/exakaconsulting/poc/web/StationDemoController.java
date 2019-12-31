@@ -61,7 +61,7 @@ public class StationDemoController {
 	private MessageSource messageSource;
 	
 	private static final String ERROR_ID_MUST_BE_SET = "The id must be set";
-	
+		
 	
 	@ApiOperation(value = "This method is use to search a traffic stations by criteria")
 	@ApiResponses(
@@ -234,7 +234,7 @@ public class StationDemoController {
 					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
 					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
 					@ApiResponse(code = 409, message = "Conflict", response = String.class , responseContainer="List"),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
 			}
 	)
 	@PutMapping(value = "/station/stations", consumes = {
@@ -258,7 +258,7 @@ public class StationDemoController {
 			return new ResponseEntity<>(errors,HttpStatus.CONFLICT);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>("Internal Error",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
@@ -292,16 +292,16 @@ public class StationDemoController {
 			
 			this.stationDemoService.updateTrafficStation(newTraffic, newCorr, id);
 		}catch(TrafficStationNotExists exception) {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s" , StationDemoController.class.getName()));					
 		}
-		return new ResponseEntity<>(null,HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "This method is use to delete a traffic station", response = Void.class , responseContainer = "JsonResult")
@@ -326,16 +326,16 @@ public class StationDemoController {
 			Assert.notNull(id, ERROR_ID_MUST_BE_SET);
 			this.stationDemoService.deleteTrafficStation(id);
 		}catch(TrafficStationNotExists exception) {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}catch (Exception exception) {
 			LOGGER.error(exception.getMessage(), exception);
-			return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("END of the method deleteTrafficStation of the class %s" , StationDemoController.class.getName()));				
 		}
-		return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		
 	}
 
