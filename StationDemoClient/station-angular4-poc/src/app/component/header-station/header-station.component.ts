@@ -34,8 +34,6 @@ export class HeaderStationComponent implements OnInit {
   }
 
   get givenName() {
-    let value = this.oauthService.authorizationHeader;
-
     const claims = this.oauthService.getIdentityClaims();
     if (!claims) {
       return null;

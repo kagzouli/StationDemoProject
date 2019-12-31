@@ -107,9 +107,7 @@ export class TrafficstationService {
 
   deleteStation(stationId : number) : Observable<DeleteStationResponse>{
       const headers = this.createHttpHeader('application/x-www-form-urlencoded');  
-      
-      let params = new HttpParams();
-    
+          
       return this.http.delete(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}`  , {headers: headers})
        .pipe(catchError(this.formatErrors));
   }

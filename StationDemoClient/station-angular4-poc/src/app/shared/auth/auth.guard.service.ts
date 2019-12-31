@@ -16,8 +16,7 @@ export class AuthGuard implements CanActivate {
 
       const authorized : boolean = this.isUserRoleAuthorized(componentRoles, userRoles);
 
-      if (authorized){
-      }else{
+      if (!authorized){
         this.router.navigate(['/error/403']);
       }
 

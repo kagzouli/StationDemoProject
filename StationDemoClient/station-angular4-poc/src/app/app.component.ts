@@ -26,7 +26,7 @@ export class AppComponent {
       this.oauthService.scope = 'openid profile email';
       this.oauthService.issuer = configuration.oktaUrl + '/oauth2/default';
       this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
-      this.oauthService.oidc= true,
+      this.oauthService.oidc= true;
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
       // Load Discovery Document and then try to login the user
@@ -74,8 +74,6 @@ export class AppComponent {
    * 
    */
   get givenName() {
-    let value = this.oauthService.authorizationHeader;
-
     const claims = this.oauthService.getIdentityClaims();
     if (!claims) {
       return null;
