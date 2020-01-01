@@ -7,6 +7,7 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { Params } from '@angular/router/src/shared';
 import { DeleteStationResponse } from '../../bean/deletestationresponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-select-station',
@@ -38,7 +39,13 @@ export class SelectStationComponent implements OnInit {
         (trafficParam: TrafficStationBean) => {
           this.trafficStationBean = trafficParam;
           this.isDataAvailable = true;
-       });
+       },
+       (error : any) => {
+        if (error.status === 404){
+          this.router.navigate(['/error/404',{}]);                         
+        }
+      }
+      );
    
   }
 
