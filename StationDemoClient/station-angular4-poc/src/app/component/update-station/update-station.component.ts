@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { TrafficStationBean } from '../../bean/trafficstationbean';
 import { ActivatedRoute, Router } from "@angular/router";
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UpdateStationResponse } from '../../bean/updatestationresponse';
 
 
 @Component({
@@ -71,21 +72,16 @@ export class UpdateStationComponent implements OnInit {
 
           // Method to create a station
           this.trafficstationService.updateStation(form.traffic, form.correspondance,this.trafficStationBeanUpdate.id).subscribe(
-            (jsonResult: UpdateStationResponse) => {
-              const success = jsonResult.success;
-              if (success) {
+            (result: any) => {
                  window.alert(this.trafficstationService.translateMessage("STATION_UPDATE_SUCESSS", {}));
-                 this.router.navigate(['/stationdemo/searchstations',{}]);               
-               }else {
-                 let messageError = jsonResult.errors[0];
-                 window.alert('Error --> ' + messageError);
-              }
+                 this.router.navigate(['/stationdemo/searchstations',{}]);  
+                 this.launchAction = false;            
+            },
+            (error : HttpErrorResponse) => {
               this.launchAction = false;
-          }
+            }  
           );
-        
-
-   }else {
+        }else {
         // Invalid data on form - we reset.
         this.rForm.reset();
     }
