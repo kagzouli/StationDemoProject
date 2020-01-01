@@ -24,7 +24,7 @@ Normally, everything must be encrypting with HTTPS but for the POC, I will not d
 
 TODO : Improve this architecture schema
 
-![picture](./schemaArchitecture.png)
+![picture](./schemaArchitectureGlobal.png)
 
 # TrafficStation integration
 
