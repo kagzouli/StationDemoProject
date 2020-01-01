@@ -6,7 +6,6 @@ import { TrafficStationBean } from '../../bean/trafficstationbean';
 
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { Params } from '@angular/router/src/shared';
-import { DeleteStationResponse } from '../../bean/deletestationresponse';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -40,7 +39,7 @@ export class SelectStationComponent implements OnInit {
           this.trafficStationBean = trafficParam;
           this.isDataAvailable = true;
        },
-       (error : any) => {
+       (error : HttpErrorResponse) => {
         if (error.status === 404){
           this.router.navigate(['/error/404',{}]);                         
         }
@@ -73,16 +72,12 @@ export class SelectStationComponent implements OnInit {
  
            // Method to create a station
         this.trafficstationService.deleteStation(this.trafficStationBean.id).subscribe(
-          (jsonResult: DeleteStationResponse) => {
-            const success = jsonResult.success;
-            if (success) {
+          (result: any) => {
                window.alert(this.trafficstationService.translateMessage('STATION_DELETE_SUCCESS' , {}));
                this.router.navigate(['/stationdemo/searchstations',{}]);               
-             }else {
-               let messageError = jsonResult.errors[0];
-               window.alert('Error --> ' + messageError);
-            }  
-        }
+          },
+          (error : HttpErrorResponse) => {
+          }
         );
     
     }

@@ -5,9 +5,6 @@ import { HttpClient , HttpHeaders , HttpParams,HttpErrorResponse} from '@angular
 import { CriteriaSearchStation } from '../bean/criteriasearchstation';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 
-import { CreateStationResponse } from '../bean/createstationresponse';
-import { UpdateStationResponse } from '../bean/updatestationresponse';
-import { DeleteStationResponse } from '../bean/deletestationresponse';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError } from 'rxjs/operators/catchError';
@@ -92,7 +89,7 @@ export class TrafficstationService {
   * Create station 
 
   */
-  createStation(trafficStationBean : TrafficStationBean)  : Observable<CreateStationResponse>{
+  createStation(trafficStationBean : TrafficStationBean)  : Observable<number>{
     const headers = this.createHttpHeader('application/json');   
     return this.http.put(`${this.configurationLoaderService.getURLTrafficService()}/stations`, trafficStationBean, {headers: headers})
     .pipe(catchError(err =>  this.formatErrors(err)));
@@ -110,7 +107,7 @@ export class TrafficstationService {
   * Update station 
 
   */
-  updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<CreateStationResponse>{
+  updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<any>{
     const headers = this.createHttpHeader('application/x-www-form-urlencoded');  
    
     let params = new HttpParams()
@@ -122,7 +119,7 @@ export class TrafficstationService {
       .pipe(catchError(err =>  this.formatErrors(err)));
   }
 
-  deleteStation(stationId : number) : Observable<DeleteStationResponse>{
+  deleteStation(stationId : number) : Observable<any>{
       const headers = this.createHttpHeader('application/x-www-form-urlencoded');  
           
       return this.http.delete(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}`  , {headers: headers})
