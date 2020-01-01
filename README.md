@@ -22,7 +22,9 @@ There is 3 docker images in the application :
        
 Normally, everything must be encrypting with HTTPS but for the POC, I will not do it 
 
-TODO : Put a schema to be me focus about architecture.
+TODO : Improve this architecture schema
+
+![picture](./firstSchemaArchitecture.png)
 
 # TrafficStation integration
 
