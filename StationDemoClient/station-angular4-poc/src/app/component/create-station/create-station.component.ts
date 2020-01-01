@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import {StringMapEntry} from '../../bean/stringmapentry';
-
 import { TrafficstationService } from '../../service/trafficstation.service';
-
 import { TrafficStationBean } from '../../bean/trafficstationbean';
-import { CreateStationResponse } from '../../bean/createstationresponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 import { Router } from "@angular/router";
@@ -80,24 +76,23 @@ export class CreateStationComponent implements OnInit {
       
         // Method to create a station
         this.trafficstationService.createStation(trafficStationBean).subscribe(
-          (jsonResult: CreateStationResponse) => {
-            const success = jsonResult.success;
-            if (success) {
-               window.alert(this.trafficstationService.translateMessage("STATION_CREATE_SUCCESS" , {}));
-               this.router.navigate(['/stationdemo/searchstations',{}]);               
-             }else {
-               this.errors.push(jsonResult.errors[0]);
-               
+          (trafficStationId: number) => {
+            window.alert(this.trafficstationService.translateMessage("STATION_CREATE_SUCCESS" , {}));
+            this.router.navigate(['/stationdemo/searchstations',{}]); 
+            this.launchAction = false;         
+          },
+          (error : HttpErrorResponse) => {
+            if (error.status === 409){
+              this.errors.push(error.error);
+              this.launchAction = false;           
             }
-            this.launchAction = false;
-        }
+          }
         );
-        
-
-   }else {
+      }
+      else {
         // Invalid data on form - we reset.
         this.rForm.reset();
-    }
+      }
   }
 
   /**
