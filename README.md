@@ -14,10 +14,9 @@ There is also a batch part made with Spring batch. It calls business part to cre
 I use docker for more simplicity and more flexibility and kubernetes (present in the kubernates directory  :), a little  misspelling). Kubernetes will allow 
 to manage the number of docker container that will start in the application (Increase or decrease the number depending of the HTTP traffic).
 There is 3 docker images in the application :
-         - The front-end in Angular 
-		 - The back-end in SpringMVC and a little use of Spring boot
-		 - The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per application deployed --> Bad practice, 
-		 I use it only for test)
+       1.   - The front-end in Angular using Nginx
+	   2.   - The back-end in SpringMVC and a little use of Spring boot using Tomcat server
+	   3.    -The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test)
 There is also an example with docker-compose
 Normally, everything must be encrypting with HTTPS but for the POC, I will not do it 
 
