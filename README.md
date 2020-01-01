@@ -26,7 +26,7 @@ TODO : Put a schema to be me focus about architecture.
 
 # TrafficStation integration
 
-I use maven for java sources and npm for Angular source. I also use a jenkins container to build all the tasks.
+I use maven for java sources and npm for Angular source. I also use a Jenkins container to build all the tasks.
 I create 5 tasks : 
 
    - Build the project, generate docker images and push them in the regular or a custom docker registry
