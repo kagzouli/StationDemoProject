@@ -11,7 +11,7 @@ This project is divided into multiples parts, a web application with the front-e
 I use Okta for identity providing (More easy to manage). I use JWT token for the communication between the front-end and the back-end (Standard in industry).
 
 There is also a batch part made with Spring batch. It calls business part to create some data. 
-I use docker for more simplicity and more flexibility and kubernetes (present in the kubernates directory  :), a little  misspelling). Kubernetes will allow 
+I use docker for more simplicity and more flexibility and kubernetes. Kubernetes will allow 
 to manage the number of docker container that will start in the application (Increase or decrease the number depending of the HTTP traffic).
 There is 3 docker images in the application :
 
@@ -100,7 +100,7 @@ This directory is containing all the tools with docker that will be use for cont
 This directory contains all the jenkins pipeline to build, push image into custom or standard docker registry  and deploy the project using docker-compose 
 or kubernetes.
 
-## kubernates (A little misspelling)
+## kubernetes
 
 This directory contains the template to start kubernetes pod and service for the project.
 There a 2 instances pod behind a service (Load balancing)

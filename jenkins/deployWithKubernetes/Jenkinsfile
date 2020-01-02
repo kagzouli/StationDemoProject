@@ -10,31 +10,31 @@ pipeline {
 		
         stage ("startBack") {
             steps {
-				sh "sed -i 's/{{VERSION}}/${VERSION}/g' kubernates/back/backDeployTemplate.yaml" 
-				sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/back/backDeployTemplate.yaml"
-				sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/back/backDeployTemplate.yaml"
-				sh "sed -i 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernates/back/backDeployTemplate.yaml"
-				sh "cat kubernates/back/backDeployTemplate.yaml"
-				sh "kubectl apply -f kubernates/back/backDeployTemplate.yaml"
+				sh "sed -i 's/{{VERSION}}/${VERSION}/g' kubernetes/back/backDeployTemplate.yaml" 
+				sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernetes/back/backDeployTemplate.yaml"
+				sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernetes/back/backDeployTemplate.yaml"
+				sh "sed -i 's+{{DATABASE_DATA}}+${DATABASE_DATA}+g' kubernetes/back/backDeployTemplate.yaml"
+				sh "cat kubernetes/back/backDeployTemplate.yaml"
+				sh "kubectl apply -f kubernetes/back/backDeployTemplate.yaml"
                 
-				sh "sed -i 's+{{SERVICE_EXTERNAL_IP}}+${SERVICE_EXTERNAL_IP}+g' kubernates/back/backServiceTemplate.yaml"
-				sh "cat kubernates/back/backServiceTemplate.yaml"
-				sh "kubectl apply -f kubernates/back/backServiceTemplate.yaml" 
+				sh "sed -i 's+{{SERVICE_EXTERNAL_IP}}+${SERVICE_EXTERNAL_IP}+g' kubernetes/back/backServiceTemplate.yaml"
+				sh "cat kubernetes/back/backServiceTemplate.yaml"
+				sh "kubectl apply -f kubernetes/back/backServiceTemplate.yaml" 
             }
         }
 
         stage ("stopFront") {
             steps {
-				sh "sed -i 's+{{VERSION}}+${VERSION}+g' kubernates/front/frontDeployTemplate.yaml"
-				sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernates/front/frontDeployTemplate.yaml"
-				sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernates/front/frontDeployTemplate.yaml"
-				sh "sed -i 's+{{ANGULAR_CONFIG}}+${ANGULAR_CONFIG}+g' kubernates/front/frontDeployTemplate.yaml"
-				sh "cat kubernates/front/frontDeployTemplate.yaml"
-                sh "kubectl apply -f kubernates/front/frontDeployTemplate.yaml" 
+				sh "sed -i 's+{{VERSION}}+${VERSION}+g' kubernetes/front/frontDeployTemplate.yaml"
+				sh "sed -i 's+{{REPO_NEXUS_URL}}+${REPO_NEXUS_URL}+g' kubernetes/front/frontDeployTemplate.yaml"
+				sh "sed -i 's+{{MY_LOGS}}+${MY_LOGS}+g' kubernetes/front/frontDeployTemplate.yaml"
+				sh "sed -i 's+{{ANGULAR_CONFIG}}+${ANGULAR_CONFIG}+g' kubernetes/front/frontDeployTemplate.yaml"
+				sh "cat kubernetes/front/frontDeployTemplate.yaml"
+                sh "kubectl apply -f kubernetes/front/frontDeployTemplate.yaml" 
 				
-				sh "sed -i 's+{{SERVICE_EXTERNAL_IP}}+${SERVICE_EXTERNAL_IP}+g' kubernates/front/frontServiceTemplate.yaml"
-				sh "cat kubernates/front/frontServiceTemplate.yaml"
-                sh "kubectl apply -f kubernates/front/frontServiceTemplate.yaml" 
+				sh "sed -i 's+{{SERVICE_EXTERNAL_IP}}+${SERVICE_EXTERNAL_IP}+g' kubernetes/front/frontServiceTemplate.yaml"
+				sh "cat kubernetes/front/frontServiceTemplate.yaml"
+                sh "kubectl apply -f kubernetes/front/frontServiceTemplate.yaml" 
             }
         }
      }
