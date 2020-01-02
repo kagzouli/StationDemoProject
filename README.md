@@ -40,13 +40,22 @@ I create 5 tasks :
 ## BuildStationDemoProject
 
 The goal of this job is to build the project and generate docker images and push them in the regular docker registry. 
+It takes 2 parameters : 
 
 | Parameter  |  Description |
 | ------------ | ------------ |
-|  VERSION |The version of the project  |
-|   |   |
-|   |   |
+| VERSION |The version of the project  |
+| REPO_NEXUS_URL | The URL of the docker container registry|
 
+## startStationDemoDockerCompose
+
+The goal of this job is to start the application using a docker-compose file. 
+It takes 5 parameters : 
+
+| Parameter  |  Description |
+| ------------ | ------------ |
+| VERSION |The version of the project  |
+| REPO_NEXUS_URL | The URL of the docker container registry|
 
 TODO : Explain all the tasks.
 
