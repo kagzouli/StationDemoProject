@@ -37,6 +37,16 @@ I create 5 tasks :
    - Start the application using kubernetes with 2 nodes
    - Stop the application starting with kubernetes.
    
+## BuildStationDemoProject
+
+The goal of this job is to build the project and generate docker images and push them in the regular docker registry. 
+
+| Parameter  |  Description |
+| ------------ | ------------ |
+|  VERSION |The version of the project  |
+|   |   |
+|   |   |
+
 
 TODO : Explain all the tasks.
 
