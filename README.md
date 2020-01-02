@@ -76,7 +76,7 @@ It takes 5 parameters :
 | DATABASE_DATA | The directory where the mariadb data is stored|
 | MY_LOGS | The directory where the logs are stored|
 | ANGULAR_CONFIG | The directory where the angular configuration file is stored|
-| SERVICE_EXTERNAL_IP | The IP service external IP that is use for the back-end kubernete service |
+| SERVICE_EXTERNAL_IP | The service external IP that is use for the back-end kubernete service |
 
 ## stopStationDemoDockerCompose
 
