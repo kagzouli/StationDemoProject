@@ -58,7 +58,7 @@ It takes 5 parameters :
 | REPO_NEXUS_URL | The URL of the docker container registry|
 | DATABASE_DATA | The directory where the mariadb data is stored|
 | MY_LOGS | The directory where the logs are stored|
-| ANGULAR_CONFIG | The directory where the angular configuration file |
+| ANGULAR_CONFIG | The directory where the angular configuration file is stored|
 
 ## stopStationDemoDockerCompose
 
@@ -75,7 +75,7 @@ It takes 5 parameters :
 | REPO_NEXUS_URL | The URL of the docker container registry|
 | DATABASE_DATA | The directory where the mariadb data is stored|
 | MY_LOGS | The directory where the logs are stored|
-| ANGULAR_CONFIG | The directory where the angular configuration file |
+| ANGULAR_CONFIG | The directory where the angular configuration file is stored|
 
 ## stopStationDemoDockerCompose
 
