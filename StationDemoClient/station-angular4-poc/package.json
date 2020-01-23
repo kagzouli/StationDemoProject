@@ -1,7 +1,10 @@
 {
-  "name": "station-angular4-poc",
+  "name": "@exakaconsulting/station-angular4-poc",
   "version": "0.0.0",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 -port 3000 --base-href=/station-angular4-poc/ --disable-host-check",
@@ -14,7 +17,6 @@
     "prod": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=distTomcat",
     "prod-zip": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.4",
     "@angular/cdk": "^5.2.4",
