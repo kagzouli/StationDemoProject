@@ -64,23 +64,6 @@
 					</configuration>
 				</execution>
 
-			        <!-- Synchronize the version of application npm with maven version -->
-				<execution>
-					<id>npm version $VERSION</id>
-					<goals>
-						<goal>exec</goal>
-					</goals>
-					<phase>initialize</phase>
-					<configuration>
-						<executable>${npm.executable}</executable>
-						<arguments>
-						    <argument>--no-git-tag-version</argument>
-							<argument>--allow-same-version</argument>
-							<argument>version</argument>
-							<argument>${project.version}</argument>
-						</arguments>
-					</configuration>
-				</execution>
 				
 				<!-- Required: This following calls `npm run build` where 'build' is
 					    the script name I used in my project, change this if yours is
