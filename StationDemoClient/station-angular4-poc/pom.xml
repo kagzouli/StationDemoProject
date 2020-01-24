@@ -47,22 +47,6 @@
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>exec-maven-plugin</artifactId>
 			<executions>
-				<!-- Required: The following will ensure `npm install` is called
-					before anything else during the 'Default Lifecycle' -->
-				<execution>
-					<id>npm install (initialize)</id>
-					<goals>
-						<goal>exec</goal>
-					</goals>
-					<phase>initialize</phase>
-					<configuration>
-						<executable>${npm.executable}</executable>
-						<arguments>
-							<argument>install</argument>
-							<argument>-g</argument>
-						</arguments>
-					</configuration>
-				</execution>
 				
 				<!-- Required: The following will ensure `npm install` is called
 				     before anything else during the 'Clean Lifecycle' -->
@@ -71,11 +55,29 @@
 					<goals>
 						<goal>exec</goal>
 					</goals>
-					<phase>pre-clean</phase>
+					<phase>initialise</phase>
 					<configuration>
 						<executable>${npm.executable}</executable>
 						<arguments>
 							<argument>install</argument>
+						</arguments>
+					</configuration>
+				</execution>
+
+			        <!-- Synchronize the version of application npm with maven version -->
+				<execution>
+					<id>npm version $VERSION</id>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					<phase>initialize</phase>
+					<configuration>
+						<executable>${npm.executable}</executable>
+						<arguments>
+						    <argument>--no-git-tag-version</argument>
+							<argument>--allow-same-version</argument>
+							<argument>version</argument>
+							<argument>${project.version}</argument>
 						</arguments>
 					</configuration>
 				</execution>

@@ -1,6 +1,6 @@
 {
   "name": "@exakaconsulting/station-angular4-poc",
-  "version": "0.0.0",
+  "version": "0.0.1-SNAPSHOT",
   "license": "MIT",
   "files": [
     "dist"
