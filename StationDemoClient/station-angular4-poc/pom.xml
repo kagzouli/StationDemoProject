@@ -55,7 +55,7 @@
 					<goals>
 						<goal>exec</goal>
 					</goals>
-					<phase>initialise</phase>
+					<phase>initialize</phase>
 					<configuration>
 						<executable>${npm.executable}</executable>
 						<arguments>
