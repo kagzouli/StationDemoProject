@@ -18,7 +18,7 @@
 	   <servletapi.version>3.1.0</servletapi.version>
 	   <springbatch.version>4.2.1.RELEASE</springbatch.version>
 	   <springboot.version>2.2.2.RELEASE</springboot.version>
-	   <springsecurity.version>5.2.1.RELEASE</springsecurity.version>
+	   <springsecurity.version>5.3.3.RELEASE</springsecurity.version>
 	   <springjwt.version>1.1.0.RELEASE</springjwt.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
