@@ -36,7 +36,7 @@ resource "aws_subnet" "station_publicsubnet1" {
 resource "aws_route_table" "station_public1routetable" {
   vpc_id = aws_vpc.station_vpc.id
   tags {
-     Name = "station_public1routetable",
+     Name = "station_public1routetable"
      Application= var.application
   }
 }
