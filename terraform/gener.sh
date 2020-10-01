@@ -1,1 +1,1 @@
-terraform apply -auto-approve
+terraform apply -auto-approve -state=output/terraform.tfstate

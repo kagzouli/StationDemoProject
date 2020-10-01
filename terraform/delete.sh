@@ -1,1 +1,1 @@
-terraform destroy -auto-approve
+terraform destroy -auto-approve -state=output/terraform.tfstate
