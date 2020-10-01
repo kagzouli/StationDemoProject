@@ -79,7 +79,7 @@ resource "aws_route_table" "station_public2routetable" {
 resource "aws_route" "station_public2" {
   route_table_id         =  aws_route_table.station_public2routetable.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "aws_internet_gateway.station_internalgw.id
+  gateway_id             =  aws_internet_gateway.station_internalgw.id
 }
 
 resource "aws_route_table_association" "station_routetablassoc_public2" {
