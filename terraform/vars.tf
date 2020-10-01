@@ -30,6 +30,16 @@ variable "private_subnet2_cidr" {
     default = "12.0.4.0/26"
 }
 
+variable "az_zone1" {
+    description = "Availability zone 1"
+    default = "eu-west-3a"
+}
+
+variable "az_zone2" {
+    description = "Availability zone 1"
+    default = "eu-west-3b"
+}
+
 
 variable "application"{ 
   default     = "STATION"
