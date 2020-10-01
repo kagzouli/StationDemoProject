@@ -9,3 +9,9 @@ variable "cidr_block" {
   type        = string
   description = "CIDR of the VPC"
 }
+
+variable "application"{ 
+  default     = "STATION"
+  type        = string
+  description = "Application"
+}

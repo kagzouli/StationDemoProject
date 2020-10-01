@@ -8,6 +8,7 @@ resource "aws_vpc" "station_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "station_vpc"
+    Name = "station_vpc",
+    Application= var.application
   }
 }
