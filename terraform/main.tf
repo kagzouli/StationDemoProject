@@ -20,20 +20,6 @@ resource "aws_internet_gateway" "station_internalgw" {
   }
 }
 
-/** NAT Gateway Public 1  **/
-resource "aws_eip" "station_nateip1" {
-  vpc = true
-}
-
-resource "aws_nat_gateway" "station_natgwpublic" {
-  allocation_id = aws_eip.station_nateip1.id
-  subnet_id     = aws_subnet.station_publicsubnet1.id
-   tags = {
-       Name = "station_natgatewaypublic1",
-       Application= var.application
-   }
-}
-
 
 /*** Public Subnet 1 **/
 resource "aws_subnet" "station_publicsubnet1" {
@@ -102,17 +88,6 @@ resource "aws_route_table_association" "station_routetablassoc_public2" {
 }
 
 
-resource "aws_route_table" "station_privateroutetable" {
-  vpc_id = aws_vpc.station_vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.station_natgwpublic.id
-  }
-  tags = {
-    Name = "station_privateroutable",
-    Application= var.application
-  }
-}
 
 /*** Private subnet 1 **/
 resource "aws_subnet" "station_privatesubnet1" {
@@ -128,13 +103,6 @@ resource "aws_subnet" "station_privatesubnet1" {
 }
 
 
-
-
-resource "aws_route_table_association" "station_privateassociation1" {
-  subnet_id      = "${aws_subnet.station_privatesubnet1.id}"
-  route_table_id = "${aws_route_table.station_privateroutetable.id}"
-}
-
 /*** Private subnet 2 **/
 resource "aws_subnet" "station_privatesubnet2" {
     vpc_id = aws_vpc.station_vpc.id
@@ -146,12 +114,6 @@ resource "aws_subnet" "station_privatesubnet2" {
        Name = "station_privatesubnet2",
        Application= var.application
     }
-}
-
-
-resource "aws_route_table_association" "station_privateassociation2" {
-  subnet_id      = "${aws_subnet.station_privatesubnet2.id}"
-  route_table_id = "${aws_route_table.station_privateroutetable.id}"
 }
 
 
