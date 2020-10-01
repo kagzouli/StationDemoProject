@@ -4,11 +4,32 @@ variable "region" {
   description = "Region of the VPC"
 }
 
-variable "cidr_block" {
-  default     = "12.0.0.0/25"
+variable "vpc_cidr_block" {
+  default     = "12.0.0.0/24"
   type        = string
   description = "CIDR of the VPC"
 }
+
+variable "public_subnet1_cidr" {
+    description = "CIDR for the Public Subnet1"
+    default = "12.0.1.0/27"
+}
+
+variable "public_subnet2_cidr" {
+    description = "CIDR for the Public Subnet2"
+    default = "12.0.2.0/27"
+}
+
+variable "private_subnet1_cidr" {
+    description = "CIDR for the Private Subnet1"
+    default = "12.0.3.0/26"
+}
+
+variable "private_subnet2_cidr" {
+    description = "CIDR for the Private Subnet2"
+    default = "12.0.4.0/26"
+}
+
 
 variable "application"{ 
   default     = "STATION"
