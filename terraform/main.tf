@@ -115,5 +115,3 @@ resource "aws_subnet" "station_privatesubnet2" {
        Application= var.application
     }
 }
-
-
