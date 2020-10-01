@@ -25,7 +25,7 @@ resource "aws_eip" "station_nateip1" {
   vpc = true
 }
 
-resource "aws_nat_gateway" "station_natgwpublic1" {
+resource "aws_nat_gateway" "station_natgwpublic" {
   allocation_id = aws_eip.station_nateip1.id
   subnet_id     = aws_subnet.station_publicsubnet1.id
    tags = {
