@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "station_internalgw" {
 resource "aws_subnet" "station_publicsubnet1" {
     vpc_id = aws_vpc.station_vpc.id
 
-    cidr_block =  var.public_subnetta1_cidr
+    cidr_block =  var.public_subnet1_cidr
     availability_zone = var.az_zone1
 
     tags = {
