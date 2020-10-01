@@ -13,7 +13,7 @@ resource "aws_vpc" "station_vpc" {
   Public Subnet 1
 */
 resource "aws_subnet" "station_publicsubnet1" {
-    vpc_id = "${aws_vpc.station_vpc.id}"
+    vpc_id = aws_vpc.station_vpc.id
 
     cidr_block =  var.public_subnet1_cidr
     availability_zone = var.az_zone1
@@ -28,7 +28,7 @@ resource "aws_subnet" "station_publicsubnet1" {
   Public Subnet 2
 */
 resource "aws_subnet" "station_publicsubnet2" {
-    vpc_id = "${aws_vpc.station_vpc.id}"
+    vpc_id = aws_vpc.station_vpc.id
 
     cidr_block =  var.public_subnet2_cidr
     availability_zone = var.az_zone2
@@ -43,7 +43,7 @@ resource "aws_subnet" "station_publicsubnet2" {
   Private Subnet 1
 */
 resource "aws_subnet" "station_privatesubnet1" {
-    vpc_id = "${aws_vpc.station_vpc.id}"
+    vpc_id = aws_vpc.station_vpc.id
 
     cidr_block =  var.private_subnet1_cidr
     availability_zone = var.az_zone1
@@ -58,7 +58,7 @@ resource "aws_subnet" "station_privatesubnet1" {
   Private subnet 2
 */
 resource "aws_subnet" "station_privatesubnet2" {
-    vpc_id = "${aws_vpc.station_vpc.id}"
+    vpc_id = aws_vpc.station_vpc.id
 
     cidr_block =  var.private_subnet2_cidr
     availability_zone = var.az_zone2
