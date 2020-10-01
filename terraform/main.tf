@@ -54,7 +54,6 @@ resource "aws_route_table_association" "station_routetablassoc_public1" {
 
 
 
-
 /*** Public subnet 2 **/
 resource "aws_subnet" "station_publicsubnet2" {
     vpc_id = aws_vpc.station_vpc.id
@@ -101,6 +100,29 @@ resource "aws_subnet" "station_privatesubnet1" {
     }
 }
 
+resource "aws_nat_gateway" "station_natgwpublic1" {
+  subnet_id     = aws_subnet.station_publicsubnet1.id
+   tags = {
+       Name = "station_natgatewaypublic1",
+       Application= var.application
+   }
+}
+
+resource "aws_route_table" "station_privateroutetable1" {
+  vpc_id = aws_vpc.station_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.station_natgwpublic1.id
+  }
+  tags = {
+    Name = "station_privateroutable1",
+    Application= var.application
+  }
+}
+
+
+
+
 /*** Private subnet 2 **/
 resource "aws_subnet" "station_privatesubnet2" {
     vpc_id = aws_vpc.station_vpc.id
@@ -113,5 +135,26 @@ resource "aws_subnet" "station_privatesubnet2" {
        Application= var.application
     }
 }
+
+resource "aws_nat_gateway" "station_natgwpublic2" {
+  subnet_id     = "${aws_subnet.station_publicsubnet2.id}"
+   tags = {
+       Name = "station_natgatewaypublic2",
+       Application= var.application
+   }
+}
+
+resource "aws_route_table" "station_privateroutetable2" {
+  vpc_id = aws_vpc.station_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.station_natgwpublic2.id
+  }
+  tags = {
+    Name = "station_privateroutable2",
+    Application= var.application
+  }
+}
+
 
 
