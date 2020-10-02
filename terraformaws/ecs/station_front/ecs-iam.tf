@@ -24,16 +24,7 @@ resource "aws_iam_role" "station_front_iam_role" {
 EOF
 
   tags = {
-    ApplicationCode = "${var.app_code}"
-    Automation      = "${var.automation}"
-    BU              = "${var.bu}"
-    Creator         = "${var.iam_creator}"
-    Criticity       = "${var.criticity}"
-    DateTimeTag     = ""
-    Environment     = "${var.environment}"
-    Name            = "${var.project}-role-${var.environment}"
-    Note            = ""
-    Owner           = "${var.iam_owner}"
-    Support         = "${var.support}"
+   Name = "station_front_execution_role"
+   Application= var.application
   }
 }
