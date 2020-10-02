@@ -14,12 +14,12 @@ variable "public_subnets" {
 }
 
 variable "station_front_container_memory"{
-   type        = string
+   type        = number
    description = "station Front container memory"
 }
 
 variable "station_front_container_cpu"{
-   type        = string
+   type        = number
    description = "station Front container cpu"
 }
 
