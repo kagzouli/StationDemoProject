@@ -4,7 +4,7 @@
       "image": "${station_front_image}",
       "portMappings": [
         {
-          "containerPort": "80",
+          "containerPort": 80,
           "hostPort": "${station_front_host_port}"
         }
       ],
