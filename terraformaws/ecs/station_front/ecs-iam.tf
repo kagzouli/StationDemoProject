@@ -25,6 +25,35 @@ EOF
   }
 }
 
+resource "aws_iam_policy" "station_front_iam_role_policy" {
+  name        = "station_front_iam_role_policy"
+  description = "Policy for reading data from secret manager"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:ListSecrets",
+                "secretsmanager:ListSecretVersionIds",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "attach_sacem_front_iam_role" {
+  role       = aws_iam_role.station_front_iam_role.name
+  policy_arn = aws_iam_policy.station_front_iam_role_policy.arn
+}
+
 # Execution Role
 resource "aws_iam_policy" "station_front_execution_role_policy" {
   policy = <<POLICY
