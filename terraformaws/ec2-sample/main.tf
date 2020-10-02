@@ -1,6 +1,6 @@
 // Nginx front server
 resource "aws_instance" "nginx_front" {
-	ami = data.aws_ami.amazon-linux-2.id
+	ami = data.aws_ami.ubuntu.id
 	instance_type = "t2.nano"
     associate_public_ip_address = true
     subnet_id     = data.aws_subnet.station_publicsubnet1.id
