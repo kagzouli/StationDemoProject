@@ -5,7 +5,7 @@
       "portMappings": [
         {
           "containerPort": 80,
-          "hostPort": "${station_front_host_port}"
+          "hostPort": ${station_front_host_port}
         }
       ],
       "environment": [
