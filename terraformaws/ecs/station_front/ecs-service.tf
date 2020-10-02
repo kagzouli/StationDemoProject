@@ -10,6 +10,7 @@ resource "aws_ecs_service" "station_front_ecs_service"{
         security_groups     = [aws_security_group.station_front.id]
     }
 
+    propagate_tags    = "SERVICE"
     tags = {
         Name = "station_front_ecs_service"
         ApplicationCode= var.application
