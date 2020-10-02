@@ -2,7 +2,7 @@
 resource "aws_security_group" "allows_http" {
   name        = "allows_http"
   description = "Allow Http request"
-  vpc_id      = vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     protocol    = "tcp"
