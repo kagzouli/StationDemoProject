@@ -25,7 +25,7 @@ variable "station_front_image"{
 }
 
 variable "station_front_host_port"{
-   type        = integer
+   type        = number
    description = "Port de station_front affiché à l'exterieur."
 }
 
