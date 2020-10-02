@@ -12,7 +12,7 @@ resource "aws_ecs_service" "station_front_ecs_service"{
 
     tags = {
         Name = "station_front_ecs_service"
-        Application= var.application
+        ApplicationCode= var.application
     }
 
 }
