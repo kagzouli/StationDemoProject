@@ -21,20 +21,21 @@ resource "aws_security_group" "allows_http" {
 
   tags = {
     Name = "allow_http"
+    Application= var.application
   }
 }
 
 // Nginx front server
 resource "aws_instance" "nginx_front" {
 	ami = data.aws_ami.ubuntu.id
-	instance_type = "t2.nano"
+	instance_type = "t2.micro"
     associate_public_ip_address = true
     subnet_id     = data.aws_subnet.station_publicsubnet1.id
     user_data     = file("ec2-sample/install_nginx_front.sh")
 	security_groups = [aws_security_group.allows_http.id]
     tags = {
 		Name = "nginx-front"	
-		Batch = "5AM"
+		Application= var.application
 	}
 
 }
