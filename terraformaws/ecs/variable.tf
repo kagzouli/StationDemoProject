@@ -28,3 +28,11 @@ variable "station_front_host_port"{
    type        = string
    description = "Port de station_front affiché à l'exterieur."
 }
+
+locals {
+  docker_registry_identification = {
+    username = "test"
+    password = "test"
+  }
+}
+

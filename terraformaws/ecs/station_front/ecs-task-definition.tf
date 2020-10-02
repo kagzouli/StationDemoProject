@@ -21,7 +21,6 @@ data "template_file"  "station_front"{
         station_front_host_port             = var.station_front_host_port
         region                              = var.region
         awslogs_group                       = aws_cloudwatch_log_group.centralized_java_log_group.name
-        secret_arn                          = data.aws_secretsmanager_secret.secrets-manager.arn
-
+        secret_arn                          = var.docker_registry_identifier
     }
 }

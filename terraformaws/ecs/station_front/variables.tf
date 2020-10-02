@@ -33,6 +33,13 @@ variable "station_front_host_port"{
    description = "Port de station_front affiché à l'exterieur."
 }
 
+variable "docker_registry_identifier"{
+   type        = string
+   description = "Docker registry identifier"
+}
+
+
+
 variable "region" {
   type        = string
 }
