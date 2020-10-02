@@ -8,13 +8,7 @@ variable "vpc_id" {
    description = "Identifiant du VPC"
 }
 
-
-variable "public_subnet1_id" {
-   type        = string
-   description = "Public subnet 1 id"
-}
-
-variable "public_subnet2_id" {
-   type        = string
-   description = "Public subnet 2 id"
+# All the public subnets
+variable "public_subnets" {
+   description = "public subnets"
 }

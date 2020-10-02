@@ -1,7 +1,7 @@
 # Create security groups for nginx-front.
-resource "aws_security_group" "allows_http" {
-  name        = "allows_http"
-  description = "Allow Http request"
+resource "aws_security_group" "station_front" {
+  name        = "station_front"
+  description = "Station front"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -9,7 +9,7 @@ resource "aws_security_group" "allows_http" {
     from_port   = 80
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Http request"
+    description = "http request"
   }
 
   egress {
@@ -20,7 +20,7 @@ resource "aws_security_group" "allows_http" {
   }
 
   tags = {
-    Name = "allow_http"
+    Name = "station_front"
     Application= var.application
   }
 }
