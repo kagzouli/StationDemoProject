@@ -1,0 +1,1 @@
+terraform destroy -auto-approve --var-file=dev.tvars -state=networks/output/terraform.tfstate networks
