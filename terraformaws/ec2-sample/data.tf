@@ -49,7 +49,6 @@ data "aws_subnet" "station_privatesubnet2" {
 // AMI Linux
 data "aws_ami" "amazon-linux-2" {
  most_recent = true
- owners = "amazon"
 
 
  filter {
