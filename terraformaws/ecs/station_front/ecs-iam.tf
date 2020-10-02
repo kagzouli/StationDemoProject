@@ -64,7 +64,7 @@ POLICY
 }
 
 resource "aws_iam_role" "station_front_execution_role" {
-  name = "${var.project}-iam-task-execution-role-${var.environment}"
+  name = "station_front_execution_role"
   assume_role_policy = <<EOF
 {
   "Version": "2008-10-17",
