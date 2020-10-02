@@ -12,3 +12,13 @@ variable "vpc_id" {
 variable "public_subnets" {
    description = "public subnets"
 }
+
+variable "station_front_container_memory"{
+   type        = string
+   description = "station Front container memory"
+}
+
+variable "station_front_container_cpu"{
+   type        = string
+   description = "station Front container cpu"
+}
