@@ -14,9 +14,7 @@
           "value": "${region}"
         }
       ],
-      "repositoryCredentials": {
-        "credentialsParameter": "${secret_arn}"
-      },
+    
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
