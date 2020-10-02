@@ -9,6 +9,7 @@ resource "aws_ecs_service" "station_front_ecs_service"{
     network_configuration{
         subnets             = var.public_subnets
         security_groups     = [aws_security_group.station_front.id]
+        assign_public_ip    = true
     }
 
     
