@@ -3,7 +3,7 @@ data "aws_iam_role" "station_front_execution_role" {
 }
 
 resource "aws_iam_role" "station_front_iam_role" {
-  name = "${var.project}-role-${var.environment}"
+  name = "station_front_execution_role"
 
   assume_role_policy = <<EOF
 {
