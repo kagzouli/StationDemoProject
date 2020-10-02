@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "station_secret_manager" {
 }
 
 resource "aws_secretsmanager_secret_version" "station_secret_version" {
-  secret_id     = "${aws_secretsmanager_secret.station_secret_manager.id}"
+  secret_id     = aws_secretsmanager_secret.station_secret_manager.id
   secret_string = "${jsonencode(local.docker_registry_identification)}"
 }
 

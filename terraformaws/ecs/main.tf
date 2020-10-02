@@ -8,7 +8,7 @@ module "station_front"{
      station_front_image            = var.station_front_image
      station_front_host_port        = var.station_front_host_port
      region                         = var.region
-     docker_registry_identifier     = data.aws_secretsmanager_secret.secrets-manager.arn
+     docker_registry_identifier     = data.aws_secretsmanager_secret.station_secret_manager.arn
 
 
 }
