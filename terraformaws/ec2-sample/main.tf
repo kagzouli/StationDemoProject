@@ -6,7 +6,7 @@ resource "aws_instance" "nginx_front" {
     subnet_id     = data.aws_subnet.station_publicsubnet1.id
     user_data     = file("ec2-sample/install_nginx_front.sh")
 	tags = {
-		Name = "Terraform"	
+		Name = "nginx-front"	
 		Batch = "5AM"
 	}
 }
