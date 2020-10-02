@@ -5,5 +5,8 @@ module "station_front"{
      public_subnets = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
      station_front_container_memory = var.station_front_container_memory
      station_front_container_cpu = var.station_front_container_cpu
+     station_front_image  = var.station_front_image
+     station_front_host_port = var.station_front_host_port
+
 
 }

@@ -18,3 +18,13 @@ variable "station_front_container_cpu"{
    type        = string
    description = "station Front container cpu"
 }
+
+variable "station_front_image"{
+   type        = string
+   description = "Image docker du station_front"
+}
+
+variable "station_front_host_port"{
+   type        = string
+   description = "Port de station_front affiché à l'exterieur."
+}

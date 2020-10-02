@@ -1,0 +1,30 @@
+[
+    {
+      "name": "station_front",
+      "image": "${station_front_image}",
+      "portMappings": [
+        {
+          "containerPort": "80",
+          "hostPort": "${station_front_host_port}"
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "${regionlocal}"
+        }
+      ],
+      "repositoryCredentials": {
+        "credentialsParameter": "${secret_arn}"
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${awslogs_group}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+  
