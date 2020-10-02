@@ -1,5 +1,5 @@
 resource "aws_iam_role" "station_front_iam_role" {
-  name = "station_front_execution_role"
+  name = "station_front_iam_role"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ resource "aws_iam_role" "station_front_iam_role" {
 EOF
 
   tags = {
-   Name = "station_front_execution_role"
+   Name = "station_front_iam_role"
    Application= var.application
   }
 }
