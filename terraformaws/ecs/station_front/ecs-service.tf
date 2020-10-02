@@ -5,10 +5,12 @@ resource "aws_ecs_service" "station_front_ecs_service"{
     desired_count       = 1
     launch_type         = "FARGATE"
  #   health_check_grace_period_seconds = 240
+    propagate_tags    = "SERVICE"
 
     network_configuration{
         subnets             = var.public_subnets
         security_groups     = [aws_security_group.station_front.id]
+        assign_public_ip    = true
     }
 
     
