@@ -1,6 +1,6 @@
 /** Station db with mariadb - Better to use RDS better performance
  but it's just for test that we build station db **/
-module "station_db"{
+/*module "station_db"{
      source = "./station_db"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -12,7 +12,7 @@ module "station_db"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-}
+}*/
 
 /** Station back with Tomcat **/
 module "station_back"{
