@@ -9,6 +9,12 @@ private_subnet2_cidr="12.0.4.0/26"
 az_zone1="eu-west-3a"
 az_zone2="eu-west-3b"
 
+# Station Back
+station_back_container_memory=512
+station_back_container_cpu=256
+station_back_image="kagzouli/station-back:1.0.6"
+station_back_host_port=8080
+
 # Station front
 station_front_container_memory=512
 station_front_container_cpu=256
