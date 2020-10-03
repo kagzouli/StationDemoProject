@@ -1,0 +1,30 @@
+[
+    {
+      "name": "station_db",
+      "image": "${station_db_image}",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": ${station_db_host_port},
+          "protocol": "tcp"
+
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "${region}"
+        }
+      ],
+    
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${awslogs_group}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+  

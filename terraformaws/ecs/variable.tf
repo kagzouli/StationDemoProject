@@ -9,25 +9,26 @@ variable "application"{
   default     = "STATION"
 }
 
-variable "station_front_container_memory"{
+variable "station_db_container_memory"{
    type        = number
-   description = "station Front container memory"
+   description = "station Db container memory"
 }
 
-variable "station_front_container_cpu"{
+variable "station_db_container_cpu"{
    type        = number
-   description = "station Front container cpu"
+   description = "station Db container cpu"
 }
 
-variable "station_front_image"{
+variable "station_db_image"{
    type        = string
-   description = "Image docker du station_front"
+   description = "Image docker du station_db"
 }
 
-variable "station_front_host_port"{
+variable "station_db_host_port"{
    type        = number
-   description = "Port de station_front affiché à l'exterieur."
+   description = "Port de station_db affiché à l'exterieur."
 }
+
 
 variable "station_back_container_memory"{
    type        = number
@@ -48,5 +49,27 @@ variable "station_back_host_port"{
    type        = number
    description = "Port de station_back affiché à l'exterieur."
 }
+
+
+variable "station_front_container_memory"{
+   type        = number
+   description = "station Front container memory"
+}
+
+variable "station_front_container_cpu"{
+   type        = number
+   description = "station Front container cpu"
+}
+
+variable "station_front_image"{
+   type        = string
+   description = "Image docker du station_front"
+}
+
+variable "station_front_host_port"{
+   type        = number
+   description = "Port de station_front affiché à l'exterieur."
+}
+
 
 
