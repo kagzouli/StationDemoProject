@@ -8,6 +8,6 @@ module "station_front"{
      station_front_image            = var.station_front_image
      station_front_host_port        = var.station_front_host_port
      region                         = var.region
-     task_role_arn                  = aws_iam_role.station_front_iam_role.arn
-     execution_role_arn             = aws_iam_role.station_front_execution_role.arn
+     task_role_arn                  = aws_iam_role.station_iam_role.arn
+     execution_role_arn             = aws_iam_role.station_execution_role.arn
 }
