@@ -53,12 +53,13 @@ public class StationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/health");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().
+		http.authorizeRequests().antMatchers("/health").permitAll().
+		anyRequest().authenticated().and().
 		addFilterBefore(this.authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
 		.csrf().disable().
 		exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().cors();
