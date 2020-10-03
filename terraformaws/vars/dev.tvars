@@ -13,4 +13,4 @@ az_zone2="eu-west-3b"
 station_front_container_memory=512
 station_front_container_cpu=256
 station_front_image="kagzouli/station-front-nginx:1.0.6"
-station_front_host_port=5000
+station_front_host_port=80
