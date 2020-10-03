@@ -7,7 +7,7 @@ resource "aws_ecs_service" "station_front_ecs_service"{
  #   health_check_grace_period_seconds = 240
  
     network_configuration{
-        subnets             = var.public_subnets
+        subnets             = var.subnets_id
         security_groups     = [aws_security_group.station_front.id]
         assign_public_ip    = true
     }

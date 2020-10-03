@@ -1,5 +1,5 @@
-resource "aws_iam_role" "station_front_iam_role" {
-  name = "station_front_iam_role"
+resource "aws_iam_role" "station_iam_role" {
+  name = "station_iam_role"
 
   assume_role_policy = <<EOF
 {
@@ -20,14 +20,14 @@ resource "aws_iam_role" "station_front_iam_role" {
 EOF
 
   tags = {
-   Name = "station_front_iam_role"
+   Name = "station_iam_role"
    Application= var.application
   }
 }
 
-resource "aws_iam_policy" "station_front_iam_role_policy" {
-  name        = "station_front_iam_role_policy"
-  description = "Policy for reading data from secret manager"
+resource "aws_iam_policy" "station_iam_role_policy" {
+  name        = "station_iam_role_policy"
+  description = "Policy for reading data"
 
   policy = <<EOF
 {
@@ -49,13 +49,13 @@ resource "aws_iam_policy" "station_front_iam_role_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "attach_sacem_front_iam_role" {
-  role       = aws_iam_role.station_front_iam_role.name
-  policy_arn = aws_iam_policy.station_front_iam_role_policy.arn
+resource "aws_iam_role_policy_attachment" "attach_station_iam_role" {
+  role       = aws_iam_role.station_iam_role.name
+  policy_arn = aws_iam_policy.station_iam_role_policy.arn
 }
 
 # Execution Role
-resource "aws_iam_policy" "station_front_execution_role_policy" {
+resource "aws_iam_policy" "station_execution_role_policy" {
   policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -92,8 +92,8 @@ resource "aws_iam_policy" "station_front_execution_role_policy" {
 POLICY
 }
 
-resource "aws_iam_role" "station_front_execution_role" {
-  name = "station_front_execution_role"
+resource "aws_iam_role" "station_execution_role" {
+  name = "station_execution_role"
   assume_role_policy = <<EOF
 {
   "Version": "2008-10-17",
@@ -112,6 +112,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "task_execution_attachment" {
-  role      = aws_iam_role.station_front_execution_role.name
-  policy_arn = aws_iam_policy.station_front_execution_role_policy.arn
+  role      = aws_iam_role.station_execution_role.name
+  policy_arn = aws_iam_policy.station_execution_role_policy.arn
 }

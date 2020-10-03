@@ -9,8 +9,9 @@ variable "vpc_id" {
 }
 
 # All the public subnets
-variable "public_subnets" {
-   description = "public subnets"
+variable "subnets_id" {
+   type    = list(string)
+   description = "List of subnets id"
 }
 
 variable "station_front_container_memory"{
@@ -36,7 +37,17 @@ variable "station_front_host_port"{
 
 variable "region" {
   type        = string
+  description = "Region"
 }
 
+variable "task_role_arn" {
+  type        = string
+  description = "ARN du role de la tache"
+}
+
+variable "execution_role_arn" {
+  type        = string
+  description = "execution_role_arn"
+}
 
 

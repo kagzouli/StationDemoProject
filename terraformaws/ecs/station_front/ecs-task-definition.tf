@@ -5,8 +5,8 @@ resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
     memory                      = var.station_front_container_memory
     cpu                         = var.station_front_container_cpu
     container_definitions       = data.template_file.station_front.rendered
-    task_role_arn               = aws_iam_role.station_front_iam_role.arn
-    execution_role_arn          = aws_iam_role.station_front_execution_role.arn
+    task_role_arn               = var.task_role_arn
+    execution_role_arn          = var.execution_role_arn
  
     tags = {
         Name = "station_front_ecs_service"
