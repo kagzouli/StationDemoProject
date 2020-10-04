@@ -106,7 +106,7 @@ or kubernetes.
 This directory contains the template to start kubernetes pod and service for the project.
 There a 2 instances pod behind a service (Load balancing)
 
-## terraform
+## terraformaws
 
 This directory contains all the terraform script to deploy StationDemo on AWS. 
 
