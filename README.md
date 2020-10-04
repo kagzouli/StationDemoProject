@@ -106,6 +106,11 @@ or kubernetes.
 This directory contains the template to start kubernetes pod and service for the project.
 There a 2 instances pod behind a service (Load balancing)
 
+## terraform
+
+This directory contains all the terraform script to deploy StationDemo on AWS. 
+
+
 ## StationDemoBatch
 
 This component contains all the sources for the batch to integrate the RATP traffic information file of 2015 (I'm not sure of the year), and store it in 
