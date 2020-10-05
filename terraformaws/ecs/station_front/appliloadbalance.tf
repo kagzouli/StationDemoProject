@@ -5,6 +5,19 @@ resource "aws_elb" "station_front_alb"{
 
     cross_zone_load_balancing   = true 
 
+    listener {
+        lb_port = 8100
+        lb_protocol = "http"
+        instance_port = 8100
+        instance_protocol = "http"
+    }
+
+    listener {
+        lb_port = 8200
+        lb_protocol = "tcp"
+        instance_port = 8200
+        instance_protocol = "tcp"
+    }  
 
     health_check {
         healthy_threshold = 2
