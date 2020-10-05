@@ -1,5 +1,4 @@
 resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
-    requires_compatibilities = ["FARGATE"]
     family                      = "station_front_ecs_task_definition"
     network_mode                = "awsvpc"
     memory                      = var.station_front_container_memory
