@@ -1,5 +1,5 @@
 resource "aws_elb" "station_front_alb"{
-    name = "station_front_alb"
+    name = "station-front-alb"
 
     subnets = var.public_subnets_id
 
