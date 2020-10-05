@@ -21,6 +21,7 @@ data "template_file"  "station_front"{
     vars = {
         station_front_image                 = var.station_front_image
         station_front_host_port             = var.station_front_host_port
+        station_front_container_port        = var.station_front_container_port
         region                              = var.region
         awslogs_group                       = aws_cloudwatch_log_group.station_front_cloudwatch_log.name
     }
