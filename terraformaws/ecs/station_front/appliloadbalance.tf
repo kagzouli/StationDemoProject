@@ -1,7 +1,7 @@
 resource "aws_elb" "station_front_alb"{
     name = "station_front_alb"
 
-    subnets = var.subnets_id
+    subnets = var.public_subnets_id
 
     cross_zone_load_balancing   = true 
 
