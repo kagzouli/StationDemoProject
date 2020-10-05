@@ -41,6 +41,7 @@ module "station_front"{
      station_front_image            = var.station_front_image
      station_front_host_port        = var.station_front_host_port
      region                         = var.region
+     availability_zones             = "${var.az_zone1}, ${var.az_zone2}"
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
 }

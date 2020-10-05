@@ -9,6 +9,17 @@ variable "application"{
   default     = "STATION"
 }
 
+variable "az_zone1" {
+    type        =  string
+    description =  "Availability zone 1"
+}
+
+variable "az_zone2" {
+    type        =  string
+    description =  "Availability zone 2"
+}
+
+
 variable "station_db_container_memory"{
    type        = number
    description = "station Db container memory"

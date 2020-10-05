@@ -11,6 +11,18 @@ resource "aws_ecs_service" "station_front_ecs_service"{
         assign_public_ip    = false
     }
 
+    placement_constraints {
+       type = "memberOf"
+       expression = "attribute:ecs.availability-zone in [${var.availability_zones}]"
+    }
+
+    ordered_placement_strategy {
+       type  = "binpack"
+      field  = "cpu"
+    }
+
+    
+
     load_balancer {
         elb_name =  aws_elb.station_front_alb.name
         container_name = "station_front"

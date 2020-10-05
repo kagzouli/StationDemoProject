@@ -20,6 +20,11 @@ variable "private_subnets_id" {
    description = "List of subnets id"
 }
 
+variable "availability_zones" {
+   type        = string
+   description = "Zone de disponibilites de l'application"
+}
+
 variable "station_front_container_memory"{
    type        = number
    description = "station Front container memory"
