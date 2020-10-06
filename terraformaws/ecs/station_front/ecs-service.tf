@@ -18,14 +18,16 @@ resource "aws_ecs_service" "station_front_ecs_service"{
 
     ordered_placement_strategy {
        type  = "binpack"
-      field  = "cpu"
+       field  = "cpu"
     }
 
-    
+    deployment_controller {
+       type = "ECS"
+    }
 
     load_balancer {
         elb_name =  aws_elb.station_front_alb.name
-        container_name = "station_front"
+        container_name = "station-front"
         container_port = var.station_front_container_port
     }
 

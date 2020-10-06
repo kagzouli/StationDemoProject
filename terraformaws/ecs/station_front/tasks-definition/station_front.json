@@ -1,6 +1,6 @@
 [
     {
-      "name": "station_front",
+      "name": "station-front",
       "image": "${station_front_image}",
       "portMappings": [
         {
