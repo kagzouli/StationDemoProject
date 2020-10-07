@@ -25,7 +25,7 @@ resource "aws_alb_target_group" "station_front_target_group" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = "/index.html"
+    path = "/"
     unhealthy_threshold = "2"
   }
   tags = {
