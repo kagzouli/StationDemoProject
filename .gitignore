@@ -55,3 +55,9 @@ ehthumbs.db
 
 Thumbs.db
 *pom.xml.versionsBackup
+
+.terraform/
+
+terraformaws/ec2-sample/output/
+terraformaws/ecs/output/
+terraformaws/networks/output/
