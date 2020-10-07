@@ -52,6 +52,12 @@ variable "station_front_container_port"{
    description = "Port de station_back affiché à l'exterieur."
 }
 
+variable "station_front_count"{
+   type        = number
+   default     = 1
+   description = "Nombre de conteneurs station_front"
+}
+
 
 variable "region" {
   type        = string
