@@ -3,7 +3,7 @@ resource "aws_alb" "station_front_alb"{
 
     subnets = var.public_subnets_id
 
-    security_groups = [ aws_security_group.station_front.id ]
+    security_groups = [ aws_security_group.sg_station_front_alb.id ]
 
     tags = {
         Name = "station_front_alb"
@@ -25,7 +25,7 @@ resource "aws_alb_target_group" "station_front_target_group" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = "/"
+    path = "/station-angular4-poc/"
     unhealthy_threshold = "2"
   }
   tags = {
