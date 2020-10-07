@@ -54,7 +54,6 @@ variable "station_front_container_port"{
 
 variable "station_front_count"{
    type        = number
-   default     = 1
    description = "Nombre de conteneurs station_front"
 }
 

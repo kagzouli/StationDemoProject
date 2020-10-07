@@ -24,6 +24,7 @@
      station_back_container_cpu     = var.station_back_container_cpu
      station_back_image             = var.station_back_image
      station_back_host_port         = var.station_back_host_port
+     station_back_count             = var.station_back_instance_count
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
@@ -40,6 +41,7 @@ module "station_front"{
      station_front_container_cpu    = var.station_front_container_cpu
      station_front_image            = var.station_front_image
      station_front_host_port        = var.station_front_host_port
+     station_front_count            = var.station_front_instance_count
      region                         = var.region
      availability_zones             = "${var.az_zone1}, ${var.az_zone2}"
      task_role_arn                  = aws_iam_role.station_iam_role.arn

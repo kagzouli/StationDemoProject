@@ -61,6 +61,12 @@ variable "station_back_host_port"{
    description = "Port de station_back affiché à l'exterieur."
 }
 
+variable "station_back_instance_count"{
+   type        = number
+   default     = 1
+   description = "Nombre de conteneurs station_back"
+}
+
 
 
 variable "station_front_container_memory"{
@@ -83,4 +89,8 @@ variable "station_front_host_port"{
    description = "Port de station_front affiché à l'exterieur."
 }
 
-
+variable "station_front_instance_count"{
+   type        = number
+   default     = 1
+   description = "Nombre de conteneurs station_back"
+}
