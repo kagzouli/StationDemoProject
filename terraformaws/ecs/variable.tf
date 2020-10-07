@@ -63,7 +63,6 @@ variable "station_back_host_port"{
 
 variable "station_back_instance_count"{
    type        = number
-   default     = 1
    description = "Nombre de conteneurs station_back"
 }
 
@@ -91,6 +90,5 @@ variable "station_front_host_port"{
 
 variable "station_front_instance_count"{
    type        = number
-   default     = 1
    description = "Nombre de conteneurs station_back"
 }
