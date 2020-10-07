@@ -34,6 +34,12 @@ variable "station_back_host_port"{
    description = "Port de station_back affiché à l'exterieur."
 }
 
+variable "station_front_container_port"{
+   type        = number
+   default     = 8080
+   description = "Port de station_back affiché à l'exterieur."
+}
+
 
 variable "region" {
   type        = string

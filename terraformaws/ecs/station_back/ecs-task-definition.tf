@@ -19,8 +19,9 @@ data "template_file"  "station_back"{
     template =  file("${path.module}/tasks-definition/station_back.json")
 
     vars = {
-        station_back_image                 = var.station_back_image
-        station_back_host_port             = var.station_back_host_port
+        station_back_image                  = var.station_back_image
+        station_back_host_port              = var.station_back_host_port
+        station_back_container_port         = var.station_back_container_port
         region                              = var.region
         awslogs_group                       = aws_cloudwatch_log_group.station_back_cloudwatch_log.name
     }
