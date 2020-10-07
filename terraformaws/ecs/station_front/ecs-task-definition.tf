@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
     execution_role_arn          = var.execution_role_arn
  
     tags = {
-        Name = "station_front_ecs_service"
+        Name = "station-front-ecs-service"
         Application= var.application
     }
 
