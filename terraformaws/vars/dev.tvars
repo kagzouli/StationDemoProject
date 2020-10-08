@@ -25,6 +25,7 @@ station_back_container_cpu=256
 station_back_image="kagzouli/station-back:1.0.7"
 station_back_host_port=8080
 station_back_instance_count=2
+station_back_url_external="stationdevback.exaka.fr"
 
 
 # Station front

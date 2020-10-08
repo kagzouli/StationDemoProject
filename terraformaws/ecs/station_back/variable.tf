@@ -67,4 +67,9 @@ variable "execution_role_arn" {
   description = "execution_role_arn"
 }
 
+variable "station_back_url_external"{
+  type        = string
+  description = "URL du backend accessible"
+}
+
 

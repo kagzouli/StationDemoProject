@@ -23,6 +23,7 @@ module "station_back"{
      source = "./station_back"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
+     station_back_url_external      = var.station_back_url_external
      public_subnets_id              = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
      private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id ]
      station_back_container_memory  = var.station_back_container_memory

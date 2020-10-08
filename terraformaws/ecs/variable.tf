@@ -67,6 +67,13 @@ variable "station_back_instance_count"{
 }
 
 
+variable "station_back_url_external"{
+  type        = string
+  description = "URL du backend accessible"
+}
+
+
+
 
 variable "station_front_container_memory"{
    type        = number
