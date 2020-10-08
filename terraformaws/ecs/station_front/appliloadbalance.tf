@@ -6,7 +6,7 @@ resource "aws_alb" "station_front_alb"{
     security_groups = [ aws_security_group.sg_station_front_alb.id ]
 
     tags = {
-        Name = "station_front_alb"
+        Name = "station-front-alb"
         Application= var.application
     }
 
