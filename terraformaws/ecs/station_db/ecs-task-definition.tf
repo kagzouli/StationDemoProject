@@ -22,6 +22,10 @@ data "template_file"  "station_db"{
         station_db_image                   = var.station_db_image
         station_db_host_port               = var.station_db_host_port
         region                             = var.region
+        station_db_root                    = var.station_db_root
+        station_db_databasename            = var.station_db_databasename
+        station_db_username                = var.station_db_username
+        station_db_password                = var.station_db_password
         awslogs_group                      = aws_cloudwatch_log_group.station_db_cloudwatch_log.name
     }
 }

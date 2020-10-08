@@ -50,4 +50,22 @@ variable "execution_role_arn" {
   description = "execution_role_arn"
 }
 
+variable "station_db_root" {
+  type        = string
+  description = "Database user root"
+}
 
+variable "station_db_databasename" {
+  type        = string
+  description = "Database name"
+}
+
+variable "station_db_username" {
+  type        = string
+  description = "Database username"
+}
+
+variable "station_db_password" {
+  type        = string
+  description = "Database password"
+}

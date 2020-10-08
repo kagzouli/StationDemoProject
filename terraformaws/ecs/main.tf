@@ -12,6 +12,10 @@ module "station_db"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
+     station_db_root                = var.station_db_root
+     station_db_databasename        = var.station_db_databasename
+     station_db_username            = var.station_db_username
+     station_db_password            = var.station_db_password
 }
 
 /** Station back with Tomcat **/

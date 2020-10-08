@@ -92,3 +92,24 @@ variable "station_front_instance_count"{
    type        = number
    description = "Nombre de conteneurs station_back"
 }
+
+variable "station_db_root" {
+  type        = string
+  description = "Database user root"
+}
+
+variable "station_db_databasename" {
+  type        = string
+  description = "Database name"
+}
+
+variable "station_db_username" {
+  type        = string
+  description = "Database username"
+}
+
+variable "station_db_password" {
+  type        = string
+  description = "Database password"
+}
+
