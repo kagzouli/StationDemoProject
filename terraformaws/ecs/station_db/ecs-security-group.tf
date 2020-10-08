@@ -1,7 +1,7 @@
 # Create security groups for database (Better to use RDS but it's for test).
 resource "aws_security_group" "station_db" {
-  name        = "station_db"
-  description = "Station db"
+  name        = "station-db"
+  description = "Station Database"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -20,7 +20,7 @@ resource "aws_security_group" "station_db" {
   }
 
   tags = {
-    Name = "station_db"
+    Name = "station-db"
     Application= var.application
   }
 }
