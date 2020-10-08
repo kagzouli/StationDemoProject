@@ -15,11 +15,12 @@
 }*/
 
 /** Station back with Tomcat **/
-/*module "station_back"{
+module "station_back"{
      source = "./station_back"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
-     subnets_id                     = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
+     public_subnets_id              = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
+     private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id ]
      station_back_container_memory  = var.station_back_container_memory
      station_back_container_cpu     = var.station_back_container_cpu
      station_back_image             = var.station_back_image
@@ -28,10 +29,10 @@
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-}*/
+}
 
 /** Station front with Nginx**/
-module "station_front"{
+/*module "station_front"{
      source = "./station_front"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -46,5 +47,5 @@ module "station_front"{
      availability_zones             = "${var.az_zone1}, ${var.az_zone2}"
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-}
+}*/
 
