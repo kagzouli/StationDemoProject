@@ -14,4 +14,12 @@ resource "aws_ecs_service" "station_back_ecs_service"{
         security_groups     = [aws_security_group.sg_station_back_ecs.id]
         assign_public_ip    = true
     }
+
+    load_balancer {
+        target_group_arn   = aws_alb_target_group.station_back_target_group.id
+        container_name     = "station-back"
+        container_port     = var.station_back_container_port
+    }
+
+    depends_on = [aws_alb_listener.station_back_alb_listener]
 }
