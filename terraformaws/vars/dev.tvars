@@ -8,7 +8,7 @@ private_subnet1_cidr="12.0.3.0/26"
 private_subnet2_cidr="12.0.4.0/26"
 az_zone1="eu-west-3a"
 az_zone2="eu-west-3b"
-station_domainname="exaka.fr"
+station_domainname="exakaconsulting.com"
 
 # Station Db
 station_db_container_memory=512
@@ -26,7 +26,7 @@ station_back_container_cpu=256
 station_back_image="kagzouli/station-back:1.0.7"
 station_back_host_port=8080
 station_back_instance_count=2
-station_back_url_external="stationdevback.exaka.fr"
+station_back_url_external="stationback"
 
 
 # Station front

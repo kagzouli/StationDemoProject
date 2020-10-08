@@ -6,12 +6,9 @@ resource "aws_route53_zone" "primary" {
 # AWS Route 53 Record
 resource "aws_route53_record" "station_back_url_external" {
   zone_id = aws_route53_zone.primary.zone_id
-  name    = var.station_back_url_external 
-  type    = "A"
-  alias {
-    name                   = "${aws_alb.station_back_alb.dns_name}"
-    zone_id                = "${aws_alb.station_back_alb.zone_id}"
-    evaluate_target_health = true
-  } 
+  name    = "${var.station_back_url_external}.${var.station_domainname}" 
+  type    = "CNAME"
+  ttl     = "10"
+  records = [aws_alb.station_back_alb.dns_name]
  
 }
