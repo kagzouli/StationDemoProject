@@ -1,7 +1,7 @@
 resource "aws_ecs_task_definition" "station_back_ecs_task_definition"{
-    requires_compatibilities = ["FARGATE"]
     family                      = "station_back_ecs_task_definition"
     network_mode                = "awsvpc"
+    requires_compatibilities    = ["FARGATE"]
     memory                      = var.station_back_container_memory
     cpu                         = var.station_back_container_cpu
     container_definitions       = data.template_file.station_back.rendered
