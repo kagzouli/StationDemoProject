@@ -34,7 +34,9 @@ module "station_back"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
+     station_domainname             = var.station_domainname
 }
+
 
 /** Station front with Nginx**/
 /*module "station_front"{

@@ -20,6 +20,12 @@ variable "private_subnets_id" {
    description = "List of subnets id"
 }
 
+variable "station_domainname" {
+    type        =  string
+    description = "Domaine name"
+}
+
+
 
 variable "station_back_container_memory"{
    type        = number

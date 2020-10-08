@@ -19,6 +19,11 @@ variable "az_zone2" {
     description =  "Availability zone 2"
 }
 
+variable "station_domainname" {
+    type        =  string
+    description = "Domaine name"
+}
+
 
 variable "station_db_container_memory"{
    type        = number
