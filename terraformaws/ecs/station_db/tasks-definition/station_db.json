@@ -16,7 +16,7 @@
           "value": "${region}"
         },
         {
-          "name": "MYSQL_ROOT",
+          "name": "MYSQL_ROOT_PASSWORD",
           "value": "${station_db_root}"
         },
         {
