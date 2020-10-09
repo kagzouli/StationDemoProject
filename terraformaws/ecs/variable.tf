@@ -45,6 +45,11 @@ variable "station_db_host_port"{
    description = "Port de station_db affiché à l'exterieur."
 }
 
+variable "station_db_url_external"{
+  type        = string
+  description = "URL de la base de donnee"
+}
+
 
 variable "station_back_container_memory"{
    type        = number

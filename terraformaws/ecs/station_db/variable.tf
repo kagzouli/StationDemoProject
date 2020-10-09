@@ -14,6 +14,11 @@ variable "subnets_id" {
    description = "List of subnets id"
 }
 
+variable "station_domainname" {
+    type        =  string
+    description = "Domaine name"
+}
+
 variable "station_db_container_memory"{
    type        = number
    description = "station Db container memory"
@@ -68,4 +73,9 @@ variable "station_db_username" {
 variable "station_db_password" {
   type        = string
   description = "Database password"
+}
+
+variable "station_db_url_external"{
+  type        = string
+  description = "URL de la base de donnee"
 }

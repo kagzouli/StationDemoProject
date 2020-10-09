@@ -19,6 +19,7 @@ station_db_root="t@tH?145"
 station_db_databasename="StationDemoDb"
 station_db_username="stationuser"
 station_db_password="stationpwd"
+station_db_url_external="stationdb"
 
 # Station Back
 station_back_container_memory=512
