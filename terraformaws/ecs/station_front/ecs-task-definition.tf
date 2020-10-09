@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
         name = "efs-station-front-data"
         efs_volume_configuration {
           file_system_id = aws_efs_file_system.station_front_efs.id
-          root_directory = "/path/to/my/data"
+          root_directory = "/station-front/config"
         }
     }
  
