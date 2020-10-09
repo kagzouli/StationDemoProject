@@ -36,7 +36,7 @@ module "station_back"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-     context_db                     = "${var.station_db_url_external}:${var.station_db_host_port}"
+     context_db                     = "${var.station_db_url_external}.${var.station_domainname}:${var.station_db_host_port}"
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
      station_domainname             = var.station_domainname
@@ -44,7 +44,7 @@ module "station_back"{
 
 
 /** Station front with Nginx**/
-/*module "station_front"{
+module "station_front"{
      source = "./station_front"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -61,5 +61,5 @@ module "station_back"{
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
      station_domainname             = var.station_domainname
-}*/
+}
 
