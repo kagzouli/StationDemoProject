@@ -26,7 +26,6 @@ variable "station_domainname" {
 }
 
 
-
 variable "station_back_container_memory"{
    type        = number
    description = "station Back container memory"
@@ -78,4 +77,17 @@ variable "station_back_url_external"{
   description = "URL du backend accessible"
 }
 
+variable "context_db"{
+  type        = string
+  description = "Context of the database"
+}
 
+variable "station_db_username"{
+  type        = string
+  variable    = "Database username"
+}
+
+variable "station_db_password"{
+  type        = string
+  variable    = "Database password"
+}
