@@ -1,6 +1,7 @@
 resource "aws_lb" "station_db_lb"{
     name = "station-db-lb"
     load_balancer_type = "network"
+    internal           = false
     subnets = var.subnets_id
 
     tags = {
