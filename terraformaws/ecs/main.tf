@@ -39,10 +39,11 @@ module "station_back"{
 
 
 /** Station front with Nginx**/
-/*module "station_front"{
+module "station_front"{
      source = "./station_front"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
+     station_front_url_external     = var.station_front_url_external
      public_subnets_id              = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
      private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id ]
      station_front_container_memory = var.station_front_container_memory
@@ -54,5 +55,6 @@ module "station_back"{
      availability_zones             = "${var.az_zone1}, ${var.az_zone2}"
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-}*/
+     station_domainname             = var.station_domainname
+}
 

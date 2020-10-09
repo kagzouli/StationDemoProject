@@ -20,6 +20,11 @@ variable "private_subnets_id" {
    description = "List of subnets id"
 }
 
+variable "station_domainname" {
+    type        =  string
+    description = "Domaine name"
+}
+
 variable "availability_zones" {
    type        = string
    description = "Zone de disponibilites de l'application"
@@ -73,4 +78,7 @@ variable "execution_role_arn" {
   description = "execution_role_arn"
 }
 
-
+variable "station_front_url_external"{
+  type        = string
+  description = "URL du site web station"
+}

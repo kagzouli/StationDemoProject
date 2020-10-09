@@ -35,3 +35,4 @@ station_front_container_cpu=256
 station_front_image="kagzouli/station-front-nginx:1.0.7"
 station_front_host_port=80
 station_front_instance_count=2
+station_front_url_external="station"

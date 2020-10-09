@@ -78,8 +78,6 @@ variable "station_back_url_external"{
 }
 
 
-
-
 variable "station_front_container_memory"{
    type        = number
    description = "station Front container memory"
@@ -104,6 +102,12 @@ variable "station_front_instance_count"{
    type        = number
    description = "Nombre de conteneurs station_back"
 }
+
+variable "station_front_url_external"{
+  type        = string
+  description = "URL du site station"
+}
+
 
 variable "station_db_root" {
   type        = string
