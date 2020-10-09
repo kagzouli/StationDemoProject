@@ -9,6 +9,6 @@ resource "aws_route53_record" "station_db_url_external" {
   name    = "${var.station_db_url_external}.${var.station_domainname}" 
   type    = "CNAME"
   ttl     = "10"
-  records = [aws_alb.station_db_alb.dns_name]
+  records = [aws_lb.station_db_lb.dns_name]
  
 }

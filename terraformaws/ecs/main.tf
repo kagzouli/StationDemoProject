@@ -5,7 +5,7 @@ module "station_db"{
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
      station_db_url_external        = var.station_db_url_external
-     subnets_id                     = [ data.aws_subnet.station_publicsubnet1.id]
+     subnets_id                     = [ data.aws_subnet.station_publicsubnet1.id, data.aws_subnet.station_publicsubnet2.id]
      station_db_container_memory    = var.station_db_container_memory
      station_db_container_cpu       = var.station_db_container_cpu
      station_db_image               = var.station_db_image

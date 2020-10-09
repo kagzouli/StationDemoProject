@@ -17,7 +17,7 @@ resource "aws_ecs_service" "station_db_ecs_service"{
         container_port     = 3306
     }
 
-    depends_on = [aws_alb_listener.station_db_alb_listener]
+    depends_on = [aws_lb_listener.station_db_alb_listener]
 
 
     

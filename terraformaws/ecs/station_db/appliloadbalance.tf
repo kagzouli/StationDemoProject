@@ -1,12 +1,10 @@
-resource "aws_alb" "station_db_alb"{
-    name = "station-db-alb"
-
+resource "aws_lb" "station_db_lb"{
+    name = "station-db-lb"
+    load_balancer_type = "network"
     subnets = var.subnets_id
 
-    security_groups = [ aws_security_group.sg_station_db_alb.id ]
-
     tags = {
-        Name = "station-db-alb"
+        Name = "station-db-nlb"
         Application= var.application
     }
 
@@ -26,8 +24,8 @@ resource "aws_alb_target_group" "station_db_target_group" {
 }
 
 # Redirect all traffic from the ALB to the target group
-resource "aws_alb_listener" "station_db_alb_listener" {
-  load_balancer_arn = aws_alb.station_db_alb.id
+resource "aws_lb_listener" "station_db_alb_listener" {
+  load_balancer_arn = aws_lb.station_db_lb.id
   port = var.station_db_host_port
   protocol = "TCP"
   default_action {
@@ -40,5 +38,5 @@ resource "aws_alb_listener" "station_db_alb_listener" {
 # output nginx public ip
 output "station_db_dns_lb" {
   description = "DNS load balancer"
-  value = aws_alb.station_db_alb.dns_name
+  value = aws_lb.station_db_lb.dns_name
 }
