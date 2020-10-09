@@ -21,7 +21,7 @@ module "station_db"{
 }
 
 /** Station back with Tomcat **/
-/*module "station_back"{
+module "station_back"{
      source = "./station_back"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -36,8 +36,11 @@ module "station_db"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
+     context_db                     = "${var.station_db_url_external}:${var.station_db_host_port}"
+     station_db_username            = var.station_db_username
+     station_db_password            = var.station_db_password
      station_domainname             = var.station_domainname
-}*/
+}
 
 
 /** Station front with Nginx**/

@@ -14,19 +14,19 @@
         {
           "name": "AWS_REGION",
           "value": "${region}"
-        }
+        },
         {
           "name": "DB_TRAFSTAT_URL",
           "value": "jdbc:mysql://${context_db}/StationDemoDb?connectTimeout=0"
-        }
+        },
         {
           "name": "DB_TRAFSTAT_MAXACTIVE",
           "value": "20"
-        }
+        },
         {
           "name": "DB_TRAFSTAT_USERNAME",
           "value": "${station_db_username}"
-        }
+        },
         {
           "name": "DB_TRAFSTAT_PASSWORD",
           "value": "${station_db_password}"

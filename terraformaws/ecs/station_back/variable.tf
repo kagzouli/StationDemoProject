@@ -84,10 +84,10 @@ variable "context_db"{
 
 variable "station_db_username"{
   type        = string
-  variable    = "Database username"
+  description = "Database username"
 }
 
 variable "station_db_password"{
   type        = string
-  variable    = "Database password"
+  description = "Database password"
 }
