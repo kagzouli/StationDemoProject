@@ -1,0 +1,6 @@
+{
+       "clientIdTrafStat": "{CLIENT_ID_TRAF_STAT}",
+       "oktaUrl": "${OKTA_URL}",
+       "contextPathTrafStation": "${CONTEXT_BACK_URL}/StationDemoSecureWeb"
+}
+
