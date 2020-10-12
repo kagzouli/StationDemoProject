@@ -31,6 +31,9 @@ data "template_file"  "station_front"{
         station_front_host_port             = var.station_front_host_port
         station_front_container_port        = var.station_front_container_port
         region                              = var.region
+        station_front_clientidtrafstat      = var.station_front_clientidtrafstat
+        station_front_oktaurl               = var.station_front_oktaurl
+        station_front_contextbackurl        = var.station_front_contextbackurl
         awslogs_group                       = aws_cloudwatch_log_group.station_front_cloudwatch_log.name
     }
 }

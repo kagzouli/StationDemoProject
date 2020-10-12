@@ -114,6 +114,17 @@ variable "station_front_url_external"{
 }
 
 
+variable "station_front_clientidtrafstat" {
+  type        = string
+  description = "Client ID for station front"
+}
+
+variable "station_front_oktaurl" {
+  type        = string
+  description = "Okta URL for station front"
+}
+
+
 variable "station_db_root" {
   type        = string
   description = "Database user root"

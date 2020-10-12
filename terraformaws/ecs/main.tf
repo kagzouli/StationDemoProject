@@ -61,5 +61,8 @@ module "station_front"{
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
      station_domainname             = var.station_domainname
+     station_front_clientidtrafstat = var.station_front_clientidtrafstat
+     station_front_oktaurl          = var.station_front_oktaurl
+     station_front_contextbackurl   = "${var.station_back_url_external}:${var.station_back_host_port}" 
 }
 

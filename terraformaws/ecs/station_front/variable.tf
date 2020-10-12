@@ -68,6 +68,21 @@ variable "region" {
   description = "Region"
 }
 
+variable "station_front_clientidtrafstat" {
+  type        = string
+  description = "Client ID for station front"
+}
+
+variable "station_front_oktaurl" {
+  type        = string
+  description = "Okta URL for station front"
+}
+
+variable "station_front_contextbackurl" {
+  type        = string
+  description = "Context back url for station_front"
+}
+
 variable "task_role_arn" {
   type        = string
   description = "ARN du role de la tache"
