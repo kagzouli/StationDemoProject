@@ -12,4 +12,4 @@ ADD conf/configuration.json /usr/share/nginx/html/station-angular4-poc/assets/co
 
 COPY setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/setup.sh
-ENTRYPOINT ["setup.sh"]
+CMD ["setup.sh"]
