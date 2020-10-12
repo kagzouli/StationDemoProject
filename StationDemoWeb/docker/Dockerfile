@@ -1,4 +1,4 @@
-FROM tomcat:latest
+FROM tomcat:9.0.38-jdk8-openjdk
 
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
