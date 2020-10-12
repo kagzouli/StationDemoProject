@@ -12,5 +12,4 @@ ADD conf/configuration.json /usr/share/nginx/html/station-angular4-poc/assets/co
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh 
-RUN ln -s usr/local/bin/docker-entrypoint.sh /
 ENTRYPOINT ["docker-entrypoint.sh"]
