@@ -63,6 +63,6 @@ module "station_front"{
      station_domainname             = var.station_domainname
      station_front_clientidtrafstat = var.station_front_clientidtrafstat
      station_front_oktaurl          = var.station_front_oktaurl
-     station_front_contextbackurl   = "${var.station_back_url_external}:${var.station_back_host_port}" 
+     station_front_contextbackurl   = "http://${var.station_back_url_external}:${var.station_back_host_port}" 
 }
 

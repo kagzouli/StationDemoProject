@@ -13,7 +13,7 @@ station_domainname="exakaconsulting.org"
 # Station Db
 station_db_container_memory=512
 station_db_container_cpu=256
-station_db_image="kagzouli/station-db:1.0.7"
+station_db_image="kagzouli/station-db:1.0.8"
 station_db_host_port=3306
 station_db_root="t@tH?145"
 station_db_databasename="StationDemoDb"
@@ -24,7 +24,7 @@ station_db_url_external="stationdb"
 # Station Back
 station_back_container_memory=512
 station_back_container_cpu=256
-station_back_image="kagzouli/station-back:1.0.7"
+station_back_image="kagzouli/station-back:1.0.8"
 station_back_host_port=8080
 station_back_instance_count=2
 station_back_url_external="stationback"
@@ -33,7 +33,7 @@ station_back_url_external="stationback"
 # Station front
 station_front_container_memory=512
 station_front_container_cpu=256
-station_front_image="kagzouli/station-front-nginx:1.0.7"
+station_front_image="kagzouli/station-front-nginx:1.0.8"
 station_front_host_port=80
 station_front_instance_count=2
 station_front_url_external="station"

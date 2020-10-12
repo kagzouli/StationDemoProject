@@ -8,13 +8,13 @@ resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
     task_role_arn               = var.task_role_arn
     execution_role_arn          = var.execution_role_arn
 
-    volume {
+    /*volume {
         name = "efs-station-front-data"
         efs_volume_configuration {
           file_system_id = aws_efs_file_system.station_front_efs.id
           root_directory = "/station-front/config"
         }
-    }
+    }*/
  
     tags = {
         Name = "station-front-ecs-service"
