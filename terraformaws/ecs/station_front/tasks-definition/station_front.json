@@ -15,14 +15,7 @@
           "name": "AWS_REGION",
           "value": "${region}"
         }
-      ],
 
-      "mountPoints": [
-        {
-           "ContainerPath": "/usr/share/nginx/html/station-angular4-poc/assets/config",
-           "SourceVolume": "efs-station-front-data",
-           "readOnly": true
-        }
       ],
     
       "logConfiguration": {
