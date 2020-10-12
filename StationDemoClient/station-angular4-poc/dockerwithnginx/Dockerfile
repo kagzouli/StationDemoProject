@@ -10,4 +10,5 @@ ADD dist /usr/share/nginx/html/
 
 ADD conf/configuration.json /usr/share/nginx/html/station-angular4-poc/assets/config/
 
+COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
