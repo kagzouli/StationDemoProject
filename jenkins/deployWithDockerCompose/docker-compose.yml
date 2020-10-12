@@ -50,18 +50,21 @@ services:
       - "10000:10000"
     volumes:
       - logstationtomcatfront:/usr/local/tomcat/logs
- 
+
   station_front_nginx:
     image: "${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    environment:
+      - CLIENT_ID_TRAF_STAT=0oaeg3yghaL9mQalz0h7
+      - OKTA_URL=https://dev-884254.oktapreview.com
+      - CONTEXT_BACK_URL=http://51.254.36.120:4000
     ports:
         - "5000:80"
     volumes:
       - logstationnginxfront:/var/log/nginx/
-      - angularconfiguration:/usr/share/nginx/html/station-angular4-poc/assets/config
 
 volumes:
    databasedata:
@@ -70,12 +73,6 @@ volumes:
         type: none
         o: bind
         device: ${DATABASE_DATA} 
-   angularconfiguration:
-      driver: local 
-      driver_opts:
-        type: none
-        o: bind
-        device: ${ANGULAR_CONFIG} 
    logstationdb:
       driver: local 
       driver_opts:
