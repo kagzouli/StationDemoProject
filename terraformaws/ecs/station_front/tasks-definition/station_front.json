@@ -14,15 +14,15 @@
         {
           "name": "AWS_REGION",
           "value": "${region}"
-        }
+        },
         {
           "name": "CLIENT_ID_TRAF_STAT",
           "value": "${station_front_clientidtrafstat}"
-        }
+        },
         {
           "name": "OKTA_URL",
           "value": "${station_front_oktaurl}"
-        }
+        },
         {
           "name": "CONTEXT_BACK_URL",
           "value": "${station_front_contextbackurl}"
