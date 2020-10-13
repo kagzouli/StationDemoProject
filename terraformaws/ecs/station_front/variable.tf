@@ -20,9 +20,9 @@ variable "private_subnets_id" {
    description = "List of subnets id"
 }
 
-variable "station_domainname" {
+variable "station_publicdomainname" {
     type        =  string
-    description = "Domaine name"
+    description = "Public Domaine name"
 }
 
 variable "availability_zones" {

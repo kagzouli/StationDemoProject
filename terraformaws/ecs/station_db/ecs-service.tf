@@ -6,9 +6,8 @@ resource "aws_ecs_service" "station_db_ecs_service"{
     launch_type         = "FARGATE"
  
     network_configuration{
-        subnets             = var.subnets_id
+        subnets             = var.private_subnets_id
         security_groups     = [aws_security_group.sg_station_db_ecs.id]
-        assign_public_ip    = true
     }
 
     load_balancer {

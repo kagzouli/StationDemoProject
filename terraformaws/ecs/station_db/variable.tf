@@ -8,15 +8,15 @@ variable "vpc_id" {
    description = "Identifiant du VPC"
 }
 
-# All the public subnets
-variable "subnets_id" {
+# All the private subnets
+variable "private_subnets_id" {
    type    = list(string)
    description = "List of subnets id"
 }
 
-variable "station_domainname" {
+variable "station_privatedomainname" {
     type        =  string
-    description = "Domaine name"
+    description = "Private domaine name"
 }
 
 variable "station_db_container_memory"{

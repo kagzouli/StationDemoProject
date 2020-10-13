@@ -14,9 +14,9 @@ variable "private_subnets_id" {
    description = "List of subnets id"
 }
 
-variable "station_domainname" {
+variable "station_privatedomainname" {
     type        =  string
-    description = "Domaine name"
+    description = "Private Domaine name"
 }
 
 

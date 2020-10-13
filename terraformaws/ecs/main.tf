@@ -1,11 +1,11 @@
 /** Station db with mariadb - Better to use RDS better performance
  but it's just for test that we build station db **/
-/*module "station_db"{
+module "station_db"{
      source = "./station_db"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
      station_db_url_external        = var.station_db_url_external
-     subnets_id                     = [ data.aws_subnet.station_publicsubnet1.id, data.aws_subnet.station_publicsubnet2.id]
+     private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id]
      station_db_container_memory    = var.station_db_container_memory
      station_db_container_cpu       = var.station_db_container_cpu
      station_db_image               = var.station_db_image
@@ -17,8 +17,8 @@
      station_db_databasename        = var.station_db_databasename
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
-     station_domainname             = var.station_domainname
-}*/
+     station_privatedomainname      = var.station_privatedomainname
+}
 
 /** Station back with Tomcat **/
 module "station_back"{
@@ -35,10 +35,10 @@ module "station_back"{
      region                         = var.region
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-     context_db                     = "${var.station_db_url_external}.${var.station_domainname}:${var.station_db_host_port}"
+     context_db                     = "${var.station_db_url_external}.${var.station_privatedomainname}:${var.station_db_host_port}"
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
-     station_domainname             = var.station_domainname
+     station_privatedomainname      = var.station_privatedomainname
 }
 
 
@@ -59,9 +59,9 @@ module "station_front"{
      availability_zones             = "${var.az_zone1}, ${var.az_zone2}"
      task_role_arn                  = aws_iam_role.station_iam_role.arn
      execution_role_arn             = aws_iam_role.station_execution_role.arn
-     station_domainname             = var.station_domainname
+     station_publicdomainname       = var.station_publicdomainname
      station_front_clientidtrafstat = var.station_front_clientidtrafstat
      station_front_oktaurl          = var.station_front_oktaurl
-     station_front_contextbackurl   = "http://${var.station_back_url_external}.${var.station_domainname}:${var.station_back_host_port}" 
+     station_front_contextbackurl   = "http://${var.station_back_url_external}.${var.station_privatedomainname}:${var.station_back_host_port}" 
 }
 
