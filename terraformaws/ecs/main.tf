@@ -1,6 +1,6 @@
 /** Station db with mariadb - Better to use RDS better performance
  but it's just for test that we build station db **/
-module "station_db"{
+/*module "station_db"{
      source = "./station_db"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -18,10 +18,10 @@ module "station_db"{
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
      station_domainname             = var.station_domainname
-}
+}*/
 
 /** Station back with Tomcat **/
-module "station_back"{
+/*module "station_back"{
      source = "./station_back"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -41,7 +41,7 @@ module "station_back"{
      station_db_password            = var.station_db_password
      station_domainname             = var.station_domainname
 }
-
+*/
 
 /** Station front with Nginx**/
 module "station_front"{
