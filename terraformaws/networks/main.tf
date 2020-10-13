@@ -93,8 +93,8 @@ resource "aws_route_table_association" "station_routetablassoc_public2" {
 resource "aws_subnet" "station_privatesubnet1" {
     vpc_id = aws_vpc.station_vpc.id
 
-    cidr_block =  var.private_subnet1_cidr
-    availability_zone = var.az_zone1
+    cidr_block             =  var.private_subnet1_cidr
+    availability_zone      = var.az_zone1
 
     tags = {
        Name = "station_privatesubnet1",

@@ -38,7 +38,7 @@ variable "az_zone2" {
     description =  "Availability zone 2"
 }
 
-variable "private_station_domainname"{
+variable "station_privatedomainname"{
     type        =  string
     description = "Private domaine name station"
 }
