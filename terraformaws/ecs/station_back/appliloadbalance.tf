@@ -1,7 +1,7 @@
 resource "aws_alb" "station_back_alb"{
     name = "station-back-alb"
 
-    subnets = var.private_subnets_id
+    subnets = var.public_subnets_id
 
     security_groups = [ aws_security_group.sg_station_back_alb.id ]
 

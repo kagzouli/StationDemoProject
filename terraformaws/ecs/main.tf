@@ -26,6 +26,7 @@ module "station_back"{
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
      station_back_url_external      = var.station_back_url_external
+     public_subnets_id              = [ data.aws_subnet.station_publicsubnet1.id , data.aws_subnet.station_publicsubnet2.id ]
      private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id ]
      station_back_container_memory  = var.station_back_container_memory
      station_back_container_cpu     = var.station_back_container_cpu
@@ -38,7 +39,7 @@ module "station_back"{
      context_db                     = "${var.station_db_url_external}.${var.station_privatedomainname}:${var.station_db_host_port}"
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
-     station_privatedomainname      = var.station_privatedomainname
+     station_publicdomainname       = var.station_publicdomainname
 }
 
 
@@ -62,6 +63,6 @@ module "station_front"{
      station_publicdomainname       = var.station_publicdomainname
      station_front_clientidtrafstat = var.station_front_clientidtrafstat
      station_front_oktaurl          = var.station_front_oktaurl
-     station_front_contextbackurl   = "http://${var.station_back_url_external}.${var.station_privatedomainname}:${var.station_back_host_port}" 
+     station_front_contextbackurl   = "http://${var.station_back_url_external}.${var.station_publicdomainname}:${var.station_back_host_port}" 
 }
 
