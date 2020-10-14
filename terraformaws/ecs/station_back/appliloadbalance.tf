@@ -22,10 +22,11 @@ resource "aws_alb_target_group" "station_back_target_group" {
   health_check {
     healthy_threshold = "2"
     interval = "30"
+    port     = var.station_back_host_port
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = "/StationDemoSecureWeb/health/"
+    path = "/StationDemoSecureWeb/health"
     unhealthy_threshold = "2"
   }
   tags = {

@@ -8,7 +8,7 @@ resource "aws_security_group" "sg_station_db_ecs" {
     protocol    = "tcp"
     from_port   = var.station_db_host_port 
     to_port     = var.station_db_host_port
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.cidr_block}"]
     description = "TCP request"
   }
 

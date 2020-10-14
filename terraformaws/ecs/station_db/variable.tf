@@ -79,3 +79,8 @@ variable "station_db_url_external"{
   type        = string
   description = "URL de la base de donnee"
 }
+
+variable "cidr_block"{
+  type        = string
+  description = "CIDR block"
+}

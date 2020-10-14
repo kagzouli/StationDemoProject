@@ -4,6 +4,7 @@ module "station_db"{
      source = "./station_db"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
+     cidr_block                     = data.aws_vpc.station_vpc.cidr_block
      station_db_url_external        = var.station_db_url_external
      private_subnets_id             = [ data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id]
      station_db_container_memory    = var.station_db_container_memory
