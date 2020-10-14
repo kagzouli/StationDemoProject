@@ -1,7 +1,3 @@
-provider "aws" {
-      region     = var.region
-}
-
 // Filter on vpc
 data "aws_vpc" "station_vpc" {
   filter {
