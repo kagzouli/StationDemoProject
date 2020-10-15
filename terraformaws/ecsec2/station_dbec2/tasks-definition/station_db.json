@@ -1,0 +1,46 @@
+[
+    {
+      "name": "station-db",
+      "image": "${station_db_image}",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": ${station_db_host_port},
+          "protocol": "tcp"
+
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "${region}"
+        },
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "value": "${station_db_root}"
+        },
+        {
+          "name": "MYSQL_DATABASE",
+          "value": "${station_db_databasename}"
+        },
+        {
+          "name": "MYSQL_USER",
+          "value": "${station_db_username}"
+        },
+        {
+          "name": "MYSQL_PASSWORD",
+          "value": "${station_db_password}"
+        }
+      ],
+    
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${awslogs_group}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+  

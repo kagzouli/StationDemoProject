@@ -1,0 +1,43 @@
+[
+    {
+      "name": "station-front",
+      "image": "${station_front_image}",
+      "portMappings": [
+        {
+          "containerPort":  ${station_front_container_port},
+          "hostPort": ${station_front_host_port},
+          "protocol": "tcp"
+
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_REGION",
+          "value": "${region}"
+        },
+        {
+          "name": "CLIENT_ID_TRAF_STAT",
+          "value": "${station_front_clientidtrafstat}"
+        },
+        {
+          "name": "OKTA_URL",
+          "value": "${station_front_oktaurl}"
+        },
+        {
+          "name": "CONTEXT_BACK_URL",
+          "value": "${station_front_contextbackurl}"
+        }
+
+      ],
+    
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${awslogs_group}",
+          "awslogs-region": "${region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+  
