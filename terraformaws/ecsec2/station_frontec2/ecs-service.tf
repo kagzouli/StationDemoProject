@@ -12,20 +12,6 @@ resource "aws_ecs_service" "station_front_ecs_service"{
         security_groups     = [aws_security_group.sg_station_front_ecs.id]
     }
 
-    placement_constraints {
-       type = "memberOf"
-       expression = "attribute:ecs.availability-zone in [${var.availability_zones}]"
-    } 
-
-    ordered_placement_strategy {
-       type  = "binpack"
-       field  = "cpu"
-    }
-
-    deployment_controller {
-       type = "ECS"
-    }
-
     load_balancer {
         target_group_arn   = aws_alb_target_group.station_front_target_group.id
         container_name     = "station-front"
