@@ -1,11 +1,12 @@
 #!/bin/bash
+echo ECS_CLUSTER=station-front-ecs-service >> /etc/ecs/ecs.config
 
-# Update all packages
-sudo yum update -y
-sudo yum install -y ecs-init
-sudo service docker start
+echo "Debut Affichage ecs.config"
+cat /etc/ecs/ecs.config
+echo "Fin Affichage ecs.config"
+
 sudo start ecs
 
-#Adding cluster name in ecs config
-echo ECS_CLUSTER=station-front-ecs-service >> /etc/ecs/ecs.config
-cat /etc/ecs/ecs.config | grep "ECS_CLUSTER"
+echo "Debut des logs"
+cat /var/log/ecs/*.log
+echo "Fin des logs"

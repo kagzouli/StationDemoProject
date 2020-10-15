@@ -1,9 +1,14 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "aws_optimized_ecs" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["amzn-ami*amazon-ecs-optimized"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
 
   filter {
@@ -11,16 +16,18 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["591542846629"] # AWS
 }
+
 
 resource "aws_launch_configuration" "ec2_stationfront_launch_config" {
     # Optimiser pour docker
-    image_id             = data.aws_ami.ubuntu.id 
+    image_id             = data.aws_ami.aws_optimized_ecs.id
     iam_instance_profile = var.aws_instanceprofile_ecsec2 
     security_groups      = [aws_security_group.sg_station_front_ecs.id]
     user_data            = file("station_frontec2/initec2front.sh") 
     instance_type        = "t2.micro"
+    associate_public_ip_address = false 
 }
 
 resource "aws_autoscaling_group" "ec2_stationfront_autoscalinggroup" {
