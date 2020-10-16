@@ -4,7 +4,7 @@ This directory is divided into 3 parts :
 
 ### networks
 
- -  This part is used to create the network part of the project (VPC , subnet, internal Gateway, Route53)
+ - This part is used to create the network part of the project (VPC , subnet, internal Gateway, Route53)
 
 ### ecsec2
   
