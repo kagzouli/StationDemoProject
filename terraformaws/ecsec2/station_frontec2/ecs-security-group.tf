@@ -47,3 +47,36 @@ resource "aws_security_group" "sg_station_front_ecs" {
     Application= var.application
   }
 }
+
+
+# Traffic from the EC2
+resource "aws_security_group" "station_front_c2_sg" {
+  vpc_id      = var.vpc_id
+  name        = "station-front-ec2-sg"
+
+  description = "Allow inbound traffic from Security Groups and CIDRs. Allow all to EC2"
+
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+
+  }
+
+	
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "station-front-ecs"
+    Application= var.application
+  }
+}
+

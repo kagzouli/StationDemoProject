@@ -1,9 +1,8 @@
-data "aws_ami" "aws_optimized_ecs" {
+data "aws_ami" "ecs_optimized" {
   most_recent = true
-
   filter {
     name   = "name"
-    values = ["amzn-ami*amazon-ecs-optimized"]
+    values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
 
   filter {
@@ -11,23 +10,23 @@ data "aws_ami" "aws_optimized_ecs" {
     values = ["x86_64"]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["591542846629"] # AWS
+  owners = ["amazon"]
 }
-
 
 resource "aws_launch_configuration" "ec2_stationfront_launch_config" {
     # Optimiser pour docker
-    image_id             = data.aws_ami.aws_optimized_ecs.id
+    image_id             = data.aws_ami.ecs_optimized.id
     iam_instance_profile = var.aws_instanceprofile_ecsec2 
-    security_groups      = [aws_security_group.sg_station_front_ecs.id]
+    security_groups      = [aws_security_group.station_front_c2_sg.id]
     user_data            = file("station_frontec2/initec2front.sh") 
     instance_type        = "t2.micro"
     associate_public_ip_address = false 
+    key_name             = "station-front-key-pair"
+ 
+    lifecycle {
+       create_before_destroy = true
+    }
+    
 }
 
 resource "aws_autoscaling_group" "ec2_stationfront_autoscalinggroup" {
@@ -40,6 +39,11 @@ resource "aws_autoscaling_group" "ec2_stationfront_autoscalinggroup" {
     max_size                  = 3 
     health_check_grace_period = 300
     health_check_type         = "EC2"
+
+   # target_group_arns = [aws_alb_target_group.station_front_target_group.id]
+    lifecycle {
+        create_before_destroy = true
+    }
 
     tag {
       key                 = "name"

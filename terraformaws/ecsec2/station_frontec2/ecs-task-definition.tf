@@ -2,6 +2,7 @@ resource "aws_ecs_task_definition" "station_front_ecs_task_definition"{
     family                      = "station_front_ecs_task_definition"
     network_mode                = "awsvpc"
     requires_compatibilities    = ["EC2"]
+    
     memory                      = var.station_front_container_memory
     cpu                         = var.station_front_container_cpu
     container_definitions       = data.template_file.station_front.rendered

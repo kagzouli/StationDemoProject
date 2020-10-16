@@ -10,7 +10,7 @@ resource "aws_ecs_service" "station_front_ecs_service"{
     network_configuration{
         subnets             = var.private_subnets_id
         security_groups     = [aws_security_group.sg_station_front_ecs.id]
-    }
+    }    
 
     load_balancer {
         target_group_arn   = aws_alb_target_group.station_front_target_group.id
@@ -19,6 +19,10 @@ resource "aws_ecs_service" "station_front_ecs_service"{
     }
 
     depends_on = [aws_alb_listener.station_front_alb_listener]
+
+    tags = {
+       name = "station-front-ecs-service"
+    }
 
     
 
