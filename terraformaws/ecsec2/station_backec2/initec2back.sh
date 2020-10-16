@@ -1,5 +1,5 @@
 #!/bin/bash
-echo ECS_CLUSTER=station-front-ecs-cluster >> /etc/ecs/ecs.config
+echo ECS_CLUSTER=station-back-ecs-cluster >> /etc/ecs/ecs.config
 
 echo "Debut Affichage ecs.config"
 cat /etc/ecs/ecs.config

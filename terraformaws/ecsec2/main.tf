@@ -1,6 +1,6 @@
 /** Station db with mariadb - Better to use RDS better performance
  but it's just for test that we build station db **/
-/*module "station_dbec2"{
+module "station_dbec2"{
      source = "./station_dbec2"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -18,11 +18,12 @@
      station_db_databasename        = var.station_db_databasename
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
+     aws_instanceprofile_ecsec2     = aws_iam_instance_profile.ecsec2_agent.name
      station_privatedomainname      = var.station_privatedomainname
-}*/
+}
 
 /** Station back with Tomcat **/
-/*module "station_backec2"{
+module "station_backec2"{
      source = "./station_backec2"
      application                    = var.application
      vpc_id                         = data.aws_vpc.station_vpc.id
@@ -40,8 +41,9 @@
      context_db                     = "${var.station_db_url_external}.${var.station_privatedomainname}:${var.station_db_host_port}"
      station_db_username            = var.station_db_username
      station_db_password            = var.station_db_password
+     aws_instanceprofile_ecsec2     = aws_iam_instance_profile.ecsec2_agent.name
      station_publicdomainname       = var.station_publicdomainname
-}*/
+}
 
 
 /** Station front with Nginx**/

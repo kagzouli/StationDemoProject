@@ -91,3 +91,8 @@ variable "station_db_password"{
   type        = string
   description = "Database password"
 }
+
+variable "aws_instanceprofile_ecsec2"{
+  type        = string
+  description = "AWS Instance profile ECS EC2"
+}

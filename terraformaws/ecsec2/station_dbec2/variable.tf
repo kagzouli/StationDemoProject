@@ -84,3 +84,8 @@ variable "cidr_block"{
   type        = string
   description = "CIDR block"
 }
+
+variable "aws_instanceprofile_ecsec2"{
+  type        = string
+  description = "AWS Instance profile ECS EC2"
+}
