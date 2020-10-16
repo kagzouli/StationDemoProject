@@ -42,7 +42,13 @@ resource "aws_security_group" "station_db_c2_sg" {
 
   }
 
-
+  ingress {
+    protocol    = "tcp"
+    from_port   = var.station_db_host_port 
+    to_port     = var.station_db_host_port
+    cidr_blocks = ["${var.cidr_block}"]
+    description = "TCP request"
+  }
 
   egress {
     from_port = 0
