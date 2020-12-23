@@ -1,0 +1,3 @@
+- name: Message deploiement front
+  debug:
+    msg: "Deploiement frontend"

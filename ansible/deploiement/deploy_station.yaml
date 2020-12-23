@@ -1,0 +1,9 @@
+- name: "Deploiement backend"
+  hosts: backend 
+  roles:
+   - role: "deploybackend"
+
+- name: "Deploiement frontend"
+  hosts: frontend 
+  roles:
+   - role: "deployfrontend"
