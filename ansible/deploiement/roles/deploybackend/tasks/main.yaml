@@ -37,3 +37,6 @@
 
 - name: Copie WAR
   copy: src={{directory_saslivraison}}/StationDemoSecureWeb.war  dest={{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war  force=yes mode=776
+
+- name: Start Tomcat
+  command: "{{directory_work}}/tomcat9/bin/startup.sh"
