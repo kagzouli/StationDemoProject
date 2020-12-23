@@ -32,5 +32,8 @@
   when: not existstomcat.stat.exists 
 
 - name: copie Tomcat
-  shell: cp -r {{directory_tmp}}/apache-tomcat-9.0.38/* {{directory_work}}//tomcat9 creates={{directory_work}}/tomcat9/bin
+  shell: cp -r {{directory_tmp}}/apache-tomcat-9.0.38/* {{directory_work}}/tomcat9 creates={{directory_work}}/tomcat9/bin
   when: not existstomcat.stat.exists
+
+- name: Copie WAR
+  copy: src={{directory_saslivraison}}/StationDemoSecureWeb.war  dest={{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war  force=yes mode=776

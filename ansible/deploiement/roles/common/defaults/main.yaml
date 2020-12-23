@@ -1,3 +1,6 @@
-directory_work: "/root/StationProjectSource/StationDemoProject/ansible/work"
+directory_work: "~/StationProjectSource/StationDemoProject/ansible/work"
 
-directory_tmp: "/root/StationProjectSource/StationDemoProject/ansible/tmp"
+directory_tmp: "~/StationProjectSource/StationDemoProject/ansible/tmp"
+
+
+directory_saslivraison: "~/StationProjectSource/StationDemoProject/ansible/saslivraison"
