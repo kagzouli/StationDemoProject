@@ -1,0 +1,3 @@
+directory_work: "/root/StationProjectSource/StationDemoProject/ansible/work"
+
+directory_tmp: "/root/StationProjectSource/StationDemoProject/ansible/tmp"

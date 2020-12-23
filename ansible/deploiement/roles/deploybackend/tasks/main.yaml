@@ -1,3 +1,36 @@
 - name: Message deploiement backend
   debug:
     msg: "Deploiement backend"
+
+- name: Verifie si tomcat existe
+  stat:
+    path={{directory_work}}/tomcat9/bin
+  register: existstomcat
+
+- name: Telecharge tomcat
+  get_url:
+    url=http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz 
+    dest="{{directory_tmp}}/apache-tomcat-9.0.38.tar.gz"
+  when: not existstomcat.stat.exists
+
+- name: Verifie existence repertoire tmp
+  file:
+    path: "{{directory_tmp}}"
+    state: directory
+
+- name: Verifie existence repertoire tomcat9
+  file:
+    path: "{{directory_work}}/tomcat9"
+    state: directory
+
+- name: extrait tomcat
+  unarchive:
+    src="{{directory_tmp}}/apache-tomcat-9.0.38.tar.gz"
+    copy=no
+    dest={{directory_tmp}} 
+    creates=yes
+  when: not existstomcat.stat.exists 
+
+- name: copie Tomcat
+  shell: cp -r {{directory_tmp}}/apache-tomcat-9.0.38/* {{directory_work}}//tomcat9 creates={{directory_work}}/tomcat9/bin
+  when: not existstomcat.stat.exists

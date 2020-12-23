@@ -24,6 +24,7 @@
 *.classpath
 *.settings
 *.project
+*.retry
 target/
 dist/
 distTomcat/
@@ -37,6 +38,7 @@ node_modules/
 **/package-lock.json
 *.war
 ansible/work/
+ansible/tmp
 
 # Logs and databases #
 
