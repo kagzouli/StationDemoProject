@@ -1,9 +1,10 @@
 resource "aws_ecs_service" "station_db_ecs_service"{
-    name                =  "station-db-ecs-service"
-    task_definition     = aws_ecs_task_definition.station_db_ecs_task_definition.arn 
-    cluster             = aws_ecs_cluster.station_db_ecs_cluster.id
-    desired_count       = 1
-    launch_type         = "FARGATE"
+    name                   =  "station-db-ecs-service"
+    task_definition        = aws_ecs_task_definition.station_db_ecs_task_definition.arn 
+    cluster                = aws_ecs_cluster.station_db_ecs_cluster.id
+    desired_count          = 1
+    launch_type            = "FARGATE"
+    force_new_deployment   = true
  
     network_configuration{
         subnets             = var.private_subnets_id
