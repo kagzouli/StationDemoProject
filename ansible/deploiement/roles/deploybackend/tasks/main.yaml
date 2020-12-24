@@ -56,6 +56,15 @@
     path: "{{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war"
     state: absent
 
+- name: Copie la librairie h2
+  copy:
+   src: "{{directory_saslivraison}}/h2-1.4.198.jar"
+   dest: "{{directory_work}}/tomcat9/lib/"
+   directory_mode: 0755
+   mode: 0664
+   force: yes
+
+
 - name: Copie WAR
   copy: src={{directory_saslivraison}}/StationDemoSecureWeb.war  dest={{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war  force=yes mode=776
 
