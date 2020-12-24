@@ -35,8 +35,29 @@
   shell: cp -r {{directory_tmp}}/apache-tomcat-9.0.38/* {{directory_work}}/tomcat9 creates={{directory_work}}/tomcat9/bin
   when: not existstomcat.stat.exists
 
+- name: Stop Tomcat
+  command: "nohup {{directory_work}}/tomcat9/bin/shutdown.sh"
+
+- name: Pause for 10 seconds for stop
+  pause:
+    seconds: 10
+
+- name: Force la destruction de la tache
+  shell: kill $(ps aux | grep 'tomcat9' | awk '{print $2}')
+  ignore_errors: yes
+
+- name: Detruit l'application ancienne
+  file:
+    path: "{{directory_work}}/tomcat9/webapps/StationDemoSecureWeb"
+    state: absent
+
+- name: Detruit le war StationDemoSecureWeb
+  file:
+    path: "{{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war"
+    state: absent
+
 - name: Copie WAR
   copy: src={{directory_saslivraison}}/StationDemoSecureWeb.war  dest={{directory_work}}/tomcat9/webapps/StationDemoSecureWeb.war  force=yes mode=776
 
 - name: Start Tomcat
-  command: "{{directory_work}}/tomcat9/bin/startup.sh"
+  command: "nohup {{directory_work}}/tomcat9/bin/startup.sh"
