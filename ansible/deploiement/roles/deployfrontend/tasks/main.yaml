@@ -1,3 +1,56 @@
 - name: Message deploiement front
   debug:
     msg: "Deploiement frontend : {{directory_work}}"
+
+- name: ensure nginx is at the latest version
+  apt: 
+     name: nginx
+     state: latest 
+     update_cache: no 
+     only_upgrade: no 
+     force: yes 
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+
+- name: Suppression de station-angular4-poc
+  file:
+    path: "/usr/share/nginx/html/station-angular4-poc"
+    state: absent
+
+- name: Detruit de index.html par default
+  file:
+    path: "/usr/share/nginx/html/index.html"
+    state: absent
+
+- name: Copie du nouveau repertoire station-angular4-poc 
+  copy: 
+   src: "{{directory_saslivraison}}/station-angular4-poc/dist/"  
+   dest: /usr/share/nginx/html/  
+   directory_mode: 0755  
+   mode: 0664
+   force: yes
+
+- name: Copie du nouveau fichier nginx.conf 
+  copy: 
+   src: "{{directory_saslivraison}}/nginx.conf"  
+   dest: /etc/nginx/nginx.conf  
+   directory_mode: 0755  
+   mode: 0664
+   force: yes
+
+- name: Copie du nouveau fichier configuration.json 
+  copy: 
+   src: "{{directory_saslivraison}}/configuration.json"  
+   dest: /usr/share/nginx/html/station-angular4-poc/assets/config/configuration.json  
+   directory_mode: 0755  
+   mode: 0664
+   force: yes
+
+- name: Redemarre nginx
+  service: 
+    name: nginx 
+    state: restarted 
+    enabled: yes
