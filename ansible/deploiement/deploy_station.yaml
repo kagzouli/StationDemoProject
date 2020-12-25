@@ -1,3 +1,8 @@
+- name: "Preparation deploiement"
+  hosts: allserver 
+  roles:
+   - role: "preparedeploy"
+
 - name: "Deploiement backend"
   hosts: backend 
   roles:

@@ -1,0 +1,14 @@
+- name: Preparation deploiement 
+  debug:
+    msg: "Deploiement backend"
+
+
+- name: Verifie existence repertoire tmp
+  file:
+    path: "{{directory_tmp}}"
+    state: directory
+
+- name: Verifie existence repertoire work
+  file:
+    path: "{{directory_work}}"
+    state: directory

@@ -13,11 +13,6 @@
     dest="{{directory_tmp}}/apache-tomcat-9.0.38.tar.gz"
   when: not existstomcat.stat.exists
 
-- name: Verifie existence repertoire tmp
-  file:
-    path: "{{directory_tmp}}"
-    state: directory
-
 - name: Verifie existence repertoire tomcat9
   file:
     path: "{{directory_work}}/tomcat9"

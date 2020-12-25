@@ -1,3 +1,6 @@
+[allserver]
+localhost
+
 [backend]
 localhost
 
