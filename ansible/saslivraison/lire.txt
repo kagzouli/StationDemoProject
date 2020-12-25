@@ -1,0 +1,10 @@
+
+- Positionner dans ce repertoire :  
+    
+     1. configuration.json
+     2. nginx.conf
+     3. La librairie H2 pour la base ou une autre, mais dans ce cas, changer context.xml
+     4. station-angular4-poc/dist/station-angular4-poc/* ou par * inclut index.html
+     5. StationDemoSecureWeb.war
+    
+

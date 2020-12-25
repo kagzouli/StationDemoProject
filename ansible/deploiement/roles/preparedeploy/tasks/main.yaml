@@ -1,6 +1,6 @@
 - name: Preparation deploiement 
   debug:
-    msg: "Deploiement backend"
+    msg: "Preparation deploiement"
 
 
 - name: Verifie existence repertoire tmp

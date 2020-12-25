@@ -38,7 +38,8 @@ node_modules/
 **/package-lock.json
 ansible/work/
 ansible/tmp
-ansible/saslivraison
+ansible/saslivraison/*.war
+ansible/saslivraison/configuration.json
 
 # Logs and databases #
 
