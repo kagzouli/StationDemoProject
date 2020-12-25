@@ -110,6 +110,10 @@ There a 2 instances pod behind a service (Load balancing)
 
 This directory contains all the terraform script to deploy StationDemo on AWS. 
 
+## ansible
+
+This directory contains all the script to deploy the station backend and the front end using a sas (saslivraison). The sas contains all the delivery.
+
 
 ## StationDemoBatch
 
