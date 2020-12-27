@@ -27,6 +27,7 @@ sudo systemctl restart docker
 #Start the Amazon ECS container agent
 sudo systemctl start ecs.service
 
+
 --===============BOUNDARY==
 MIME-Version: 1.0
 Content-Type: text/cloud-boothook; charset="us-ascii"
