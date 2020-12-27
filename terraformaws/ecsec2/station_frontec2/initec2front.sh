@@ -12,7 +12,6 @@ echo ECS_CLUSTER=${ecs_cluster_name} >> /etc/ecs/ecs.config
 
 
 export PATH=$PATH:/usr/local/bin
-yum install amazon-efs-utils -y
 yum install amazon-ssm-agent -y
 yum update -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
 #Restart SSM agent
