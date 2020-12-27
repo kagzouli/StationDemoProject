@@ -1,12 +1,37 @@
+Content-Type: multipart/mixed; boundary="===============BOUNDARY=="
+MIME-Version: 1.0
+ 
+--===============BOUNDARY==
+MIME-Version: 1.0
+Content-Type: text/x-shellscript; charset="us-ascii"
+ 
 #!/bin/bash
-echo ECS_CLUSTER=station-back-ecs-cluster >> /etc/ecs/ecs.config
+set -x
 
-echo "Debut Affichage ecs.config"
-cat /etc/ecs/ecs.config
-echo "Fin Affichage ecs.config"
+echo ECS_CLUSTER=${ecs_cluster_name} >> /etc/ecs/ecs.config
 
-sudo start ecs
 
-echo "Debut des logs"
-cat /var/log/ecs/*.log
-echo "Fin des logs"
+export PATH=$PATH:/usr/local/bin
+yum install amazon-efs-utils -y
+yum install amazon-ssm-agent -y
+yum update -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+#Restart SSM agent
+systemctl restart amazon-ssm-agent
+
+sudo yum update -y
+
+
+#Stop the Amazon ECS container agent
+sudo systemctl stop ecs.service
+#Restart the Docker daemon
+sudo systemctl restart docker
+#Start the Amazon ECS container agent
+sudo systemctl start ecs.service
+
+--===============BOUNDARY==
+MIME-Version: 1.0
+Content-Type: text/cloud-boothook; charset="us-ascii"
+ 
+#cloud-boothook
+ 
+--===============BOUNDARY==--
