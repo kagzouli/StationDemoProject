@@ -1,4 +1,4 @@
-# Datasource
+# Datasources
 data "aws_ami" "ecs_optimized" {
   most_recent = true
   filter {
