@@ -1,6 +1,6 @@
 - name: Message deploiement front
   debug:
-    msg: "Deploiement frontend : {{directory_work}}"
+    msg: "Deploiement frontend environnement {{environnement}}" 
 
 - name: ensure nginx is at the latest version
   apt: 

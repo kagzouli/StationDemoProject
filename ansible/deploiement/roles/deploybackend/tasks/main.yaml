@@ -1,6 +1,6 @@
 - name: Message deploiement backend
   debug:
-    msg: "Deploiement backend"
+    msg: "Deploiement backend environnement {{environnement}}"
 
 - name: Verifie si tomcat existe
   stat:

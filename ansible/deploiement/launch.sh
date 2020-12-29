@@ -1,1 +1,1 @@
-ansible-playbook deploy_station.yaml --inventory-file hosts 
+ansible-playbook deploy_station.yaml --inventory-file hosts/developpement/inventory 

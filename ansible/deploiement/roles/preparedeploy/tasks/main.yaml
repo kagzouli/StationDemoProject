@@ -1,6 +1,6 @@
 - name: Preparation deploiement 
   debug:
-    msg: "Preparation deploiement"
+    msg: "Preparation deploiement environnement {{environnement}}"
 
 
 - name: Verifie existence repertoire tmp

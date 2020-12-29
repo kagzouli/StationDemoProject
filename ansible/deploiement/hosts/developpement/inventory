@@ -1,0 +1,13 @@
+[allserver]
+localhost
+
+[backend]
+localhost
+
+[frontend]
+localhost
+
+# Variables globales pour l'environnement
+[all:vars]
+
+environnement=dev
