@@ -1,4 +1,4 @@
-# TrafficStation application demo
+# TrafficStation application demo 
 
 This project is a simple CRUD application with a MariaDB or H2 database , it allows to create, delete, update and read traffic station information.
 It will also allow to search traffic stations information by criteria using pagination (With REST call)
