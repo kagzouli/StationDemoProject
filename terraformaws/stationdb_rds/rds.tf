@@ -6,7 +6,7 @@
 resource "aws_db_subnet_group" "station_db_rds_subnet_group" {
   name        = "station-db-rds-subnet-group"
   description = "RDS subnet group"
-  subnet_ids  = var.private_subnets_id
+  subnet_ids  = [ data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id] 
   tags = {
      Name = "station-db-rds-subnet-group"
      Application= var.application
@@ -16,7 +16,7 @@ resource "aws_db_subnet_group" "station_db_rds_subnet_group" {
 
 resource "aws_rds_cluster" "station_db_rds_cluster" {
   cluster_identifier      = "station-db-rds-cluster"
-  availability_zones      = var.availability_zones 
+  availability_zones      = ["${var.az_zone1}", "${var.az_zone2}"] 
   engine                  = "aurora-mysql" 
   engine_version          = "5.7.mysql_aurora.2.03.2" 
   database_name           = var.station_db_databasename

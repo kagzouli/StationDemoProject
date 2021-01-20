@@ -1,17 +1,7 @@
 variable "application"{ 
   type        =  string
+  default     =  "stationdb"
   description = "Nom application"
-}
-
-variable "vpc_id" {
-   type        = string
-   description = "Identifiant du VPC"
-}
-
-# All the private subnets
-variable "private_subnets_id" {
-   type    = list(string)
-   description = "List of subnets id"
 }
 
 variable "station_privatedomainname" {
@@ -24,9 +14,14 @@ variable "station_db_host_port"{
    description = "Port de station_db affiché à l'exterieur."
 }
 
-variable "availability_zones" {
-   type        = list(string)
-   description = "Zone de disponibilites de l'application"
+variable "az_zone1" {
+    type        =  string
+    description =  "Availability zone 1"
+}
+
+variable "az_zone2" {
+    type        =  string
+    description =  "Availability zone 2"
 }
 
 variable "region" {
@@ -34,15 +29,15 @@ variable "region" {
   description = "Region"
 }
 
-variable "task_role_arn" {
-  type        = string
-  description = "ARN du role de la tache"
-}
+#variable "task_role_arn" {
+#  type        = string
+#  description = "ARN du role de la tache"
+#}
 
-variable "execution_role_arn" {
-  type        = string
-  description = "execution_role_arn"
-}
+#variable "execution_role_arn" {
+#  type        = string
+#  description = "execution_role_arn"
+#}
 
 variable "station_db_root" {
   type        = string
@@ -80,12 +75,8 @@ variable "station_db_instance_type"{
   description = "Type d'instance DB"
 }
 
-variable "cidr_block"{
-  type        = string
-  description = "CIDR block"
-}
 
-variable "aws_instanceprofile_ecsec2"{
-  type        = string
-  description = "AWS Instance profile ECS EC2"
-}
+#variable "aws_instanceprofile_ecsec2"{
+#  type        = string
+#  description = "AWS Instance profile ECS EC2"
+#}

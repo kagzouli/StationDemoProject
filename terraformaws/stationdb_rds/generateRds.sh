@@ -1,1 +1,1 @@
-terraform apply -auto-approve --var-file=../vars/dev.tvars .
+terraform apply --lock=false -auto-approve --var-file=../vars/dev.tvars .
