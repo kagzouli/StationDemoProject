@@ -104,3 +104,28 @@ variable "station_front_oktaurl" {
 }
 
 
+variable "station_db_url_external"{
+  type        = string
+  description = "URL de la base de donnee"
+}
+
+variable "station_db_host_port"{
+   type        = number
+   description = "Port de station_db affiché à l'exterieur."
+}
+
+variable "station_db_databasename" {
+  type        = string
+  description = "Database name"
+}
+
+variable "station_db_username" {
+  type        = string
+  description = "Database username"
+}
+
+variable "station_db_password" {
+  type        = string
+  description = "Database password"
+}
+

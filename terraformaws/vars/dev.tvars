@@ -18,7 +18,7 @@ station_db_databasename="StationDemoDb"
 station_db_username="stationuser"
 station_db_password="stationpwd"
 station_db_url_external="stationdb"
-station_db_count=2
+station_db_count=1
 station_db_instance_type="db.t3.small"
 
 # Station Back
