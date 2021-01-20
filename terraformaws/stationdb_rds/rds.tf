@@ -69,4 +69,6 @@ resource "aws_rds_cluster_instance" "rds_instance" {
  
 }
 
-
+output "db_cluster_url"{
+  value = ["${aws_rds_cluster.station_db_rds_cluster.endpoint}"]
+}
