@@ -19,26 +19,15 @@ variable "station_privatedomainname" {
     description = "Private domaine name"
 }
 
-variable "station_db_container_memory"{
-   type        = number
-   description = "station Db container memory"
-}
-
-variable "station_db_container_cpu"{
-   type        = number
-   description = "station db container cpu"
-}
-
-variable "station_db_image"{
-   type        = string
-   description = "Image docker du station_db"
-}
-
 variable "station_db_host_port"{
    type        = number
    description = "Port de station_db affiché à l'exterieur."
 }
 
+variable "availability_zones" {
+   type        = list(string)
+   description = "Zone de disponibilites de l'application"
+}
 
 variable "region" {
   type        = string
@@ -78,6 +67,17 @@ variable "station_db_password" {
 variable "station_db_url_external"{
   type        = string
   description = "URL de la base de donnee"
+}
+
+
+variable "station_db_count"{
+  type        = number
+  description = "Nombre d'instances de base."
+}
+
+variable "station_db_instance_type"{
+  type        = string
+  description = "Type d'instance DB"
 }
 
 variable "cidr_block"{
