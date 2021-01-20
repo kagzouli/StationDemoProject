@@ -9,8 +9,6 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 set -x
 
-echo ECS_CLUSTER=${ecs_cluster_name} >> /etc/ecs/ecs.config
-
 
 export PATH=$PATH:/usr/local/bin
 yum install amazon-ssm-agent -y
@@ -19,6 +17,10 @@ yum update -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/lin
 systemctl restart amazon-ssm-agent
 
 sudo yum update -y
+
+# Init mysql
+sudo yum install -y mysql
+sudo mysql -u${stationdb_user} -p{stationdb_pwd} -h{stationdb_hostname} < scriptinit.sql
 
 # Patch
 yum install -y yum-plugin-kernel-livepatch
@@ -32,15 +34,6 @@ EOF
 chmod 600 /var/spool/cron/ec2-user
 chown ec2-user:ec2-user /var/spool/cron/ec2-user
 sudo systemctl reload crond.service
-
-
-#Stop the Amazon ECS container agent
-sudo systemctl stop ecs.service
-#Restart the Docker daemon
-sudo systemctl restart docker
-#Start the Amazon ECS container agent
-sudo systemctl start ecs.service
-
 
 --===============BOUNDARY==
 MIME-Version: 1.0

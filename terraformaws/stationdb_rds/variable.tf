@@ -29,16 +29,6 @@ variable "region" {
   description = "Region"
 }
 
-#variable "task_role_arn" {
-#  type        = string
-#  description = "ARN du role de la tache"
-#}
-
-#variable "execution_role_arn" {
-#  type        = string
-#  description = "execution_role_arn"
-#}
-
 variable "station_db_root" {
   type        = string
   description = "Database user root"
