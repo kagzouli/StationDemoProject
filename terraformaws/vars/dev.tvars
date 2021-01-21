@@ -12,15 +12,14 @@ station_publicdomainname="exakaconsulting.org"
 station_privatedomainname="interne.exakaconsulting.org"
 
 # Station Db
-station_db_container_memory=512
-station_db_container_cpu=256
-station_db_image="kagzouli/station-db:1.0.8"
 station_db_host_port=3306
 station_db_root="t@tH?145"
 station_db_databasename="StationDemoDb"
 station_db_username="stationuser"
 station_db_password="stationpwd"
 station_db_url_external="stationdb"
+station_db_count=1
+station_db_instance_type="db.t3.small"
 
 # Station Back
 station_back_container_memory=512
