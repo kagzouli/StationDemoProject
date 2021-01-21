@@ -85,7 +85,7 @@ public class StationDemoController {
 			@RequestParam(value="ville", required=false) final String ville,
 			@RequestParam(value="arrondiss", required=false) final Integer arrondiss,
 			@RequestParam(value="page" , required=false) final Integer page,
-			@RequestParam(value="perPage" , required=false) final Integer perPage,
+			@RequestParam(value="per_page" , required=false) final Integer perPage,
 			@RequestParam(value="sort", required=false) final String sort){	
 		
 		if (LOGGER.isInfoEnabled()){
