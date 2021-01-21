@@ -1,10 +1,6 @@
 echo "Apply terraform change"
 terraform apply -auto-approve --lock=false --var-file=../vars/dev.tvars
 
-# Relaunch the database to take into account the new task definition
-echo "Relaunch the database tasks to take into account the new task definition"
-aws ecs list-tasks --cluster station-db-ecs-cluster --service-name station-db-ecs-service | jq -r ".taskArns[]" | awk '{print "aws ecs stop-task --cluster station-db-ecs-cluster --task \""$0"\""}' | sh
-
 # Relaunch the back-end to take into account the new task definition
 echo "Relaunch the backend to take into account the new task definition"
 aws ecs list-tasks --cluster station-back-ecs-cluster --service-name station-back-ecs-service | jq -r ".taskArns[]" | awk '{print "aws ecs stop-task --cluster station-back-ecs-cluster --task \""$0"\""}' | sh

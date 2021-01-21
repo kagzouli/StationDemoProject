@@ -1,17 +1,7 @@
 variable "application"{ 
   type        =  string
+  default     =  "stationdb"
   description = "Nom application"
-}
-
-variable "vpc_id" {
-   type        = string
-   description = "Identifiant du VPC"
-}
-
-# All the private subnets
-variable "private_subnets_id" {
-   type    = list(string)
-   description = "List of subnets id"
 }
 
 variable "station_privatedomainname" {
@@ -19,40 +9,24 @@ variable "station_privatedomainname" {
     description = "Private domaine name"
 }
 
-variable "station_db_container_memory"{
-   type        = number
-   description = "station Db container memory"
-}
-
-variable "station_db_container_cpu"{
-   type        = number
-   description = "station db container cpu"
-}
-
-variable "station_db_image"{
-   type        = string
-   description = "Image docker du station_db"
-}
-
 variable "station_db_host_port"{
    type        = number
    description = "Port de station_db affiché à l'exterieur."
 }
 
+variable "az_zone1" {
+    type        =  string
+    description =  "Availability zone 1"
+}
+
+variable "az_zone2" {
+    type        =  string
+    description =  "Availability zone 2"
+}
 
 variable "region" {
   type        = string
   description = "Region"
-}
-
-variable "task_role_arn" {
-  type        = string
-  description = "ARN du role de la tache"
-}
-
-variable "execution_role_arn" {
-  type        = string
-  description = "execution_role_arn"
 }
 
 variable "station_db_root" {
@@ -80,7 +54,19 @@ variable "station_db_url_external"{
   description = "URL de la base de donnee"
 }
 
-variable "cidr_block"{
-  type        = string
-  description = "CIDR block"
+
+variable "station_db_count"{
+  type        = number
+  description = "Nombre d'instances de base."
 }
+
+variable "station_db_instance_type"{
+  type        = string
+  description = "Type d'instance DB"
+}
+
+
+#variable "aws_instanceprofile_ecsec2"{
+#  type        = string
+#  description = "AWS Instance profile ECS EC2"
+#}

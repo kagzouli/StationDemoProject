@@ -10,6 +10,6 @@ resource "aws_route53_record" "station_db_url_external" {
   name         = "${var.station_db_url_external}.${var.station_privatedomainname}" 
   type         = "CNAME"
   ttl          = "10"
-  records      = [aws_lb.station_db_lb.dns_name]
+  records      = ["${aws_rds_cluster.station_db_rds_cluster.endpoint}"] 
  
 }
