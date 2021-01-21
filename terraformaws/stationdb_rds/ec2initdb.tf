@@ -54,14 +54,14 @@ resource "aws_iam_instance_profile" "machinesql_iam_profile" {
   role = aws_iam_role.machinesql_role_iam_role.name
 }
 
+
 # EC2 cluster instances - booting script
 data "template_file" "user_data" {
   template = file("${path.module}/initec2db.sh")
   vars = {
      stationdb_user      = var.station_db_username
      stationdb_pwd       = var.station_db_password
-     stationdb_hostname  = "${var.station_db_url_external}.${var.station_privatedomainname}" 
-         
+     stationdb_hostname  = aws_rds_cluster.station_db_rds_cluster.endpoint 
   }
 }
 
@@ -74,9 +74,14 @@ resource "aws_instance" "machinesql" {
   user_data            = data.template_file.user_data.rendered 
   security_groups      = [aws_security_group.station_db_c2_sg.id]
 
+  depends_on = [
+     aws_rds_cluster_instance.rds_instance 
+  ]  
+
   tags = {
      Name = "machinesql"
      Application= var.application
   }
 
 }
+
