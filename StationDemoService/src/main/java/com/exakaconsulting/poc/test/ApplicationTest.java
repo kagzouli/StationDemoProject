@@ -39,6 +39,8 @@ public class ApplicationTest {
 	public PlatformTransactionManager transactionBanqueBean(final ApplicationContext appContext){
 		return new DataSourceTransactionManager(appContext.getBean(ConstantStationDemo.DATASOURCE_STATION, DataSource.class));
 	}
+	
+
 
 
 }

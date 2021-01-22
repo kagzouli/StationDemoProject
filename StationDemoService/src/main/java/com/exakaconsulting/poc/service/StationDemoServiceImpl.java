@@ -1,11 +1,14 @@
 package com.exakaconsulting.poc.service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +27,15 @@ import static com.exakaconsulting.poc.service.ConstantStationDemo.TRANSACTIONAL_
 @Service
 public class StationDemoServiceImpl implements IStationDemoService{
 	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(StationDemoServiceImpl.class);
 	 
-	 @Autowired
-	 private IStationDemoDao stationDemoDao;
+	@Autowired
+	private IStationDemoDao stationDemoDao;
+	
+	@Autowired
+	private RedisTemplate<String, TrafficStationBean> redisTemplate;
+	
+	private static final String TRAFFIC_STATION_KEY  = "trafficstation_";
 
 	@Override
 	public List<TrafficStationBean> findStations(CriteriaSearchTrafficStation criteria) {
@@ -107,20 +115,37 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	public TrafficStationBean findStationById(Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id station must be set");
 
-		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("BEGIN of the method findStationById of the class %s [id = '%s']" , StationDemoServiceImpl.class.getName(), id));			
-		}
+		TrafficStationBean trafficStation = null;
+
+		final String key = String.format("%s%s", TRAFFIC_STATION_KEY, id);
+		
+		final ValueOperations<String, TrafficStationBean> valuesOperation = this.redisTemplate.opsForValue();
+
+		// Search the traffic station on the redis cache
+		final boolean hasKey = this.redisTemplate.hasKey(key);
+    
+		if (hasKey) {
+			// If found in the cache
+			trafficStation = valuesOperation.get(key);
+            
+            if (LOGGER.isInfoEnabled()) {
+            	LOGGER.info(String.format("Find the trafficstation in the redis cache with id '%s'", id));
+            }
+        }else {
+    		trafficStation = stationDemoDao.findStationById(id);
+    		
+    		if (trafficStation == null){
+    			throw new TrafficStationNotExists(String.format("The traffic station %s does not exist", id));
+    		}
+    		
+    		// Put the data in the cache for 1 minutes.
+    		valuesOperation.set(key, trafficStation, 60, TimeUnit.SECONDS);
+        	
+        }
+		
 		
 
-		TrafficStationBean trafficStation = stationDemoDao.findStationById(id);
-		
-		if (trafficStation == null){
-			throw new TrafficStationNotExists(String.format("The traffic station %s does not exist", id));
-		}
 
-		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("END of the method findStationById of the class %s [id = '%s']" , StationDemoServiceImpl.class.getName() , id));			
-		}
 		
 		return trafficStation;
 	}
@@ -129,10 +154,17 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	public void updateTrafficStation(Long newTrafficValue, String newCorr, Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id has to be set");
 		
-		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("BEGIN of the method updateTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
-		}		
-
+		// Remove the data of the redis cache.
+		final String key = String.format("%s%s", TRAFFIC_STATION_KEY, id);
+        final boolean hasKey = redisTemplate.hasKey(key);
+        if (hasKey) {
+            this.redisTemplate.delete(key);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s"), id);             	
+            }
+        }
+		
+		
 		stationDemoDao.updateTrafficStation(newTrafficValue, newCorr , id);
 
 		if (LOGGER.isInfoEnabled()){
@@ -145,15 +177,20 @@ public class StationDemoServiceImpl implements IStationDemoService{
 	@Override
 	public void deleteTrafficStation(Integer id) throws TrafficStationNotExists{
 		Assert.notNull(id , "The id has to be set");
-		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("BEGIN of the method deleteTrafficStation of the class %s"  , StationDemoServiceImpl.class.getName()));
-		}
+
+		// Remove the data of the redis cache.
+		final String key = String.format("%s%s", TRAFFIC_STATION_KEY, id);
+        final boolean hasKey = redisTemplate.hasKey(key);
+        if (hasKey) {
+            this.redisTemplate.delete(key);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s"), id);             	
+            }
+        }
+	
 		
 		stationDemoDao.deleteTrafficStation(id);
 		
-		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("END of the method deleteTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
-		}
 	}
 
 

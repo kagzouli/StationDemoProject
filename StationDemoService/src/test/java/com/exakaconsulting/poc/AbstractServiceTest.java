@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -32,11 +35,20 @@ public abstract class AbstractServiceTest {
 	static final String VILLE_PORTE_CHOISY = "Paris"; 
 	static final Integer ARROND_PORTE_CHOISY = 13;
 	
+	@MockBean
+	private RedisTemplate<String, TrafficStationBean> redisTemplate;
+
+	@MockBean
+	private ValueOperations<String, TrafficStationBean> valuesOperation;
+	
 	@Before
 	public void beforeTest(){
 		
 		Logger logger = Mockito.mock(Logger.class);
         Mockito.when(logger.isInfoEnabled()).thenReturn(true);
+        
+        Mockito.when(this.redisTemplate.opsForValue()).thenReturn(valuesOperation);
+        
 	}
 
 	
