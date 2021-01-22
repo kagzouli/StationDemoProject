@@ -33,6 +33,7 @@ services:
   station_back:
     depends_on:
       - station_db
+      - station_redis
     image: "${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
     deploy:
       replicas: 1
