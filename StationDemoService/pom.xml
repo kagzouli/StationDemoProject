@@ -82,6 +82,13 @@
 			<groupId>com.okta.jwt</groupId>
 			<artifactId>okta-jwt-verifier</artifactId>
 		</dependency>
+		
+		
+		<!--  Redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
     	
 	  
 				
