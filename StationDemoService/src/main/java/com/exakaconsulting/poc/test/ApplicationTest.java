@@ -19,7 +19,7 @@ import com.exakaconsulting.poc.service.ConstantStationDemo;
 
 @Configuration
 @ComponentScan({"com.exakaconsulting.poc.service" ,  "com.exakaconsulting.poc.dao"})
-@PropertySource("classpath:configServices.properties")
+@PropertySource("classpath:application.properties")
 @Profile("test")
 public class ApplicationTest {
 	
