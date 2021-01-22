@@ -44,7 +44,7 @@ services:
       - DB_TRAFSTAT_MAXACTIVE=100
       - DB_TRAFSTAT_USERNAME=stationuser  
       - DB_TRAFSTAT_PASSWORD=stationpwd
-      - REDIS_HOSTNAME=localhost
+      - REDIS_HOSTNAME=127.0.0.1
       - REDIS_PORT=6000
       - REDIS_PASS=test650
     ports:
