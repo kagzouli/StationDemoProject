@@ -160,7 +160,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
         if (hasKey) {
             this.redisTemplate.delete(key);
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s"), id);             	
+                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s", id));             	
             }
         }
 		
@@ -184,7 +184,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
         if (hasKey) {
             this.redisTemplate.delete(key);
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s"), id);             	
+                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s", id));             	
             }
         }
 	
