@@ -76,7 +76,7 @@ services:
       - OKTA_URL=https://dev-884254.oktapreview.com
       - CONTEXT_BACK_URL=http://51.254.36.120:4000
     ports:
-        - "5000:80"
+        - "80:80"
     volumes:
       - logstationnginxfront:/var/log/nginx/
 
