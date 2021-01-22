@@ -19,6 +19,17 @@ services:
       - logstationdb:/var/log/mysql
       - databasedata:/var/lib/mysql
       
+  station_redis:
+    image: "redis:6.0.10"
+    deploy:
+      replicas: 1 
+      restart_policy:
+        condition: on-failure
+    restart: always
+    command: redis-server --requirepass test650
+    ports:
+      - "6000:6379"      
+      
   station_back:
     depends_on:
       - station_db
@@ -31,7 +42,10 @@ services:
       - DB_TRAFSTAT_URL=jdbc:mysql://station_db:3306/StationDemoDb?connectTimeout=0
       - DB_TRAFSTAT_MAXACTIVE=100
       - DB_TRAFSTAT_USERNAME=stationuser  
-      - DB_TRAFSTAT_PASSWORD=stationpwd   
+      - DB_TRAFSTAT_PASSWORD=stationpwd
+      - REDIS_HOSTNAME=localhost
+      - REDIS_PORT=6000
+      - REDIS_PASS=test650
     ports:
       - "4000:8080"
     volumes:
