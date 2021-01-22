@@ -168,7 +168,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 		stationDemoDao.updateTrafficStation(newTrafficValue, newCorr , id);
 
 		if (LOGGER.isInfoEnabled()){
-			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s" , StationDemoServiceImpl.class.getName()));
+			LOGGER.info(String.format("END of the method updateTrafficStation of the class %s'" , StationDemoServiceImpl.class.getName()));
 		}
 
 		
@@ -184,7 +184,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
         if (hasKey) {
             this.redisTemplate.delete(key);
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s", id));             	
+                LOGGER.info(String.format("Delete the trafficstation in the redis cache with id '%s'", id));             	
             }
         }
 	
