@@ -23,9 +23,9 @@ station_db_instance_type="db.t3.small"
 
 # Station redis
 station_redis_host_port=6379
-station_db_password="stationredis120"
+station_redis_password="stationredis12012Ozskdkdeddew"
 station_redis_url_external="stationredis"
-station_redis_count=1
+station_redis_count=2
 station_redis_instance_type="cache.t2.small"
 
 

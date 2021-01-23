@@ -1,6 +1,6 @@
 # ALB Security Group: Edit to restrict access to the redis 
-resource "aws_security_group" "sg_station_redis" {
-  name        = "sg-station-redis"
+resource "aws_security_group" "secgroup_station_redis" {
+  name        = "securitygroup-station-redis"
   description = "Controle les acces a Redis"
   vpc_id      =  data.aws_vpc.station_vpc.id 
 
@@ -20,7 +20,7 @@ resource "aws_security_group" "sg_station_redis" {
   }
 
   tags = {
-    Name = "sg-station-redis"
+    Name = "securitygroup-station-redis"
     Application= var.application
   }
 }

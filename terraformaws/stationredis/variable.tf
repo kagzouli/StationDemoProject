@@ -46,3 +46,8 @@ variable "station_redis_instance_type"{
   description = "Type d'instance DB"
 }
 
+variable "station_redis_url_external"{
+  type        = string
+  description = "URL Redis"
+}
+

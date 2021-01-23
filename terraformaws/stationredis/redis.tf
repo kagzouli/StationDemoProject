@@ -1,12 +1,25 @@
-resource "aws_elasticache_cluster" "station_redis_cluster" {
-  cluster_id           =  "station-redis-cluster"
-  engine               =  "redis"
-  node_type            =  var.station_redis_instance_type 
-  num_cache_nodes      =  var.station_redis_count
-  security_group_ids   =  [ data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id] 
-  parameter_group_name =  "default.redis3.2"
-  engine_version       =  "3.2.10"
-  port                 =  var.station_redis_host_port
+resource "aws_elasticache_subnet_group" "station_redis_subnet_group" {
+  name       = "station-redis-subnets-group"
+  subnet_ids = [ data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id]
+
+}
+
+
+resource "aws_elasticache_replication_group" "station_redis_cluster" {
+  replication_group_id           =  "station-redis-cluster"
+  engine                         =  "redis"
+  engine_version                 =  "5.0.0"
+  transit_encryption_enabled     =  true
+  replication_group_description  =  "Redis cluster for caching storage (has automatic eviction)"
+  node_type                      =  var.station_redis_instance_type 
+  auth_token                     =  var.station_redis_password
+  number_cache_clusters          =  var.station_redis_count
+  automatic_failover_enabled     =  false
+  availability_zones             =  ["${var.az_zone1}", "${var.az_zone2}"] 
+  security_group_ids             =  ["${aws_security_group.secgroup_station_redis.id}"] 
+  subnet_group_name              =  "${aws_elasticache_subnet_group.station_redis_subnet_group.name}"
+  parameter_group_name           =  "default.redis5.0"
+  port                           =  var.station_redis_host_port
 
   tags = {
      Name = "station-redis-cluster"
