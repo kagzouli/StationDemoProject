@@ -129,3 +129,17 @@ variable "station_db_password" {
   description = "Database password"
 }
 
+variable "station_redis_url_external"{
+  type        = string
+  description = "URL de redis"
+}
+
+variable "station_redis_host_port"{
+   type        = number
+   description = "Port de redis affiché à l'exterieur."
+}
+
+variable "station_redis_password" {
+  type        = string
+  description = "Redis password"
+}

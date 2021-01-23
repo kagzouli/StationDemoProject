@@ -96,3 +96,18 @@ variable "aws_instanceprofile_ecsec2"{
   type        = string
   description = "AWS Instance profile ECS EC2"
 }
+
+variable "station_redis_hostname"{
+  type        = string
+  description = "Redis hostname"
+}
+
+variable "station_redis_port"{
+  type        = string
+  description = "Redis port"
+}
+
+variable "station_redis_password"{
+  type        = string
+  description = "Database redis"
+}

@@ -30,6 +30,18 @@
         {
           "name": "DB_TRAFSTAT_PASSWORD",
           "value": "${station_db_password}"
+        },
+        {
+          "name": "REDIS_HOSTNAME",
+          "value": "${station_redis_hostname}"
+        },
+        {
+          "name": "REDIS_PORT",
+          "value": "${station_redis_port}"
+        },
+        {
+          "name": "REDIS_PASS",
+          "value": "${station_redis_password}"
         }
       ],
     
