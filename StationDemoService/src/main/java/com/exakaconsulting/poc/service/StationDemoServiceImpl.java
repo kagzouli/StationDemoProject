@@ -131,7 +131,10 @@ public class StationDemoServiceImpl implements IStationDemoService{
             if (LOGGER.isInfoEnabled()) {
             	LOGGER.info(String.format("Find the trafficstation in the redis cache with id '%s'", id));
             }
-        }else {
+        }
+		
+		// If the traffic station has not been found on the redis cache, search in the db
+		if (trafficStation == null) {
     		trafficStation = stationDemoDao.findStationById(id);
     		
     		if (trafficStation == null){
