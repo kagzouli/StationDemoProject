@@ -6,6 +6,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -95,7 +96,10 @@ public class Application extends AbstractApplication {
 		// Configure name and port
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(this.redisHostname,
 				this.redisPort);
-		redisStandaloneConfiguration.setPassword(RedisPassword.of(this.redisSecret));
+		
+		if (!StringUtils.isBlank(this.redisSecret)) {
+			redisStandaloneConfiguration.setPassword(RedisPassword.of(this.redisSecret));
+		}
 		return new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfigurationBuilder.build());
 	}
 
