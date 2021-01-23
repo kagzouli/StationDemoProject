@@ -26,7 +26,7 @@ station_redis_host_port=6379
 station_db_password="stationredis120"
 station_redis_url_external="stationredis"
 station_redis_count=1
-station_redis_instance_type="db.t3.small"
+station_redis_instance_type="cache.t2.small"
 
 
 # Station Back
