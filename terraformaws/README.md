@@ -13,6 +13,14 @@ This directory is divided into 3 parts :
 ### ecsfargate
   
  - This part is used to create all the station based on ECS fargate and docker image stored in dockerhub of the project Station Demo
+ 
+### stationdb_rds
+  
+ - This part is used to create the database AWS RDS of the project Station Demo
+
+### vars
+  
+ - This part is used to configure all the environments
 
 
 
