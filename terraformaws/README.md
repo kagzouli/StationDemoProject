@@ -18,6 +18,11 @@ This directory is divided into differents parts :
   
  - This part is used to create the database AWS RDS of the project Station Demo
 
+### stationredis
+  
+ - This part is used to create the redis cache of the project Station Demo
+
+
 ### vars
   
  - This part is used to configure all the environments
