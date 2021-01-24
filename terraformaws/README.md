@@ -1,6 +1,6 @@
 # Station Demo
 
-This directory is divided into 3 parts :
+This directory is divided into differents parts :
 
 ### networks
 
