@@ -17,7 +17,7 @@ to manage the number of docker container that will start in the application (Inc
 There is 2 docker images and 2 components for the DB and Redis in the application :
 
 
-   - The front-end in Angular using Nginx in a docker images
+   - The front-end in Angular using Nginx in a docker image.
    - The back-end in SpringMVC and a little use of Spring boot using Tomcat server in a docker image.
    - The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test), There is also an example with docker-compose. But for AWS, I use a real configuration with RDS.
    - Redis which is use for AWS (Elasticache).s
