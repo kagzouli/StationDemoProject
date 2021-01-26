@@ -26,7 +26,7 @@ services:
       restart_policy:
         condition: on-failure
     restart: always
-    command: redis-server --bind station_redis --ssl --port 6000 --requirepass test650
+    command: redis-server --bind station_redis --port 6000 --requirepass test650
     ports:
       - "6000:6379"      
       
@@ -47,6 +47,7 @@ services:
       - REDIS_HOSTNAME=station_redis
       - REDIS_PORT=6000
       - REDIS_PASS=test650
+      - REDIS_USESSL=false
     ports:
       - "4000:8080"
     volumes:

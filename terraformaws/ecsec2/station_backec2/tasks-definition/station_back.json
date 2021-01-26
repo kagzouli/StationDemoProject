@@ -42,6 +42,10 @@
         {
           "name": "REDIS_PASS",
           "value": "${station_redis_password}"
+        },
+        {
+          "name": "REDIS_USESSL",
+          "value": "true"
         }
       ],
     

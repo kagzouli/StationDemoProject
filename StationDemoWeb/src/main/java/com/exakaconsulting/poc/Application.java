@@ -46,6 +46,9 @@ public class Application extends AbstractApplication {
 
 	@Value("${redis.password}")
 	private String redisSecret;
+	
+	@Value("${redis.usessl}")
+	private Boolean redisUseSsl;
 
 	/** For swagger-ui **/
 	@Bean
@@ -79,7 +82,7 @@ public class Application extends AbstractApplication {
 
 	private JedisPoolConfig jedisPoolConfig() {
 		JedisPoolConfig config = new JedisPoolConfig();
-		config.setMaxTotal(5);
+		config.setMaxTotal(7);
 		config.setTestOnBorrow(true);
 		config.setTestOnReturn(true);
 		return config;
@@ -94,7 +97,9 @@ public class Application extends AbstractApplication {
 		jedisClientConfigurationBuilder.usePooling().poolConfig(jedisPoolConfig());
 		
 		// Use the ssl
-		jedisClientConfigurationBuilder.useSsl();
+		if (redisUseSsl) {
+			jedisClientConfigurationBuilder.useSsl();
+		}
 
 		// Configure name and port
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(this.redisHostname,
