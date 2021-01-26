@@ -92,6 +92,9 @@ public class Application extends AbstractApplication {
 
 		// Configure the pool for the client.
 		jedisClientConfigurationBuilder.usePooling().poolConfig(jedisPoolConfig());
+		
+		// Use the ssl
+		jedisClientConfigurationBuilder.useSsl();
 
 		// Configure name and port
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(this.redisHostname,
