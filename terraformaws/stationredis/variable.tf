@@ -14,6 +14,11 @@ variable "station_redis_host_port"{
    description = "Port de station redis affiché à l'exterieur."
 }
 
+variable "station_redis_clusterbus_port"{
+   type        = number
+   description = "Port de station redis cluster bus."
+}
+
 variable "az_zone1" {
     type        =  string
     description =  "Availability zone 1"

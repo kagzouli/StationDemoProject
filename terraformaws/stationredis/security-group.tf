@@ -12,6 +12,14 @@ resource "aws_security_group" "secgroup_station_redis" {
     description = "TCP request"
   }
 
+  ingress {
+    protocol    = "tcp"
+    from_port   = var.station_redis_clusterbus_port
+    to_port     = var.station_redis_clusterbus_port
+    cidr_blocks = ["${data.aws_vpc.station_vpc.cidr_block}"]
+    description = "TCP request"
+  }
+  
   egress {
     from_port   = 0
     to_port     = 0
