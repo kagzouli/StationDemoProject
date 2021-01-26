@@ -14,12 +14,13 @@ I use Okta for identity providing (More easy to manage). I use JWT token for the
 There is also a batch part made with Spring batch. It calls business part to create some data. 
 I use docker for more simplicity and more flexibility and kubernetes. Kubernetes will allow 
 to manage the number of docker container that will start in the application (Increase or decrease the number depending of the HTTP traffic).
-There is 3 docker images in the application :
+There is 2 docker images and 2 components for the DB and Redis in the application :
 
 
    - The front-end in Angular using Nginx
    - The back-end in SpringMVC and a little use of Spring boot using Tomcat server
-   - The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test), There is also an example with docker-compose
+   - The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test), There is also an example with docker-compose. But for AWS, I use a real configuration with RDS.
+   - Redis which is use for AWS (Elasticache).s
        
 Normally, everything must be encrypting with HTTPS but for the POC, I will not do it 
 
