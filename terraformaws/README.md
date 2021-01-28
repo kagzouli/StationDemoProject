@@ -2,7 +2,9 @@
 
 The architecture of the projet is based on AWS component. This is the AWS architecture schema of the project : 
 
+
 ![picture](./schemaArchitectureAWS.png)
+
 
 
 The StationDemoProject directory is divided into differents parts :
