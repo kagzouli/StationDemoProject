@@ -1,13 +1,25 @@
+
 - name: Message deploiement redis server
   debug:
     msg: "Deploiement redis server environnement {{environnement}}"
 
+
 - name: Ensure Redis is present
-  apt: pkg=redis-server state=latest
+  apt:
+    pkg: redis-server
+    state: latest
+
+- name: Copie du nouveau fichier redis.conf
+  copy:
+   src: "{{directory_saslivraison}}/redis.conf"
+   dest: /etc/redis/redis.conf
+   directory_mode: 0755
+   mode: 0664
+   force: yes
+
 
 - name: Ensure Redis is started
-  service: name=redis-server state=started enabled=yes
-
-- name: Ensure Redis Configuration
-  template: src="{{directory_saslivraison}}/redis.conf.j2" dest=/etc/redis/redis.conf owner=root group=root mode=0644
-  notify: Redis Restart
+  service: 
+    name: redis-server 
+    state: restarted 
+    enabled: yes
