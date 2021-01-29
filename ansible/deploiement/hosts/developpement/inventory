@@ -1,6 +1,9 @@
 [allserver]
 localhost
 
+[redisserver]
+localhost
+
 [backend]
 localhost
 

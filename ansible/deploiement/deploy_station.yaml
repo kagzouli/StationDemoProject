@@ -3,6 +3,11 @@
   roles:
    - role: "preparedeploy"
 
+- name: "Deploiement redis"
+  hosts: redisserver
+  roles:
+   - role: "deployredis"
+
 - name: "Deploiement backend"
   hosts: backend 
   roles:
