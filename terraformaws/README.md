@@ -1,6 +1,13 @@
 # Station Demo
 
-This directory is divided into differents parts :
+The architecture of the projet is based on AWS component. This is the AWS architecture schema of the project : <br/><br/><br/>
+
+
+![picture](./schemaArchitectureAWS.png)
+<br/><br/><br/>
+
+
+The StationDemoProject directory is divided into differents parts :
 
 ### networks
 
