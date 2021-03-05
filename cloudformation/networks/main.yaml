@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Station Demo networks 
+
+Parameters:
+  Env:
+    Type: String
+    Description: The environment you're deploying to.
+
+Mappings: 
+  Environments:
+    Dev:  
+      CidrBlockStationVpc : '12.0.0.0/21'
+      CidrBlockStationPublicSubnet1: '12.0.1.0/27'
+      AvailableZonePublicSubnet1:  'eu-west-3a'
+
+
+Resources:
+  StationDemoVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock:
+        Fn::FindInMap:
+          - Environments
+          - Ref: Env
+          - CidrBlockStationVpc
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: 'StationDemo'
+
+  StationPublicSubnet1:
+     Type: AWS::EC2::Subnet
+     Properties:
+       CidrBlock: 
+         Fn::FindInMap:
+          - Environments
+          - Ref: Env
+          - CidrBlockStationPublicSubnet1         
+       AvailabilityZone:
+         Fn::FindInMap: 
+          - Environments
+          - Ref: Env
+          - AvailableZonePublicSubnet1
+       VpcId: !Ref StationDemoVPC
+       Tags:
+         - Key: Name
+           Value: 'StationDemo'
+
+  
