@@ -1,1 +1,1 @@
-terraform destroy -auto-approve --var-file=../vars/dev.tvars .
+terraform destroy -auto-approve  --var-file=../vars/dev.tvars
