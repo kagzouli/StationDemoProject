@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "stationback_deployment" {
   }
 
   spec {
-    replicas = 2
+    replicas = var.station_back_instance_count 
 
     selector {
       match_labels = {
@@ -31,6 +31,45 @@ resource "kubernetes_deployment" "stationback_deployment" {
           port {
             container_port = 8080
           }
+
+          env = [
+            {
+               name  = "AWS_REGION"
+               value = var.region
+            },
+            {
+               name  = "DB_TRAFSTAT_URL"
+               value = "jdbc:mysql://${var.station_db_url_external}.${var.station_privatedomainname}:${var.station_db_host_port}/StationDemoDb?connectTimeout=0"
+            },
+            { 
+               name  = "DB_TRAFSTAT_MAXACTIVE"
+               value = "20"
+            },
+            { 
+               name  = "DB_TRAFSTAT_USERNAME" 
+               value = var.station_db_username 
+            },
+            {
+               name  = "DB_TRAFSTAT_PASSWORD"
+               value = var.station_db_password
+            }, 
+            {
+               name  = "REDIS_HOSTNAME"
+               value = "${var.station_redis_url_external}.${var.station_privatedomainname}" 
+            },
+            {
+               name  =  "REDIS_PORT"
+               value =  var.station_redis_host_port
+            },
+            {
+               name  = "REDIS_PASS"
+               value = var.station_redis_password
+            },
+            {
+               name  =  "REDIS_USESSL"
+               value =  "true"
+             }
+          ]
         }
       }
     }
@@ -41,7 +80,7 @@ resource "kubernetes_deployment" "stationback_deployment" {
 
 resource "kubernetes_service" "stationback_service" {
   metadata {
-    name      = "stationback-deploy"
+    name      = "stationbackservice"
     namespace = "stationback-deploy"
   }
   spec {
@@ -55,7 +94,7 @@ resource "kubernetes_service" "stationback_service" {
       protocol    = "TCP"
     }
 
-    type = "NodePort"
+    type = "LoadBalancer"
   }
 
   depends_on = [kubernetes_deployment.stationback_deployment]

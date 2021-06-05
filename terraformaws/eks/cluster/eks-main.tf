@@ -31,7 +31,7 @@ resource "aws_eks_node_group" "nodes" {
   scaling_config {
     desired_size = 2
     max_size     = 2
-    min_size     = 1
+    min_size     = 2 
   }
 
   # I'd recommend t3.large or t3.xlarge for most production workloads
