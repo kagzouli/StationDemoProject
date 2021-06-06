@@ -1,12 +1,11 @@
-rlb.ingress.kubernetes.io/schemeesource "kubernetes_ingress" "app" {
+resource "kubernetes_ingress" "app" {
   metadata {
     name      = "stationback-ingress"
-    namespace = "stationback"
+    namespace = "stationback-deploy"
     annotations = {
       "kubernetes.io/ingress.class"               = "alb"
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
       "alb.ingress.kubernetes.io/target-type"     = "ip"
-      "kubernetes.io/cluster/station-eks"         = "shared"
     }
     labels = {
         "app" = "stationback"

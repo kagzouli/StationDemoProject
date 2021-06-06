@@ -7,6 +7,7 @@ resource "aws_vpc" "station_vpc" {
   tags = {
     Name = "station_vpc",
     Application= var.application
+    "kubernetes.io/cluster/station-eks-cluster" = "shared"
   }
 }
 
@@ -31,6 +32,7 @@ resource "aws_subnet" "station_publicsubnet1" {
     tags = {
        Name = "station_publicsubnet1",
        Application= var.application
+       "kubernetes.io/cluster/station-eks-cluster" = "shared"
     }
 }
 
@@ -65,6 +67,7 @@ resource "aws_subnet" "station_publicsubnet2" {
     tags = {
        Name = "station_publicsubnet2",
        Application= var.application
+       "kubernetes.io/cluster/station-eks-cluster" = "shared"
     }
 }
 
