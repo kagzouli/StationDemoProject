@@ -6,6 +6,8 @@ resource "kubernetes_ingress" "app" {
       "kubernetes.io/ingress.class"               = "alb"
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
       "alb.ingress.kubernetes.io/target-type"     = "ip"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "stationback-eks-alb"
+      "external-dns.alpha.kubernetes.io/hostname" = "${var.station_back_url_external}.${var.station_publicdomainname}"
     }
     labels = {
         "app" = "stationback"
