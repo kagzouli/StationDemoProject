@@ -5,6 +5,7 @@ resource "kubernetes_deployment" "stationback_deployment" {
     labels    = {
       app = "stationback"
     }
+
   }
 
   spec {
@@ -89,6 +90,11 @@ resource "kubernetes_service" "stationback_service" {
   metadata {
     name      = "stationbackservice"
     namespace = "stationback-deploy"
+    
+    annotations = {
+      "external-dns.alpha.kubernetes.io/hostname" = "${var.station_back_url_external}.${var.station_publicdomainname}"
+    }
+
   }
   spec {
     selector = {
