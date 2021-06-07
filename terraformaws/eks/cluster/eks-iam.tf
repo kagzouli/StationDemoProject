@@ -63,6 +63,25 @@ resource "aws_iam_role" "aws_eks_iam_role" {
 
 }
 
+resource "aws_iam_policy" "AmazonEKSClusterCloudWatchMetricsPolicy" {
+  name   = "AmazonEKSClusterCloudWatchMetricsPolicy"
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudwatch:PutMetricData"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+EOF
+}
+
+
 # We also need to attach additional policies:
 resource "aws_iam_role_policy_attachment" "cluster_eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
@@ -73,5 +92,10 @@ resource "aws_iam_role_policy_attachment" "cluster_eks_cluster_policy" {
 # Reference: 
 resource "aws_iam_role_policy_attachment" "cluster_eks_vpc_resource_controller" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  role       = aws_iam_role.aws_eks_iam_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSCloudWatchMetricsPolicy" {
+  policy_arn = aws_iam_policy.AmazonEKSClusterCloudWatchMetricsPolicy.arn
   role       = aws_iam_role.aws_eks_iam_role.name
 }
