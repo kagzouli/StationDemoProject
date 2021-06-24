@@ -111,7 +111,7 @@ resource "kubernetes_service" "stationback_service" {
       protocol    = "TCP"
     }
 
-    type = "LoadBalancer"
+    type = "ClusterIP"
   }
 
   depends_on = [kubernetes_deployment.stationback_deployment]
