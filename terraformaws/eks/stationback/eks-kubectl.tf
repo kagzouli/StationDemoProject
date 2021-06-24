@@ -93,6 +93,10 @@ resource "kubernetes_service" "stationback_service" {
     
     annotations = {
       "external-dns.alpha.kubernetes.io/hostname" = "${var.station_back_url_external}.${var.station_publicdomainname}"
+      "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type"  =  "ip"
+      "service.beta.kubernetes.io/aws-load-balancer-scheme" =  "internet-facing"
+      "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags" = "Name=eks-alb-loadbalancer, Application= ${var.application}"
+      "service.beta.kubernetes.io/aws-load-balancer-type" = "alb"
     }
 
   }
