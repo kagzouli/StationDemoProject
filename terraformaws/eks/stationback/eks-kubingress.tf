@@ -3,7 +3,7 @@ resource "kubernetes_service_account" "alb-ingress" {
     name = "stationback-ingress"
     namespace = "stationback-deploy"
     labels = {
-      "app.kubernetes.io/name" = "stationback-deploy"
+      "app.kubernetes.io/name" = "stationback-ingress"
     }
   }
 
@@ -14,7 +14,7 @@ resource "kubernetes_cluster_role" "alb-ingress" {
   metadata {
     name = "stationback-ingress"
     labels = {
-      "app.kubernetes.io/name" = "stationback-deploy"
+      "app.kubernetes.io/name" = "stationback-ingress"
     }
   }
 
@@ -35,7 +35,7 @@ resource "kubernetes_cluster_role_binding" "alb-ingress" {
   metadata {
     name = "stationback-ingress"
     labels = {
-      "app.kubernetes.io/name" = "stationback-deploy"
+      "app.kubernetes.io/name" = "stationback-ingress"
     }
   }
 
@@ -61,14 +61,11 @@ resource "kubernetes_ingress" "app" {
     annotations = {
       "kubernetes.io/ingress.class"               = "alb"
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type"     = "instance"
+      "alb.ingress.kubernetes.io/target-type"     = "ip"
       "alb.ingress.kubernetes.io/group.name"      = "stationback-alb"
       "alb.ingress.kubernetes.io/group.order"     = 1
-      "alb.ingress.kubernetes.io/load-balancer-name" = "stationback-eks-alb"
-      "external-dns.alpha.kubernetes.io/hostname" = "${var.station_back_url_external}.${var.station_publicdomainname}"
       "alb.ingress.kubernetes.io/tags"            = "Name=stationback-alb, Application=${var.application}"
       "alb.ingress.kubernetes.io/security-groups" = aws_security_group.sg_station_back_alb.id
-      "alb.ingress.kubernetes.io/subnets"         = "${data.aws_subnet.station_publicsubnet1.id} , ${data.aws_subnet.station_publicsubnet2.id}" 
       "alb.ingress.kubernetes.io/healthcheck-path" =  "/health"
     }
     labels = {

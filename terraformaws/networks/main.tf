@@ -8,6 +8,7 @@ resource "aws_vpc" "station_vpc" {
     Name = "station_vpc",
     Application= var.application
     "kubernetes.io/cluster/station-eks-cluster" = "shared"
+    "kubernetes.io/role/elb"   =  "1"
   }
 }
 
@@ -33,6 +34,7 @@ resource "aws_subnet" "station_publicsubnet1" {
        Name = "station_publicsubnet1",
        Application= var.application
        "kubernetes.io/cluster/station-eks-cluster" = "shared"
+       "kubernetes.io/role/elb"   =  "1"
     }
 }
 
@@ -68,6 +70,7 @@ resource "aws_subnet" "station_publicsubnet2" {
        Name = "station_publicsubnet2",
        Application= var.application
        "kubernetes.io/cluster/station-eks-cluster" = "shared"
+       "kubernetes.io/role/elb"    = "1"
     }
 }
 
