@@ -105,6 +105,7 @@ resource "aws_subnet" "station_privatesubnet1" {
     tags = {
        Name = "station_privatesubnet1",
        Application= var.application
+       "kubernetes.io/role/internal-elb"  = "1"
     }
 }
 
@@ -166,6 +167,7 @@ resource "aws_subnet" "station_privatesubnet2" {
     tags = {
        Name = "station_privatesubnet2",
        Application= var.application
+       "kubernetes.io/role/internal-elb" = "1"
     }
 }
 

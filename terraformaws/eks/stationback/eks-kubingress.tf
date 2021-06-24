@@ -67,6 +67,7 @@ resource "kubernetes_ingress" "app" {
       "alb.ingress.kubernetes.io/tags"            = "Name=stationback-alb, Application=${var.application}"
       "alb.ingress.kubernetes.io/security-groups" = aws_security_group.sg_station_back_alb.id
       "alb.ingress.kubernetes.io/healthcheck-path" =  "/health"
+      "alb.ingress.kubernetes.io/listen-ports"   =  "[{\"HTTP\": 8080}]"
     }
     labels = {
         "app" = "stationback"
@@ -74,6 +75,7 @@ resource "kubernetes_ingress" "app" {
   }
 
   spec {
+    
     rule {
       http {
         path {
