@@ -1,0 +1,12 @@
+Doc
+---
+
+https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
+Il faut imperativement aws-load-balancer-controller
+
+kubectl get deployment -n kube-system aws-load-balancer-controller
+Output
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+aws-load-balancer-controller   2/2     2            2           84s

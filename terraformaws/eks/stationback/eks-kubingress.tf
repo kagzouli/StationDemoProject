@@ -1,62 +1,6 @@
-resource "kubernetes_service_account" "alb-ingress" {
-  metadata {
-    name = "stationback-ingress"
-    namespace = "stationback-deploy"
-    labels = {
-      "app.kubernetes.io/name" = "stationback-ingress"
-    }
-  }
-
-  automount_service_account_token = true
-}
-
-resource "kubernetes_cluster_role" "alb-ingress" {
-  metadata {
-    name = "stationback-ingress"
-    labels = {
-      "app.kubernetes.io/name" = "stationback-ingress"
-    }
-  }
-
-  rule {
-    api_groups = ["", "extensions"]
-    resources  = ["configmaps", "endpoints", "events", "ingresses", "ingresses/status", "services"]
-    verbs      = ["create", "get", "list", "update", "watch", "patch"]
-  }
-
-  rule {
-    api_groups = ["", "extensions"]
-    resources  = ["nodes", "pods", "secrets", "services", "namespaces"]
-    verbs      = ["get", "list", "watch"]
-  }
-}
-
-resource "kubernetes_cluster_role_binding" "alb-ingress" {
-  metadata {
-    name = "stationback-ingress"
-    labels = {
-      "app.kubernetes.io/name" = "stationback-ingress"
-    }
-  }
-
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "stationback-ingress"
-  }
-
-  subject {
-    kind      = "ServiceAccount"
-    name      = "stationback-ingress"
-    namespace = "stationback-deploy"
-  }
-}
-
-
-
 resource "kubernetes_ingress" "app" {
   metadata {
-    name      = "stationback-ingress"
+    name      = "stationback-ingress-app2"
     namespace = "stationback-deploy"
     annotations = {
       "kubernetes.io/ingress.class"               = "alb"
@@ -68,6 +12,7 @@ resource "kubernetes_ingress" "app" {
       "alb.ingress.kubernetes.io/security-groups" = aws_security_group.sg_station_back_alb.id
       "alb.ingress.kubernetes.io/healthcheck-path" =  "/health"
       "alb.ingress.kubernetes.io/listen-ports"   =  "[{\"HTTP\": 8080}]"
+      "alb.ingress.kubernetes.io/load-balancer-name" = "stationback-eks-alb"
     }
     labels = {
         "app" = "stationback"
