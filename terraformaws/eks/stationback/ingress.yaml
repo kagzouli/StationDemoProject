@@ -7,12 +7,13 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: "ip"
-    alb.ingress.kubernetes.io/group.name: "stationback-alb-app"
-    alb.ingress.kubernetes.io/group.order: "1"
+    #alb.ingress.kubernetes.io/group.name: "stationback-alb-app"
+    #alb.ingress.kubernetes.io/group.order: "1"
     alb.ingress.kubernetes.io/tags: Name=stationback-alb, Application=STATION
     alb.ingress.kubernetes.io/healthcheck-path: "/StationDemoSecureWeb/health"
     alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 8080}]'
     external-dns.alpha.kubernetes.io/hostname: stationback.exakaconsulting.org
+    alb.ingress.kubernetes.io/load-balancer-name: station-back-alb
 spec:
   backend:
     serviceName: stationbackservice
