@@ -5,40 +5,51 @@ Doc
 1) Il faut imperativement aws-load-balancer-controller
 ------------------------------------------------------
 
-Lien : https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+Lien : https://aws.amazon.com/fr/premiumsupport/knowledge-center/eks-alb-ingress-controller-fargate/
 
 
 
 * Commande lancé : 
   ---------------
   
+I) Installer   aws-load-balancer-controller
+*******************************************
+  
   1)  eksctl utils associate-iam-oidc-provider \
     --region eu-west-3 \
     --cluster  station-eks-cluster\
     --approve
 
-  2) 
+  2) eksctl create iamserviceaccount \
+  --cluster=station-eks-cluster \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --attach-policy-arn=arn:aws:iam::XXXXX:policy/AWSLoadBalancerControllerIAMPolicy \
+  --override-existing-serviceaccounts \
+  --approve  
  
   
-  helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller \
+   3) helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller \
     --set clusterName=station-eks-cluster \
     --set serviceAccount.create=false \
     --set region=eu-west-3 \
-    --set vpcId=$VPC_ID\
+    --set vpcId=vpc-YYYYYY\
     --set serviceAccount.name=aws-load-balancer-controller \
     -n kube-system
   
 * Vérification : 
   ------------
 
-Explication : kubectl get deployment -n kube-system aws-load-balancer-controller
+1) kubectl get serviceaccount aws-load-balancer-controller --namespace kube-system               
+   NAME                           SECRETS   AGE
+   aws-load-balancer-controller   1         2m9s
 
-Output
+2) kubectl get deployment -n kube-system aws-load-balancer-controller
 
-NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
-aws-load-balancer-controller   2/2     2            2           84s
+   NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+   aws-load-balancer-controller   2/2     2            2           84s
 
 
 
-2) Il faut imperativement installer external-dns
-------------------------------------------------
+II) Il faut imperativement installer external-dns
+*************************************************
