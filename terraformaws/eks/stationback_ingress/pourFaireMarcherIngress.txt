@@ -51,5 +51,8 @@ I) Installer   aws-load-balancer-controller
 
 
 
-II) Il faut imperativement installer external-dns
-*************************************************
+II) Il faut imperativement installer external-dns (pour les annotations ingress external-dns)
+*********************************************************************************************
+
+
+Utiliser https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/integrations/external_dns/
