@@ -30,4 +30,10 @@ Return the contextPathBackUrl
 {{- printf "http://%s:%s" .Values.stationback.hostname  (toString .Values.stationback.externalPort) -}}
 {{- end -}}
 
+{{/*
+Return the database url for stationback 
+*/}}
+{{- define "stationback.databaseUrl" -}}
+{{- printf "jdbc:mysql://stationdbservice.%s.svc.cluster.local:3306/StationDemoDb?connectTimeout=0" .Release.Namespace  -}}
+{{- end -}}
 

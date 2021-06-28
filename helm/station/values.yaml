@@ -28,7 +28,11 @@ stationdb:
   
   # Mysql password
   mysqlPassword: stationpwd
-  
+   
+  image:
+    pullPolicy: IfNotPresent
+
+
 stationback:
 
   # Nb replicas
