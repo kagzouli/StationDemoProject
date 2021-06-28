@@ -6,7 +6,7 @@ metadata:
 spec:
   type: {{ .Values.stationfront.service.serviceType | quote }}
   ports:
-  - port: {{ .Values.stationfront.service.externalPort }} 
+  - port: {{ .Values.stationfront.service.internalPort }} 
     name: stationfrontnginx
     {{- if or (eq .Values.stationfront.service.serviceType "NodePort") (eq .Values.stationfront.service.serviceType "LoadBalancer")  }}
     nodePort: {{ .Values.stationfront.service.nodePort }}

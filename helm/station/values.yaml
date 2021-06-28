@@ -87,7 +87,7 @@ stationfront:
 
   service:
     # External port
-    externalPort: 5000
+    internalPort: 5000
     
     # Node port
     nodePort: 32601

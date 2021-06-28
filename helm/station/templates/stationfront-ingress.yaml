@@ -17,4 +17,4 @@ spec:
           service:
             name: stationfrontservice
             port:
-              number: {{ .Values.stationfront.service.externalPort }} 
+              number: {{ .Values.stationfront.service.internalPort }} 
