@@ -55,7 +55,7 @@ spec:
           - name: DB_TRAFSTAT_USERNAME
             value: {{ .Values.stationdb.mysqlUser | quote  }}
           - name: DB_TRAFSTAT_PASSWORD
-            value: {{ .Values.stationdb.mysqlpwd | quote  }}
+            value: {{ .Values.stationdb.mysqlPassword | quote  }}
           ports:
           - containerPort: 8080
             protocol: TCP
