@@ -83,7 +83,7 @@ stationfront:
   
   
   #Okta URL
-  oktaURL: https://dev-884254.oktapreview.com
+  oktaUrl: https://dev-884254.oktapreview.com
 
   service:
     # External port
