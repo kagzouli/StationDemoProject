@@ -11,7 +11,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /station-angular4-poc
         pathType: Prefix
         backend:
           service:
