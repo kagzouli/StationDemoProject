@@ -19,4 +19,4 @@ spec:
           service:
             name: stationbackservice
             port:
-              number: {{ .Values.stationback.service.externalPort }}
+              number: {{ .Values.stationback.service.internalPort }}

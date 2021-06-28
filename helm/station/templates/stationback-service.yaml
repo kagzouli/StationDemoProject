@@ -6,7 +6,7 @@ metadata:
 spec:
   type: {{ .Values.stationback.service.serviceType | quote }}
   ports:
-  - port: {{ .Values.stationback.service.externalPort }}
+  - port: {{ .Values.stationback.service.internalPort }}
     name: stationback
     {{- if or (eq .Values.stationback.service.serviceType "NodePort") (eq .Values.stationback.service.serviceType "LoadBalancer")  }}
     nodePort: {{ .Values.stationback.service.nodePort }}

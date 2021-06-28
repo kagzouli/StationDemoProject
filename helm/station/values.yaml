@@ -40,12 +40,16 @@ stationback:
   # Hostname
   hostname: 51.254.36.120
   
+  # External port
+  externalPort: 80
+
   service:
-    # External port
-    externalPort: 4000
     
     # Node port
     nodePort: 32610
+
+    # Internal port
+    internalPort: 4000
     
     # Type service:
     serviceType: ClusterIP 
