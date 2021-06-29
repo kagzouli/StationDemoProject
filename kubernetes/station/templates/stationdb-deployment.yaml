@@ -50,4 +50,4 @@ spec:
       volumes:
       - name: datastationdb 
         persistentVolumeClaim: 
-          claimName: datastationdb  
+          claimName: stationdb-data  

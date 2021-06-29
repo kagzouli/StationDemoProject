@@ -4,9 +4,9 @@ metadata:
   name: persistentvolume
   namespace: {{ .Release.Namespace | quote }}
 spec:
-  storageClassName: manual
+  storageClassName: {{ .Values.stationdb.storage.storageClass | quote}} 
   capacity:
-    storage: 1Gi
+    storage: {{ .Values.stationdb.storage.globalCapacity | quote}} 
   accessModes: 
     -  ReadWriteOnce
   hostPath:

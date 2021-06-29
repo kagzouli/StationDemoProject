@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: datastationdb
+  name: stationdb-data 
   namespace: {{ .Release.Namespace | quote }} 
 spec:
-  storageClassName: manual
+  storageClassName: {{ .Values.stationdb.storage.storageClass | quote}} 
   accessModes: 
     -  ReadWriteOnce
   resources:
     requests: 
-      storage: 150Mi
+      storage: {{ .Values.stationdb.storage.dataCapacity | quote}}

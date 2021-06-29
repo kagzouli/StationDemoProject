@@ -28,6 +28,19 @@ stationdb:
   
   # Mysql password
   mysqlPassword: stationpwd
+
+  # Storage data
+  storage: 
+    
+    # Storage type
+    storageClass: manual
+
+    # Data Capacity
+    dataCapacity: 150Mi 
+ 
+    # Global Capacity
+    globalCapacity: 1Gi
+       
    
   image:
     pullPolicy: IfNotPresent
