@@ -78,13 +78,12 @@ This directory is containing all the tools with docker that will be use for cont
 
 ## jenkins
 
-This directory contains all the jenkins pipeline to build, push image into custom or standard docker registry  and deploy the project using docker-compose 
-or kubernetes.
+This directory contains all the jenkins pipeline to build, push image into custom or standard docker registry  and deploy the project using docker-compose.
+
 
 ## kubernetes
 
 This directory contains the template to start kubernetes pod and service for the project.
-There a 2 instances pod behind a service (Load balancing)
 
 ## terraformaws
 
