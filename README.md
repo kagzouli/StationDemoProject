@@ -36,8 +36,6 @@ I create 5 tasks :
    - Build the project, generate docker images and push them in the regular or a custom docker registry
    - Start The application with docker-compose
    - Stop the application with docker-compose
-   - Start the application using kubernetes with 2 nodes
-   - Stop the application starting with kubernetes.
    
 ## BuildStationDemoProject
 
@@ -66,25 +64,6 @@ It takes 5 parameters :
 
 The goal of this job is to stop the application using a docker-compose file. 
 
-## startStationDemoKubernete
-
-The goal of this job is to start the application using kubernetes and 2 nodes.
-It takes 5 parameters : 
-
-| Parameter  |  Description |
-| ------------ | ------------ |
-| VERSION |The version of the project  |
-| REPO_NEXUS_URL | The URL of the docker container registry|
-| DATABASE_DATA | The directory where the mariadb data is stored|
-| MY_LOGS | The directory where the logs are stored|
-| ANGULAR_CONFIG | The directory where the angular configuration file is stored|
-| SERVICE_EXTERNAL_IP | The service external IP that is use for the back-end kubernete service |
-
-## stopStationDemoDockerCompose
-
-The goal of this job is to stop the application using kubernetes
-
-<br/>
 
 # TrafficStation organization source
 
