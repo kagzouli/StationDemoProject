@@ -1,0 +1,108 @@
+# Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+app:
+  # Context path of the repo nexus url
+  repoNexusUrl: ''
+ 
+stationdb:
+  # Directory where to put data of the database
+  databaseData: /data
+  
+  # Mysql root password
+  mysqlRootPassword: root123
+  
+  # Mysql user
+  mysqlUser: stationUser
+  
+  # Mysql password
+  mysqlPassword: stationpwd
+   
+  image:
+    pullPolicy: IfNotPresent
+
+
+stationback:
+
+  # Nb replicas
+  nbReplicas: 2
+
+  # Nbr connexion datasource active db
+  nbConnectionDbMaxActive: 15
+  
+  # Hostname
+  hostname: 51.254.36.120
+  
+  # External port
+  externalPort: 80
+
+  service:
+    
+    # Node port
+    nodePort: 32610
+
+    # Internal port
+    internalPort: 4000
+    
+    # Type service:
+    serviceType: ClusterIP 
+
+  image:
+    pullPolicy: IfNotPresent   
+
+  ingress:
+    annotations:  
+      kubernetes.io/ingress.class: "nginx"
+      # kubernetes.io/ingress.class: alb
+      # alb.ingress.kubernetes.io/scheme: internet-facing
+      # alb.ingress.kubernetes.io/target-type: "ip"
+      # alb.ingress.kubernetes.io/tags: Name=stationback-alb, Application=STATION
+      # alb.ingress.kubernetes.io/healthcheck-path: "/StationDemoSecureWeb/health"
+      # alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 8080}]'
+      # external-dns.alpha.kubernetes.io/hostname: stationback.exakaconsulting.org
+      # alb.ingress.kubernetes.io/load-balancer-name: station-back-alb
+
+stationfront:
+
+  # Nb replicas
+  nbReplicas: 2
+
+
+  # Region 
+  region: eu-west-3
+  
+  # Client id traf stat
+  clientIdTrafStat: 0oaeg3yghaL9mQalz0h7
+  
+  
+  #Okta URL
+  oktaUrl: https://dev-884254.oktapreview.com
+
+  service:
+    # External port
+    internalPort: 5000
+    
+    # Node port
+    nodePort: 32601
+    
+    # Type service:
+    serviceType: ClusterIP 
+ 
+  image:
+    pullPolicy: IfNotPresent  
+
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+  
