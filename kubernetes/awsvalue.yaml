@@ -33,7 +33,7 @@ stationdb:
   storage: 
     
     # Storage type
-    storageClass: aws-efs 
+    storageClass: efs 
 
     # Data Capacity
     dataCapacity: 100Mi 
