@@ -21,6 +21,68 @@ resource "aws_iam_role" "aws_eks_nodes_role" {
 
 }
 
+resource "aws_iam_policy" "eks_worknode_ebs_policy" {
+  name = "Amazon_EBS_CSI_Driver"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AttachVolume",
+        "ec2:CreateSnapshot",
+        "ec2:CreateTags",
+        "ec2:CreateVolume",
+        "ec2:DeleteSnapshot",
+        "ec2:DeleteTags",
+        "ec2:DeleteVolume",
+        "ec2:DescribeInstances",
+        "ec2:DescribeSnapshots",
+        "ec2:DescribeTags",
+        "ec2:DescribeVolumes",
+        "ec2:DetachVolume"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+POLICY
+}
+
+
+resource "aws_iam_role_policy_attachment" "station_autoscaler" {
+  policy_arn = aws_iam_policy.cluster_autoscaler_policy.arn
+  role = aws_iam_role.aws_eks_nodes_role.name
+}
+
+resource "aws_iam_policy" "cluster_autoscaler_policy" {
+  name        = "iam-policy-ClusterAutoScaler"
+  description = "Give the worker node running the Cluster Autoscaler access to required resources and actions"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeTags",
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:TerminateInstanceInAutoScalingGroup"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+
 resource "aws_iam_role_policy_attachment" "nodes_eks_worker_node_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.aws_eks_nodes_role.name
@@ -31,8 +93,15 @@ resource "aws_iam_role_policy_attachment" "nodes_eks_cni_policy" {
   role       = aws_iam_role.aws_eks_nodes_role.name
 }
 
+
 resource "aws_iam_role_policy_attachment" "nodes_ec2_container_registry_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.aws_eks_nodes_role.name
+}
+
+# And attach the new policy
+resource "aws_iam_role_policy_attachment" "worknode-AmazonEBSCSIDriver" {
+  policy_arn = aws_iam_policy.eks_worknode_ebs_policy.arn
   role       = aws_iam_role.aws_eks_nodes_role.name
 }
 
@@ -82,6 +151,7 @@ EOF
 }
 
 
+
 # We also need to attach additional policies:
 resource "aws_iam_role_policy_attachment" "cluster_eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
@@ -99,3 +169,9 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSCloudWatchMetricsPolicy" {
   policy_arn = aws_iam_policy.AmazonEKSClusterCloudWatchMetricsPolicy.arn
   role       = aws_iam_role.aws_eks_iam_role.name
 }
+
+resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSServicePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = aws_iam_role.aws_eks_iam_role.name
+}
+

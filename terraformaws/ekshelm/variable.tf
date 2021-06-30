@@ -19,3 +19,13 @@ variable "nbNodeInstanceEks"{
   description = "Nombre nodes cluster station EKS"
 }
 
+variable "az_zone1" {
+    type        =  string
+    description =  "Availability zone 1"
+}
+
+variable "az_zone2" {
+    type        =  string
+    description =  "Availability zone 2"
+}
+
