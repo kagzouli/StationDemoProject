@@ -41,13 +41,17 @@ spec:
               secretKeyRef:
                 name: stationdb-secret 
                 key: database-password 
+          {{- if (ne .Values.stationdb.storage.storageClass "none")   }} 
           volumeMounts:
           - name: datastationdb  
             mountPath: /var/lib/mysql
+          {{- end }}
           ports:
           - containerPort: 3306
             protocol: TCP
+      {{- if (ne .Values.stationdb.storage.storageClass "none")   }}
       volumes:
       - name: datastationdb 
         persistentVolumeClaim: 
           claimName: stationdb-data  
+      {{- end }}
