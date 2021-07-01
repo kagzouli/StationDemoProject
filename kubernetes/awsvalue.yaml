@@ -55,7 +55,7 @@ stationback:
   nbConnectionDbMaxActive: 15
   
   # Hostname
-  hostname: stationback.interne.exakaconsulting.org
+  hostname: stationback.exakaconsulting.org
   
   # External port
   externalPort: 8080
