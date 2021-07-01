@@ -33,13 +33,16 @@ stationdb:
   storage: 
     
     # Storage type
-    storageClass: 'none' 
+    #storageClass: 'none' 
+    storageClass: 'efs-sc' 
 
     # Data Capacity
     dataCapacity: 100Mi 
  
     # Global Capacity
     globalCapacity: 150Mi
+
+    efsid: fs-7af0cecb
        
    
   image:

@@ -9,5 +9,14 @@ spec:
     storage: {{ .Values.stationdb.storage.globalCapacity | quote}} 
   accessModes: 
     -  ReadWriteOnce
+  {{- if (eq .Values.stationdb.storage.storageClass "efs-sc")   }}
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: {{ .Values.stationdb.storage.efsid | quote}}
+  {{- end }}
+  {{- if (ne .Values.stationdb.storage.storageClass "efs-sc")   }} 
   hostPath:
     path: {{ .Values.stationdb.databaseData | quote  }} 
+  {{- end }}
