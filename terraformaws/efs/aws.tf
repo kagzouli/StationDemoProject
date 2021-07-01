@@ -4,7 +4,7 @@ terraform {
   backend "s3" {
       region  = "eu-west-3" 
       bucket  = "station-tfstate"
-      key     = "station-ekskubcluster.tfstate"
+      key     = "station-efseks.tfstate"
       encrypt = true
   }
 }
