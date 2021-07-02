@@ -2,7 +2,7 @@ resource "aws_efs_file_system" "station_efs" {
 
    creation_token = "stationdb-data"
 
-   encrypted       = true
+   encrypted       = false 
 
   tags = {
       Name        = "stationdb-data"
