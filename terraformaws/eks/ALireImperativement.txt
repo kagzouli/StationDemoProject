@@ -71,4 +71,10 @@ Utiliser
    
    Cette commande a marché : 
      helm repo add bitnami https://charts.bitnami.com/bitnami
-     helm install my-release bitnami/external-dns		 
+     helm install my-release bitnami/external-dns		
+
+III) Pour la partie EFS pour EKS
+--------------------------------
+
+Doc : https://docs.aws.amazon.com/eks/latest/userguide/eks-ug.pdf
+Lire a partir de la page 189
