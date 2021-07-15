@@ -21,6 +21,8 @@ resource "aws_instance" "kubernatemaster" {
 
   iam_instance_profile = aws_iam_instance_profile.kubmastermanual_agent.name
 
+  key_name      =   aws_key_pair.kubernetesmaster-key-pair.key_name
+
   tags = {
     Name = "kubernatemaster"
     Application= var.application

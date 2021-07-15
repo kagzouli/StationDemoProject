@@ -13,7 +13,7 @@ resource "aws_launch_configuration" "kubworker_launch_config" {
     user_data            = data.template_file.user_data.rendered 
     instance_type        = "t2.small"
     associate_public_ip_address = false 
-   # key_name             = "kubworker-key-pair"
+    key_name             = "kubernetesmaster-key-pair" 
  
     lifecycle {
        create_before_destroy = true

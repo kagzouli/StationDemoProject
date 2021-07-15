@@ -63,3 +63,8 @@ data "aws_ami" "ecs_optimized" {
 data "aws_iam_instance_profile" "kubworkermanual_agent" {
   name = "kubmastermanual-agent"
 }
+
+// data "aws_key_pair" "kubernetesmaster-key-pair" {
+//  key_name   = "kubernetesmaster-key-pair"
+// }
+
