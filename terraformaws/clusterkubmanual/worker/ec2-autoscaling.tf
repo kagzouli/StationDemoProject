@@ -37,7 +37,7 @@ resource "aws_autoscaling_group" "kubworker_autoscalinggroup" {
     }
 
     tag {
-      key                 = "name"
+      key                 = "Name"
       value               = "kubworker-ec2"
       propagate_at_launch = true
     }
