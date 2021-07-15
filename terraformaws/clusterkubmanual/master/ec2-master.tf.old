@@ -1,0 +1,25 @@
+# EC2 cluster instances - booting script
+data "template_file" "user_data" {
+  template = file("${path.module}/initec2back.sh")
+  vars = {
+    ecs_cluster_name  = aws_ecs_cluster.station_back_ecs_cluster.name
+  }
+}
+
+
+resource "aws_launch_configuration" "ec2_kubmaster_launch_config" {
+    # Optimiser pour docker
+    name_prefix          = "kubmanualmaster"
+    image_id             = data.aws_ami.ecs_optimized.id
+    iam_instance_profile = var.aws_instanceprofile_ecsec2 
+    security_groups      = [ aws_security_group.station_ec2_sg.id ]
+    user_data            = data.template_file.user_data.rendered 
+    instance_type        = "t2.micro"
+    associate_public_ip_address = false 
+    key_name             = "kubmanual"
+ 
+    lifecycle {
+       create_before_destroy = true
+    }
+    
+}
