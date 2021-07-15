@@ -22,7 +22,7 @@ resource "aws_launch_configuration" "kubworker_launch_config" {
 }
 
 resource "aws_autoscaling_group" "kubworker_autoscalinggroup" {
-    name                      = "kubworker-autoscaling"
+    name                      = "kubworker-ec2"
     vpc_zone_identifier       = [data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id] 
     launch_configuration      = aws_launch_configuration.kubworker_launch_config.name
 
