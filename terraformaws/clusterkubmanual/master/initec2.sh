@@ -47,10 +47,16 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF'
 
+# Install kubernetes component
 sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni
 
 
-sudo yum install -y kubeadm-1.20.8
+#Enable kubelet
+sudo systemctl enable kubelet
+
+sudo kubeadm config images pull
+
+sudo kubeadm init --pod-network-cidr=${cidr_block_vpc}
 
 --===============BOUNDARY==
 MIME-Version: 1.0
