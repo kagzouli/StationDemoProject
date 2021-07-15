@@ -22,18 +22,20 @@ yum install -y yum-plugin-kernel-livepatch
 yum kernel-livepatch enable -y
 yum update kpatch-runtime -y
 systemctl enable kpatch.service
-amazon-linux-extras enable livepatch
-
+sudo amazon-linux-extras enable livepatch
 sudo bash -c 'cat << EOF > /home/ec2-user/security_patches.log
-0 1 * * * sudo yum update --security -y
+0 1 * * * sudo yum update --security -y 
 EOF'
-
 chmod 600 /var/spool/cron/ec2-user
 chown ec2-user:ec2-user /var/spool/cron/ec2-user
 sudo systemctl reload crond.service
 
+sudo setenforce 0
+
+
 #Restart the Docker daemon
 sudo systemctl restart docker
+
 
 sudo bash -c 'cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -46,8 +48,13 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF'
 
 # Install kubernetes component
-sudo yum install -y kubectl
+sudo yum install -y docker kubelet kubeadm kubernetes-cni
 
+
+#Enable kubelet
+sudo systemctl enable kubelet
+
+sudo kubeadm config images pull
 
 
 --===============BOUNDARY==
