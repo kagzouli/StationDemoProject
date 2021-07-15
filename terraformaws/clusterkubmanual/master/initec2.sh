@@ -58,6 +58,14 @@ sudo kubeadm config images pull
 
 sudo kubeadm init --pod-network-cidr=${cidr_block_vpc}
 
+# Copy config
+#sudo mkdir -p ~/.kube
+#sudo cp /etc/kubernetes/admin.conf ~/.kube/config
+#sudo chown $(id -u):$(id -g) ~/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+
 --===============BOUNDARY==
 MIME-Version: 1.0
 Content-Type: text/cloud-boothook; charset="us-ascii"
