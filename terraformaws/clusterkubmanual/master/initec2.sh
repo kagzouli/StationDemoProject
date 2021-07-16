@@ -66,6 +66,12 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 
+#Installation helm
+sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+sudo chmod 700 get_helm.sh
+sudo sh get_helm.sh
+helm repo add eks https://aws.github.io/eks-charts
+
 --===============BOUNDARY==
 MIME-Version: 1.0
 Content-Type: text/cloud-boothook; charset="us-ascii"
