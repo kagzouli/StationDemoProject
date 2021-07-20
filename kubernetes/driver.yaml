@@ -153,11 +153,13 @@ spec:
         - --csi-address=$(ADDRESS)
         - --v=2
         - --feature-gates=Topology=true
+        - --extra-create-metadata
         - --leader-election
         env:
         - name: ADDRESS
           value: /var/lib/csi/sockets/pluginproxy/csi.sock
         image: public.ecr.aws/eks-distro/kubernetes-csi/external-provisioner:v2.1.1-eks-1-18-2
+        imagePullPolicy: IfNotPresent
         name: csi-provisioner
         volumeMounts:
         - mountPath: /var/lib/csi/sockets/pluginproxy/
@@ -166,6 +168,7 @@ spec:
         - --csi-address=/csi/csi.sock
         - --health-port=9909
         image: public.ecr.aws/eks-distro/kubernetes-csi/livenessprobe:v2.2.0-eks-1-18-2
+        imagePullPolicy: IfNotPresent
         name: liveness-probe
         volumeMounts:
         - mountPath: /csi
@@ -217,6 +220,7 @@ spec:
         - name: CSI_ENDPOINT
           value: unix:/csi/csi.sock
         image: 602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/aws-efs-csi-driver:v1.3.2
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
           httpGet:
@@ -258,6 +262,7 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         image: public.ecr.aws/eks-distro/kubernetes-csi/node-driver-registrar:v2.1.0-eks-1-18-2
+        imagePullPolicy: IfNotPresent
         name: csi-driver-registrar
         volumeMounts:
         - mountPath: /csi
@@ -269,14 +274,17 @@ spec:
         - --health-port=9809
         - --v=2
         image: public.ecr.aws/eks-distro/kubernetes-csi/livenessprobe:v2.2.0-eks-1-18-2
+        imagePullPolicy: IfNotPresent
         name: liveness-probe
         volumeMounts:
         - mountPath: /csi
           name: plugin-dir
+      dnsPolicy: ClusterFirst
       hostNetwork: true
       nodeSelector:
         beta.kubernetes.io/os: linux
       priorityClassName: system-node-critical
+      serviceAccountName: efs-csi-node-sa
       tolerations:
       - operator: Exists
       volumes:
