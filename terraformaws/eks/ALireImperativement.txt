@@ -78,3 +78,24 @@ III) Pour la partie EFS pour EKS
 
 Doc : https://docs.aws.amazon.com/eks/latest/userguide/eks-ug.pdf
 Lire a partir de la page 189
+
+  Lancer les commandes suivantes 
+  ------------------------------
+
+  1) eksctl delete iamserviceaccount \
+ --name efs-csi-controller-sa \
+ --namespace kube-system \
+ --cluster station-eks-cluster 
+ 
+
+  2) eksctl create iamserviceaccount \
+ --name efs-csi-controller-sa \
+ --namespace kube-system \
+ --cluster station-eks-cluster \
+ --attach-policy-arn arn:aws:iam::XXXXXXX:policy/AmazonEKS_EFS_CSI_Driver_Policy \
+ --approve \
+ --override-existing-serviceaccounts \
+ --region eu-west-3
+ 
+ 3) kubectl apply -f kubernetes/driver.yaml
+
