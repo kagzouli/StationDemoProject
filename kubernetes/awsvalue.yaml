@@ -87,6 +87,7 @@ stationback:
       alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 8080}]'
       external-dns.alpha.kubernetes.io/hostname: stationback.exakaconsulting.org
       alb.ingress.kubernetes.io/load-balancer-name: station-back-alb
+      alb.ingress.kubernetes.io/group.name: station-back-group
 
 stationfront:
 
@@ -122,8 +123,9 @@ stationfront:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: "ip"
-      alb.ingress.kubernetes.io/tags: Name=stationfront-alb, Application=STATION
+      alb.ingress.kubernetes.io/tags: Name=station-front-alb, Application=STATION
       alb.ingress.kubernetes.io/healthcheck-path: "/station-angular4-poc"
       alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 80}]'
       external-dns.alpha.kubernetes.io/hostname: station.exakaconsulting.org
-      alb.ingress.kubernetes.io/load-balancer-name: station-front-alb 
+      alb.ingress.kubernetes.io/load-balancer-name: station-front-alb
+      alb.ingress.kubernetes.io/group.name: station-front-group 

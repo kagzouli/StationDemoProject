@@ -8,6 +8,9 @@ resource "aws_alb" "station_front_alb"{
     tags = {
         Name = "station-front-alb"
         Application= var.application
+        "ingress.k8s.aws/stack"    = "station-front-group"
+        "ingress.k8s.aws/resource" = "LoadBalancer"
+        "elbv2.k8s.aws/cluster"    = "station-eks-cluster"
     }
 
 
