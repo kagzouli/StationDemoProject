@@ -29,3 +29,10 @@ variable "az_zone2" {
     description =  "Availability zone 2"
 }
 
+
+
+variable "station_front_host_port"{
+   type        = number
+   description = "Port de station_front affiché à l'exterieur."
+}
+
