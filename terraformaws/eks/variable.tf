@@ -36,3 +36,14 @@ variable "station_front_host_port"{
    description = "Port de station_front affiché à l'exterieur."
 }
 
+variable "station_front_url_external"{
+  type        = string
+  description = "URL du site web station"
+}
+
+
+variable "station_publicdomainname" {
+    type        =  string
+    description = "Public Domaine name"
+}
+
