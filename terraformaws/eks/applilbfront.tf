@@ -33,4 +33,11 @@ resource "aws_alb" "station_front_alb"{
 #    Name = "station-front-alb-target-group"
 #    Application= var.application
 #  }
-#} 
+#}
+
+# output nginx public ip
+output "station_front_dns_lb" {
+  description = "DNS load balancer"
+  value = aws_alb.station_front_alb.dns_name
+}
+ 

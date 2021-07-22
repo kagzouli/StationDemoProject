@@ -1,3 +1,4 @@
+{{- if (ne .Values.stationfront.ingress.type "awstargetgroupbind")   }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -17,4 +18,5 @@ spec:
           service:
             name: stationfrontservice
             port:
-              number: {{ .Values.stationfront.service.internalPort }} 
+              number: {{ .Values.stationfront.service.internalPort }}
+{{- end }} 

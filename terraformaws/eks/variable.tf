@@ -30,6 +30,17 @@ variable "az_zone2" {
 }
 
 
+variable "station_back_host_port"{
+   type        = number
+   description = "Port de station_back affiché à l'exterieur."
+}
+
+variable "station_back_url_external"{
+  type        = string
+  description = "URL du backend accessible"
+}
+
+
 
 variable "station_front_host_port"{
    type        = number

@@ -1,0 +1,13 @@
+{{- if (eq .Values.stationback.ingress.type "awstargetgroupbind")   }}
+apiVersion: elbv2.k8s.aws/v1beta1 
+kind: TargetGroupBinding
+metadata:
+  name: station-back-tgb
+  namespace: {{ .Release.Namespace | quote }}
+  
+spec:
+  serviceRef:
+    name: stationbackservice 
+    port: {{ .Values.stationback.service.internalPort }} 
+  targetGroupARN: {{ .Values.stationback.ingress.targetGroupARN }} 
+{{- end }}

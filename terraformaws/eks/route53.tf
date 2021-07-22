@@ -4,6 +4,17 @@ data "aws_route53_zone" "public" {
 }
 
 
+# AWS Route 53 Record
+resource "aws_route53_record" "station_back_url_external" {
+  zone_id      =  data.aws_route53_zone.public.zone_id
+  name         = "${var.station_back_url_external}.${var.station_publicdomainname}"
+  type         = "CNAME"
+  ttl          = "10"
+  records      = [aws_alb.station_back_alb.dns_name]
+
+}
+
+
 resource "aws_route53_record" "station_front_url_external" {
   zone_id      =  data.aws_route53_zone.public.zone_id
   name         = "${var.station_front_url_external}.${var.station_publicdomainname}"

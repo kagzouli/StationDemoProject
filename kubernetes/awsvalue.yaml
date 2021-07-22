@@ -78,14 +78,19 @@ stationback:
     pullPolicy: IfNotPresent   
 
   ingress:
+    
+    # type empty or alb or awstargetgroupbind 
+    type: "alb"
+    
+    #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
+    
     annotations:  
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: "ip"
-      alb.ingress.kubernetes.io/tags: Name=stationback-alb, Application=STATION
+      alb.ingress.kubernetes.io/tags: Name=station-back-alb, Application=STATION
       alb.ingress.kubernetes.io/healthcheck-path: "/StationDemoSecureWeb/health"
       alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 8080}]'
-      external-dns.alpha.kubernetes.io/hostname: stationback.exakaconsulting.org
       alb.ingress.kubernetes.io/load-balancer-name: station-back-alb
       alb.ingress.kubernetes.io/group.name: station-back-group
 
@@ -113,12 +118,20 @@ stationfront:
     nodePort: 32601
     
     # Type service:
-    serviceType: ClusterIP 
+    serviceType: ClusterIP
+    #serviceType: NodePort 
  
   image:
     pullPolicy: IfNotPresent  
 
+  
   ingress:
+ 
+    # type empty or alb or awstargetgroupbind 
+    type: "alb"
+
+    #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
+
     annotations:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -126,6 +139,5 @@ stationfront:
       alb.ingress.kubernetes.io/tags: Name=station-front-alb, Application=STATION
       alb.ingress.kubernetes.io/healthcheck-path: "/station-angular4-poc"
       alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 80}]'
-      external-dns.alpha.kubernetes.io/hostname: station.exakaconsulting.org
       alb.ingress.kubernetes.io/load-balancer-name: station-front-alb
       alb.ingress.kubernetes.io/group.name: station-front-group 
