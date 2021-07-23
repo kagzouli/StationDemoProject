@@ -24,6 +24,14 @@ The StationDemoProject directory is divided into differents parts :
   
  - This part is used to create all the station based on ECS fargate and docker image stored in dockerhub of the project Station Demo
  
+### eks 
+  
+ - This part is used to create all the station based on EKS fargate and docker image stored in dockerhub of the project Station Demo
+ 
+### ec2instance 
+  
+ - This part is used to create a EC2 instance in the private subnet
+ 
 ### stationdb_rds
   
  - This part is used to create the database AWS RDS of the project Station Demo
