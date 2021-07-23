@@ -9,5 +9,13 @@ spec:
   serviceRef:
     name: stationfrontservice 
     port: {{ .Values.stationfront.service.internalPort }} 
-  targetGroupARN: {{ .Values.stationfront.ingress.targetGroupARN }} 
+  targetGroupARN: {{ .Values.stationfront.ingress.targetGroupARN }}
+  networking:
+    ingress:
+      - from:
+        - ipBlock:
+            cidr: 12.0.0.0/21
+        ports:
+        - port: {{ .Values.stationfront.service.internalPort }} 
+          protocol: TCP
 {{- end }}

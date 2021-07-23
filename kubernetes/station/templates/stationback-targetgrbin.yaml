@@ -10,4 +10,12 @@ spec:
     name: stationbackservice 
     port: {{ .Values.stationback.service.internalPort }} 
   targetGroupARN: {{ .Values.stationback.ingress.targetGroupARN }} 
+  networking:
+    ingress:
+      - from:
+        - ipBlock:
+            cidr: 12.0.0.0/21
+        ports:
+        - port: {{ .Values.stationback.service.internalPort }} 
+          protocol: TCP
 {{- end }}

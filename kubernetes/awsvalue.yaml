@@ -80,9 +80,10 @@ stationback:
   ingress:
     
     # type empty Ingress or TargetGroupBinding
-    type: "Ingress"
+    #type: "Ingress"
+    type: "TargetGroupBinding"
     
-    #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/f877411ee0dc74ff" 
     
     annotations:  
       kubernetes.io/ingress.class: alb
@@ -112,14 +113,14 @@ stationfront:
 
   service:
     # External port
-    internalPort: 5000
+    internalPort: 80 
     
     # Node port
     nodePort: 32601
     
     # Type service:
-    serviceType: ClusterIP
-    #serviceType: NodePort 
+    #serviceType: ClusterIP
+    serviceType: NodePort 
  
   image:
     pullPolicy: IfNotPresent  
@@ -128,9 +129,10 @@ stationfront:
   ingress:
  
     # type Ingress or TargetGroupBinding 
-    type: "Ingress"
+    #type: "Ingress"
+    type: "TargetGroupBinding"
 
-    #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/7a7a5585fec71487" 
 
     annotations:
       kubernetes.io/ingress.class: alb

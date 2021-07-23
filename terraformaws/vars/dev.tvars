@@ -44,7 +44,7 @@ station_back_instance_count=2
 station_back_url_external="stationback"
 
 # Ingress or TargetGroupBinding
-type_kind_helm_back="Ingress"
+type_kind_helm_back="TargetGroupBinding"
 
 
 # Station front
@@ -58,4 +58,4 @@ station_front_clientidtrafstat="0oaeg3yghaL9mQalz0h7"
 station_front_oktaurl="https://dev-884254.oktapreview.com"
 
 # Ingress or TargetGroupBinding
-type_kind_helm_front="Ingress"
+type_kind_helm_front="TargetGroupBinding"
