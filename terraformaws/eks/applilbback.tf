@@ -16,38 +16,44 @@ resource "aws_alb" "station_back_alb"{
 
 } 
 
-#resource "aws_alb_target_group" "station_back_target_group" {
-#  name = "station-back-target-group"
-#  port = var.station_back_host_port 
-#  protocol = "HTTP"
-#  vpc_id = var.vpc_id 
-#  target_type = "ip"
-#  health_check {
-#    healthy_threshold = "2"
-#    interval = "30"
-#    port     = var.station_back_host_port
-#    protocol = "HTTP"
-#    matcher = "200"
-#    timeout = "3"
-#    path = "/StationDemoSecureWeb/health"
-#    unhealthy_threshold = "2"
-#  }
-#  tags = {
-#    Name = "station-back-alb-target-group"
-#    Application= var.application
-#  }
-#}
+resource "aws_alb_target_group" "station_back_target_group" {
+  name = "station-back-target-group"
+  port = var.station_back_host_port 
+  protocol = "HTTP"
+  vpc_id = data.aws_vpc.station_vpc.id 
+  target_type = "ip"
+  health_check {
+    healthy_threshold = "2"
+    interval = "30"
+    port     = var.station_back_host_port
+    protocol = "HTTP"
+    matcher = "200"
+    timeout = "3"
+    path = "/StationDemoSecureWeb/health"
+    unhealthy_threshold = "2"
+  }
+
+  count = (var.type_kind_helm_back == "TargetGroupBinding") ? 1:0
+  
+  tags = {
+    Name = "station-back-alb-target-group"
+    Application= var.application
+  }
+}
 
 # Redirect all traffic from the ALB to the target group
-#resource "aws_alb_listener" "station_back_alb_listener" {
-#  load_balancer_arn = aws_alb.station_back_alb.id
-#  port = var.station_back_host_port
-#  protocol = "HTTP"
-#  default_action {
-#    target_group_arn = aws_alb_target_group.station_back_target_group.id
-#    type = "forward"
-#  }
-#}
+resource "aws_alb_listener" "station_back_alb_listener" {
+  load_balancer_arn = aws_alb.station_back_alb.id
+  port = var.station_back_host_port
+  protocol = "HTTP"
+  
+  count = (var.type_kind_helm_back == "TargetGroupBinding") ? 1:0
+  
+  default_action {
+    target_group_arn = aws_alb_target_group.station_back_target_group[0].id
+    type = "forward"
+  }
+}
 
 
 # output nginx public ip
