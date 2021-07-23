@@ -123,6 +123,7 @@ stationfront:
     nodePort: 32601
     
     # Type service:
+    # Dans le cas Ingress, il faut prendre ClusterIP ,  si c'est TargetGroupBuinding prendre imperativement NodePort 
     #serviceType: ClusterIP
     serviceType: NodePort 
  
@@ -132,7 +133,8 @@ stationfront:
   
   ingress:
  
-    # type Ingress or TargetGroupBinding 
+    # type Ingress or TargetGroupBinding
+    # Dans le cas Ingress, il faut prendre ClusterIP ,  si c'est TargetGroupBuinding prendre imperativement NodePort 
     #type: "Ingress"
     type: "TargetGroupBinding"
 
