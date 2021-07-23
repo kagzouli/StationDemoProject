@@ -32,6 +32,10 @@ The StationDemoProject directory is divided into differents parts :
   
  - This part is used to create a EC2 instance in the private subnet
  
+### clusterkubmanual 
+  
+ - This part is used to create a cluster kubernates manually without using EKS
+
 ### stationdb_rds
   
  - This part is used to create the database AWS RDS of the project Station Demo
@@ -39,6 +43,10 @@ The StationDemoProject directory is divided into differents parts :
 ### stationredis
   
  - This part is used to create the redis cache of the project Station Demo
+
+### efs 
+  
+ - This part is used to create the EFS storage for the usage of a container docker mysql (If we do not use RDS)
 
 
 ### vars
