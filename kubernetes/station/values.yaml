@@ -17,10 +17,13 @@ app:
   repoNexusUrl: ''
  
 stationdb:
-  # Directory where to put data of the database
+
+  mode: 'internaldb'
+
+  # Directory where to put data of the database - Use only if mode=internaldb
   databaseData: /data
   
-  # Mysql root password
+  # Mysql root password -Use only for mode=internaldb
   mysqlRootPassword: root123
   
   # Mysql user
@@ -29,7 +32,10 @@ stationdb:
   # Mysql password
   mysqlPassword: stationpwd
 
-  # Storage data
+  # Use only if mode=externaldb for url external database
+  jdbcDatabaseUrl: ''
+  
+  # Storage data - Use only if mode=internaldb
   storage: 
     
     # Storage type

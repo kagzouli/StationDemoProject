@@ -1,3 +1,4 @@
+{{- if (ne .Values.stationdb.mode "externaldb")   }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,3 +56,4 @@ spec:
         persistentVolumeClaim: 
           claimName: stationdb-data  
       {{- end }}
+ {{- end }}

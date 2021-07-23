@@ -21,19 +21,24 @@ app:
  
  
 stationdb:
-  # Directory where to put data of the database
+  mode: 'externaldb'
+
+  # Directory where to put data of the database - Use only if mode=internaldb
   databaseData: /data
   
-  # Mysql root password
+  # Mysql root password -Use only for mode=internaldb
   mysqlRootPassword: root123
   
   # Mysql user
-  mysqlUser: stationUser
+  mysqlUser: stationuser
   
   # Mysql password
   mysqlPassword: stationpwd
 
-  # Storage data
+  # Use only if mode=externaldb for url external database
+  jdbcDatabaseUrl: 'jdbc:mysql://stationdb.interne.exakaconsulting.org:3306/StationDemoDb?connectTimeout=0' 
+ 
+  # Storage data - Use only if mode=internaldb
   storage: 
     
     # Storage type
@@ -87,7 +92,7 @@ stationback:
     #type: "Ingress"
     type: "TargetGroupBinding"
     
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/f877411ee0dc74ff" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/035987275b96401b" 
     
     annotations:  
       kubernetes.io/ingress.class: alb
@@ -138,7 +143,7 @@ stationfront:
     #type: "Ingress"
     type: "TargetGroupBinding"
 
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/7a7a5585fec71487" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/15bcca582d4b0d20" 
 
     annotations:
       kubernetes.io/ingress.class: alb

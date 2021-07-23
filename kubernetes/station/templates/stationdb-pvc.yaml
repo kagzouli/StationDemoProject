@@ -1,3 +1,4 @@
+{{- if (ne .Values.stationdb.mode "externaldb")   }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,3 +11,4 @@ spec:
   resources:
     requests: 
       storage: {{ .Values.stationdb.storage.dataCapacity | quote}}
+{{- end }}

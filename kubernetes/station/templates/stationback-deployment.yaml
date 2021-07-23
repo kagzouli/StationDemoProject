@@ -31,16 +31,24 @@ spec:
           imagePullPolicy: {{ .Values.stationback.image.pullPolicy | quote }}
           env: 
           - name: DB_TRAFSTAT_URL
+            {{- if (ne .Values.stationdb.mode "externaldb")   }}
             value: {{ template "stationback.databaseUrl" . }}
+            {{ else }}
+            value: {{ .Values.stationdb.jdbcDatabaseUrl | quote }}
+            {{- end }}
           - name: DB_TRAFSTAT_MAXACTIVE
             value: {{ .Values.stationback.nbConnectionDbMaxActive | quote}}
           - name: DB_TRAFSTAT_USERNAME
             value: {{ .Values.stationdb.mysqlUser | quote  }}
           - name: DB_TRAFSTAT_PASSWORD
+            {{- if (ne .Values.stationdb.mode "externaldb")   }}
             valueFrom:
               secretKeyRef:
                 name: stationdb-secret
                 key: database-password
+            {{ else }}
+            value: {{ .Values.stationdb.mysqlPassword | quote }} 
+            {{- end }}
           ports:
           - containerPort: 8080
             protocol: TCP
