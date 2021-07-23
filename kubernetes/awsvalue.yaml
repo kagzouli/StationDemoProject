@@ -21,7 +21,7 @@ app:
  
  
 stationdb:
-  mode: 'externaldb'
+  mode: 'internaldb'
 
   # Directory where to put data of the database - Use only if mode=internaldb
   databaseData: /data
