@@ -14,7 +14,7 @@ spec:
     ingress:
       - from:
         - ipBlock:
-            cidr: 12.0.0.0/21
+            cidr: {{ .Values.app.network.vpc_cidr | quote }} 
         ports:
         - port: {{ .Values.stationback.service.internalPort }} 
           protocol: TCP
