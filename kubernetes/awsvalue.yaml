@@ -73,7 +73,7 @@ stationback:
     nodePort: 32610
 
     # Internal port
-    internalPort: 4000
+    internalPort: 8080 
     
     # Type service:
     serviceType: NodePort 
