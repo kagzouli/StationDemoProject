@@ -43,6 +43,9 @@ station_back_host_port=8080
 station_back_instance_count=2
 station_back_url_external="stationback"
 
+# Ingress or TargetGroupBinding
+type_kind_helm_back="Ingress"
+
 
 # Station front
 station_front_container_memory=512
@@ -53,3 +56,6 @@ station_front_instance_count=2
 station_front_url_external="station"
 station_front_clientidtrafstat="0oaeg3yghaL9mQalz0h7"
 station_front_oktaurl="https://dev-884254.oktapreview.com"
+
+# Ingress or TargetGroupBinding
+type_kind_helm_front="Ingress"

@@ -75,6 +75,10 @@ stationback:
     pullPolicy: IfNotPresent   
 
   ingress:
+ 
+    # type Ingress or TargetGroupBinding
+    type: "Ingress"
+
     annotations:  
       kubernetes.io/ingress.class: "nginx"
       # kubernetes.io/ingress.class: alb
@@ -116,6 +120,10 @@ stationfront:
     pullPolicy: IfNotPresent  
 
   ingress:
+
+     # type Ingress or TargetGroupBinding
+    type: "Ingress"    
+
     annotations:
       kubernetes.io/ingress.class: "nginx"
   

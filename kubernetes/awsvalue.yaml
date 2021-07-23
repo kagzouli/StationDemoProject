@@ -79,8 +79,8 @@ stationback:
 
   ingress:
     
-    # type empty or alb or awstargetgroupbind 
-    type: "alb"
+    # type empty Ingress or TargetGroupBinding
+    type: "Ingress"
     
     #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
     
@@ -127,8 +127,8 @@ stationfront:
   
   ingress:
  
-    # type empty or alb or awstargetgroupbind 
-    type: "alb"
+    # type Ingress or TargetGroupBinding 
+    type: "Ingress"
 
     #targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/4c3ec08fdedd8da2" 
 

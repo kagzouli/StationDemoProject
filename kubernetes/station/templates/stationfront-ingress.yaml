@@ -1,4 +1,4 @@
-{{- if (ne .Values.stationfront.ingress.type "awstargetgroupbind")   }}
+{{- if (ne .Values.stationfront.ingress.type "TargetGroupBinding")   }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

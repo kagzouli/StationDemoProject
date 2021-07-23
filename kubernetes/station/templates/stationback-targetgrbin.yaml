@@ -1,4 +1,4 @@
-{{- if (eq .Values.stationback.ingress.type "awstargetgroupbind")   }}
+{{- if (eq .Values.stationback.ingress.type "TargetGroupBinding")   }}
 apiVersion: elbv2.k8s.aws/v1beta1 
 kind: TargetGroupBinding
 metadata:
