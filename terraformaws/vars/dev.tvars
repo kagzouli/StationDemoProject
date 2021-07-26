@@ -25,6 +25,8 @@ station_db_url_external="stationdb"
 station_db_count=2
 station_db_instance_type="db.t3.small"
 
+# Uniquement pour les instances internes. Pas utiliser sur RDS
+station_db_root_password="root123"
 
 # Station redis
 station_redis_host_port=6379

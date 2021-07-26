@@ -12,6 +12,10 @@ We use Terraform version 0.15.5
 
 The StationDemoProject directory is divided into differents parts :
 
+### secrets 
+
+ - This part is used to create the secrets for all the project (Only use for database in the POC)
+
 ### networks
 
  - This part is used to create the network part of the project (VPC , subnet, internal Gateway, Route53)
