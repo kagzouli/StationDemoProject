@@ -21,7 +21,7 @@ resource "aws_rds_cluster" "station_db_rds_cluster" {
   engine_version          = "5.7.mysql_aurora.2.03.2" 
   database_name           = var.station_db_databasename
   master_username         = var.station_db_username
-  master_password         = var.station_db_password
+  master_password         = jsondecode(data.aws_secretsmanager_secret_version.station_vers_secretmanager.secret_string)["stationdbpassword"] 
   storage_encrypted       = true
   db_subnet_group_name    = aws_db_subnet_group.station_db_rds_subnet_group.name
   preferred_backup_window = "07:00-09:00"

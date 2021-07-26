@@ -60,7 +60,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/initec2db.sh")
   vars = {
      stationdb_user      = var.station_db_username
-     stationdb_pwd       = var.station_db_password
+     stationdb_pwd       = jsondecode(data.aws_secretsmanager_secret_version.station_vers_secretmanager.secret_string)["stationdbpassword"] 
      stationdb_hostname  = aws_rds_cluster.station_db_rds_cluster.endpoint 
   }
 }
