@@ -81,3 +81,15 @@ Lire a partir de la page 189
  
  3) kubectl apply -f kubernetes/driver.yaml
 
+
+III) Pour la partie External Secret pour EKS
+--------------------------------------------
+
+1) helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+
+2) helm install external-secrets external-secrets/kubernetes-external-secrets -n kube-system 
+
+3) Fixer les variables d'environnements suivantes : 
+
+     export AWS_ACCESS_KEY_ID="$my_access_key"
+     export AWS_SECRET_ACCESS_KEY="my_secret_key"

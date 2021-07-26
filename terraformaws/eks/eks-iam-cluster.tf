@@ -96,7 +96,8 @@ resource "aws_iam_policy" "secretmanager_getsecret_policy" {
         {
             "Effect": "Allow",
             "Action": [
-                "secretsmanager:GetSecretValue"
+                "secretsmanager:GetSecretValue",
+                "kms:*"
             ],
             "Resource": "*"
         }
