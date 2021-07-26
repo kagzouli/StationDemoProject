@@ -10,6 +10,13 @@
 
         }
       ],
+      "secrets": [
+        {
+          "name": "DB_TRAFSTAT_PASSWORD",
+          "valueFrom": "${station_secretmanager}:stationdbpassword::"
+        }
+      ],
+
       "environment": [
         {
           "name": "AWS_REGION",
@@ -26,10 +33,6 @@
         {
           "name": "DB_TRAFSTAT_USERNAME",
           "value": "${station_db_username}"
-        },
-        {
-          "name": "DB_TRAFSTAT_PASSWORD",
-          "value": "${station_db_password}"
         },
         {
           "name": "REDIS_HOSTNAME",

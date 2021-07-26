@@ -16,7 +16,6 @@ module "station_backec2"{
      execution_role_arn             = aws_iam_role.station_execution_role.arn
      context_db                     = "${var.station_db_url_external}.${var.station_privatedomainname}:${var.station_db_host_port}"
      station_db_username            = var.station_db_username
-     station_db_password            = var.station_db_password
      aws_instanceprofile_ecsec2     = aws_iam_instance_profile.ecsec2_agent.name
      station_publicdomainname       = var.station_publicdomainname
      station_redis_hostname         = "${var.station_redis_url_external}.${var.station_privatedomainname}"
