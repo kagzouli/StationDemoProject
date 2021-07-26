@@ -52,10 +52,6 @@ POLICY
 }
 
 
-resource "aws_iam_role_policy_attachment" "station_autoscaler" {
-  policy_arn = aws_iam_policy.cluster_autoscaler_policy.arn
-  role = aws_iam_role.aws_eks_nodes_role.name
-}
 
 resource "aws_iam_policy" "cluster_autoscaler_policy" {
   name        = "iam-policy-ClusterAutoScaler"
@@ -81,6 +77,40 @@ resource "aws_iam_policy" "cluster_autoscaler_policy" {
 }
 EOF
 }
+
+
+resource "aws_iam_role_policy_attachment" "station_autoscaler" {
+  policy_arn = aws_iam_policy.cluster_autoscaler_policy.arn
+  role = aws_iam_role.aws_eks_nodes_role.name
+}
+
+
+resource "aws_iam_policy" "secretmanager_getsecret_policy" {
+  name        = "secretmanager-getsecret-policy"
+  description = "Get secret manager for the kubernetes"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+}
+
+
+resource "aws_iam_role_policy_attachment" "station_getsecret" {
+  policy_arn = aws_iam_policy.secretmanager_getsecret_policy.arn
+  role = aws_iam_role.aws_eks_nodes_role.name
+}
+
 
 
 resource "aws_iam_role_policy_attachment" "nodes_eks_worker_node_policy" {
