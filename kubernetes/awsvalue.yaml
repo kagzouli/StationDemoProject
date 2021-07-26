@@ -17,7 +17,9 @@ app:
   repoNexusUrl: ''
 
   network:
-    vpc_cidr:  '12.0.0.0/21' 
+    vpc_cidr:  '12.0.0.0/21'
+
+    region: 'eu-west-3' 
  
  
 stationdb:
@@ -92,7 +94,7 @@ stationback:
     #type: "Ingress"
     type: "TargetGroupBinding"
     
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/035987275b96401b" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/f645c70329f90b18" 
     
     annotations:  
       kubernetes.io/ingress.class: alb
@@ -143,7 +145,7 @@ stationfront:
     #type: "Ingress"
     type: "TargetGroupBinding"
 
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/15bcca582d4b0d20" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/95adf47392485349" 
 
     annotations:
       kubernetes.io/ingress.class: alb
