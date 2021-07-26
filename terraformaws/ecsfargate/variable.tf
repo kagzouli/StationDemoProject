@@ -124,10 +124,6 @@ variable "station_db_username" {
   description = "Database username"
 }
 
-variable "station_db_password" {
-  type        = string
-  description = "Database password"
-}
 
 variable "station_redis_url_external"{
   type        = string
