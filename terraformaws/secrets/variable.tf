@@ -28,8 +28,3 @@ locals {
   }
 }
 
-variable "kms_principal" {
-  default = [
-    "arn:aws:iam::794637260409:root"
-  ]
-}
