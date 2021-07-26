@@ -32,7 +32,10 @@ spec:
           imagePullPolicy: {{ .Values.stationdb.image.pullPolicy | quote }}
           env:
           - name: MYSQL_ROOT_PASSWORD
-            value: {{ .Values.stationdb.mysqlRootPassword | quote  }}
+            valueFrom:
+              secretKeyRef:
+                name: stationdb-secret
+                key: database-rootpassword
           - name: MYSQL_DATABASE
             value: "StationDemoDb"
           - name: MYSQL_USER
