@@ -45,6 +45,22 @@ spec:
               secretKeyRef:
                 name: stationdb-secret
                 key: database-password
+          - name: REDIS_HOSTNAME
+           {{- if (ne .Values.stationredis.mode "externalredis")   }}
+            value: {{ template "stationredis.hostname" .  }}
+           {{ else }}
+            value: {{ .Values.stationredis.hostname | quote }}
+           {{- end }}
+          - name: REDIS_PORT
+            value: {{ .Values.stationredis.port | quote}}
+          - name: REDIS_PASS 
+            valueFrom:
+              secretKeyRef:
+                name: stationredis-secret
+                key: redis-password
+          - name: REDIS_USESSL
+            value: {{ .Values.stationredis.usessl | quote   }}
+          
           ports:
           - containerPort: 8080
             protocol: TCP

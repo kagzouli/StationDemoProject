@@ -37,3 +37,9 @@ Return the database url for stationback
 {{- printf "jdbc:mysql://stationdbservice.%s.svc.cluster.local:3306/StationDemoDb?connectTimeout=0" .Release.Namespace  -}}
 {{- end -}}
 
+{{/*
+Return the hostname of the redis server 
+*/}}
+{{- define "stationredis.hostname" -}}
+{{- printf "stationredisservice.%s.svc.cluster.local" .Release.Namespace  -}}
+{{- end -}}

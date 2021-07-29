@@ -16,6 +16,25 @@ app:
   # Context path of the repo nexus url
   repoNexusUrl: ''
  
+
+stationredis:
+  
+  # Mode : internalredis or externalredis
+  mode: 'internalredis'
+
+  # redis password - Use only for mode=internalredis
+  redisPassword: 'redis60'
+
+  # Host name of the redis - Use only for mode=externalredis
+  hostname: '' 
+
+  port:  6379 
+
+  usessl: false
+
+  image:
+    pullPolicy: IfNotPresent
+
 stationdb:
 
   mode: 'internaldb'
@@ -29,7 +48,7 @@ stationdb:
   # Mysql user
   mysqlUser: stationUser
   
-  # Mysql password
+  # Mysql password - Use only for mode=internaldb
   mysqlPassword: stationpwd
 
   # Use only if mode=externaldb for url external database

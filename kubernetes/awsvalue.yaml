@@ -22,6 +22,25 @@ app:
     region: 'eu-west-3' 
  
  
+stationredis:
+  
+  # Mode : internalredis or externalredis
+  mode: 'externalredis'
+
+  # redis password - Use only for mode=internalredis
+  redisPassword: 'redis60'
+
+  # Host name of the redis - Use only for mode=externalredis
+  hostname: 'stationredis.interne.exakaconsulting.org'
+
+  port:  6379 
+
+  usessl: true
+
+  image:
+    pullPolicy: IfNotPresent
+
+
 stationdb:
   mode: 'internaldb'
 
