@@ -31,7 +31,7 @@ spec:
           image: "redis:6.0.10"
           imagePullPolicy: {{ .Values.stationredis.image.pullPolicy | quote }}
           command: ["redis-server"]
-          args: ["--bind", "station_redis", "--port", "6379", "--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
+          args: ["--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
           ports:
           - containerPort: 6379 
             protocol: TCP
