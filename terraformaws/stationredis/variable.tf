@@ -35,12 +35,6 @@ variable "region" {
 }
 
 
-variable "station_redis_password" {
-  type        = string
-  description = "Redis password"
-}
-
-
 variable "station_redis_count"{
   type        = number
   description = "Nombre d'instances de base."

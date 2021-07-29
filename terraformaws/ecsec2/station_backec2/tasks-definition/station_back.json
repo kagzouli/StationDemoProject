@@ -14,6 +14,10 @@
         {
           "name": "DB_TRAFSTAT_PASSWORD",
           "valueFrom": "${station_secretmanager}:stationdbpassword::"
+        },
+        {
+          "name": "REDIS_PASS",
+          "valueFrom": "${station_secretmanager}:stationredispassword::"
         }
       ],
 
@@ -41,10 +45,6 @@
         {
           "name": "REDIS_PORT",
           "value": "${station_redis_port}"
-        },
-        {
-          "name": "REDIS_PASS",
-          "value": "${station_redis_password}"
         },
         {
           "name": "REDIS_USESSL",

@@ -26,7 +26,6 @@ data "template_file"  "station_back"{
         station_db_username                 = var.station_db_username
         station_redis_hostname              = var.station_redis_hostname
         station_redis_port                  = var.station_redis_port
-        station_redis_password              = var.station_redis_password 
         region                              = var.region
         awslogs_group                       = aws_cloudwatch_log_group.station_back_cloudwatch_log.name
         station_secretmanager               = data.aws_secretsmanager_secret.station_secretmanager.arn

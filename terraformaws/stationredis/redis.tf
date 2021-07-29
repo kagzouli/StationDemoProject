@@ -12,7 +12,7 @@ resource "aws_elasticache_replication_group" "station_redis_cluster" {
   node_type                      =  var.station_redis_instance_type 
   transit_encryption_enabled     =  true
   at_rest_encryption_enabled     =  true
-  auth_token                     =  var.station_redis_password
+  auth_token                     =  jsondecode(data.aws_secretsmanager_secret_version.station_vers_secretmanager.secret_string)["stationredispassword"] 
   number_cache_clusters          =  var.station_redis_count
   automatic_failover_enabled     =  false
   availability_zones             =  ["${var.az_zone1}", "${var.az_zone2}"] 

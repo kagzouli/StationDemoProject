@@ -20,18 +20,14 @@ station_db_host_port=3306
 station_db_root="t@tH?145"
 station_db_databasename="StationDemoDb"
 station_db_username="stationuser"
-station_db_password="stationpwd"
 station_db_url_external="stationdb"
 station_db_count=2
 station_db_instance_type="db.t3.small"
 
-# Uniquement pour les instances internes. Pas utiliser sur RDS
-station_db_root_password="root123"
 
 # Station redis
 station_redis_host_port=6379
 station_redis_clusterbus_port=16379
-station_redis_password="stationredis12012Ozskdkdeddew"
 station_redis_url_external="stationredis"
 station_redis_count=2
 station_redis_instance_type="cache.t2.small"

@@ -19,7 +19,6 @@ module "station_back"{
      station_publicdomainname       = var.station_publicdomainname
      station_redis_hostname         = "${var.station_redis_url_external}.${var.station_privatedomainname}"
      station_redis_port             = "${var.station_redis_host_port}"
-     station_redis_password         = var.station_redis_password
 }
 
 

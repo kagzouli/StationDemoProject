@@ -41,3 +41,14 @@ data "aws_subnet" "station_privatesubnet2" {
     values = ["station_privatesubnet2"]
   }
 }
+
+
+// Secret manager for Station
+data "aws_secretsmanager_secret" "station_secretmanager" {
+  name = "stationsec-secretmanager"
+}
+
+data "aws_secretsmanager_secret_version" "station_vers_secretmanager" {
+  secret_id = data.aws_secretsmanager_secret.station_secretmanager.id
+}
+

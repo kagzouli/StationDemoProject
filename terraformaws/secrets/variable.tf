@@ -10,21 +10,3 @@ variable "application"{
   default     = "STATION"
 }
 
-
-variable "station_db_password" {
-  type        = string
-  description = "Database password"
-}
-
-variable "station_db_root_password" {
-  type        = string
-  description = "Database root password"
-}
-
-locals {
-  station_credentials = {
-    stationdbrootpassword  = var.station_db_root_password
-    stationdbpassword      = var.station_db_password
-  }
-}
-

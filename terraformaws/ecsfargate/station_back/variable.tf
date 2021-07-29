@@ -98,7 +98,3 @@ variable "station_redis_port"{
   description = "Redis port"
 }
 
-variable "station_redis_password"{
-  type        = string
-  description = "Database redis"
-}

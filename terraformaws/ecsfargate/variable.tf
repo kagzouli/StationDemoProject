@@ -135,7 +135,3 @@ variable "station_redis_host_port"{
    description = "Port de redis affiché à l'exterieur."
 }
 
-variable "station_redis_password" {
-  type        = string
-  description = "Redis password"
-}

@@ -42,7 +42,7 @@ data "aws_subnet" "station_privatesubnet2" {
   }
 }
 
-// Secret manager for RDS
+// Secret manager for Station 
 data "aws_secretsmanager_secret" "station_secretmanager" {
   name = "stationsec-secretmanager"
 }
