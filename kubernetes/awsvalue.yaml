@@ -25,7 +25,7 @@ app:
 stationredis:
   
   # Mode : internalredis or externalredis
-  mode: 'externalredis'
+  mode: 'internalredis'
 
   # redis password - Use only for mode=internalredis
   redisPassword: 'redis60'
@@ -35,7 +35,7 @@ stationredis:
 
   port:  6379 
 
-  usessl: true
+  usessl: false 
 
   image:
     pullPolicy: IfNotPresent
@@ -113,7 +113,7 @@ stationback:
     #type: "Ingress"
     type: "TargetGroupBinding"
     
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/f645c70329f90b18" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/68d07913ff523214" 
     
     annotations:  
       kubernetes.io/ingress.class: alb
@@ -164,7 +164,7 @@ stationfront:
     #type: "Ingress"
     type: "TargetGroupBinding"
 
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/95adf47392485349" 
+    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/5f8e8e39ab5a20b0" 
 
     annotations:
       kubernetes.io/ingress.class: alb
