@@ -2,7 +2,15 @@
 AWS_REGION="eu-west-3"  
 ECR_OFFICIAL_AWS="602401143452.dkr.ecr.${AWS_REGION}.amazonaws.com"
 SHARED_NAMESPACE="transverse"
- 
+
+# Definit les charts par default
+helm repo add eks https://aws.github.io/eks-charts
+helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+
+helm repo update
+
+# Recupere les variables
 VPC_ID=$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text )
 echo "VPC_ID : ${VPC_ID}"
 
@@ -16,7 +24,7 @@ aws eks --region ${AWS_REGION} update-kubeconfig --name station-eks-cluster
 # Lancement du chart transverse
 echo "Installation des services account transverses"
 helm install transverse ./transverse -n ${SHARED_NAMESPACE}  \
-     --set app.accountidentifier="${TG_ARN_STATION_BACK}"  \
+     --set app.accountidentifier="${TG_ARN_STATION_BACK}"  
 
 
 # Install AWS Load balancer controller
