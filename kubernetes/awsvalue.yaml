@@ -113,7 +113,7 @@ stationback:
     #type: "Ingress"
     type: "TargetGroupBinding"
     
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-back-target-group/68d07913ff523214" 
+    targetGroupARN: "" 
     
     annotations:  
       kubernetes.io/ingress.class: alb

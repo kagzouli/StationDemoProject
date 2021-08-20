@@ -67,3 +67,8 @@ variable "type_kind_helm_front" {
     type        =  string
     description = "Type kind of helm station front. Can be Ingress or TargetGroupBinding"
 }
+
+variable "shared_namespace" {
+    type        =  string
+    description = "Nom du sharepoint pour les outils communs"
+}

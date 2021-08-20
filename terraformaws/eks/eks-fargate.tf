@@ -1,4 +1,4 @@
-resource "aws_eks_fargate_profile" "aws_eks_station_fargate" {
+/*resource "aws_eks_fargate_profile" "aws_eks_station_fargate" {
   cluster_name           = aws_eks_cluster.station_eks_cluster.name
   fargate_profile_name   = "aws-eks-profile-station-fargate"
   pod_execution_role_arn = aws_iam_role.aws_eks_station_fargate_role.arn
@@ -17,4 +17,4 @@ resource "aws_eks_fargate_profile" "aws_eks_station_fargate" {
     delete   = "30m"
   }
 
-}
+}*/

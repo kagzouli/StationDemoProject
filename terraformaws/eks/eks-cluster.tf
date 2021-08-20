@@ -66,3 +66,15 @@ resource "aws_eks_node_group" "nodes" {
       Application= var.application
   }
 }
+
+
+data "tls_certificate" "eks_tls" {
+  url = aws_eks_cluster.station_eks_cluster.identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_openid_connect_provider" "eks_openid" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks_tls.certificates[0].sha1_fingerprint]
+  url             = aws_eks_cluster.station_eks_cluster.identity[0].oidc[0].issuer
+}
+

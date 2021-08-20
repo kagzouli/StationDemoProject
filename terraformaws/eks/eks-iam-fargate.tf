@@ -1,7 +1,7 @@
 
 ############### EKS fargate ###############################
 
-resource "aws_iam_role" "aws_eks_station_fargate_role" {
+/*resource "aws_iam_role" "aws_eks_station_fargate_role" {
   name = "aws-eks-station-fargate-role"
   description = "Allow fargate cluster to allocate resources for running pods"
   force_detach_policies = true
@@ -37,4 +37,4 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
 resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.aws_eks_station_fargate_role.name
-}
+}*/
