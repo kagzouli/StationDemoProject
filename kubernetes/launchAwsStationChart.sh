@@ -16,8 +16,7 @@ aws eks --region ${AWS_REGION} update-kubeconfig --name station-eks-cluster
 # Lancement du chart transverse
 echo "Installation des services account transverses"
 helm install transverse ./transverse -n ${SHARED_NAMESPACE}  \
-     set app.accountidentifier="${TG_ARN_STATION_BACK}"  \
-     set app.stationfront.ingress.targetGroupARN="${ACCOUNT_NUMBER}"
+     --set app.accountidentifier="${TG_ARN_STATION_BACK}"  \
 
 
 # Install AWS Load balancer controller
