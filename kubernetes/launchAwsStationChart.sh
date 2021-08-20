@@ -76,7 +76,10 @@ kubectl apply -f efsstorage/efs-csidriver.yaml
 kubectl apply -f efsstorage/efs-storageclass.yaml
 
 # Lancement du chart applicatiof station
-helm install stationdev ./station -n stationdev -f awsvalue.yaml \
-     --set app.stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
-     --set app.stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" 
+helm install stationdev ./station  \
+     -f awsvalue.yaml \
+     --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
+     --set stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" \
+     -n stationdev \
+     --create-namespace 
 
