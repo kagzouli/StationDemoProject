@@ -37,7 +37,7 @@ case $TYPE_INSTALL in
         displayMessage "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
         REDIS_MODE="internalredis"
 	REDIS_USESSL=false
-        DB_MODE= "internaldb"
+        DB_MODE="internaldb"
         ;;
   
      "external")
