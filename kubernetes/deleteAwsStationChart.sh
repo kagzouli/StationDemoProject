@@ -1,6 +1,8 @@
 echo "Fixe les variables"
 SHARED_NAMESPACE="transverse"
 
+sudo kubectl delete -f efsstorage/efs-storageclass.yaml
+
 echo "Suppression du chart station"
 helm delete stationdev -n stationdev
 
@@ -17,5 +19,4 @@ helm delete station-aws-efs-csi-driver -n ${SHARED_NAMESPACE}
 echo "Delete external secret"
 helm delete station-external-secrets -n ${SHARED_NAMESPACE}
 
-sudo kubectl delete -f efsstorage/efs-storageclass.yaml
 

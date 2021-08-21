@@ -8,6 +8,13 @@ displayError(){
   echo -e "${RED}${BOLD}$1${NORMAL}"
 }
 
+displayMessage(){
+  BOLD=$(tput bold)
+  BLUE='\033[0;34m'
+  NORMAL='\033[0m' 
+  echo -e "${BLUE}${BOLD}$1${NORMAL}"
+}
+
 AWS_REGION="eu-west-3"  
 ECR_OFFICIAL_AWS="602401143452.dkr.ecr.${AWS_REGION}.amazonaws.com"
 SHARED_NAMESPACE="transverse"
@@ -26,15 +33,15 @@ REDIS_MODE=""
 DB_MODE=""
 case $TYPE_INSTALL in
      "internal")
-        echo "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
+        displayMessage "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
         REDIS_MODE="internalredis"
-        DB_MODE   = "internaldb"
+        DB_MODE= "internaldb"
         ;;
   
      "external")
-        echo "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
+        displayMessage "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
         REDIS_MODE="externalredis"
-        DB_MODE   ="externaldb"
+        DB_MODE="externaldb"
         ;;
 
       *)
@@ -60,18 +67,18 @@ echo "VPC_ID : ${VPC_ID}"
 ACCOUNT_NUMBER=$( aws sts get-caller-identity --query 'Account' --output text )
 echo "Account number : ${ACCOUNT_NUMBER}"
 
-echo "Connect to the station-eks-cluster"
+displayMessage "Connect to the station-eks-cluster"
 aws eks --region ${AWS_REGION} update-kubeconfig --name station-eks-cluster
 
 
 # Lancement du chart transverse
-echo "Installation des services account transverses"
+displayMessage  "Installation des services account transverses"
 helm install transverse ./transverse -n ${SHARED_NAMESPACE}  \
      --set app.accountidentifier="${ACCOUNT_NUMBER}"  
 
 
 # Install AWS Load balancer controller
-echo "Installation de AWS Load balancer controller."
+displayMessage "Installation de AWS Load balancer controller."
 helm upgrade -i station-aws-load-balancer-controller eks/aws-load-balancer-controller \
     --set clusterName=station-eks-cluster \
     --set serviceAccount.create=false \
@@ -86,7 +93,7 @@ helm upgrade -i station-aws-load-balancer-controller eks/aws-load-balancer-contr
 
 
 # Install EFS CSI Driver - No need for fargate.
-echo "Installation de l'EFS CSI Driver."
+displayMessage "Installation de l'EFS CSI Driver."
 helm upgrade -i station-aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
     --set image.repository="${ECR_OFFICIAL_AWS}/eks/aws-efs-csi-driver" \
     --set controller.serviceAccount.create=false \
@@ -96,7 +103,7 @@ helm upgrade -i station-aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver
 
 
 # Install External Secret
-echo "Installation de External Secret."
+displayMessage "Installation de External Secret."
 helm upgrade -i  station-external-secrets external-secrets/kubernetes-external-secrets  \
     --set serviceAccount.create=false \
     --set env.AWS_REGION="${AWS_REGION}" \
@@ -117,6 +124,7 @@ echo "Target Group ARN station front : ${TG_ARN_STATION_FRONT}"
 kubectl apply -f efsstorage/efs-storageclass.yaml
 
 # Lancement du chart applicatiof station
+displayMessage "Installation de l'application station"
 helm upgrade -i stationdev ./station  \
      -f awsvalue.yaml \
      --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
