@@ -1,7 +1,42 @@
+#!/bin/bash
 # Fixe les variables
 AWS_REGION="eu-west-3"  
 ECR_OFFICIAL_AWS="602401143452.dkr.ecr.${AWS_REGION}.amazonaws.com"
 SHARED_NAMESPACE="transverse"
+
+
+if [ -z $1 ]
+then
+   echo "Il manque le 1er argument. La valeur doit être internal si on veut que redis ou db soit interne ou external si on veut que ce soit pilotee par un service managee"
+   exit 1
+fi
+
+TYPE_INSTALL=$1
+
+# Choix du type installation
+REDIS_MODE=""
+DB_MODE=""
+case $TYPE_INSTALL in
+     "internal")
+        echo "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
+        REDIS_MODE="internalredis"
+        DB_MODE   = "internaldb"
+        ;;
+  
+     "external")
+        echo "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
+        REDIS_MODE="externalredis"
+        DB_MODE   ="externaldb"
+        ;;
+
+      *)
+        echo "La valeur doit être internal si on veut que redis ou db soit interne ou external si on veut que ce soit pilotee par un service managee"
+        exit 1
+        ;;
+esac
+
+#Test parametre entree
+
 
 # Definit les charts par default
 helm repo add eks https://aws.github.io/eks-charts
@@ -79,6 +114,8 @@ helm upgrade -i stationdev ./station  \
      -f awsvalue.yaml \
      --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
      --set stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" \
+     --set stationredis.mode="${REDIS_MODE}" \
+     --set stationdb.mode="${DB_MODE}" \
      -n stationdev \
      --create-namespace 
 
