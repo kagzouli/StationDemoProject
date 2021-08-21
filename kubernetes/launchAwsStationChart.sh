@@ -30,18 +30,21 @@ TYPE_INSTALL=$1
 
 # Choix du type installation
 REDIS_MODE=""
+REDIS_USESSL=false
 DB_MODE=""
 case $TYPE_INSTALL in
      "internal")
         displayMessage "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
         REDIS_MODE="internalredis"
+	REDIS_USESSL=false
         DB_MODE= "internaldb"
         ;;
   
      "external")
         displayMessage "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
         REDIS_MODE="externalredis"
-        DB_MODE="externaldb"
+        REDIS_USESSL=true
+	DB_MODE="externaldb"
         ;;
 
       *)
@@ -130,6 +133,7 @@ helm upgrade -i stationdev ./station  \
      --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
      --set stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" \
      --set stationredis.mode="${REDIS_MODE}" \
+     --set stationredis.usessl="${REDIS_USESSL}" \
      --set stationdb.mode="${DB_MODE}" \
      -n stationdev \
      --create-namespace 
