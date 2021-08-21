@@ -1,6 +1,9 @@
 echo "Fixe les variables"
 SHARED_NAMESPACE="transverse"
 
+echo "Suppression du chart station"
+helm delete stationdev -n stationdev
+
 echo "Delete transverse namespace and chart helm"
 helm delete transverse  -n ${SHARED_NAMESPACE}
 
@@ -17,5 +20,3 @@ helm delete station-external-secrets -n ${SHARED_NAMESPACE}
 sudo kubectl delete -f efsstorage/efs-csidriver.yaml
 sudo kubectl delete -f efsstorage/efs-storageclass.yaml
 
-echo "Suppression du chart station"
-sudo helm delete stationdev -n stationdev
