@@ -67,6 +67,21 @@ resource "aws_iam_policy" "eks_alb_iam_policy" {
             ],
             "Resource": "*"
         },
+         {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupIngress"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateSecurityGroup"
+            ],
+            "Resource": "*"
+        },
         {
             "Effect": "Allow",
             "Action": [
@@ -126,7 +141,16 @@ resource "aws_iam_policy" "eks_alb_iam_policy" {
                 "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
                 "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
             ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticloadbalancing:RegisterTargets",
+                "elasticloadbalancing:DeregisterTargets"
+            ],
+            "Resource": "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"
         }
+
     ]
 }
 POLICY
