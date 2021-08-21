@@ -64,8 +64,7 @@ helm upgrade -i  station-external-secrets external-secrets/kubernetes-external-s
     --create-namespace
 
 # Recupere le target group station back
-# Get the target group of web console internal gateway
-TG_ARN_STATION_BACK=$( aws elbv2 describe-target-groups --name station-back-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text )
+/bin/bash: q: command not found
 echo "Target Group ARN station back : ${TG_ARN_STATION_BACK}"
 
 TG_ARN_STATION_FRONT=$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text )
