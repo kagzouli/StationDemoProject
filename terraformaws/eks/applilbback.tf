@@ -32,8 +32,6 @@ resource "aws_alb_target_group" "station_back_target_group" {
     path = "/StationDemoSecureWeb/health"
     unhealthy_threshold = "2"
   }
-
-  count = (var.type_kind_helm_back == "TargetGroupBinding") ? 1:0
   
   tags = {
     Name = "station-back-alb-target-group"
@@ -47,10 +45,8 @@ resource "aws_alb_listener" "station_back_alb_listener" {
   port = var.station_back_host_port
   protocol = "HTTP"
   
-  count = (var.type_kind_helm_back == "TargetGroupBinding") ? 1:0
-  
   default_action {
-    target_group_arn = aws_alb_target_group.station_back_target_group[0].id
+    target_group_arn = aws_alb_target_group.station_back_target_group.id
     type = "forward"
   }
 }

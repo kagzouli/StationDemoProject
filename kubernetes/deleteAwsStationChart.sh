@@ -17,6 +17,5 @@ helm delete station-aws-efs-csi-driver -n ${SHARED_NAMESPACE}
 echo "Delete external secret"
 helm delete station-external-secrets -n ${SHARED_NAMESPACE}
 
-sudo kubectl delete -f efsstorage/efs-csidriver.yaml
 sudo kubectl delete -f efsstorage/efs-storageclass.yaml
 

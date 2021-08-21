@@ -85,35 +85,6 @@ resource "aws_iam_role_policy_attachment" "station_autoscaler" {
 }
 
 
-resource "aws_iam_policy" "secretmanager_getsecret_policy" {
-  name        = "secretmanager-getsecret-policy"
-  description = "Get secret manager for the kubernetes"
-
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "secretsmanager:GetSecretValue",
-                "kms:*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-EOF
-}
-
-
-resource "aws_iam_role_policy_attachment" "station_getsecret" {
-  policy_arn = aws_iam_policy.secretmanager_getsecret_policy.arn
-  role = aws_iam_role.aws_eks_nodes_role.name
-}
-
-
-
 resource "aws_iam_role_policy_attachment" "nodes_eks_worker_node_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.aws_eks_nodes_role.name

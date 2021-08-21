@@ -58,15 +58,6 @@ variable "station_publicdomainname" {
     description = "Public Domaine name"
 }
 
-variable "type_kind_helm_back" {
-    type        =  string
-    description = "Type kind of helm station back. Can be Ingress or TargetGroupBinding"
-}
-
-variable "type_kind_helm_front" {
-    type        =  string
-    description = "Type kind of helm station front. Can be Ingress or TargetGroupBinding"
-}
 
 variable "shared_namespace" {
     type        =  string

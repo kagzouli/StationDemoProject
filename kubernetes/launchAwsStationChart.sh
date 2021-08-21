@@ -107,14 +107,13 @@ helm upgrade -i  station-external-secrets external-secrets/kubernetes-external-s
     --create-namespace
 
 # Recupere le target group station back
-/bin/bash: q: command not found
+TG_ARN_STATION_BACK=$( aws elbv2 describe-target-groups --name station-back-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text )
 echo "Target Group ARN station back : ${TG_ARN_STATION_BACK}"
 
 TG_ARN_STATION_FRONT=$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text )
 echo "Target Group ARN station front : ${TG_ARN_STATION_FRONT}"
 
 
-kubectl apply -f efsstorage/efs-csidriver.yaml
 kubectl apply -f efsstorage/efs-storageclass.yaml
 
 # Lancement du chart applicatiof station

@@ -109,8 +109,7 @@ stationback:
 
   ingress:
     
-    # type empty Ingress or TargetGroupBinding
-    #type: "Ingress"
+    # type must be TargetGroupBinding for AWS
     type: "TargetGroupBinding"
     
     targetGroupARN: "" 
@@ -159,12 +158,11 @@ stationfront:
   
   ingress:
  
-    # type Ingress or TargetGroupBinding
+    # type TargetGroupBinding imperatif dans le cas AWS. 
     # Dans le cas Ingress, il faut prendre ClusterIP ,  si c'est TargetGroupBuinding prendre imperativement NodePort 
-    #type: "Ingress"
     type: "TargetGroupBinding"
 
-    targetGroupARN: "arn:aws:elasticloadbalancing:eu-west-3:794637260409:targetgroup/station-front-target-group/5f8e8e39ab5a20b0" 
+    targetGroupARN: "" 
 
     annotations:
       kubernetes.io/ingress.class: alb

@@ -41,11 +41,7 @@ resource "aws_iam_policy" "eks_secret_iam_policy" {
      { 
         "Effect": "Allow", 
         "Action": [ 
-            "secretsmanager:GetResourcePolicy", 
             "secretsmanager:GetSecretValue", 
-            "secretsmanager:DescribeSecret", 
-            "secretsmanager:ListSecretVersionIds", 
-            "secretsmanager:ListSecrets" ,
             "kms:Decrypt"
         ], 
         "Resource": "*"

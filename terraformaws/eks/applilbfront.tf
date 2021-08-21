@@ -30,8 +30,6 @@ resource "aws_alb_target_group" "station_front_target_group" {
     unhealthy_threshold = "2"
   }
 
-  count = (var.type_kind_helm_front == "TargetGroupBinding") ? 1:0
-
   tags = {
     Name = "station-front-alb-target-group"
     Application= var.application
@@ -45,10 +43,8 @@ resource "aws_alb_listener" "station_front_alb_listener" {
   port = var.station_front_host_port
   protocol = "HTTP"
 
-  count = (var.type_kind_helm_front == "TargetGroupBinding") ? 1:0
-
   default_action {
-    target_group_arn = aws_alb_target_group.station_front_target_group[0].id
+    target_group_arn = aws_alb_target_group.station_front_target_group.id
     type = "forward"
   }
 }
