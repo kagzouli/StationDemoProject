@@ -1,5 +1,13 @@
 #!/bin/bash
 # Fixe les variables
+
+displayError(){
+  BOLD=$(tput bold)
+  RED='\033[0;31m'
+  NORMAL='\033[0m' 
+  echo -e "${RED}${BOLD}$1${NORMAL}"
+}
+
 AWS_REGION="eu-west-3"  
 ECR_OFFICIAL_AWS="602401143452.dkr.ecr.${AWS_REGION}.amazonaws.com"
 SHARED_NAMESPACE="transverse"
@@ -7,7 +15,7 @@ SHARED_NAMESPACE="transverse"
 
 if [ -z $1 ]
 then
-   echo "Il manque le 1er argument. La valeur doit être internal si on veut que redis ou db soit interne ou external si on veut que ce soit pilotee par un service managee"
+   displayError "Il manque le 1er argument. La valeur doit être internal si on veut que redis ou db soit interne, ou external si on veut que ce soit pilotee par un service managee"
    exit 1
 fi
 
@@ -30,7 +38,7 @@ case $TYPE_INSTALL in
         ;;
 
       *)
-        echo "La valeur doit être internal si on veut que redis ou db soit interne ou external si on veut que ce soit pilotee par un service managee"
+        displayError "La valeur doit être internal si on veut que redis ou db soit interne, ou external si on veut que ce soit pilotee par un service managee"
         exit 1
         ;;
 esac
