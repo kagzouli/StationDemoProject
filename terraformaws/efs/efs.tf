@@ -29,15 +29,14 @@ resource "aws_efs_access_point" "station_efs_accesspoint" {
   file_system_id = aws_efs_file_system.station_efs.id
   root_directory {
     path = "/"
-    
-  }
-  posix_user {
-    uid = 65534
-    gid = 65534
-
   }
 
-   tags = {
+  //posix_user {
+  // uid = 65534
+  //  gid = 65534
+  //}
+
+  tags = {
     Name        = "station-efs-accesspoint"
     Environment = var.application
   }
