@@ -11,4 +11,5 @@ spec:
   resources:
     requests: 
       storage: {{ .Values.stationdb.storage.dataCapacity | quote}}
+  volumeName: station-pv 
 {{- end }}
