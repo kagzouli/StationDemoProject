@@ -67,10 +67,10 @@ stationdb:
     #storageClass: 'efs-sc' 
 
     # Data Capacity
-    dataCapacity: 100Mi 
+    dataCapacity: 200Mi 
  
     # Global Capacity
-    globalCapacity: 150Mi
+    globalCapacity: 250Mi
 
     efsid: '' 
 
