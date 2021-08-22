@@ -1,8 +1,6 @@
 echo "Fixe les variables"
 SHARED_NAMESPACE="transverse"
 
-sudo kubectl delete -f efsstorage/efs-storageclass.yaml
-
 echo "Suppression du chart station"
 helm delete stationdev -n stationdev
 

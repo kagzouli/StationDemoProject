@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: persistentvolume
+  name: station-pv
   namespace: {{ .Release.Namespace | quote }}
 spec:
   storageClassName: {{ .Values.stationdb.storage.storageClass | quote}} 
@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: {{ .Values.stationdb.storage.efsid | quote}}
+    volumeHandle: "{{ .Values.stationdb.storage.efsid | quote}}::{{ .Values.stationdb.storage.efsaccesspointid | quote}}"
   {{- end }}
   {{- if (ne .Values.stationdb.storage.storageClass "efs-sc")   }} 
   hostPath:

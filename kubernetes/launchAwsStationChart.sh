@@ -142,8 +142,6 @@ TG_ARN_STATION_FRONT=$( aws elbv2 describe-target-groups --name station-front-ta
 echo "Target Group ARN station front : ${TG_ARN_STATION_FRONT}"
 
 
-kubectl apply -f efsstorage/efs-storageclass.yaml
-
 # Lancement du chart applicatiof station
 displayMessage "Installation de l'application station"
 helm upgrade -i stationdev ./station  \
