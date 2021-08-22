@@ -49,7 +49,9 @@ resource "aws_iam_policy" "eks_efs_iam_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "elasticfilesystem:CreateAccessPoint"
+        "elasticfilesystem:CreateAccessPoint",
+        "elasticfilesystem:ClientMount",
+        "elasticfilesystem:ClientWrite"
       ],
       "Resource": "*",
       "Condition": {
