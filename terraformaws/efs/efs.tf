@@ -28,7 +28,7 @@ resource "aws_efs_mount_target" "station_efs_mount" {
 resource "aws_efs_access_point" "station_efs_accesspoint" {
   file_system_id = aws_efs_file_system.station_efs.id
   root_directory {
-    path = "/stationdb"
+    path = "/"
     
   }
   posix_user {
