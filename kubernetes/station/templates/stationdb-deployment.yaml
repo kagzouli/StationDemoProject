@@ -49,6 +49,10 @@ spec:
           volumeMounts:
           - name: datastationdb  
             mountPath: /var/lib/mysql
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            allowPrivilegeEscalation: false
           {{- end }}
           ports:
           - containerPort: 3306

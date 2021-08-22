@@ -94,7 +94,7 @@ aws eks --region ${AWS_REGION} update-kubeconfig --name station-eks-cluster
 
 # Lancement du chart transverse
 displayMessage  "Installation des services account transverses"
-helm install transverse ./transverse -n ${SHARED_NAMESPACE}  \
+helm upgrade -i transverse ./transverse -n ${SHARED_NAMESPACE}  \
      --set app.accountidentifier="${ACCOUNT_NUMBER}"  
 
 
