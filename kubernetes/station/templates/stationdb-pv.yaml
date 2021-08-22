@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: "{{ .Values.stationdb.storage.efsid | quote}}::{{ .Values.stationdb.storage.efsaccesspointid | quote}}"
+    volumeHandle: "{{ .Values.stationdb.storage.efsid }}::{{ .Values.stationdb.storage.efsaccesspointid }}"
   {{- end }}
   {{- if (ne .Values.stationdb.storage.storageClass "efs-sc")   }} 
   hostPath:
