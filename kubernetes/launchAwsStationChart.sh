@@ -32,6 +32,10 @@ TYPE_INSTALL=$1
 REDIS_MODE=""
 REDIS_USESSL=false
 DB_MODE=""
+STORAGE_EFS_CLASS="none"
+EFS_SYSTEM_ID=""
+EFS_ACCESSPOINT_ID=""
+
 case $TYPE_INSTALL in
      "internal")
         displayMessage "On est en mode installation internal - la db et redis sont internes sans EFS pour la db"
@@ -39,6 +43,20 @@ case $TYPE_INSTALL in
 	REDIS_USESSL=false
         DB_MODE="internaldb"
         ;;
+     
+     "internal_efs")
+        displayMessage "On est en mode installation internal - la db et redis sont internes avec EFS pour la db"
+        REDIS_MODE="internalredis"
+	REDIS_USESSL=false
+        DB_MODE="internaldb"
+        STORAGE_EFS_CLASS="efs-sc"
+        # TODO
+        EFS_SYSTEM_ID=$( aws efs describe-file-systems --query FileSystems[?Name==\'stationdb-data\'].FileSystemId --output text )
+        echo "EFS_SYSTEM_ID : ${EFS_SYSTEM_ID}"
+        EFS_ACCESSPOINT_ID=$( aws efs describe-access-points --query AccessPoints[?Name==\'station-efs-accesspoint\'].AccessPointId --output text )
+        echo "EFS_ACCESSPOINT_ID : ${EFS_ACCESSPOINT_ID}"
+        ;;
+  
   
      "external")
         displayMessage "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
@@ -135,6 +153,9 @@ helm upgrade -i stationdev ./station  \
      --set stationredis.mode="${REDIS_MODE}" \
      --set stationredis.usessl="${REDIS_USESSL}" \
      --set stationdb.mode="${DB_MODE}" \
+     --set stationdb.storage.storageClass="${STORAGE_EFS_CLASS}" \
+     --set stationdb.storage.efsid="${EFS_SYSTEM_ID}" \
+     --set stationdb.storage.efsaccesspointid="${EFS_ACCESSPOINT_ID}" \
      -n stationdev \
      --create-namespace 
 

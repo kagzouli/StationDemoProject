@@ -72,7 +72,9 @@ stationdb:
     # Global Capacity
     globalCapacity: 150Mi
 
-    efsid: fs-7af0cecb
+    efsid: '' 
+
+    efsaccesspointid: ''
        
    
   image:
