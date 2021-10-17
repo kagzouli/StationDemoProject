@@ -79,6 +79,29 @@ EOF
 }
 
 
+resource "aws_iam_policy" "cluster_cloudwatch__policy" {
+  name        = "iam-policy-Cluster-cloudwatch"
+  description = "Policy CloudWatch"
+
+  policy = <<EOF
+{
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Effect": "Allow",
+		"Action": [
+			"logs:CreateLogStream",
+			"logs:CreateLogGroup",
+			"logs:DescribeLogStreams",
+			"logs:PutLogEvents"
+		],
+		"Resource": "*"
+	}
+       ]
+}
+EOF
+}
+
+
 resource "aws_iam_role_policy_attachment" "station_autoscaler" {
   policy_arn = aws_iam_policy.cluster_autoscaler_policy.arn
   role = aws_iam_role.aws_eks_nodes_role.name
@@ -108,6 +131,11 @@ resource "aws_iam_role_policy_attachment" "worknode-AmazonEBSCSIDriver" {
 }
 
 
+# And attach the new policy
+resource "aws_iam_role_policy_attachment" "nodes_eks_cloudwatch_policy_attachment" {
+  policy_arn = aws_iam_policy.cluster_cloudwatch__policy.arn
+  role       = aws_iam_role.aws_eks_nodes_role.name
+}
 
 ################# EKS cluster #################################
 
