@@ -18,12 +18,39 @@ data:
         Refresh_Interval  10
     [OUTPUT]
         Name cloudwatch 
-        Match   *station*
-        region eu-west-3
-        log_group_name fluent-bit-cloudwatch
+        Match   *stationdb*
+        region {{ .Values.app.region }} 
+        log_group_name stationdb-eks-log-group
         log_stream_prefix from-fluent-bit-
         log_key log
-        auto_create_group true
+        auto_create_group false
+
+    [OUTPUT]
+        Name cloudwatch 
+        Match   *stationredis*
+        region {{ .Values.app.region }} 
+        log_group_name stationredis-eks-log-group
+        log_stream_prefix from-fluent-bit-
+        log_key log
+        auto_create_group false
+
+    [OUTPUT]
+        Name cloudwatch 
+        Match   *stationback*
+        region {{ .Values.app.region }} 
+        log_group_name stationback-eks-log-group
+        log_stream_prefix from-fluent-bit-
+        log_key log
+        auto_create_group false
+    
+    [OUTPUT]
+        Name cloudwatch 
+        Match   *stationfront*
+        region {{ .Values.app.region }} 
+        log_group_name stationfront-eks-log-group
+        log_stream_prefix from-fluent-bit-
+        log_key log
+        auto_create_group false
 
   parsers.conf: |-
     [PARSER]

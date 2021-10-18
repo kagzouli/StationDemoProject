@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: Always
         env:
             - name: AWS_REGION
-              value: "eu-west-3" 
+              value: {{ .Values.app.region }} 
             - name: CLUSTER_NAME
               value: "station-eks-cluster"
             - name: HOST_NAME

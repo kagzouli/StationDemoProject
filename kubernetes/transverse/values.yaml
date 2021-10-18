@@ -15,3 +15,6 @@
 app:
   # Identifiant du compte 
   accountidentifier: '' 
+
+  # Region
+  region: 'eu-west-3'
