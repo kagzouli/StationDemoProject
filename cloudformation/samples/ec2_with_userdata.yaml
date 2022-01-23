@@ -6,6 +6,10 @@ Parameters:
   Env:
     Type: String
     Description: The environment you're deploying to.
+    
+  LatestLinuxAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
 
 Mappings: 
   Environments:
@@ -43,7 +47,7 @@ Resources:
   MyInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId:  ami-0984c6fda63734a94
+      ImageId:  !Ref LatestLinuxAmiId
       InstanceType: t2.micro
       NetworkInterfaces: 
         - AssociatePublicIpAddress: "true"
