@@ -1,0 +1,91 @@
+---
+Parameters:
+  SecurityGroupDescription:
+    Description: Security group description
+    Type: String
+  Env:
+    Type: String
+    Description: The environment you're deploying to.
+
+Mappings: 
+  Environments:
+    Dev:  
+      CidrBlockStationVpc : '12.0.0.0/21'
+      CidrBlockStationPublicSubnet1: '12.0.1.0/27'
+      AvailableZonePublicSubnet1:  'eu-west-3a'
+
+
+Resources: 
+
+  # The VPC to create
+  StationDemoVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !FindInMap [ Environments, !Ref Env, CidrBlockStationVpc]
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: 'StationDemo'
+
+  # The subnet to create
+  StationPublicSubnet1:
+     Type: AWS::EC2::Subnet
+     Properties:
+       CidrBlock: !FindInMap [ Environments, !Ref Env, CidrBlockStationPublicSubnet1]     
+       AvailabilityZone: !FindInMap [ Environments, !Ref Env, AvailableZonePublicSubnet1] 
+       VpcId: !Ref StationDemoVPC
+       Tags:
+         - Key: Name
+           Value: 'StationDemo'
+
+  # The instance to create
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId:  ami-0984c6fda63734a94
+      InstanceType: t2.micro
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          SubnetId: !Ref StationPublicSubnet1
+          GroupSet: [!Ref 'SSHSecurityGroup']
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash -xe 
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd
+          systemctl enable httpd
+          echo "Hello Word from user data" > /var/www/html/index.html
+
+  # The security group for the EC2 instance. 
+  SSHSecurityGroup:
+     Type: AWS::EC2::SecurityGroup
+     Properties:
+       VpcId: !Ref StationDemoVPC
+       GroupName: "Test Target Group"
+       GroupDescription: !Ref SecurityGroupDescription
+       SecurityGroupIngress:
+       - CidrIp : 192.168.12.12/31
+         FromPort: 22
+         IpProtocol: tcp
+         ToPort: 22
+       - CidrIp : 0.0.0.0/0
+         FromPort: 80
+         IpProtocol: tcp
+         ToPort: 80
+ 
+Outputs:
+  StackSSHSecurityGroup:
+    Description: The SSH Security Group for EC2
+    Value: !Ref SSHSecurityGroup
+    Export:
+        Name: OutputSSHSecurityGroup
+        
+  EC2DNSName:
+    Description: The EC2 DNS Name
+    Value: !GetAtt MyInstance.PublicDnsName
+    Export:
+        Name: EC2DNSName
+  
