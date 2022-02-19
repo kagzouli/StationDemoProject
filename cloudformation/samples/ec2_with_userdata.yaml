@@ -11,7 +11,6 @@ Parameters:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
 
-
 Mappings: 
   Environments:
     Dev:  
@@ -50,9 +49,19 @@ Resources:
     Properties:
       ImageId:  !Ref LatestLinuxAmiId
       InstanceType: t2.micro
-      SubnetId: !Ref StationPublicSubnet1
-      SecurityGroupIds:
-        - !Ref SSHSecurityGroup
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          SubnetId: !Ref StationPublicSubnet1
+          GroupSet: [!Ref 'SSHSecurityGroup']
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash -xe 
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd
+          systemctl enable httpd
+          echo "Hello Word from user data" > /var/www/html/index.html
 
   # The security group for the EC2 instance. 
   SSHSecurityGroup:
@@ -66,3 +75,21 @@ Resources:
          FromPort: 22
          IpProtocol: tcp
          ToPort: 22
+       - CidrIp : 0.0.0.0/0
+         FromPort: 80
+         IpProtocol: tcp
+         ToPort: 80
+ 
+Outputs:
+  StackSSHSecurityGroup:
+    Description: The SSH Security Group for EC2
+    Value: !Ref SSHSecurityGroup
+    Export:
+        Name: OutputSSHSecurityGroup
+        
+  EC2DNSName:
+    Description: The EC2 DNS Name
+    Value: !GetAtt MyInstance.PublicDnsName
+    Export:
+        Name: EC2DNSName
+  
