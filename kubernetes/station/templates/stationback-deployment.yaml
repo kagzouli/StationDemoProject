@@ -63,4 +63,11 @@ spec:
           
           ports:
           - containerPort: 8080
-            protocol: TCP
+            protocol: TCP 
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: stationback
+              topologyKey: kubernetes.io/hostname

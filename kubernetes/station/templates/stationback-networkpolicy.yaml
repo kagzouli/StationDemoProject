@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stationback-networkpolicy
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  podSelector:
+    matchLabels:
+      app: stationback
+
+  policyTypes:
+  - Ingress
+  ingress:
+
+  # Autorise les IP de l'ALB back
+  - from:
+    {{ range .Values.stationback.albiplist }}
+    - ipBlock:
+        cidr: {{ . }}/32
+    {{ end }}
+    ports:
+    - protocol: TCP
+      port: 8080
+
+     
+  # Ouverture Port DNS
+  - ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+      

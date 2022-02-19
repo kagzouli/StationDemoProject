@@ -88,6 +88,9 @@ stationback:
 
   # Nbr connexion datasource active db
   nbConnectionDbMaxActive: 15
+
+  # Liste des ip alb du station back
+  albiplist: []
   
   # Hostname
   hostname: stationback.exakaconsulting.org
@@ -142,6 +145,9 @@ stationfront:
   #Okta URL
   oktaUrl: https://dev-884254.oktapreview.com
 
+  # Liste des ip alb du station front
+  albiplist: []
+  
   service:
     # External port
     internalPort: 80 
