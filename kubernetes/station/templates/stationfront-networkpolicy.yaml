@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stationfront-networkpolicy
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  podSelector:
+    matchLabels:
+      app: stationfront
+
+  policyTypes:
+  - Ingress
+  ingress:
+
+  # Autorise les IP de l'ALB front
+  - from:
+    {{ range .Values.stationfront.albiplist }}
+    - ipBlock:
+        cidr: {{ . }}/32
+    {{ end }}
+    ports:
+    - protocol: TCP
+      port: 80
+
+     
+  # Ouverture Port DNS
+  - ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+      

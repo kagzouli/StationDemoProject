@@ -78,6 +78,7 @@ esac
 helm repo add eks https://aws.github.io/eks-charts
 helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
 helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+helm repo add calico https://docs.projectcalico.org/charts
 
 helm repo update
 
@@ -143,13 +144,26 @@ echo "Target Group ARN station back : ${TG_ARN_STATION_BACK}"
 TG_ARN_STATION_FRONT=$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text )
 echo "Target Group ARN station front : ${TG_ARN_STATION_FRONT}"
 
+# Recuperation  IP ALB front
+ALB_NAME_FRONT="station-front-alb"
+VALUES_IP_ALB_FRONT=$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/$ALB_NAME_FRONT/$(aws elbv2 describe-load-balancers --names $ALB_NAME_FRONT | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )
+ipaddrs_FRONT=$(echo $VALUES_IP_ALB_FRONT | xargs)
+echo "IP ALB Front : $ipaddrs_FRONT"
+
+# Recuperation  IP ALB back
+ALB_NAME_BACK="station-back-alb"
+VALUES_IP_ALB_BACK=$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/$ALB_NAME_BACK/$(aws elbv2 describe-load-balancers --names $ALB_NAME_BACK | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )
+ipaddrs_BACK=$(echo $VALUES_IP_ALB_BACK | xargs)
+echo "IP ALB Back : $ipaddrs_BACK"
 
 # Lancement du chart applicatiof station
 displayMessage "Installation de l'application station"
 helm upgrade -i stationdev ./station  \
      -f awsvalue.yaml \
      --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
+     --set stationback.albiplist="{${ipaddrs_BACK// /, }}" \
      --set stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" \
+     --set stationfront.albiplist="{${ipaddrs_FRONT// /, }}" \
      --set stationredis.mode="${REDIS_MODE}" \
      --set stationredis.usessl="${REDIS_USESSL}" \
      --set stationdb.mode="${DB_MODE}" \
@@ -159,3 +173,14 @@ helm upgrade -i stationdev ./station  \
      -n stationdev \
      --create-namespace 
 
+# Install calico pour EKS EC2
+displayMessage "Installation Chart calico"
+helm upgrade -i calico calico/tigera-operator --version v3.21.4
+
+# Test commande helm upgrade calico
+EXEC_CALICO_HELM="$?"
+displayMessage "Resultat execution chart helm  calico : ${EXEC_CALICO_HELM}"
+if [ "${EXEC_CALICO_HELM}" -ne 0 ]; then
+        displayError "Le chart helm calico a eu un soucis"
+        exit 1;
+fi
