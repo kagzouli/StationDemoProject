@@ -36,10 +36,40 @@ resource "aws_eks_cluster" "station_eks_cluster" {
   }
 }
 
+# Aws launch template
+resource "aws_launch_template" "station_eks_launch_template" {
+  name_prefix =  "station-eks-launch-template"
+
+  vpc_security_group_ids = [aws_eks_cluster.station_eks_cluster.vpc_config[0].cluster_security_group_id]
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_size =  20 
+      volume_type = "gp2"
+    }
+  }
+
+  instance_type = "t3.large" 
+  
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "station-eks-launch-template"
+      Application= var.application
+    }
+  }
+}
+
+
+
 
 resource "aws_eks_node_group" "nodes" {
   cluster_name    = aws_eks_cluster.station_eks_cluster.name
-  node_group_name = "default"
+  node_group_name = "station"
   node_role_arn   = aws_iam_role.aws_eks_nodes_role.arn
   subnet_ids      = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id  ]
 
@@ -50,8 +80,12 @@ resource "aws_eks_node_group" "nodes" {
     min_size     = var.nbNodeInstanceEks 
   }
 
-  # I'd recommend t3.large or t3.xlarge for most production workloads
-  instance_types = ["t2.large"]
+  launch_template {
+    name = aws_launch_template.station_eks_launch_template.name
+    version = aws_launch_template.station_eks_launch_template.latest_version
+  }
+
+
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
