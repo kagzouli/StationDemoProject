@@ -9,6 +9,8 @@ pipeline {
     stages {
         stage ("buildProject") {
             steps {
+				cd application
+			
 				sh "${M2_HOME}/bin/mvn versions:set -DnewVersion=${VERSION}"
 				// Use instead mvn clean deploy in real environment 
 				sh "${M2_HOME}/bin/mvn clean install"
@@ -17,6 +19,8 @@ pipeline {
 		
         stage ("CreateDockerImage") {
             steps {
+				cd application
+			
                 sh "docker build -t kagzouli/station-db StationDemoDb"
 		
 		sh "cp StationDemoWeb/target/StationDemoSecureWeb.war StationDemoWeb/docker/StationDemoSecureWeb.war"
@@ -33,8 +37,10 @@ pipeline {
 		
         stage ("Sonar") {
             steps {
+			
 			   echo "Lancement qualite du code"
-			  // sh "${M2_HOME}/bin/mvn sonar:sonar"
+			   cd application
+			   sh "${M2_HOME}/bin/mvn sonar:sonar"
             }
         }
 	
