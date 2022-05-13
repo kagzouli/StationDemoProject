@@ -54,3 +54,5 @@ station_front_url_external="station"
 station_front_clientidtrafstat="0oaeg3yghaL9mQalz0h7"
 station_front_oktaurl="https://dev-884254.oktapreview.com"
 
+# Alerte
+mail_cloudwatch_alert=["toto@toto.com"]
