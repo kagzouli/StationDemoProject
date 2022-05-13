@@ -115,6 +115,17 @@ helm upgrade -i station-aws-load-balancer-controller eks/aws-load-balancer-contr
     -n ${SHARED_NAMESPACE} \
     --create-namespace
 
+# Check that ALB load balancer controller is in state Running, Failed 
+NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n ${SHARED_NAMESPACE} -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+while [[ -z "${NOTPENDING_ALB_CONTROLLER}" ]]
+do
+  echo "Les pods ${NOTPENDING_ALB_CONTROLLER} de l'ALB load balancer controller sont encore en cours"
+  sleep 5s
+  NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n ${SHARED_NAMESPACE} -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+
+done
+
+
 
 # Install EFS CSI Driver - No need for fargate.
 displayMessage "Installation de l'EFS CSI Driver."
