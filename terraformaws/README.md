@@ -52,6 +52,9 @@ The StationDemoProject directory is divided into differents parts :
   
  - This part is used to create the EFS storage for the usage of a container docker mysql (If we do not use RDS)
 
+### apigateways
+  
+ - This part is just a sample to show how to create apigateways
 
 ### vars
   

@@ -12,3 +12,9 @@ def delete_handler(event, context):
         'body': 'Call the addiinfo delete method'
     }
 
+def put_handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': 'Call the addiinfo put method'
+    }
+
