@@ -36,9 +36,9 @@ The StationDemoProject directory is divided into differents parts :
   
  - This part is used to create a EC2 instance in the private subnet
  
-### clusterkubmanual 
+### cloudwatchalarm 
   
- - This part is used to create a cluster kubernates manually without using EKS
+ - This part is used to create alarm and notifications when some production errors occurs
 
 ### stationdb_rds
   
