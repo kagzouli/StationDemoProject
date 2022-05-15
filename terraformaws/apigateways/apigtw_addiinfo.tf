@@ -36,10 +36,23 @@ resource "aws_api_gateway_method" "addiinfo_put" {
 }
 
 
-# Method additional Information DELETE 
+##########################################################################################
+# Method additional Information DELETE
+##########################################################################################
+
 resource "aws_api_gateway_method" "addiinfo_delete" {
   authorization = "NONE"
   http_method   = "DELETE"
   resource_id   = aws_api_gateway_resource.addiinfo.id
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
 }
+
+resource "aws_api_gateway_integration" "addiinfo_delete" {
+  rest_api_id             = aws_api_gateway_rest_api.api_gateway.id
+  resource_id             = aws_api_gateway_resource.addiinfo.id
+  http_method             = aws_api_gateway_method.addiinfo_delete.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.addiinfo_delete.invoke_arn
+}
+
