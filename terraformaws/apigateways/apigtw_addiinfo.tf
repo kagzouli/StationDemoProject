@@ -5,7 +5,10 @@ resource "aws_api_gateway_resource" "addiinfo" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
 }
 
+##########################################################################################
 # Method additional Information GET
+##########################################################################################
+
 resource "aws_api_gateway_method" "addiinfo_get" {
   authorization = "NONE"
   http_method   = "GET"
@@ -22,6 +25,8 @@ resource "aws_api_gateway_integration" "addiinfo_get" {
   uri                     = aws_lambda_function.addiinfo_get.invoke_arn
 }
 
+
+
 # Method additional Information PUT
 resource "aws_api_gateway_method" "addiinfo_put" {
   authorization = "NONE"
@@ -30,13 +35,6 @@ resource "aws_api_gateway_method" "addiinfo_put" {
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
 }
 
-# Method additional Information PATCH
-resource "aws_api_gateway_method" "addiinfo_patch" {
-  authorization = "NONE"
-  http_method   = "PATCH"
-  resource_id   = aws_api_gateway_resource.addiinfo.id
-  rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
-}
 
 # Method additional Information DELETE 
 resource "aws_api_gateway_method" "addiinfo_delete" {
