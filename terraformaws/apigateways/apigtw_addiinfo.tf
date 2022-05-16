@@ -10,10 +10,12 @@ resource "aws_api_gateway_resource" "addiinfo" {
 ##########################################################################################
 
 resource "aws_api_gateway_method" "addiinfo_get" {
-  authorization = "NONE"
   http_method   = "GET"
   resource_id   = aws_api_gateway_resource.addiinfo.id
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.station_authorizer.id
+
 }
 
 resource "aws_api_gateway_integration" "addiinfo_get" {
@@ -33,10 +35,12 @@ resource "aws_api_gateway_integration" "addiinfo_get" {
 ##########################################################################################
 
 resource "aws_api_gateway_method" "addiinfo_put" {
-  authorization = "NONE"
   http_method   = "PUT"
   resource_id   = aws_api_gateway_resource.addiinfo.id
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.station_authorizer.id
+
 }
 
 
@@ -56,10 +60,12 @@ resource "aws_api_gateway_integration" "addiinfo_put" {
 ##########################################################################################
 
 resource "aws_api_gateway_method" "addiinfo_delete" {
-  authorization = "NONE"
   http_method   = "DELETE"
   resource_id   = aws_api_gateway_resource.addiinfo.id
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
+  authorization = "CUSTOM"
+  authorizer_id = aws_api_gateway_authorizer.station_authorizer.id
+
 }
 
 resource "aws_api_gateway_integration" "addiinfo_delete" {
