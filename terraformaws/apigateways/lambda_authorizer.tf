@@ -2,13 +2,12 @@
 ############ adddinfo : Get method                           ##
 ###############################################################
 resource "aws_lambda_function" "lambda_authorizer" {
-  filename         = "authorizer.zip"
+  filename         = "api_lambda_authorizer.zip"
   function_name    = "station-lambda-authorizer"
-  handler          = "authorizer.authorize"
+  handler          = "lambda_authorizer.handler"
   role             = aws_iam_role.lambda_iam_role.arn
-  runtime          = "python3.9"
+  runtime          = "nodejs14.x"
   source_code_hash = data.archive_file.authorizer.output_base64sha256
-  publish          = true
 
 }
 
@@ -30,7 +29,7 @@ resource "aws_lambda_permission" "okta_lambda_permission" {
 
 data "archive_file" "authorizer" {
   type        = "zip"
-  source_file = "authorizer.py"
-  output_path = "authorizer.zip"
+  source_dir  = "lambda_authorizer/"
+  output_path = "api_lambda_authorizer.zip"
 }
 

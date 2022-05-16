@@ -6,7 +6,6 @@ resource "aws_api_gateway_authorizer" "okta_authorizer" {
   type                   = "REQUEST"
 
   authorizer_result_ttl_in_seconds = 0
-  identity_source = "method.request.header.Host"
 }
 
 
