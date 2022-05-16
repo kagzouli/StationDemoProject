@@ -12,7 +12,7 @@ resource "aws_lambda_function" "lambda_authorizer" {
 }
 
 
-resource "aws_lambda_permission" "okta_lambda_permission" {
+resource "aws_lambda_permission" "station_authorizer_lambda_permission" {
   statement_id  = "AllowOktaLambdaPermission"
   action        = "lambda:InvokeFunction"
   function_name =  aws_lambda_function.lambda_authorizer.function_name
