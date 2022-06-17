@@ -40,6 +40,10 @@ The StationDemoProject directory is divided into differents parts :
   
  - This part is used to create alarm and notifications when some production errors occurs
 
+### cloudwatchevent 
+  
+ - This part is used to create cloudwatch event to launch lambda for monitoring
+
 ### stationdb_rds
   
  - This part is used to create the database AWS RDS of the project Station Demo
