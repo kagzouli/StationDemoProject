@@ -1,0 +1,29 @@
+name: Java CI
+
+on: [push]
+
+env:
+  TERRAFORM_VERSION: 0.15.5
+
+jobs:
+  createec2instance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Setup Terraform
+        id: setup
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION}} 
+          terraform_wrapper: false
+
+      - name: Terraform init
+        id: init-without-backend
+        run: terraform init 
+        
+      - name: Terraform validate
+        id: validate
+        run: terraform validate
+      

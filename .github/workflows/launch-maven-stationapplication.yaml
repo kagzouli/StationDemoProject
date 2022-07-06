@@ -1,6 +1,6 @@
 name: Java CI
 
-on: [push]
+on: [pull_request]
 
 env:
   NODEJS_VERSION: 14
@@ -27,3 +27,5 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
         working-directory: application
+
+      
