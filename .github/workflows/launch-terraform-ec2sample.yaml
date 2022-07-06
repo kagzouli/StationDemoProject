@@ -6,7 +6,7 @@ env:
   TERRAFORM_VERSION: 0.15.5
 
 jobs:
-  createec2instance:
+  create-networks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init 
-        working-directory: terraformaws/ec2instance
+        working-directory: terraformaws/networks
 
       - name: Terraform validate
         id: validate
@@ -33,7 +33,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform validate
-        working-directory: terraformaws/ec2instance
+        working-directory: terraformaws/networks
 
       - name: Terraform plan
         id: plan
@@ -41,5 +41,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform plan --lock=false --var-file=../vars/dev.tvars
-        working-directory: terraformaws/ec2instance
+        working-directory: terraformaws/networks
       
