@@ -22,8 +22,10 @@ jobs:
       - name: Terraform init
         id: init-without-backend
         run: terraform init 
-        
+        working-directory: terraformaws/ec2instance
+
       - name: Terraform validate
         id: validate
         run: terraform validate
+        working-directory: terraformaws/ec2instance
       
