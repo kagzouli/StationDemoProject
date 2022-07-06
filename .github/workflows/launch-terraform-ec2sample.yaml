@@ -21,11 +21,17 @@ jobs:
 
       - name: Terraform init
         id: init-without-backend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init 
         working-directory: terraformaws/ec2instance
 
       - name: Terraform validate
         id: validate
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform validate
         working-directory: terraformaws/ec2instance
       
