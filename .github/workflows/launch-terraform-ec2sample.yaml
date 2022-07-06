@@ -34,4 +34,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform validate
         working-directory: terraformaws/ec2instance
+
+      - name: Terraform plan
+        id: plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform plan --lock=false --var-file=../vars/dev.tvars
+        working-directory: terraformaws/ec2instance
       
