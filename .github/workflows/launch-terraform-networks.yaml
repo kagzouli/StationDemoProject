@@ -35,11 +35,11 @@ jobs:
         run: terraform validate
         working-directory: terraformaws/networks
 
-      - name: Terraform apply
-        id: apply
+      - name: Terraform plan
+        id: plan
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform destroy  -auto-approve --lock=false --var-file=../vars/dev.tvars
+        run: terraform plan  -auto-approve --lock=false --var-file=../vars/dev.tvars
         working-directory: terraformaws/networks
       
