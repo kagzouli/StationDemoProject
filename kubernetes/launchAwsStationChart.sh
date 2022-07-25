@@ -4,13 +4,13 @@
 displayError(){
   RED='\033[0;31m'
   NORMAL='\033[0m' 
-  echo "${RED}$1${NORMAL}"
+  echo -e "${RED}$1${NORMAL}"
 }
 
 displayMessage(){
   BLUE='\033[0;34m'
   NORMAL='\033[0m' 
-  echo "${BLUE}$1${NORMAL}"
+  echo -e "${BLUE}$1${NORMAL}"
 }
 
 AWS_REGION="eu-west-3"  
