@@ -15,6 +15,7 @@ on:
 #  ENVIRONMENT_NAME: dev
 
 jobs:
+  # Deploy networks
   networks:
     uses: ./.github/workflows/terraform-networks-reusable.yaml
     with:
@@ -24,9 +25,21 @@ jobs:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  # Deploy networks
   secrets:
     uses: ./.github/workflows/terraform-secrets-reusable.yaml
     needs: networks
+    with:
+      # environment: ${{ env.ENVIRONMENT_NAME}}
+      environment: ${{ github.events.inputs.environment}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  # Deploy EKS
+  eks:
+    uses: ./.github/workflows/terraform-eks-reusable.yaml
+    needs: secrets
     with:
       # environment: ${{ env.ENVIRONMENT_NAME}}
       environment: ${{ github.events.inputs.environment}}
