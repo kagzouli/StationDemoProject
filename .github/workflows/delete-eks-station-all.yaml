@@ -10,8 +10,46 @@ on:
           - dev
         required: true
 
+env:
+  TERRAFORM_VERSION: 0.15.5
+  AWS_REGION: eu-west-3
+
 
 jobs:
+
+  delete_eks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        id: setup_terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION}} 
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION}}
+          role-duration-seconds: 3600
+
+
+      - name: eks init
+        id: init-eks-without-backend
+        run: terraform init 
+        working-directory: terraformaws/eks
+
+      - name: eks destroy
+        id: destroy-eks
+        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
+        working-directory: terraformaws/eks
+
   delete_secrets:
     runs-on: ubuntu-latest
     steps:
@@ -29,8 +67,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.aws_access_key }}
-          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION}}
           role-duration-seconds: 3600
 
@@ -63,8 +101,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.aws_access_key }}
-          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION}}
           role-duration-seconds: 3600
 
