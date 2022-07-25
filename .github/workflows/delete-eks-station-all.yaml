@@ -1,0 +1,80 @@
+name: Delete all eks
+
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
+
+jobs:
+  delete_secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        id: setup_terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION}} 
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-region: ${{ env.AWS_REGION}}
+          role-duration-seconds: 3600
+
+
+      - name: secrets init
+        id: init-secrets-without-backend
+        run: terraform init 
+        working-directory: terraformaws/secrets
+
+      - name: secrets destroy
+        id: destroy-secrets
+        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
+        working-directory: terraformaws/secrets
+
+  delete_networks:
+    runs-on: ubuntu-latest
+    needs: delete_secrets
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        id: setup_terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION}} 
+          terraform_wrapper: false
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-region: ${{ env.AWS_REGION}}
+          role-duration-seconds: 3600
+
+
+      - name: networks init
+        id: init-networks-without-backend
+        run: terraform init 
+        working-directory: terraformaws/networks
+
+      - name: networks destroy
+        id: destroy-networks
+        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
+        working-directory: terraformaws/networks
