@@ -18,7 +18,7 @@ env:
   ENVIRONMENT_NAME: dev
 
 jobs:
-  networks:
+  apply_networks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
