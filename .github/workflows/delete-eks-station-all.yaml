@@ -81,6 +81,7 @@ jobs:
 
   delete_secrets:
     runs-on: ubuntu-latest
+    needs: delete_eks
     steps:
       - name: Checkout
         id: checkout
