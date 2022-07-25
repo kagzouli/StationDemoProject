@@ -10,9 +10,15 @@ on:
           - dev
         required: true
 
+      region:
+        type: choice
+        description: The region where we can create objects
+        options:
+          - eu-west-3
+        required: true
+
 env:
   TERRAFORM_VERSION: 0.15.5
-  AWS_REGION: eu-west-3
 
 
 jobs:
@@ -31,7 +37,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.aws_access_key }}
           aws-secret-access-key: ${{ secrets.aws_secret_key }}
-          aws-region: ${{ env.AWS_REGION}}
+          aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
       - name: delete helm station
@@ -59,7 +65,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION}}
+          aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
 
@@ -92,7 +98,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION}}
+          aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
 
@@ -126,7 +132,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION}}
+          aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
 
