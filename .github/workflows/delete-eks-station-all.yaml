@@ -42,7 +42,7 @@ jobs:
 
       - name: delete helm station
         id: delete-station
-        run: sh deleteAwsStationChart.sh
+        run: bash deleteAwsStationChart.sh
         working-directory: kubernetes
 
   delete_eks:

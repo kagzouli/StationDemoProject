@@ -2,17 +2,15 @@
 # Fixe les variables
 
 displayError(){
-  BOLD=$(tput bold)
   RED='\033[0;31m'
   NORMAL='\033[0m' 
-  echo -e "${RED}${BOLD}$1${NORMAL}"
+  echo "${RED}$1${NORMAL}"
 }
 
 displayMessage(){
-  BOLD=$(tput bold)
   BLUE='\033[0;34m'
   NORMAL='\033[0m' 
-  echo -e "${BLUE}${BOLD}$1${NORMAL}"
+  echo "${BLUE}$1${NORMAL}"
 }
 
 AWS_REGION="eu-west-3"  
