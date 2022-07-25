@@ -57,7 +57,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
-     - name: Debug directory
+      - name: Debug directory
         id: debug-directory-station
         run: ls
         working-directory: kubernetes
