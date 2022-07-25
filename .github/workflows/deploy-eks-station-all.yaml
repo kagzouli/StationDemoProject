@@ -46,4 +46,24 @@ jobs:
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  # Deploy kubernetes station
+  deploy_station:
+    runs-on: ubuntu-latest
+    needs: eks
+    steps:
+
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+     - name: Debug directory
+        id: debug-directory-station
+        run: ls
+        working-directory: kubernetes
+
+      - name: launch station
+        id: launch-station
+        run: launchAwsStationChart.sh internal
+        working-directory: kubernetes
       
