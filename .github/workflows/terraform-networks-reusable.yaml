@@ -50,8 +50,8 @@ jobs:
         run: terraform plan  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
         working-directory: terraformaws/networks
 
-      - name: network plan
-        id: apply
+      - name: network apply
+        id: apply-network
         run: terraform apply -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
         working-directory: terraformaws/networks
       
