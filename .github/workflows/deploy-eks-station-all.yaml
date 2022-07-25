@@ -1,0 +1,36 @@
+name: Deploy all eks
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
+#env:
+#  ENVIRONMENT_NAME: dev
+
+jobs:
+  networks:
+    uses: ./.github/workflows/terraform-networks-reusable.yaml
+    with:
+      # environment: ${{ env.ENVIRONMENT_NAME}}
+      environment: ${{ github.events.inputs.environment}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  secrets:
+    uses: ./.github/workflows/terraform-secrets-reusable.yaml
+    needs: networks
+    with:
+      # environment: ${{ env.ENVIRONMENT_NAME}}
+      environment: ${{ github.events.inputs.environment}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
