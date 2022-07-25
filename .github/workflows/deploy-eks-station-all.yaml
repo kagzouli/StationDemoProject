@@ -64,6 +64,6 @@ jobs:
 
       - name: launch station
         id: launch-station
-        run: launchAwsStationChart.sh internal
+        run: sh launchAwsStationChart.sh internal
         working-directory: kubernetes
       
