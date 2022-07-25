@@ -1,4 +1,4 @@
-name: Java CI
+name: Build station
 
 on: [pull_request]
 
