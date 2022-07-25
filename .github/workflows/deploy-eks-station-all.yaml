@@ -67,6 +67,9 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
 
+      - name: Debug variable
+        run: echo "Region  ${{ github.events.inputs.region}}"
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
