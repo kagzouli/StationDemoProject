@@ -14,8 +14,10 @@ spec:
   - host: argocd.exakaconsulting.org
     http:
       paths:
-      - backend:
-          serviceName: argocd-server
-          port: 80
-        path: /*
-        pathType: ImplementationSpecific
+      -  path: / 
+         pathType: Prefix
+	 backend:
+           service:
+             name: argocd-server
+             port:
+              number: 80 
