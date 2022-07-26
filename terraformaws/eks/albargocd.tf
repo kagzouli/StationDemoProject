@@ -26,7 +26,7 @@ resource "aws_alb_target_group" "argocd_target_group" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = "/argocd-server/"
+    path = "/"
     unhealthy_threshold = "2"
   }
 
