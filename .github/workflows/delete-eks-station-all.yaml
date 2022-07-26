@@ -26,7 +26,7 @@ jobs:
 
   destroy_station:
     runs-on: ubuntu-latest
-    # Il faut creer une environnement ou on specifie une validation (dev par example dans Settings) - Permet d'éviter de supprimer par erreur. 
+    # Il faut creer un environnement ou on specifie une validation (dev par example dans Settings) - Permet d'éviter de supprimer par erreur. 
     environment: ${{ github.event.inputs.environment}}
     steps:
 
