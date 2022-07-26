@@ -90,6 +90,7 @@ jobs:
   install_argocd:
     runs-on: ubuntu-latest
     needs: deploy_station
+    steps:
       
       - name: Checkout
         id: checkout
