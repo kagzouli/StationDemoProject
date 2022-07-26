@@ -16,8 +16,8 @@ resource "aws_alb" "argocd_alb"{
 
 resource "aws_alb_target_group" "argocd_target_group" {
   name = "argocd-target-group"
-  port = 80 
-  protocol = "HTTP"
+  port = 443 
+  protocol = "HTTPS"
   vpc_id = data.aws_vpc.station_vpc.id 
   target_type = "ip"
   health_check {
@@ -40,8 +40,8 @@ resource "aws_alb_target_group" "argocd_target_group" {
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "argocd_alb_listener" {
   load_balancer_arn = aws_alb.argocd_alb.id
-  port = 80
-  protocol = "HTTP"
+  port = 443
+  protocol = "HTTPS"
 
   default_action {
     target_group_arn = aws_alb_target_group.argocd_target_group.id

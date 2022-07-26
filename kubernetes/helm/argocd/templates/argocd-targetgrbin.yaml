@@ -7,7 +7,7 @@ metadata:
 spec:
   serviceRef:
     name: argocd-server
-    port: 80 
+    port: 443 
   targetGroupARN: {{ .Values.argocd.ingress.targetGroupARN }} 
   networking:
     ingress:
@@ -15,5 +15,5 @@ spec:
         - ipBlock:
             cidr: {{ .Values.argocd.network.vpc_cidr | quote }} 
         ports:
-        - port: 80
+        - port: 443
           protocol: TCP
