@@ -132,9 +132,9 @@ jobs:
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
 
       - name: Retrieve VPC id
-        id: argocd-vpcid
+        id: argocd-vpccidr
         run: |
-          echo "::set-output name=vpcid::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
+          echo "::set-output name=vpccidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
      
 
       - name: Installation argoCD
@@ -143,5 +143,5 @@ jobs:
       
       - name: Open UI Argocd
         id: argocd-openui
-        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpcid.outputs.vpcid }}"
+        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpccidr.outputs.vpccidr }}"
         working-directory: kubernetes/helm
