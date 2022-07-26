@@ -131,7 +131,7 @@ jobs:
         run: |
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
 
-      - name: Retrieve VPC id
+      - name: Retrieve VPC CIDR
         id: argocd-vpccidr
         run: |
           echo "::set-output name=vpccidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
@@ -140,7 +140,14 @@ jobs:
       - name: Installation argoCD
         id: argocd-installation
         run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+
+      - name: Change NodePort ArgoCD Server
+        id: argocd-nodeport
+        run: bash changenoport-argocd.sh
+        working-directory: kubernetes/argocd
       
+
       - name: Open UI Argocd
         id: argocd-openui
         run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpccidr.outputs.vpccidr }}"
