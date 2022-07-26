@@ -5,6 +5,11 @@ metadata:
     #alb.ingress.kubernetes.io/wafv2-acl-arn:  arn:aws:wafv2:us-east-2:<Account_Number>:regional/webacl/deployment/41b495a2-xxxx-xxxx-xxxx-xxxx16619441
     alb.ingress.kubernetes.io/scheme: internet-facing
     kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/backend-protocol: HTTPS
+    # Use this annotation (which must match a service name) to route traffic to HTTP2 backends.
+    alb.ingress.kubernetes.io/conditions.argogrpc: |
+        [{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "Content-Type", "values":["application/grpc"]}}]
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
   labels:
     app: ingress-argocd
   name: ingress-argocd
@@ -20,4 +25,12 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 80 
+              number: 443
+
+      - path: / 
+        pathType: Prefix
+        backend:
+          service:
+            name: argogrpc
+            port:
+              number: 443
