@@ -42,6 +42,7 @@ resource "aws_alb_listener" "argocd_alb_listener" {
   load_balancer_arn = aws_alb.argocd_alb.id
   port = 443
   protocol = "HTTPS"
+  certificate_arn   = data.aws_acm_certificate.public_domain.arn
 
   default_action {
     target_group_arn = aws_alb_target_group.argocd_target_group.id
