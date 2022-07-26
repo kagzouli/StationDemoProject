@@ -111,6 +111,12 @@ jobs:
         id: kubernetes_installation
         run: curl -LO https://storage.googleapis.com/kubernetes-release/release/${{ env.KUBERNETES_VERSION }}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
 
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
 
       - name: Connect EKS cluster
         id: connect_eks_cluster
@@ -133,9 +139,9 @@ jobs:
 
       - name: Installation argoCD
         id: argocd-installation
-        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-vpcid.outputs.vpcid }}"
+        run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
       
       - name: Open UI Argocd
         id: argocd-openui
-        run: helm upgrade -i transverse ./transverse -n ${SHARED_NAMESPACE}
+        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpcid.outputs.vpcid }}"
         working-directory: kubernetes/helm
