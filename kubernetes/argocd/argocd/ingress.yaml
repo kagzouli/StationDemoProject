@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    #alb.ingress.kubernetes.io/wafv2-acl-arn:  arn:aws:wafv2:us-east-2:<Account_Number>:regional/webacl/deployment/41b495a2-xxxx-xxxx-xxxx-xxxx16619441
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    kubernetes.io/ingress.class: alb
+  labels:
+    app: ingress-argocd
+  name: ingress-argocd
+  namespace: argocd
+spec: 
+  rules:
+  - host: argocd.exakaconsulting.org
+    http:
+      paths:
+      - backend:
+          serviceName: argocd-server
+          port: 80
+        path: /*
+        pathType: ImplementationSpecific
