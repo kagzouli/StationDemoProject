@@ -18,6 +18,9 @@ on:
           - eu-west-3
         required: true
 
+env:
+  KUBERNETES_VERSION: v1.23.6
+
 #env:
 #  ENVIRONMENT_NAME: dev
 
@@ -95,12 +98,33 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
       
       - name: Installation Kubernetes
         id: kubernetes_installation
-        run: curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
+        run: curl -LO https://storage.googleapis.com/kubernetes-release/release/${{ env.KUBERNETES_VERSION }}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
+
+
+      - name: Connect EKS cluster
+        id: connect_eks_cluster
+        run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
+
+      - name: Installation argoCD Namespace
+        id: argocd-createnamespace
+        run: kubectl get namespace | grep -q "^argocd" || kubectl create namespace argocd
 
       - name: Installation argoCD
         id: argocd-installation
-        run: kubectl create namespace argocd && kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
       
+      - name: Installation ingress for ArgoCD
+        id: argocd-ingress-installation
+        run: kubectl apply -f ingress.yaml
+        working-directory: kubernetes/argocd/argocd
