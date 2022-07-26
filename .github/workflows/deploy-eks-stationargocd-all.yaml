@@ -85,4 +85,8 @@ jobs:
         id: launch-station
         run: bash launchAwsStationChart.sh internal
         working-directory: kubernetes/helm
+
+      - name: Installation argoCD
+        id: argocd-installation
+        run: kubectl create namespace argocd && kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
       
