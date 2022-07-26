@@ -41,3 +41,11 @@ data "aws_subnet" "station_privatesubnet2" {
     values = ["station_privatesubnet2"]
   }
 }
+
+
+data "aws_acm_certificate" "public_domain" {
+  domain   = "${var.station_publicdomainname}"
+  types       = ["AMAZON_ISSUED"]
+  most_recent = true
+}
+
