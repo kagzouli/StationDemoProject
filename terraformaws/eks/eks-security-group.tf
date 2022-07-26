@@ -41,6 +41,14 @@ resource "aws_security_group" "sg_station_front_alb" {
     description = "http request"
   }
 
+  ingress {
+    protocol    = "tcp"
+    from_port   = 443
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "https request"
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
