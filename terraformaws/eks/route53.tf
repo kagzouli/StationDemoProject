@@ -24,3 +24,13 @@ resource "aws_route53_record" "station_front_url_external" {
 
 }
 
+# ArgoCD Route53
+resource "aws_route53_record" "argocd_url_external" {
+  zone_id      =  data.aws_route53_zone.public.zone_id
+  name         = "argocd.${var.station_publicdomainname}"
+  type         = "CNAME"
+  ttl          = "10"
+  records      = [aws_alb.argocd_alb.dns_name]
+
+}
+

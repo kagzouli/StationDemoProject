@@ -111,6 +111,12 @@ jobs:
         id: kubernetes_installation
         run: curl -LO https://storage.googleapis.com/kubernetes-release/release/${{ env.KUBERNETES_VERSION }}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
 
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
 
       - name: Connect EKS cluster
         id: connect_eks_cluster
@@ -120,11 +126,22 @@ jobs:
         id: argocd-createnamespace
         run: kubectl get namespace | grep -q "^argocd" || kubectl create namespace argocd
 
+      - name: Retrieve targetGroupBinding
+        id: argocd-targetgroupbinding
+        run: |
+          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+
+      - name: Retrieve VPC id
+        id: argocd-vpcid
+        run: |
+          echo "::set-output name=vpcid::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
+     
+
       - name: Installation argoCD
         id: argocd-installation
         run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
       
-      - name: Installation ingress for ArgoCD
-        id: argocd-ingress-installation
-        run: kubectl apply -f ingress.yaml
-        working-directory: kubernetes/argocd/argocd
+      - name: Open UI Argocd
+        id: argocd-openui
+        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpcid.outputs.vpcid }}"
+        working-directory: kubernetes/helm
