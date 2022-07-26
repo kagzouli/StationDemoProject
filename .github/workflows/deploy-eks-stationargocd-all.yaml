@@ -126,5 +126,5 @@ jobs:
       
       - name: Installation ingress for ArgoCD
         id: argocd-ingress-installation
-        run: kubectl apply -f 
+        run: kubectl apply -f ingress.yaml
         working-directory: kubernetes/argocd/argocd
