@@ -26,6 +26,8 @@ jobs:
 
   destroy_station:
     runs-on: ubuntu-latest
+    # Il faut creer une environnement ou on specifie une validation (dev par example dans Settings) - Permet d'éviter de supprimer par erreur. 
+    environment: ${{ github.event.inputs.environment}}
     steps:
 
       - name: Checkout
@@ -40,10 +42,16 @@ jobs:
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
       - name: delete helm station
         id: delete-station
         run: bash deleteAwsStationChart.sh
-        working-directory: kubernetes
+        working-directory: kubernetes/helm
 
   delete_eks:
     runs-on: ubuntu-latest

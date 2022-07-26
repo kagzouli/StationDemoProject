@@ -75,8 +75,14 @@ jobs:
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
       - name: launch station
         id: launch-station
         run: bash launchAwsStationChart.sh internal
-        working-directory: kubernetes
+        working-directory: kubernetes/helm
       
