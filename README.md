@@ -83,7 +83,7 @@ This directory contains all the jenkins pipeline to build, push image into custo
 
 ## kubernetes
 
-This directory contains the template to start kubernetes pod and service for the project.
+This directory contains the template to start kubernetes pod and service for the project. We have an helm directory and in the future a argocd directory
 
 ## terraformaws
 
