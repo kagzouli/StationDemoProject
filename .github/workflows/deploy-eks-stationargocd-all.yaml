@@ -120,11 +120,22 @@ jobs:
         id: argocd-createnamespace
         run: kubectl get namespace | grep -q "^argocd" || kubectl create namespace argocd
 
+      - name: Retrieve targetGroupBinding
+        id: argocd-targetgroupbinding
+        run: |
+          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+
+       - name: Retrieve VPC id
+        id: argocd-vpcid
+        run: |
+          echo "::set-output name=vpcid::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
+     
+
       - name: Installation argoCD
         id: argocd-installation
-        run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-vpcid.outputs.vpcid }}"
       
-      - name: Installation ingress for ArgoCD
-        id: argocd-ingress-installation
-        run: kubectl apply -f ingress.yaml
-        working-directory: kubernetes/argocd/argocd
+      - name: Open UI Argocd
+        id: argocd-openui
+        run: helm upgrade -i transverse ./transverse -n ${SHARED_NAMESPACE}
+        working-directory: kubernetes/helm

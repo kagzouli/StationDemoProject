@@ -1,0 +1,19 @@
+apiVersion: elbv2.k8s.aws/v1beta1 
+kind: TargetGroupBinding
+metadata:
+  name: argocd-tgb
+  namespace: argocd
+  
+spec:
+  serviceRef:
+    name: argocd-server
+    port: 80 
+  targetGroupARN: {{ .Values.argocd.ingress.targetGroupARN }} 
+  networking:
+    ingress:
+      - from:
+        - ipBlock:
+            cidr: {{ .Values.argocd.network.vpc_cidr | quote }} 
+        ports:
+        - port: 80
+          protocol: TCP
