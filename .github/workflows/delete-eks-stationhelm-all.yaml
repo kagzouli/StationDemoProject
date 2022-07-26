@@ -1,4 +1,4 @@
-name: Delete all eks
+name: Delete all eks Helm
 
 on: 
   workflow_dispatch:

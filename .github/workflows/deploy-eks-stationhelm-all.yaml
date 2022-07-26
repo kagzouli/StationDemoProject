@@ -1,4 +1,4 @@
-name: Deploy EKS station
+name: Deploy EKS station Helm
 
 #on: [push]
 on: 
