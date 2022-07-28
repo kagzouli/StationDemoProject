@@ -165,22 +165,6 @@ VALUES_IP_ALB_BACK=$( aws ec2 describe-network-interfaces --filters "Name=descri
 ipaddrs_BACK=$(echo $VALUES_IP_ALB_BACK | xargs)
 echo "IP ALB Back : $ipaddrs_BACK"
 
-# Lancement du chart applicatiof station
-displayMessage "Installation de l'application station"
-helm upgrade -i stationdev ./station  \
-     -f awsvalue.yaml \
-     --set stationback.ingress.targetGroupARN="${TG_ARN_STATION_BACK}"  \
-     --set stationback.albiplist="{${ipaddrs_BACK// /, }}" \
-     --set stationfront.ingress.targetGroupARN="${TG_ARN_STATION_FRONT}" \
-     --set stationfront.albiplist="{${ipaddrs_FRONT// /, }}" \
-     --set stationredis.mode="${REDIS_MODE}" \
-     --set stationredis.usessl="${REDIS_USESSL}" \
-     --set stationdb.mode="${DB_MODE}" \
-     --set stationdb.storage.storageClass="${STORAGE_EFS_CLASS}" \
-     --set stationdb.storage.efsid="${EFS_SYSTEM_ID}" \
-     --set stationdb.storage.efsaccesspointid="${EFS_ACCESSPOINT_ID}" \
-     -n stationdev \
-     --create-namespace 
 
 # Install calico pour EKS EC2
 displayMessage "Installation Chart calico"
