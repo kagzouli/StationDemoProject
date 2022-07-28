@@ -1,4 +1,4 @@
-name: Delete all eks Helm
+name: Delete all eks ArgoCD
 
 on: 
   workflow_dispatch:
