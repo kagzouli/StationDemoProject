@@ -45,7 +45,7 @@ resource "aws_alb_target_group" "argocd_target_group" {
     protocol = "HTTPS"
     matcher = "200"
     timeout = "3"
-    path = "/"
+    path = "/healthz"
     unhealthy_threshold = "2"
   }
 
