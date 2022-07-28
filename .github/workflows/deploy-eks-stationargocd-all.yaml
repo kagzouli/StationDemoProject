@@ -199,16 +199,6 @@ jobs:
           "password": "${{ steps.argocd-pass.outputs.password }}"
           }}'
 
-
-      - name: Change argocd password argocd-secret
-        id: argocd-change-password
-        run: |
-          kubectl -n argocd patch secret argocd-secret \
-          -p '{"stringData": {
-          "admin.password": "${{ steps.argocd-pass.outputs.password }}",
-          "admin.passwordMtime": "'$(date +%FT%T%Z)'"
-          }}'
-
   
   # Configuration ArgoCD
   install_application_argocd:
