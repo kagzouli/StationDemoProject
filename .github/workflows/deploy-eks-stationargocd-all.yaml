@@ -176,6 +176,12 @@ jobs:
         run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
 
 
+      - name: Installation Kubernetes
+        id: kubernetes_installation
+        run: curl -LO https://storage.googleapis.com/kubernetes-release/release/${{ env.KUBERNETES_VERSION }}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
+
+
+
       - name: Installation argocdcli
         id:  argocd-installation
         run: sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && sudo chmod +x /usr/local/bin/argocd
@@ -185,13 +191,54 @@ jobs:
         run: |
           echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)"
 
+      - name: Change argocd password argocd-initsecret
+        id: argocd-change-initpassword
+        run: |
+          kubectl -n argocd patch secret argocd-initial-admin-secret \
+          -p '{"stringData": {
+          "data.password": "${{ steps.argocd-passbase64.outputs.password }}",
+          }}'
 
-      - name: Change argocd password
+
+      - name: Change argocd password argocd-secret
         id: argocd-change-password
         run: |
-  
           kubectl -n argocd patch secret argocd-secret \
           -p '{"stringData": {
           "admin.password": "${{ steps.argocd-passbase64.outputs.password }}",
           "admin.passwordMtime": "'$(date +%FT%T%Z)'"
           }}'
+
+  
+  # Configuration ArgoCD
+ install_application_argocd:
+    runs-on: ubuntu-latest
+    needs: configuration_argocd
+    steps:
+      
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
+      
+      - name: Connect EKS cluster
+        id: connect_eks_cluster
+        run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
+
+
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+
+      - name: Installation application on argocd
+        id:  argocd-installationappli
+        run: helm upgrade -i applications applications
+        working-directory: kubernetes/argocd
+  
