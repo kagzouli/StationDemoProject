@@ -186,8 +186,8 @@ jobs:
         id:  argocd-installation
         run: sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && sudo chmod +x /usr/local/bin/argocd
 
-      - name: Retrieve argocdpassbase64
-        id: argocd-passbase64
+      - name: Retrieve argocdpass
+        id: argocd-pass
         run: |
           echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)"
 
@@ -196,7 +196,7 @@ jobs:
         run: |
           kubectl -n argocd patch secret argocd-initial-admin-secret \
           -p '{"stringData": {
-          "data.password": "${{ steps.argocd-passbase64.outputs.password }}"
+          "password": "${{ steps.argocd-pass.outputs.password }}"
           }}'
 
 
@@ -205,7 +205,7 @@ jobs:
         run: |
           kubectl -n argocd patch secret argocd-secret \
           -p '{"stringData": {
-          "admin.password": "${{ steps.argocd-passbase64.outputs.password }}",
+          "admin.password": "${{ steps.argocd-pass.outputs.password }}",
           "admin.passwordMtime": "'$(date +%FT%T%Z)'"
           }}'
 
@@ -258,7 +258,7 @@ jobs:
       - name: Installation application on argocd
         id:  argocd-installationappli
         run: |
-          helm upgrade -i applications applications \
+          helm upgrade -i applications ./applications \
           --set station.back.ingressarn=${{ steps.stationback-targetgroupbinding.outputs.targetGroupBinding }} \
           --set station.back.albiplist=${{ steps.stationback-albiplist.outputs.albiplist }} \
           --set station.front.ingressarn=${{ steps.stationfront-targetgroupbinding.outputs.targetGroupBinding }}
