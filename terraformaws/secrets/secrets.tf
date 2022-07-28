@@ -31,7 +31,7 @@ resource "random_password" "station_redis_password" {
   override_special = "_%="
 }
 
-resource "argocd_password" "station_argocd_password" {
+resource "random_password" "station_argocd_password" {
   length           = 16
   special          = true
   override_special = "_%="
