@@ -87,7 +87,7 @@ jobs:
       - name: launch station
         id: launch-station
         run: bash launchAwsStationChart.sh internal
-        working-directory: kubernetes/helm
+        working-directory: kubernetes/argocd
 
   # Installation ArgoCD
   install_argocd:
