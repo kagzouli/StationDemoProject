@@ -3,8 +3,6 @@ terraform {
 
   backend "s3" {
       region  = "eu-west-3" 
-      bucket  = "station-tfstate"
-      key     = "station-network.tfstate"
       encrypt = true
   }
 }

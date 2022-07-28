@@ -78,8 +78,8 @@ jobs:
 
 
       - name: eks init
-        id: init-eks-without-backend
-        run: terraform init 
+        id: init-eks
+        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
         working-directory: terraformaws/eks
 
       - name: eks destroy

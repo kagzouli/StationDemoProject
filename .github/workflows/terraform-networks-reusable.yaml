@@ -44,8 +44,8 @@ jobs:
           role-duration-seconds: 3600
 
       - name: network init
-        id: init-network-without-backend
-        run: terraform init 
+        id: init-network
+        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
         working-directory: terraformaws/networks
 
       - name: network plan
