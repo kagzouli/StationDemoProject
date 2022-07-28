@@ -189,9 +189,9 @@ jobs:
       - name: Change argocd password
         id: argocd-change-password
         run: |
-          kubectl --namespace=argocd patch secret argocd-secret -p "$(cat <<EOF{"stringData": {
-            "admin.password": "${{ steps.argocd-passbase64.outputs.password }}",
-            "admin.passwordMtime": "'$(date +%FT%T%Z)'"
-          }}
-          EOF
-          )"
+  
+          kubectl -n argocd patch secret argocd-secret \
+          -p '{"stringData": {
+          "admin.password": "${{ steps.argocd-passbase64.outputs.password }}",
+          "admin.passwordMtime": "'$(date +%FT%T%Z)'"
+          }}'

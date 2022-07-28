@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: station
+  namespace: stationdev
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  project: default
+  source:
+    chart: station
+    helm:
+      stationback: |
+        ingress:
+          targetGroupARN: "toto"
+    repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetes/helm/station
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
