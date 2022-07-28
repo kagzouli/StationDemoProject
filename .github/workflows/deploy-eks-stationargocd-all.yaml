@@ -216,6 +216,11 @@ jobs:
     needs: configuration_argocd
     steps:
       
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -245,7 +250,7 @@ jobs:
       - name: Retrieve back albiplist
         id: stationback-albiplist
         run: |
-          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/$ALB_NAME_BACK/$(aws elbv2 describe-load-balancers --names $ALB_NAME_BACK | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs)"
+          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/$ALB_NAME_BACK/$(aws elbv2 describe-load-balancers --names $ALB_NAME_BACK | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )"
 
 
       - name: Retrieve front ingress
