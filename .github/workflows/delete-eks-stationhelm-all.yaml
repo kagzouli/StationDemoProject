@@ -78,8 +78,8 @@ jobs:
 
 
       - name: eks init
-        id: init-eks-without-backend
-        run: terraform init 
+        id: init-eks
+        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
         working-directory: terraformaws/eks
 
       - name: eks destroy
@@ -112,8 +112,8 @@ jobs:
 
 
       - name: secrets init
-        id: init-secrets-without-backend
-        run: terraform init 
+        id: init-secrets
+        run: terraform init  -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
         working-directory: terraformaws/secrets
 
       - name: secrets destroy
@@ -146,8 +146,8 @@ jobs:
 
 
       - name: networks init
-        id: init-networks-without-backend
-        run: terraform init 
+        id: init-networks
+        run: terraform init  -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
         working-directory: terraformaws/networks
 
       - name: networks destroy
