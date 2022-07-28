@@ -242,11 +242,25 @@ jobs:
         run: |
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name station-back-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
 
+      - name: Retrieve back albiplist
+        id: stationback-albiplist
+        run: |
+          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/$ALB_NAME_BACK/$(aws elbv2 describe-load-balancers --names $ALB_NAME_BACK | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs)"
+
+
+      - name: Retrieve front ingress
+        id: stationfront-targetgroupbinding
+        run: |
+          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+
+      
 
       - name: Installation application on argocd
         id:  argocd-installationappli
         run: |
           helm upgrade -i applications applications \
-          --set station.back.ingressarn=${{ steps.stationback-targetgroupbinding.outputs.targetGroupBinding }}
+          --set station.back.ingressarn=${{ steps.stationback-targetgroupbinding.outputs.targetGroupBinding }} \
+          --set station.back.albiplist=${{ steps.stationback-albiplist.outputs.albiplist }} \
+          --set station.front.ingressarn=${{ steps.stationfront-targetgroupbinding.outputs.targetGroupBinding }}
         working-directory: kubernetes/argocd
   
