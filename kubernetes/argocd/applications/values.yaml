@@ -1,0 +1,9 @@
+# Value of station application
+station:
+  back:
+    ingressarn: ""
+
+    albiplist: ""
+
+  front:
+    ingressarn: ""
