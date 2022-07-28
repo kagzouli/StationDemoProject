@@ -14,6 +14,25 @@ resource "aws_alb" "argocd_alb"{
     }
 }
 
+
+resource "aws_alb_listener" "argocd_http_target_groups" {
+    load_balancer_arn = aws_alb.argocd_alb.arn
+    port              = "80"
+    protocol          = "HTTP"
+    default_action {
+    type = "redirect"
+    redirect {
+
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+
+    }
+
+  }
+
+}
+
 resource "aws_alb_target_group" "argocd_target_group" {
   name = "argocd-target-group"
   port = 443 
