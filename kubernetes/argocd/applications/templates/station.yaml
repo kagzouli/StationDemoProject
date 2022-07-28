@@ -13,9 +13,9 @@ spec:
   source:
     chart: station
     helm:
-      stationback: |
-        ingress:
-          targetGroupARN: "toto"
+      station: |
+        back:
+          ingressarn: "toto"
     repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetes/helm/station
     targetRevision: master
   syncPolicy:
