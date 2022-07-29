@@ -82,6 +82,8 @@ jobs:
         run:  |
             git config --global user.name "kagzouli"
             git config --global user.email "noreply-kagzouli@exakaconsulting.org"
+            git remote -v
+            git branch
             git add . && git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}} && git push origin main"
         working-directory: helm-repo
 
