@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: station-aws-load-balancer-controller
+  namespace: transverse
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: default
+  source:
+    chart: aws-load-balancer-controller
+    helm:
+      releaseName: aws-load-balancer-controller
+      parameters: 
+        - name: clusterName
+          value: station-eks-cluster
+        - name: serviceAccount.create
+          value: false 
+        - name: region
+          value: {{ .Values.app.region | quote }}
+        - name: vpcId
+          value: {{ .Values.app.vpcId | quote }}
+        - name: serviceAccount.name
+          value: "station-aws-load-balancer-controller-sa"
+        - name: image.repository
+          value: "602401143452.dkr.ecr.eu-west-3.amazonaws.com/amazon/aws-load-balancer-controller"
+        - name: nameOverride
+          value: "station-aws-load-balancer-controller"
+        - name: fullnameOverride
+          value: "station-aws-load-balancer-controller"
+
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: v2.4.2
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

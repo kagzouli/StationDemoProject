@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: transverse
+  namespace: transverse
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: default
+  source:
+    chart: transverse
+    helm:
+      releaseName: transverse
+      parameters: 
+        - name: app.accountidentifier
+          value: {{ .Values.app.accountidentifier | quote }}
+        - name: app.region
+          value: {{ .Values.app.region | quote }}
+
+    repoURL: {{ .Values.helm.repository | quote }} 
+    targetRevision: 1.0.0
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

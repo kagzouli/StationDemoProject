@@ -1,0 +1,10 @@
+# Value of station application
+helm:
+  repository: https://kagzouli.github.io/helm-charts/
+
+app:
+  accountidentifier: ""
+
+  region: ""
+
+  vpcId: ""

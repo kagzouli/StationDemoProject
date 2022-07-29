@@ -69,34 +69,6 @@ jobs:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  # Deploy kubernetes station
-  deploy_station:
-    runs-on: ubuntu-latest
-    needs: eks
-    steps:
-
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-      - name: Install Helm
-        run: |
-          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-          chmod 700 get_helm.sh
-          ./get_helm.sh
-
-      - name: launch station
-        id: launch-station
-        run: bash launchAwsStationChart.sh internal
-        working-directory: kubernetes/argocd
 
   # Installation ArgoCD
   install_argocd:
@@ -141,9 +113,10 @@ jobs:
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
 
       - name: Retrieve VPC CIDR
-        id: argocd-vpccidr
+        id: argocd-vpc
         run: |
-          echo "::set-output name=vpccidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
+          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
+          echo "::set-output name=cidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text )"
      
 
       - name: Installation argoCD
@@ -159,8 +132,9 @@ jobs:
 
       - name: Open UI Argocd
         id: argocd-openui
-        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpccidr.outputs.vpccidr }}"
+        run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpc.outputs.cidr }}"
         working-directory: kubernetes/helm
+
 
   # Configuration ArgoCD
   configuration_argocd:
@@ -200,19 +174,72 @@ jobs:
         run: |
           echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)"
 
-      - name: Change argocd password argocd-initsecret
-        id: argocd-change-initpassword
-        run: |
-          kubectl -n argocd patch secret argocd-initial-admin-secret \
-          -p '{"stringData": {
-          "password": "${{ steps.argocd-pass.outputs.password }}"
-          }}'
+      # Not working
+      #- name: Change argocd password argocd-initsecret
+      #  id: argocd-change-initpassword
+      #  run: |
+      #    kubectl -n argocd patch secret argocd-initial-admin-secret \
+      #    -p '{"stringData": {
+      #    "password": "${{ steps.argocd-pass.outputs.password }}"
+      #    }}'
 
-  
+    # Configuration ArgoCD
+  install_shared_argocd:
+    runs-on: ubuntu-latest
+    needs: configuration_argocd
+    steps:
+      
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
+      
+      - name: Connect EKS cluster
+        id: connect_eks_cluster
+        run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
+
+
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      # Recuperer account
+      - name: Retrieve account 
+        id: retrieve-account
+        run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
+
+      - name: Retrieve VPC
+        id: argocd-vpc
+        run: |
+          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
+    
+
+      # Installation composant transverse
+      - name: Installation shared on argocd
+        id:  argocd-installationshared
+        run: |
+          helm upgrade -i shared ./shared \
+          --set app.accountidentifier="${{ steps.retrieve-account.outputs.identifier }}" \
+          --set app.region="${{ github.event.inputs.region}}" 
+          --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" 
+        working-directory: kubernetes/argocd
+     
+
+
   # Configuration ArgoCD
   install_application_argocd:
     runs-on: ubuntu-latest
-    needs: configuration_argocd
+    needs: install_shared_argocd
     steps:
       
       - name: Checkout
@@ -297,9 +324,9 @@ jobs:
           if [[ "${{ github.event.inputs.deployMode }}" == "external" ]]; then
               echo "::set-output name=mode::externaldb"
           fi
-  
-     
-
+      
+      
+      # Installation composant applications
       - name: Installation application on argocd
         id:  argocd-installationappli
         run: |
@@ -310,6 +337,6 @@ jobs:
           --set station.front.albiplist="${{ steps.stationfront-albiplist.outputs.albiplist }}" \
           --set station.redis.mode="${{ steps.stationredis-mode.outputs.mode }}" \
           --set station.redis.usessl=${{ steps.stationredis-mode.outputs.usessl }} \
-          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" \
+          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" 
         working-directory: kubernetes/argocd
   
