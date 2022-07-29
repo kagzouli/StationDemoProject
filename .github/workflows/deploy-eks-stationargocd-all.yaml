@@ -303,10 +303,6 @@ jobs:
         id: retrieve-account
         run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
 
-      # Recuperer db - mode
-      - name: Retrieve region 
-        id: retrieve-region
-        run: echo "::set-output name=region::eu-west-3"
 
       
 
@@ -316,7 +312,7 @@ jobs:
         run: |
           helm upgrade -i shared ./shared \
           --set app.accountidentifier="${{ steps.retrieve-account.outputs.identifier }}" \
-          --set app.region="${{ steps.retrieve-region.outputs.region }}" \
+          --set app.region="${{ github.event.inputs.region}}" 
         working-directory: kubernetes/argocd
      
 
@@ -331,6 +327,6 @@ jobs:
           --set station.front.albiplist="${{ steps.stationfront-albiplist.outputs.albiplist }}" \
           --set station.redis.mode="${{ steps.stationredis-mode.outputs.mode }}" \
           --set station.redis.usessl=${{ steps.stationredis-mode.outputs.usessl }} \
-          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" \
+          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" 
         working-directory: kubernetes/argocd
   
