@@ -116,8 +116,8 @@ jobs:
       - name: Retrieve VPC CIDR
         id: argocd-vpc
         run: |
-          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
-          echo "::set-output name=cidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text )"
+          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
+          echo "::set-output name=cidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text )"
      
 
       - name: Installation argoCD
@@ -224,7 +224,7 @@ jobs:
       - name: Retrieve VPC
         id: argocd-vpc
         run: |
-          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text)"
+          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
     
 
       # Installation composant transverse
