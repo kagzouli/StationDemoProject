@@ -297,9 +297,30 @@ jobs:
           if [[ "${{ github.event.inputs.deployMode }}" == "external" ]]; then
               echo "::set-output name=mode::externaldb"
           fi
-  
+
+      # Recuperer db - mode
+      - name: Retrieve account 
+        id: retrieve-account
+        run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
+
+      # Recuperer db - mode
+      - name: Retrieve region 
+        id: retrieve-region
+        run: echo "::set-output name=region::eu-west-3"
+
+      
+
+      # Installation composant transverse
+      - name: Installation shared on argocd
+        id:  argocd-installationshared
+        run: |
+          helm upgrade -i shared ./shared \
+          --set app.accountidentifier="${{ steps.retrieve-account.outputs.identifier }}" \
+          --set app.region="${{ steps.retrieve-region.outputs.region }}" \
+        working-directory: kubernetes/argocd
      
 
+      # Installation composant applications
       - name: Installation application on argocd
         id:  argocd-installationappli
         run: |
