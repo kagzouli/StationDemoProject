@@ -20,7 +20,7 @@ spec:
         - name: clusterName
           value: station-eks-cluster
         - name: serviceAccount.create
-          value: false 
+          value: "false" 
         - name: region
           value: {{ .Values.app.region | quote }}
         - name: vpcId
