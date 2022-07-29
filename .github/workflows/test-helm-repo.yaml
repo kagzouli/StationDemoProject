@@ -22,12 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # Retrieve a token for push
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
       # Retrieve current source
       - name: Checkout current 
         id: checkout-current
         uses: actions/checkout@v2
         with:
           path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
 
       # Retrieve helm repository
       - name: Checkout helm repo
@@ -37,13 +47,8 @@ jobs:
           repository: kagzouli/helm-charts
           path: helm-repo
           ref: main
+          token: ${{ steps.get_workflow_token.outputs.token }}
 
-      - name: Get Token
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v1
-        with:
-          application_id: ${{ secrets.APPLICATION_ID }}
-          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 
       # Retrieve helm
       - name: Install Helm
@@ -79,15 +84,6 @@ jobs:
         id: index-helm-repo
         run:  helm repo index helm-repo  --url ${{ env.STATION_HELM_REPO}} 
 
-      - name: Debug1
-        id: debug1
-        run:  ls 
-        working-directory: helm-repo
-
-      - name: Debug2
-        id: debug2
-        run:  cat index.yaml
-        working-directory: helm-repo
 
       # Push to Git repo
       - name: push index repo
