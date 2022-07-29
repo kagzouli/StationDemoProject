@@ -7,6 +7,7 @@ on:
 
       helm_project_version:
         type: string
+        default: 1.0.0
         description: Helm project version
         required: true
 
@@ -23,14 +24,14 @@ jobs:
 
       # Retrieve current source
       - name: Checkout current 
-        id: checkout
+        id: checkout-current
         uses: actions/checkout@v2
         with:
           path: current
 
       # Retrieve helm repository
-      - name: Checkout helm 
-        id: checkout
+      - name: Checkout helm repo
+        id: checkout-helm-repo
         uses: actions/checkout@v2
         with:
           repository: kagzouli/helm-charts
