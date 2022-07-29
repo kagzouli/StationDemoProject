@@ -66,8 +66,21 @@ jobs:
         id: index-helm-repo
         run:  helm repo index .  --url ${{ env.STATION_HELM_REPO}} 
 
+      - name: Debug1
+        id: debug1
+        run:  ls 
+        working-directory: helm-repo
+
+      - name: Debug2
+        id: debug2
+        run:  cat index.yml
+        working-directory: helm-repo
+
       - name: push index repo
         id: push-helm-repo
-        run:  git add . && git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}} && git push origin main"
+        run:  |
+            git config --global user.name "kagzouli"
+            git config --global user.email "noreply-kagzouli@exakaconsulting.org"
+            git add . && git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}} && git push origin main"
         working-directory: helm-repo
 
