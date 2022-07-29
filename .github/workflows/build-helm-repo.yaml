@@ -1,4 +1,4 @@
-name: Test Helm repo
+name: Build station Helm repo
 
 #on: [push]
 on: 
@@ -22,12 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # Retrieve a token for push
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
       # Retrieve current source
       - name: Checkout current 
         id: checkout-current
         uses: actions/checkout@v2
         with:
           path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
 
       # Retrieve helm repository
       - name: Checkout helm repo
@@ -36,6 +46,9 @@ jobs:
         with:
           repository: kagzouli/helm-charts
           path: helm-repo
+          ref: main
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
 
       # Retrieve helm
       - name: Install Helm
@@ -44,30 +57,42 @@ jobs:
           chmod 700 get_helm.sh
           ./get_helm.sh
 
+      # Generate package helm for station
       - name: package station
         id: package-station
         run: helm package station --version ${{ github.event.inputs.helm_project_version}}
         working-directory: current/kubernetes/helm
 
+      # Copy station to helm repository
       - name: Copie station helm repo
         id: copy-station
         run: cp current/kubernetes/helm/station-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
 
+      # Generate package helm for transverse
       - name: package transverse
         id: package-transverse
         run: helm package transverse --version ${{ github.event.inputs.helm_project_version}}
         working-directory: current/kubernetes/helm
 
+      # Copy transverse to helm repository
       - name: Copie transverse helm repo
         id: copy-transverse
         run: cp current/kubernetes/helm/transverse-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
 
+      # Index everything
       - name: index helm repo
         id: index-helm-repo
-        run:  helm repo index .  --url ${{ env.STATION_HELM_REPO}} 
+        run:  helm repo index helm-repo  --url ${{ env.STATION_HELM_REPO}} 
 
+
+      # Push to Git repo
       - name: push index repo
         id: push-helm-repo
-        run:  git add . && git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}} && git push origin main"
+        run:  |
+            git config --global user.name "kagzouli"
+            git config --global user.email "noreply-kagzouli@exakaconsulting.org"
+            git add . 
+            git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}}" 
+            git push origin main
         working-directory: helm-repo
 
