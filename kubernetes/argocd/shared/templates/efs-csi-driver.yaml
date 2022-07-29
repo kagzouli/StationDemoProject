@@ -20,7 +20,7 @@ spec:
         - name: image.repository
           value: "602401143452.dkr.ecr.eu-west-3.amazonaws.com/eks/aws-efs-csi-driver"
         - name: controller.serviceAccount.create
-          value: false
+          value: "false"
         - name: controller.serviceAccount.name
           value: "station-efs-csi-controller-sa" 
 
