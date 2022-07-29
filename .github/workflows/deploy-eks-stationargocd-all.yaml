@@ -227,7 +227,7 @@ jobs:
           ./get_helm.sh
 
 
-     - name: Open UI Argocd
+      - name: Open UI Argocd
         id: argocd-openui
         run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpc.outputs.cidr }}"
         working-directory: kubernetes/helm
