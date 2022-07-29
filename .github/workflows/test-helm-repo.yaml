@@ -65,7 +65,7 @@ jobs:
 
       - name: index helm repo
         id: index-helm-repo
-        run:  helm repo index .  --url ${{ env.STATION_HELM_REPO}} 
+        run:  helm repo index helm-repo  --url ${{ env.STATION_HELM_REPO}} 
 
       - name: Debug1
         id: debug1
