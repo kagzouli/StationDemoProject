@@ -4,6 +4,15 @@ helm:
 
 
 station:
+
+  redis:
+    mode: ""
+
+    usessl: false
+
+  db:
+    mode: ""
+
   back:
     ingressarn: ""
 
@@ -11,3 +20,5 @@ station:
 
   front:
     ingressarn: ""
+
+    albiplist: ""
