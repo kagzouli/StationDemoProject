@@ -21,6 +21,20 @@ spec:
           value: {{ .Values.station.back.albiplist | quote }}
         - name: stationfront.ingress.targetGroupARN
           value: {{ .Values.station.front.ingressarn | quote }}
+        - name: stationfront.albiplist
+          value: {{ .Values.station.front.albiplist | quote }}
+        - name: stationredis.mode
+          value: {{ .Values.station.redis.mode | quote }}
+        - name: stationredis.usessl
+          value: {{ .Values.station.redis.usessl  }}
+        - name: stationdb.mode
+          value: {{ .Values.station.db.mode | quote }}
+        - name: stationdb.storage.storageClass
+          value: "none"
+        - name: stationdb.storage.efsid
+          value: ""
+        - name: stationdb.storage.efsaccesspointid
+          value: ""
 
     repoURL: {{ .Values.helm.repository | quote }} 
     targetRevision: 1.0.0
