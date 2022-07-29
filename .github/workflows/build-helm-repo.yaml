@@ -1,4 +1,4 @@
-name: Test Helm repo
+name: Build station Helm repo
 
 #on: [push]
 on: 
