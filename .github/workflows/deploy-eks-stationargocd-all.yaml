@@ -87,6 +87,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
+          mask-aws-account-id: false
       
       - name: Installation Kubernetes
         id: kubernetes_installation
@@ -153,6 +154,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
+          mask-aws-account-id: false
       
       - name: Connect EKS cluster
         id: connect_eks_cluster
@@ -201,6 +203,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
+          mask-aws-account-id: false
       
       - name: Connect EKS cluster
         id: connect_eks_cluster
@@ -255,6 +258,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
+          mask-aws-account-id: false
       
       - name: Connect EKS cluster
         id: connect_eks_cluster
