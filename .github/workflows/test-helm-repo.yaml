@@ -1,0 +1,72 @@
+name: Test Helm repo
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+
+      helm_project_version:
+        type: string
+        description: Helm project version
+        required: true
+
+env:
+  STATION_HELM_REPO:  https://kagzouli.github.io/helm-charts/
+
+
+jobs:
+
+  # Deploy kubernetes station
+  build_helm:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout
+        uses: actions/checkout@v2
+        with:
+          path: current
+
+      # Retrieve helm repository
+      - name: Checkout helm 
+        id: checkout
+        uses: actions/checkout@v2
+        with:
+          repository: kagzouli/helm-charts
+          path: helm-repo
+
+      # Retrieve helm
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: package station
+        id: package-station
+        run: helm package station --version ${{ github.event.inputs.helm_project_version}}
+        working-directory: current/kubernetes/helm
+
+      - name: Copie station helm repo
+        id: copy-station
+        run: cp current/kubernetes/helm/station-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
+
+      - name: package transverse
+        id: package-transverse
+        run: helm package transverse --version ${{ github.event.inputs.helm_project_version}}
+        working-directory: current/kubernetes/helm
+
+      - name: Copie transverse helm repo
+        id: copy-transverse
+        run: cp current/kubernetes/helm/transverse-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
+
+      - name: index helm repo
+        id: index-helm-repo
+        run:  helm repo index .  --url ${{ env.STATION_HELM_REPO}} 
+
+      - name: push index repo
+        id: push-helm-repo
+        run:  git add . && git commit -m "Deploiement version ${{ github.event.inputs.helm_project_version}} && git push origin main"
+        working-directory: helm-repo
+
