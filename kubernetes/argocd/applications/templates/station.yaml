@@ -13,12 +13,17 @@ spec:
   source:
     chart: station
     helm:
-      values: |
-        stationback:
-          ingress:
-            targetGroupARN: "toto"
-    repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetes/helm/station
-    targetRevision: master
+      releaseName: station
+      parameters: 
+        - name: stationback.ingress.targetGroupARN
+          value: {{ .Values.station.back.ingressarn | quote }}
+        - name: stationback.albiplist
+          value: {{ .Values.station.back.albiplist | quote }}
+        - name: stationfront.ingress.targetGroupARN
+          value: {{ .Values.station.front.ingressarn | quote }}
+
+    repoURL: {{ .Values.helm.repository | quote }} 
+    targetRevision: 1.0.0
   syncPolicy:
     automated:
       prune: true
