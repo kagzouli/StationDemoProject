@@ -74,7 +74,7 @@ jobs:
 
       - name: Debug2
         id: debug2
-        run:  cat index.yml
+        run:  cat index.yaml
         working-directory: helm-repo
 
       - name: push index repo
