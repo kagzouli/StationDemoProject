@@ -6,3 +6,5 @@ app:
   accountidentifier: ""
 
   region: ""
+
+  vpcId: ""

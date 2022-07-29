@@ -5,10 +5,12 @@ metadata:
   namespace: stationdev
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: station
   project: default
   source:
     chart: station

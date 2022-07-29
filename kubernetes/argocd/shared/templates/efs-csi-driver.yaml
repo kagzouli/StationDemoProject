@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: station-aws-efs-csi-driver
+  namespace: transverse
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: default
+  source:
+    chart: aws-efs-csi-driver
+    helm:
+      releaseName: aws-efs-csi-driver
+      parameters: 
+        - name: image.repository
+          value: "602401143452.dkr.ecr.eu-west-3.amazonaws.com/eks/aws-efs-csi-driver"
+        - name: controller.serviceAccount.create
+          value: false
+        - name: controller.serviceAccount.name
+          value: "station-efs-csi-controller-sa" 
+
+    repoURL: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+    targetRevision: 2.2.7
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
