@@ -1,4 +1,4 @@
-name: Deploy EKS station ArgoCD
+name: [AWS] Deploy EKS station ArgoCD
 
 #on: [push]
 on: 
@@ -179,7 +179,17 @@ jobs:
           --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" 
         working-directory: kubernetes/argocd
    
-
+      # Check that ALB load balancer controller is in state Running, Failed 
+      - name: Waiting ALB load balancer to be running
+        id:  albloadbalancercontroller-isrunnin
+        run: |
+          NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+          while [[ -z "${NOTPENDING_ALB_CONTROLLER}" ]]
+          do
+            echo "Les pods ${NOTPENDING_ALB_CONTROLLER} de l'ALB load balancer controller sont encore en cours"
+            sleep 5s
+            NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n ${SHARED_NAMESPACE} -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+          done
 
   # Configuration ArgoCD
   configuration_argocd:
@@ -301,11 +311,17 @@ jobs:
         run: |
           echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-back-alb/$(aws elbv2 describe-load-balancers --names station-back-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )"
 
+      - name: Retrieve back albiplist temp2
+        id: stationback-albiplisttemp2
+        run: |
+          echo "::set-output name=albiplist::$( echo ${{ steps.stationback-albiplisttemp.outputs.albiplist }} | xargs )"
+
       - name: Retrieve back albiplist
         id: stationback-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo ${{ steps.stationback-albiplisttemp.outputs.albiplist }} | xargs )"
-    
+          echo "::set-output name=albiplist::$( echo {${{ steps.stationback-albiplisttemp2.outputs.albiplist }}} )"
+  
+
       # Recuperer stationfront - TargetGroupBinding
       - name: Retrieve front ingress 
         id: stationfront-targetgroupbinding
@@ -319,9 +335,16 @@ jobs:
           echo "::set-output name=albiplist::$(  aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-front-alb/$(aws elbv2 describe-load-balancers --names station-front-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )"
 
       - name: Retrieve front albiplist
-        id: stationfront-albiplist
+        id: stationfront-albiplisttemp2
         run: |
           echo "::set-output name=albiplist::$( echo  ${{ steps.stationfront-albiplisttemp.outputs.albiplist }} | xargs )"
+
+      - name: Retrieve front albiplist
+        id: stationfront-albiplist
+        run: |
+          echo "::set-output name=albiplist::$( echo {${{ steps.stationfront-albiplisttemp2.outputs.albiplist }}} )"
+
+
 
       # Recuperer redis mode
       - name: Retrieve redis mode
