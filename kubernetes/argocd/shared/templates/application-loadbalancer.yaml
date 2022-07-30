@@ -35,7 +35,7 @@ spec:
           value: "station-aws-load-balancer-controller"
 
     repoURL: https://aws.github.io/eks-charts
-    targetRevision: v2.4.2
+    targetRevision: 1.4.3
   syncPolicy:
     automated:
       prune: true
