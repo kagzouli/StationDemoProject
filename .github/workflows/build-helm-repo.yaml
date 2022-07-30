@@ -64,8 +64,8 @@ jobs:
         working-directory: current/kubernetes/helm
 
       # Display value
-      - name: Copy value station
-        id: copy-value-station
+      - name: Debug value
+        id: debug-value
         run: |
           ls 
           cat values.yaml
