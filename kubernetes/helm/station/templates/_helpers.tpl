@@ -4,7 +4,7 @@ Return the stationdb image
 */}}
  
 {{- define "stationdb.image.label" -}}
-{{- printf "%skagzouli/station-db:%s" .Values.app.repoNexusUrl .Chart.AppVersion -}}
+{{- printf "%skagzouli/station-db:%s" .Values.app.repoNexusUrl .Values.image.tag -}}
 {{- end -}}
 
 {{/*
@@ -12,7 +12,7 @@ Return the stationback image
 */}}
 
 {{- define "stationback.image.label" -}}
-{{- printf "%skagzouli/station-back:%s" .Values.app.repoNexusUrl .Chart.AppVersion -}}
+{{- printf "%skagzouli/station-back:%s" .Values.app.repoNexusUrl .Values.image.tag -}}
 {{- end -}}
 
 {{/*
@@ -20,7 +20,7 @@ Return the stationfront image
 */}}
  
 {{- define "stationfront.image.label" -}}
-{{- printf "%skagzouli/station-front-nginx:%s" .Values.app.repoNexusUrl .Chart.AppVersion -}}
+{{- printf "%skagzouli/station-front-nginx:%s" .Values.app.repoNexusUrl .Values.image.tag -}}
 {{- end -}}
 
 {{/*
