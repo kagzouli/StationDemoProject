@@ -314,7 +314,7 @@ jobs:
       - name: Retrieve back albiplist
         id: stationback-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {${{ steps.stationback-albiplisttemp.outputs.albiplist }}} )"
+          echo "::set-output name=albiplist::$( echo {"${{ steps.stationback-albiplisttemp.outputs.albiplist }}"} )"
   
 
       # Recuperer stationfront - TargetGroupBinding
@@ -332,7 +332,7 @@ jobs:
       - name: Retrieve front albiplist
         id: stationfront-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {${{ steps.stationfront-albiplisttemp.outputs.albiplist }}}  )"
+          echo "::set-output name=albiplist::$( echo {"${{ steps.stationfront-albiplisttemp.outputs.albiplist }}"}  )"
 
 
 
