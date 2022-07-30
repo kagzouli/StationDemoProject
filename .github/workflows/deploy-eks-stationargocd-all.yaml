@@ -1,4 +1,4 @@
-name: [AWS] Deploy EKS station ArgoCD
+name: "[AWS] Deploy EKS station ArgoCD"
 
 #on: [push]
 on: 
