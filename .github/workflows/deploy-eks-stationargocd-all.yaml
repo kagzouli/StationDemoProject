@@ -188,7 +188,7 @@ jobs:
           do
             echo "Les pods ${NOTPENDING_ALB_CONTROLLER} de l'ALB load balancer controller sont encore en cours"
             sleep 5s
-            NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n ${SHARED_NAMESPACE} -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+            NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
           done
 
   # Configuration ArgoCD
