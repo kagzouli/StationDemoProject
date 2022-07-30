@@ -18,11 +18,11 @@ spec:
         - name: stationback.ingress.targetGroupARN
           value: {{ .Values.station.back.ingressarn | quote }}
         - name: stationback.albiplist
-          value: [{{ .Values.station.back.albiplist | quote }}]
+          value: {{ .Values.station.back.albiplist | quote }}
         - name: stationfront.ingress.targetGroupARN
           value: {{ .Values.station.front.ingressarn | quote }}
         - name: stationfront.albiplist
-          value: [{{ .Values.station.front.albiplist  }}]
+          value: {{ .Values.station.front.albiplist | quote  }}
         - name: stationredis.mode
           value: {{ .Values.station.redis.mode | quote }}
         - name: stationredis.usessl
