@@ -309,17 +309,12 @@ jobs:
       - name: Retrieve back albiplist temp
         id: stationback-albiplisttemp
         run: |
-          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-back-alb/$(aws elbv2 describe-load-balancers --names station-back-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )"
-
-      - name: Retrieve back albiplist temp2
-        id: stationback-albiplisttemp2
-        run: |
-          echo "::set-output name=albiplist::$( echo ${{ steps.stationback-albiplisttemp.outputs.albiplist }} | xargs )"
+          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-back-alb/$(aws elbv2 describe-load-balancers --names station-back-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g'  )"
 
       - name: Retrieve back albiplist
         id: stationback-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {${{ steps.stationback-albiplisttemp2.outputs.albiplist }}} )"
+          echo "::set-output name=albiplist::$( echo {${{ steps.stationback-albiplisttemp.outputs.albiplist }}} )"
   
 
       # Recuperer stationfront - TargetGroupBinding
@@ -332,17 +327,12 @@ jobs:
       - name: Retrieve front albiplist temp
         id: stationfront-albiplisttemp
         run: |
-          echo "::set-output name=albiplist::$(  aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-front-alb/$(aws elbv2 describe-load-balancers --names station-front-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text )"
-
-      - name: Retrieve front albiplist
-        id: stationfront-albiplisttemp2
-        run: |
-          echo "::set-output name=albiplist::$( echo  ${{ steps.stationfront-albiplisttemp.outputs.albiplist }} | xargs )"
+          echo "::set-output name=albiplist::$(  aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-front-alb/$(aws elbv2 describe-load-balancers --names station-front-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g' )"
 
       - name: Retrieve front albiplist
         id: stationfront-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {${{ steps.stationfront-albiplisttemp2.outputs.albiplist }}} )"
+          echo "::set-output name=albiplist::$( echo {${{ steps.stationfront-albiplisttemp.outputs.albiplist }}}  )"
 
 
 
