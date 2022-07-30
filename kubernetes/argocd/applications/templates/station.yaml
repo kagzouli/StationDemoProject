@@ -41,7 +41,7 @@ spec:
           value: ""
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.0.0
+    targetRevision: 1.0.1
   syncPolicy:
     automated:
       prune: true
