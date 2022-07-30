@@ -1,4 +1,4 @@
-name: [AWS] Delete all eks ArgoCD
+name: "[AWS] Delete all eks ArgoCD"
 
 on: 
   workflow_dispatch:

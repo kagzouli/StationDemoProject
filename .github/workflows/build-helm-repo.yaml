@@ -1,4 +1,4 @@
-name:  [AWS] Build station Helm repo
+name:  "[AWS] Build station Helm repo"
 
 #on: [push]
 on: 

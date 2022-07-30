@@ -1,4 +1,4 @@
-name: Build station
+name: "Build station"
 
 on: [pull_request]
 
