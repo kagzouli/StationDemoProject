@@ -17,7 +17,7 @@ spec:
     helm:
       releaseName: tigera-operator
     repoURL: https://docs.projectcalico.org/charts
-    targetRevision: v3.21.4
+    targetRevision: v3.23.3
   syncPolicy:
     automated:
       prune: true
