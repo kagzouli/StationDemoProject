@@ -63,15 +63,6 @@ jobs:
         run: cp awsvalue.yaml station/values.yaml
         working-directory: current/kubernetes/helm
 
-      # Display value
-      - name: Debug value
-        id: debug-value
-        run: |
-          ls 
-          cat values.yaml
-        working-directory: current/kubernetes/helm/station
-
-
 
       # Generate package helm for station
       - name: package station
