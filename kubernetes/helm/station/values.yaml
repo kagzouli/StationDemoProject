@@ -78,6 +78,9 @@ stationback:
 
   # Nbr connexion datasource active db
   nbConnectionDbMaxActive: 15
+
+  # Liste des ip alb du station back
+  albiplist: []
   
   # Hostname
   hostname: 51.254.36.120
@@ -130,6 +133,10 @@ stationfront:
   
   #Okta URL
   oktaUrl: https://dev-884254.oktapreview.com
+
+  # Liste des ip alb du station front
+  albiplist: []
+  
 
   service:
     # External port
