@@ -26,7 +26,7 @@ spec:
         - name: stationredis.mode
           value: {{ .Values.station.redis.mode | quote }}
         - name: stationredis.usessl
-          value: {{ .Values.station.redis.usessl  }}
+          value: {{ .Values.station.redis.usessl | quote  }}
         - name: stationdb.mode
           value: {{ .Values.station.db.mode | quote }}
         - name: stationdb.storage.storageClass
