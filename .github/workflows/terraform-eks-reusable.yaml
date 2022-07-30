@@ -1,4 +1,4 @@
-name: Terraform EKS
+name: [AWS] Terraform EKS
 
 on: 
   workflow_call:

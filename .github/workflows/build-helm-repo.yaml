@@ -1,4 +1,4 @@
-name: Build station Helm repo
+name:  [AWS] Build station Helm repo
 
 #on: [push]
 on: 
@@ -56,6 +56,13 @@ jobs:
           curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
+
+      # Copy aws value - Hack for AWS
+      - name: Copy value station
+        id: copy-value-station
+        run: cp awsvalue.yaml station/values.yaml
+        working-directory: current/kubernetes/helm
+
 
       # Generate package helm for station
       - name: package station

@@ -1,4 +1,4 @@
-name: Terraform network
+name: [AWS] Terraform network
 
 on: 
   workflow_call:

@@ -1,4 +1,4 @@
-name: Deploy EKS station Helm
+name: [AWS] Deploy EKS station Helm
 
 #on: [push]
 on: 
