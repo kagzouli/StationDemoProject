@@ -18,13 +18,22 @@ on:
           - eu-west-3
         required: true
 
+      supervision:
+        type: choice
+        description: Supervision (Oui/Non)
+        default: non
+        options:
+          - non
+          - oui
+        required: true
+
       deployMode:
         type: choice
         description: Deploy mode (internal, external)
         default: internal
         options:
           - internal
-          - external
+       #  - external
         required: true
 
 env:
@@ -68,6 +77,19 @@ jobs:
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+  # Deploy cloudwatchalarm if supervision is activated.
+  cloudwatchalarm:
+    uses: ./.github/workflows/terraform-cloudwatchalarm-reusable.yaml
+    needs: eks
+    if: ${{ github.event.inputs.supervision == 'oui' }}
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
 
 
   # Installation ArgoCD
