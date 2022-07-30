@@ -16,9 +16,9 @@ station:
   back:
     ingressarn: ""
 
-    albiplist: ""
+    albiplist: []
 
   front:
     ingressarn: ""
 
-    albiplist: ""
+    albiplist: []
