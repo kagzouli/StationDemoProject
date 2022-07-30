@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: station
+    namespace: stationdev
   project: default
   source:
     chart: station
@@ -17,12 +17,16 @@ spec:
       parameters: 
         - name: stationback.ingress.targetGroupARN
           value: {{ .Values.station.back.ingressarn | quote }}
-        - name: stationback.albiplist
-          value: [{{ .Values.station.back.albiplist | quote }}]
+        {{- range $index, $element := .Values.station.back.albiplist }}
+        - name: stationback.albiplist[{{ $index }}]
+          value: {{ $element }}
+        {{- end }}
         - name: stationfront.ingress.targetGroupARN
           value: {{ .Values.station.front.ingressarn | quote }}
-        - name: stationfront.albiplist
-          value: [{{ .Values.station.front.albiplist  }}]
+        {{- range $index, $element := .Values.station.front.albiplist }}
+        - name: stationfront.albiplist[{{ $index }}]
+          value: {{ $element }}
+        {{- end }}
         - name: stationredis.mode
           value: {{ .Values.station.redis.mode | quote }}
         - name: stationredis.usessl
