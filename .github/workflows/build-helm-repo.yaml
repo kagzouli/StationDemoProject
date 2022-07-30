@@ -69,7 +69,7 @@ jobs:
         run: |
           ls 
           cat values.yaml
-        working-directory: current/kubernetes/helms/station
+        working-directory: current/kubernetes/helm/station
 
 
 
