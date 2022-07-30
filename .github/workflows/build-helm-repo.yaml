@@ -63,6 +63,15 @@ jobs:
         run: cp awsvalue.yaml station/values.yaml
         working-directory: current/kubernetes/helm
 
+      # Display value
+      - name: Copy value station
+        id: copy-value-station
+        run: |
+          ls 
+          cat values.yaml
+        working-directory: current/kubernetes/helms/station
+
+
 
       # Generate package helm for station
       - name: package station
