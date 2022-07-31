@@ -5,6 +5,9 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "10"
+  
+  labels:
+    exakaconsulting/strategy: "refresh"
 spec:
   destination:
     server: https://kubernetes.default.svc
@@ -43,6 +46,5 @@ spec:
     repoURL: {{ .Values.helm.repository | quote }} 
     targetRevision: 1.0.1
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
