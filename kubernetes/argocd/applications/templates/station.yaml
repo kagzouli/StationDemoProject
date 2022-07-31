@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "10"
+  
+  labels:
     exakaconsulting/strategy: "refresh"
 spec:
   destination:
