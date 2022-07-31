@@ -33,7 +33,7 @@ on:
         default: internal
         options:
           - internal
-       #  - external
+          - external
         required: true
 
 env:
@@ -77,11 +77,35 @@ jobs:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+  # Deploy RDS
+  rds:
+    uses: ./.github/workflows/terraform-rds-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'externe' }}
+    needs: secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  # Deploy redis
+  redis:
+    uses: ./.github/workflows/terraform-redis-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'externe' }}
+    needs: secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
   # Deploy cloudwatchalarm if supervision is activated.
   cloudwatchalarm:
     uses: ./.github/workflows/terraform-cloudwatchalarm-reusable.yaml
-    needs: eks
+    needs: [eks , rds, redis] 
     if: ${{ github.event.inputs.supervision == 'oui' }}
     with:
       environment: ${{ github.event.inputs.environment}}
@@ -94,7 +118,7 @@ jobs:
   # Installation ArgoCD
   install_argocd:
     runs-on: ubuntu-latest
-    needs: eks
+    needs: [eks , rds, redis] 
     steps:
       
       - name: Checkout
