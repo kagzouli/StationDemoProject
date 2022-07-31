@@ -1,4 +1,4 @@
-name: "Build station"
+name: "[Global] Build station"
 
 #on: [pull_request]
 on: 
@@ -6,6 +6,7 @@ on:
     inputs:
 
       image_on_aws:
+        type: choice
         description: Image on AWS (oui/non)
         default: non
         options:
