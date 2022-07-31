@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
 
-     docker_project_version:
+      docker_project_version:
         type: string
         default: 1.0.12
         description: station  project version
