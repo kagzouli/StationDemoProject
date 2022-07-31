@@ -25,6 +25,53 @@ env:
   NODEJS_VERSION: 14
 
 jobs:
+
+
+  # Push station front to dockerhub
+  push_db_dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
+      # Login to dockerhub
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Tag push
+        id: push-db-docker
+        run: |
+            # Build
+            "docker build -t kagzouli/station-db .
+
+            # Tag 
+            docker tag kagzouli/station-db:latest kagzouli/station-db:${{ github.event.inputs.docker_project_version}}
+
+            # Push
+            docker push kagzouli/station-db:${{ github.event.inputs.docker_project_version}}
+        working-directory: current/application/StationDemoDb
+ 
+
+
+
   build_backend:
     runs-on: ubuntu-latest
     steps:
@@ -158,5 +205,103 @@ jobs:
             # Launch Execution
             npm run-script prod-zip
         working-directory: current/application/StationDemoClient/station-angular4-poc
+
+      - name: Upload frontend zip
+        id: upload-frontendangular
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontendangular
+          path: current/application/StationDemoClient/station-angular4-poc/dist
+
         
-   
+  
+  # Push station front to dockerhub
+  push_front_dockerhub:
+    runs-on: ubuntu-latest
+    needs: build_front
+    steps:
+
+      # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
+      # Download artifact
+      - name: download front end angular
+        id: download-frontend-angular
+        uses: actions/download-artifact@v3
+        with:
+          name: frontendangular
+          path: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/
+ 
+      - name: debug
+        id: debug
+        run: ls
+        working-directory: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/
+ 
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Tag push
+        id: push-frontendangular-docker
+        run: |
+            # Build
+            "docker build -t kagzouli/station-front-nginx dockerwithnginx
+
+            # Tag 
+            docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
+  
+            # Push
+            docker push kagzouli/station-front-nginx:${{ github.event.inputs.docker_project_version}}
+        working-directory: current/application/StationDemoClient/station-angular4-poc
+ 
+   # Push station front to dockerhub
+  tag_version_git:
+    runs-on: ubuntu-latest
+    needs: [push_db_dockerhub, push_back_dockerhub, push_front_dockerhub]
+    steps:
+
+      # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+    
+      - name: Tag Push Git
+        id: push-tag-git
+        run: |
+            # Commit tag
+            "git tag -a v${{ github.event.inputs.docker_project_version}}-m "Version ${{ github.event.inputs.docker_project_version}}"
+
+            # Tag 
+            git push origin v${{ github.event.inputs.docker_project_version}}
+  
+        working-directory: current/application
+ 
