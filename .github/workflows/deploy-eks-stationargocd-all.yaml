@@ -434,9 +434,9 @@ jobs:
         run: argocd login ${{ env.ARGOCD_SERVER }}  --username admin --password ${{ steps.retrieve-password-argocd.outputs.value }} --insecure
 
       # Synchronize applications
-     # - name: Synchronize Applications
-     #   id: synchronize-applications
-     #   run: argocd app sync --prune --retry-limit 2 -l exakaconsulting/strategy=refresh
+      - name: Synchronize Applications
+        id: synchronize-applications
+        run: argocd app sync --prune --retry-limit 2 -l exakaconsulting/strategy=refresh
 
 
 
