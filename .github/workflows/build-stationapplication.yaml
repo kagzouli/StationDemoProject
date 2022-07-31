@@ -63,7 +63,7 @@ jobs:
         with:
           name: backendwar
           path: path/to/artifact/world.txt
-        working-directory: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.war
+          working-directory: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.war
 
   push_back_dockerhub:
     runs-on: ubuntu-latest
