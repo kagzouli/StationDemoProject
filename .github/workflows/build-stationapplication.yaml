@@ -152,8 +152,8 @@ jobs:
 
       - name: Build Backenddocker
         id: build-backend-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back StationDemoWeb/docker
-        working-directory: current/application/spring-java
+        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back .
+        working-directory: current/application/spring-java/StationDemoWeb/docker
  
       - name: Tag Backenddocker
         id: tag-backend-docker
@@ -196,14 +196,14 @@ jobs:
       - run: node --version
       
       # Build front
+      - name: Install front Angular
+        id: install-front-angular
+        run: npm install
+        working-directory: current/application/StationDemoClient/station-angular4-poc
+
       - name: Build front Angular
         id: build-front-angular
-        run: |
-            # Init
-            npm install
-
-            # Launch Execution
-            npm run-script prod-zip
+        run: npm run-script prod-zip
         working-directory: current/application/StationDemoClient/station-angular4-poc
 
       - name: Upload frontend zip
@@ -255,8 +255,8 @@ jobs:
 
       - name: Build frontendangular docker
         id: build-frontendangular-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx/
-        working-directory: current/application
+        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx .
+        working-directory: current/applicationStationDemoClient/station-angular4-poc/dockerwithnginx
  
       - name: Tag frontendangular docker
         id: tag-frontendangular-docker
