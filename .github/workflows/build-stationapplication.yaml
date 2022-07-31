@@ -5,6 +5,13 @@ on:
   workflow_dispatch:
     inputs:
 
+     docker_project_version:
+        type: string
+        default: 1.0.12
+        description: station  project version
+        required: true
+
+
       image_on_aws:
         type: choice
         description: Image on AWS (oui/non)
@@ -20,7 +27,6 @@ env:
 jobs:
   build_backend:
     runs-on: ubuntu-latest
-
     steps:
       
       # Retrieve a token for pull
@@ -50,16 +56,71 @@ jobs:
         id: build_backend
         run: mvn --batch-mode --update-snapshots package
         working-directory: current/application
+ 
+      - name: Upload backend WAR
+        id: upload-backendwar
+        uses: actions/upload-artifact@v3
+        with:
+          name: backendwar
+          path: path/to/artifact/world.txt
+        working-directory: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.war
 
-  login_dockerhub:
+  push_back_dockerhub:
     runs-on: ubuntu-latest
+    needs: build_backend
     steps:
-      
+
+     # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
+      # Download artifact
+      - name: download backend WAR
+        id: download-backendwar
+        uses: actions/download-artifact@v3
+        with:
+          name: backendwar
+          path: StationDemoSecureWeb.war
+        working-directory: current/application/spring-java/StationDemoWeb/docker
+ 
+      - name: debug
+        id: debug
+        run: ls
+        working-directory: current/application/spring-java/StationDemoWeb/docker
+ 
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Tag push
+        id: push-backend-docker
+        run: |
+            # Build
+            docker build -t kagzouli/station-back docker
+
+            # Tag 
+            docker tag kagzouli/station-back:latest kagzouli/station-back:${{ github.event.inputs.docker_project_version}}
+
+            # Push
+            docker push kagzouli/station-back:${{ github.event.inputs.docker_project_version}}
+        working-directory: current/application/spring-java/StationDemoWeb
+ 
 
   build_front:
     runs-on: ubuntu-latest
@@ -90,13 +151,14 @@ jobs:
       - run: node --version
       
       # Build front
-      - name: Build front
-        id: build-front
+      - name: Build front Angular
+        id: build-front-angular
         run: |
             # Init
             npm install
 
             # Launch Execution
             npm run-script prod-zip
+        working-directory: current/application/StationDemoClient/station-angular4-poc
         
    
