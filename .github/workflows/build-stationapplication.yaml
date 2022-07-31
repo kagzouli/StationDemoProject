@@ -23,6 +23,7 @@ on:
 
 env:
   NODEJS_VERSION: 14
+  REPO_DOCKER_HUB: kagzouli3
 
 jobs:
 
@@ -60,13 +61,13 @@ jobs:
         id: push-db-docker
         run: |
             # Build
-            "docker build -t kagzouli/station-db .
+            "docker build -t {{ env.REPO_DOCKER_HUB}}/station-db .
 
             # Tag 
-            docker tag kagzouli/station-db:latest kagzouli/station-db:${{ github.event.inputs.docker_project_version}}
+            docker tag {{ env.REPO_DOCKER_HUB}}/station-db:latest {{ env.REPO_DOCKER_HUB}}/station-db:${{ github.event.inputs.docker_project_version}}
 
             # Push
-            docker push kagzouli/station-db:${{ github.event.inputs.docker_project_version}}
+            docker push {{ env.REPO_DOCKER_HUB}}/station-db:${{ github.event.inputs.docker_project_version}}
         working-directory: current/application/StationDemoDb
  
 
@@ -157,13 +158,13 @@ jobs:
         id: push-backend-docker
         run: |
             # Build
-            docker build -t kagzouli/station-back docker
+            docker build -t {{ env.REPO_DOCKER_HUB}}/station-back docker
 
             # Tag 
-            docker tag kagzouli/station-back:latest kagzouli/station-back:${{ github.event.inputs.docker_project_version}}
+            docker tag {{ env.REPO_DOCKER_HUB}}/station-back:latest {{ env.REPO_DOCKER_HUB}}/station-back:${{ github.event.inputs.docker_project_version}}
 
             # Push
-            docker push kagzouli/station-back:${{ github.event.inputs.docker_project_version}}
+            docker push {{ env.REPO_DOCKER_HUB}}/station-back:${{ github.event.inputs.docker_project_version}}
         working-directory: current/application/spring-java/StationDemoWeb
  
 
@@ -262,13 +263,13 @@ jobs:
         id: push-frontendangular-docker
         run: |
             # Build
-            "docker build -t kagzouli/station-front-nginx dockerwithnginx
+            "docker build -t {{ env.REPO_DOCKER_HUB}}/station-front-nginx dockerwithnginx
 
             # Tag 
-            docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
+            docker tag {{ env.REPO_DOCKER_HUB}}/station-front-nginx:latest {{ env.REPO_DOCKER_HUB}}/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
   
             # Push
-            docker push kagzouli/station-front-nginx:${{ github.event.inputs.docker_project_version}}
+            docker push {{ env.REPO_DOCKER_HUB}}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
         working-directory: current/application/StationDemoClient/station-angular4-poc
  
    # Push station front to dockerhub
