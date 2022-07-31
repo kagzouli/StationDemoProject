@@ -34,7 +34,7 @@ jobs:
       # Retrieve current source
       - name: Checkout current 
         id: checkout-current
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: current
           token: ${{ steps.get_workflow_token.outputs.token }}
@@ -42,7 +42,7 @@ jobs:
       # Retrieve helm repository
       - name: Checkout helm repo
         id: checkout-helm-repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: kagzouli/helm-charts
           path: helm-repo
