@@ -249,7 +249,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: frontendangular
-          path: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/
+          path: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/dist
 
 
       - name: Login to DockerHub
