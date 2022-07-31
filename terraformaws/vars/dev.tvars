@@ -56,3 +56,6 @@ station_front_oktaurl="https://dev-884254.oktapreview.com"
 
 # Alerte
 mail_cloudwatch_alert=["toto@toto.com"]
+
+# ECR 
+image_tag_mutability= "MUTABLE"
