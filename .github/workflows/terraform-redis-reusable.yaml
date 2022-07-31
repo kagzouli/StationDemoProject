@@ -1,4 +1,4 @@
-name: "[AWS] Terraform redis"
+name: "[zzzzzz] Terraform redis"
 
 on: 
   workflow_call:
