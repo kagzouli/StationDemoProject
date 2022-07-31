@@ -1,6 +1,17 @@
 name: "Build station"
 
-on: [pull_request]
+#on: [pull_request]
+on: 
+  workflow_dispatch:
+    inputs:
+
+      image_on_aws:
+        description: Image on AWS (oui/non)
+        default: non
+        options:
+          - non
+          - oui
+        required: true
 
 env:
   NODEJS_VERSION: 14
