@@ -61,7 +61,7 @@ jobs:
         id: push-db-docker
         run: |
             # Build
-            "docker build -t {{ env.REPO_DOCKER_HUB }}/station-db .
+            docker build -t {{ env.REPO_DOCKER_HUB }}/station-db .
 
             # Tag 
             docker tag {{ env.REPO_DOCKER_HUB }}/station-db:latest {{ env.REPO_DOCKER_HUB }}/station-db:${{ github.event.inputs.docker_project_version}}
@@ -263,7 +263,7 @@ jobs:
         id: push-frontendangular-docker
         run: |
             # Build
-            "docker build -t {{ env.REPO_DOCKER_HUB }}/station-front-nginx dockerwithnginx
+            docker build -t {{ env.REPO_DOCKER_HUB }}/station-front-nginx dockerwithnginx
 
             # Tag 
             docker tag {{ env.REPO_DOCKER_HUB }}/station-front-nginx:latest {{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
