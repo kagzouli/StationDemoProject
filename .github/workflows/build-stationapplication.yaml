@@ -264,7 +264,7 @@ jobs:
  
             
       - name: Push frontendangular docker
-        id: tag-frontendangular-docker
+        id: push-frontendangular-docker
         run: docker push ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
   
             
