@@ -94,7 +94,7 @@ jobs:
         with:
           name: backendwar
           path: StationDemoSecureWeb.war
-        working-directory: current/application/spring-java/StationDemoWeb/docker
+          working-directory: current/application/spring-java/StationDemoWeb/docker
  
       - name: debug
         id: debug
