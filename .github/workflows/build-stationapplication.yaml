@@ -62,8 +62,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
   build_front:
-
-        # Retrieve a token for pull
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Retrieve a token for pull
       - name: Get Token
         id: get_workflow_token
         uses: peter-murray/workflow-application-token-action@v1
