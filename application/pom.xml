@@ -342,10 +342,11 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>StationDemoService</module>
-		<module>StationDemoWeb</module>
-		<module>StationDemoBatch</module>
-		<module>StationDemoClient/station-angular4-poc</module>
+		<module>spring-java/StationDemoService</module>
+		<module>spring-java/StationDemoWeb</module>
+		<module>spring-java/StationDemoBatch</module>
+		<!-- Bad practice - Client Angular must not be here but it's only to show how to do if we have to make this bad conception -->
+	<!--	<module>StationDemoClient/station-angular4-poc</module> -->
 	</modules>
 
 
