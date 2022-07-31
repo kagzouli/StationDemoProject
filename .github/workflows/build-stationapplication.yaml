@@ -60,15 +60,12 @@ jobs:
       - name: Tag push
         id: push-db-docker
         run: |
-            # Build
-            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-db .
+            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-db StationDemoDb
 
-            # Tag 
             docker tag ${{ env.REPO_DOCKER_HUB }}/station-db:latest ${{ env.REPO_DOCKER_HUB }}/station-db:${{ github.event.inputs.docker_project_version}}
 
-            # Push
             docker push ${{ env.REPO_DOCKER_HUB }}/station-db:${{ github.event.inputs.docker_project_version}}
-        working-directory: current/application/StationDemoDb
+        working-directory: current/application
  
 
 
@@ -157,15 +154,12 @@ jobs:
       - name: Tag push
         id: push-backend-docker
         run: |
-            # Build
-            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back docker
+            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back StationDemoWeb/docker
 
-            # Tag 
             docker tag ${{ env.REPO_DOCKER_HUB }}/station-back:latest ${{ env.REPO_DOCKER_HUB }}/station-back:${{ github.event.inputs.docker_project_version}}
 
-            # Push
             docker push ${{ env.REPO_DOCKER_HUB }}/station-back:${{ github.event.inputs.docker_project_version}}
-        working-directory: current/application/spring-java/StationDemoWeb
+        working-directory: current/application/spring-java
  
 
   build_front:
@@ -263,14 +257,12 @@ jobs:
         id: push-frontendangular-docker
         run: |
             # Build
-            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx dockerwithnginx
-
-            # Tag 
+            docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx/
+            
             docker tag ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:latest ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
   
-            # Push
             docker push ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
-        working-directory: current/application/StationDemoClient/station-angular4-poc
+        working-directory: current/application
  
    # Push station front to dockerhub
   tag_version_git:
@@ -298,10 +290,8 @@ jobs:
       - name: Tag Push Git
         id: push-tag-git
         run: |
-            # Commit tag
-            "git tag -a v${{ github.event.inputs.docker_project_version}}-m "Version ${{ github.event.inputs.docker_project_version}}"
+            git tag -a v${{ github.event.inputs.docker_project_version}}-m "Version ${{ github.event.inputs.docker_project_version}}"
 
-            # Tag 
             git push origin v${{ github.event.inputs.docker_project_version}}
   
         working-directory: current/application
