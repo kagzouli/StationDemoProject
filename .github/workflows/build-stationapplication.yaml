@@ -90,13 +90,14 @@ jobs:
       - run: node --version
       
       # Build front
-      - name: Build front
-        id: build-front
+      - name: Build front Angular
+        id: build-front-angular
         run: |
             # Init
             npm install
 
             # Launch Execution
             npm run-script prod-zip
+        working-directory: current/application/StationDemoClient/station-angular4-poc
         
    
