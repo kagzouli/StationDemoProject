@@ -152,8 +152,8 @@ jobs:
 
       - name: Build Backenddocker
         id: build-backend-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back spring-java/StationDemoWeb/docker
-        working-directory: current/application
+        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back .
+        working-directory: current/application/spring-java/StationDemoWeb/docker
  
       - name: Tag Backenddocker
         id: tag-backend-docker
@@ -255,8 +255,8 @@ jobs:
 
       - name: Build frontendangular docker
         id: build-frontendangular-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx
-        working-directory: current/application
+        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx .
+        working-directory: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx
  
       - name: Tag frontendangular docker
         id: tag-frontendangular-docker
