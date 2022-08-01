@@ -23,3 +23,9 @@ variable "image_tag_mutability" {
   description = "image mutable/immutable , in production must be immutable"
   type        = string
 }
+
+variable "force_delete_ecr" {
+  description = Force delete 
+  type        = boolean
+  default     = false
+}

@@ -59,3 +59,4 @@ mail_cloudwatch_alert=["toto@toto.com"]
 
 # ECR 
 image_tag_mutability= "MUTABLE"
+force_delete_ecr    = true

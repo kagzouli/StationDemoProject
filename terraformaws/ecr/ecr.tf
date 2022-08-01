@@ -8,6 +8,7 @@ locals {
 resource "aws_ecr_repository" "station_database_registry" {
     name  = "station/station-db"
     image_tag_mutability = var.image_tag_mutability
+    force_delete  = var.force_delete_ecr
     image_scanning_configuration {
       scan_on_push = true
     }
@@ -55,6 +56,7 @@ resource "aws_ecr_repository_policy" "station_database_registry_policy" {
 resource "aws_ecr_repository" "station_back_registry" {
     name  = "station/station-back"
     image_tag_mutability = var.image_tag_mutability
+    force_delete  = var.force_delete_ecr
     image_scanning_configuration {
       scan_on_push = true
     }
@@ -103,6 +105,7 @@ resource "aws_ecr_repository_policy" "station_back_registry_policy" {
 resource "aws_ecr_repository" "station_front_registry" {
     name  = "station/station-front-nginx"
     image_tag_mutability = var.image_tag_mutability
+    force_delete  = var.force_delete_ecr
     image_scanning_configuration {
       scan_on_push = true
     }
