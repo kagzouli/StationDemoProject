@@ -1,4 +1,4 @@
-name: "[Repo] Build station on dockerhub"
+name: "[Repo] Build docker station on dockerhub"
 
 #on: [pull_request]
 on: 

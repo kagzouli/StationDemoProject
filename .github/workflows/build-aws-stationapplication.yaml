@@ -1,4 +1,4 @@
-name: "[AWS] Build station on AWS"
+name: "[AWS] Build docker station on AWS"
 
 #on: [pull_request]
 on: 
