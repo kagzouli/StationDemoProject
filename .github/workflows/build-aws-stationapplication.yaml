@@ -1,4 +1,4 @@
-name: "[Repo] Build station on dockerhub"
+name: "[AWS] Build station on AWS"
 
 #on: [pull_request]
 on: 
@@ -10,9 +10,16 @@ on:
         default: 1.0.11
         description: station  project version
         required: true
+
+      region:
+        type: choice
+        description: The region where we can create objects
+        options:
+          - eu-west-3
+        required: true
+
 env:
   NODEJS_VERSION: 14
-  REPO_DOCKER_HUB: kagzouli3
 
 jobs:
 
@@ -39,25 +46,35 @@ jobs:
           path: current
           token: ${{ steps.get_workflow_token.outputs.token }}
 
-      # Login to dockerhub
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
+      # Get AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
 
+      # Login to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Build db docker
       - name: Build db docker
         id: build-db-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-db StationDemoDb
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-db StationDemoDb
         working-directory: current/application
 
+      # Tag db docker
       - name: Tag db docker
         id: tag-db-docker
-        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-db:latest ${{ env.REPO_DOCKER_HUB }}/station-db:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-db:latest ${{ steps.login-ecr.outputs.registry }}/station-db:${{ github.event.inputs.docker_project_version}}
 
+      # Push db docker
       - name: Push db docker
         id: push-db-docker
-        run: docker push ${{ env.REPO_DOCKER_HUB }}/station-db:${{ github.event.inputs.docker_project_version}}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-db:${{ github.event.inputs.docker_project_version}}
         
  
 
@@ -132,26 +149,35 @@ jobs:
           name: backendwar
           path: current/application/spring-java/StationDemoWeb/docker/StationDemoSecureWeb.war
  
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
+      # Get AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
 
+      # Login to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Build back docker
       - name: Build Backenddocker
         id: build-backend-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back .
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-back .
         working-directory: current/application/spring-java/StationDemoWeb/docker
  
+      # Tag back docker
       - name: Tag Backenddocker
         id: tag-backend-docker
-        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-back:latest ${{ env.REPO_DOCKER_HUB }}/station-back:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-back:latest ${{ steps.login-ecr.outputs.registry }}/station-back:${{ github.event.inputs.docker_project_version}}
  
-            
+      # Push back docker       
       - name: Push Backenddocker
         id: push-backend-docker
-        run: docker push ${{ env.REPO_DOCKER_HUB }}/station-back:${{ github.event.inputs.docker_project_version}}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-back:${{ steps.login-ecr.outputs.registry }}
  
 
             
@@ -236,58 +262,32 @@ jobs:
           path: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/dist
 
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
+      # Get AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
+          aws-access-key-id: ${{ secrets.aws_access_key }}
+          aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
 
+      # Login to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Build front docker
       - name: Build frontendangular docker
         id: build-frontendangular-docker
-        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-front-nginx .
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-front-nginx .
         working-directory: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx
  
+      # Tag front docker
       - name: Tag frontendangular docker
         id: tag-frontendangular-docker
-        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:latest ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:latest ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
  
-            
+      # Push front docker      
       - name: Push frontendangular docker
         id: push-frontendangular-docker
-        run: docker push ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
-  
-            
- 
-   # Push station front to dockerhub
-  tag_version_git:
-    runs-on: ubuntu-latest
-    needs: [push_db_dockerhub, push_back_dockerhub, push_front_dockerhub]
-    if: github.ref == 'refs/heads/master'
-    steps:
-
-      # Retrieve a token for pull
-      - name: Get Token
-        id: get_workflow_token
-        uses: peter-murray/workflow-application-token-action@v1
-        with:
-          application_id: ${{ secrets.APPLICATION_ID }}
-          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-
-
-      # Retrieve current source
-      - name: Checkout current 
-        id: checkout-current
-        uses: actions/checkout@v3
-        with:
-          path: current
-          token: ${{ steps.get_workflow_token.outputs.token }}
-    
-
-      - name: Tag and push git source
-        id: tag-git-version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          custom_tag: ${{ github.event.inputs.docker_project_version}}
-          tag_prefix: v
-          github_token: ${{ steps.get_workflow_token.outputs.token }}
- 
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
