@@ -299,5 +299,4 @@ jobs:
         with:
           custom_tag: v${{ github.event.inputs.docker_project_version}}
           github_token: ${{ steps.get_workflow_token.outputs.token }}
-        working-directory: current/application
  
