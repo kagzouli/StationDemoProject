@@ -5,6 +5,13 @@ on:
   workflow_dispatch:
     inputs:
 
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
       docker_project_version:
         type: string
         default: 1.0.11
@@ -23,12 +30,22 @@ env:
 
 jobs:
 
+  # Deploy ECR
+  ecr:
+    uses: ./.github/workflows/terraform-ecr-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Push station front to dockerhub
   push_db_dockerhub:
+    needs: ecr
     runs-on: ubuntu-latest
     steps:
-      
+
       # Retrieve a token for pull
       - name: Get Token
         id: get_workflow_token
@@ -77,9 +94,6 @@ jobs:
         run: docker push ${{ steps.login-ecr.outputs.registry }}/station-db:${{ github.event.inputs.docker_project_version}}
         
  
-
-
-
   build_backend:
     runs-on: ubuntu-latest
     steps:
