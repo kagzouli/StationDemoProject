@@ -1,4 +1,4 @@
-name: "[AWS] Delete all ECR"
+name: "[AWS] Delete ECR"
 
 on: 
   workflow_dispatch:
@@ -26,8 +26,6 @@ jobs:
   # Delete ECR
   delete_ecr:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.deployMode == 'externe' }}
-    needs: destroy_station
     steps:
       - name: Checkout
         id: checkout
@@ -58,4 +56,3 @@ jobs:
         id: destroy-ecr
         run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
         working-directory: terraformaws/ecr
-        
