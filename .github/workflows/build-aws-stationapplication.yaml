@@ -14,7 +14,7 @@ on:
 
       docker_project_version:
         type: string
-        default: 1.0.11
+        default: 1.0.10
         description: station  project version
         required: true
 
@@ -192,7 +192,7 @@ jobs:
       # Push back docker       
       - name: Push Backenddocker
         id: push-backend-docker
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/station/station-back:${{ steps.login-ecr.outputs.registry }}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station/station-back:${{ github.event.inputs.docker_project_version}}
  
 
             
