@@ -80,18 +80,18 @@ jobs:
       # Build db docker
       - name: Build db docker
         id: build-db-docker
-        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-db StationDemoDb
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station/station-db StationDemoDb
         working-directory: current/application
 
       # Tag db docker
       - name: Tag db docker
         id: tag-db-docker
-        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-db:latest ${{ steps.login-ecr.outputs.registry }}/station-db:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station/station-db:latest ${{ steps.login-ecr.outputs.registry }}/station/station-db:${{ github.event.inputs.docker_project_version}}
 
       # Push db docker
       - name: Push db docker
         id: push-db-docker
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-db:${{ github.event.inputs.docker_project_version}}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station/station-db:${{ github.event.inputs.docker_project_version}}
         
  
   build_backend:
@@ -181,18 +181,18 @@ jobs:
       # Build back docker
       - name: Build Backenddocker
         id: build-backend-docker
-        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-back .
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station/station-back .
         working-directory: current/application/spring-java/StationDemoWeb/docker
  
       # Tag back docker
       - name: Tag Backenddocker
         id: tag-backend-docker
-        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-back:latest ${{ steps.login-ecr.outputs.registry }}/station-back:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station/station-back:latest ${{ steps.login-ecr.outputs.registry }}/station/station-back:${{ github.event.inputs.docker_project_version}}
  
       # Push back docker       
       - name: Push Backenddocker
         id: push-backend-docker
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-back:${{ steps.login-ecr.outputs.registry }}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station/station-back:${{ steps.login-ecr.outputs.registry }}
  
 
             
@@ -295,15 +295,15 @@ jobs:
       # Build front docker
       - name: Build frontendangular docker
         id: build-frontendangular-docker
-        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station-front-nginx .
+        run: docker build -t ${{ steps.login-ecr.outputs.registry }}/station/station-front-nginx .
         working-directory: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx
  
       # Tag front docker
       - name: Tag frontendangular docker
         id: tag-frontendangular-docker
-        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:latest ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
+        run: docker tag ${{ steps.login-ecr.outputs.registry }}/station/station-front-nginx:latest ${{ steps.login-ecr.outputs.registry }}/station/station-front-nginx:${{ github.event.inputs.docker_project_version}}
  
       # Push front docker      
       - name: Push frontendangular docker
         id: push-frontendangular-docker
-        run: docker push ${{ steps.login-ecr.outputs.registry }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
+        run: docker push ${{ steps.login-ecr.outputs.registry }}/station/station-front-nginx:${{ github.event.inputs.docker_project_version}}

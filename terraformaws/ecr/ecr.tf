@@ -6,7 +6,7 @@ locals {
 
 ################### Registry database ######################################################################
 resource "aws_ecr_repository" "station_database_registry" {
-    name  = "station-ecr-registry/station-db"
+    name  = "station/station-db"
     image_tag_mutability = var.image_tag_mutability
     image_scanning_configuration {
       scan_on_push = true
@@ -53,7 +53,7 @@ resource "aws_ecr_repository_policy" "station_database_registry_policy" {
 
 ##################### Registry back ##############################################################
 resource "aws_ecr_repository" "station_back_registry" {
-    name  = "station-ecr-registry/station-back"
+    name  = "station/station-back"
     image_tag_mutability = var.image_tag_mutability
     image_scanning_configuration {
       scan_on_push = true
@@ -101,7 +101,7 @@ resource "aws_ecr_repository_policy" "station_back_registry_policy" {
 
 ##################### Registry front ##############################################################
 resource "aws_ecr_repository" "station_front_registry" {
-    name  = "station-ecr-registry/station-front-nginx"
+    name  = "station/station-front-nginx"
     image_tag_mutability = var.image_tag_mutability
     image_scanning_configuration {
       scan_on_push = true
