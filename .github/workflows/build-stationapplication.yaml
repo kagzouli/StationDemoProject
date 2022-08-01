@@ -150,11 +150,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
-      - name: Debug karim
-        id: debug-karim
-        run: ls
-        working-directory: current/application/spring-java/StationDemoWeb/docker
-
       - name: Build Backenddocker
         id: build-backend-docker
         run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-back .
@@ -265,7 +260,7 @@ jobs:
  
       - name: Tag frontendangular docker
         id: tag-frontendangular-docker
-        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:latest ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}"
+        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:latest ${{ env.REPO_DOCKER_HUB }}/station-front-nginx:${{ github.event.inputs.docker_project_version}}
  
             
       - name: Push frontendangular docker
