@@ -1,4 +1,4 @@
-name: "[Global] Build station"
+name: "[Repo] Build station"
 
 #on: [pull_request]
 on: 
