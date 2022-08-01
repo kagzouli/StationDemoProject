@@ -294,7 +294,7 @@ jobs:
     
       - name: Tag git source
         id: tag-git-source
-        run: git tag -a v${{ github.event.inputs.docker_project_version}}-m "Version ${{ github.event.inputs.docker_project_version}}"
+        run: git tag -a v${{ github.event.inputs.docker_project_version}} -m "Version ${{ github.event.inputs.docker_project_version}}"
         working-directory: current/application
 
       - name: Push git source
