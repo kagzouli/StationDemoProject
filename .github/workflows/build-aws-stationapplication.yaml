@@ -96,6 +96,7 @@ jobs:
  
   build_backend:
     runs-on: ubuntu-latest
+    needs: ecr
     steps:
       
       # Retrieve a token for pull
@@ -198,6 +199,7 @@ jobs:
 
   build_front:
     runs-on: ubuntu-latest
+    needs: ecr
     steps:
       
       # Retrieve a token for pull
