@@ -1,5 +1,6 @@
 locals {
-  role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/devops-ci"
+ # role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/devops-ci"
+   role_arn = "*"
 }
 
 
@@ -29,7 +30,9 @@ resource "aws_ecr_repository_policy" "station_database_registry_policy" {
         "Sid": "private access for db repository",
         "Effect": "Allow",
         "Principal": 
-          {"AWS": "${local.role_arn}" },
+          {
+            "AWS": "${local.role_arn}" 
+          },
         "Action": [
           "ecr:BatchCheckLayerAvailability",
           "ecr:BatchGetImage",
@@ -73,8 +76,10 @@ resource "aws_ecr_repository_policy" "station_back_registry_policy" {
       {
         "Sid": "private access for back repository",
         "Effect": "Allow",
-        "Principal": 
-          {"AWS": "${local.role_arn}" },
+        "Principal":
+          {
+            "AWS": "${local.role_arn}"
+          },
         "Action": [
           "ecr:BatchCheckLayerAvailability",
           "ecr:BatchGetImage",
@@ -119,8 +124,10 @@ resource "aws_ecr_repository_policy" "station_front_registry_policy" {
       {
         "Sid": "private access for front repository",
         "Effect": "Allow",
-        "Principal": 
-          {"AWS": "${local.role_arn}" },
+        "Principal":
+        {
+          "AWS": "${local.role_arn}"
+        },
         "Action": [
           "ecr:BatchCheckLayerAvailability",
           "ecr:BatchGetImage",

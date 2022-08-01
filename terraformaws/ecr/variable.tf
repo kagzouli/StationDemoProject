@@ -19,5 +19,7 @@ variable "region" {
   description = "Region"
 }
 
-
-
+variable "image_tag_mutability" {
+  description = "image mutable/immutable , in production must be immutable"
+  type        = string
+}
