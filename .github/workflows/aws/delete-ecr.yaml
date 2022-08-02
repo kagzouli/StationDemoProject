@@ -25,7 +25,7 @@ jobs:
 
   # Delete ECR
   delete_ecr:
-    uses: ./.github/workflows/reuse/terraform-aws-delete-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-delete-reusable.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
