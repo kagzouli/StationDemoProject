@@ -29,9 +29,9 @@ spec:
         cidr: {{ .Values.app.network.vpc_cidr | quote }} 
       ports:
       - protocol: TCP
-          port: 3306
+        port: 3306
       - protocol: TCP
-          port: 6379
+        port: 6379
 
      
   # Ouverture Port DNS
