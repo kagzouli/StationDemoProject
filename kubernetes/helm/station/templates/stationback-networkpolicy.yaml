@@ -27,11 +27,11 @@ spec:
   - to:
     - ipBlock:
         cidr: {{ .Values.app.network.vpc_cidr | quote }} 
-      ports:
-      - protocol: TCP
-        port: 3306
-      - protocol: TCP
-        port: 6379
+    ports:
+    - protocol: TCP
+      port: 3306
+    - protocol: TCP
+      port: 6379
 
      
   # Ouverture Port DNS
