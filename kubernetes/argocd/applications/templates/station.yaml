@@ -44,7 +44,7 @@ spec:
           value: ""
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.0.1
+    targetRevision: 1.0.2
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
