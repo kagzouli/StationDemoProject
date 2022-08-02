@@ -32,10 +32,11 @@ jobs:
 
   # Deploy ECR
   ecr:
-    uses: ./.github/workflows/terraform-ecr-reusable.yaml
+    uses: ./.github/workflows/reuse/terraform-aws-apply-reusable.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: "ecr"
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
