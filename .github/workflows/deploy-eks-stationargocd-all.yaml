@@ -81,7 +81,7 @@ jobs:
   # Deploy RDS
   rds:
     uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'externe' }}
+    if: ${{ github.event.inputs.deployMode == 'external' }}
     needs: secrets
     with:
       environment: ${{ github.event.inputs.environment}}
@@ -94,7 +94,7 @@ jobs:
   # Deploy redis
   redis:
     uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'externe' }}
+    if: ${{ github.event.inputs.deployMode == 'external' }}
     needs: secrets
     with:
       environment: ${{ github.event.inputs.environment}}
