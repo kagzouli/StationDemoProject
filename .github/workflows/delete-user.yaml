@@ -1,4 +1,4 @@
-name: "[AWS] delete user"
+name: "[AWS] Delete user"
 
 #on: [push]
 on: 
