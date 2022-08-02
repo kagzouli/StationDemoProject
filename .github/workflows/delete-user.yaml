@@ -1,0 +1,32 @@
+name: "[AWS] delete user"
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to delete
+        options:
+          - dev
+        required: true
+
+      region:
+        type: choice
+        description: The region where we can delete objects
+        options:
+          - eu-west-3
+        required: true
+
+
+jobs:
+  # Deploy user
+  user:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: user
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
