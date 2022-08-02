@@ -8,7 +8,7 @@ resource "aws_elasticache_subnet_group" "station_redis_subnet_group" {
 resource "aws_elasticache_replication_group" "station_redis_cluster" {
   replication_group_id           =  "station-redis-cluster"
   engine                         =  "redis"
-  replication_group_description  =  "Redis cluster for caching storage (has automatic eviction)"
+  description  =  "Redis cluster for caching storage (has automatic eviction)"
   node_type                      =  var.station_redis_instance_type 
   transit_encryption_enabled     =  true
   at_rest_encryption_enabled     =  true

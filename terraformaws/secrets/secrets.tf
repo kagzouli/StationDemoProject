@@ -16,25 +16,25 @@ resource "aws_secretsmanager_secret" "station_secretmanager" {
 resource "random_password" "station_db_root_password" {
   length           = 16
   special          = true
-  override_special = "_%="
+  override_special = "_="
 }
 
 resource "random_password" "station_db_password" {
   length           = 16
   special          = true
-  override_special = "_%="
+  override_special = "_="
 }
 
 resource "random_password" "station_redis_password" {
   length           = 16
   special          = true
-  override_special = "_%="
+  override_special = "_="
 }
 
 resource "random_password" "station_argocd_password" {
   length           = 16
   special          = true
-  override_special = "_%="
+  override_special = "_="
 }
 
 locals {
