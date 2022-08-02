@@ -50,7 +50,7 @@ jobs:
 
       - name: Debug
         id: debug-karim
-        run:  echo ${{ github.event.inputs.component}}
+        run:  echo ${{ github.event.inputs.component}},${{ github.event.inputs.region}}
 
       - name: init
         id: init
