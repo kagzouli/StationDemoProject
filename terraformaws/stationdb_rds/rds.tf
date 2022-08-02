@@ -18,7 +18,7 @@ resource "aws_rds_cluster" "station_db_rds_cluster" {
   cluster_identifier      = "station-db-rds-cluster"
   availability_zones      = ["${var.az_zone1}", "${var.az_zone2}"] 
   engine                  = "aurora-mysql" 
-  engine_version          = "5.7.mysql_aurora.2.03.2" 
+  engine_version          = "5.7.mysql_aurora.2.10.1" 
   database_name           = var.station_db_databasename
   master_username         = var.station_db_username
   master_password         = jsondecode(data.aws_secretsmanager_secret_version.station_vers_secretmanager.secret_string)["stationdbpassword"] 
