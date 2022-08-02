@@ -44,59 +44,62 @@ env:
 jobs:
   # Deploy networks
   networks:
-    uses: ./.github/workflows/terraform-networks-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     with:
       # environment: ${{ env.ENVIRONMENT_NAME}}
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: networks
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Deploy networks
   secrets:
-    uses: ./.github/workflows/terraform-secrets-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     needs: networks
     with:
-      # environment: ${{ env.ENVIRONMENT_NAME}}
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: secrets
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Deploy EKS
   eks:
-    uses: ./.github/workflows/terraform-eks-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     needs: secrets
     with:
-      # environment: ${{ env.ENVIRONMENT_NAME}}
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: eks
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Deploy RDS
   rds:
-    uses: ./.github/workflows/terraform-rds-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'externe' }}
     needs: secrets
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: stationdb_rds
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   # Deploy redis
   redis:
-    uses: ./.github/workflows/terraform-redis-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'externe' }}
     needs: secrets
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: stationredis
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -104,12 +107,13 @@ jobs:
 
   # Deploy cloudwatchalarm if supervision is activated.
   cloudwatchalarm:
-    uses: ./.github/workflows/terraform-cloudwatchalarm-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
     needs: [eks , rds, redis] 
     if: ${{ github.event.inputs.supervision == 'oui' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      component: cloudwatchalarm
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  

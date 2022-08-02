@@ -81,216 +81,75 @@ jobs:
         working-directory: kubernetes/argocd
 
   delete_cloudwatchalarm:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: destroy_station
     if: ${{ github.event.inputs.supervision == 'oui' }}
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: cloudwatchalarm
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
 
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: cloudwatchalarm init
-        id: init-cloudwatchalarm
-        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/cloudwatchalarm
-
-      - name: cloudwatchalarm destroy
-        id: destroy-cloudwatchalarm
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/cloudwatchalarm
 
   # Delete RDS
   delete_rds:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'externe' }}
     needs: destroy_station
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: rds init
-        id: init-rds
-        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/stationdb_rds
-
-      - name: rds destroy
-        id: destroy-rds
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/stationdb_rds
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationdb_rds
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
 
   # Delete Redis
   delete_redis:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'externe' }}
     needs: destroy_station
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationredis
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
 
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: redis init
-        id: init-redis
-        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/stationredis
-
-      - name: redis destroy
-        id: destroy-redis
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/stationredis
-
-
-
-
-
-
+  #Delete EKS
   delete_eks:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: [destroy_station , delete_rds]
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: eks init
-        id: init-eks
-        run: terraform init -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/eks
-
-      - name: eks destroy
-        id: destroy-eks
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/eks
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: eks
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
 
  
   delete_secrets:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: delete_eks
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: secrets init
-        id: init-secrets
-        run: terraform init  -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/secrets
-
-      - name: secrets destroy
-        id: destroy-secrets
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: secrets
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
 
   delete_networks:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: delete_secrets
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TERRAFORM_VERSION}} 
-          terraform_wrapper: false
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region}}
-          role-duration-seconds: 3600
-
-
-      - name: networks init
-        id: init-networks
-        run: terraform init  -backend-config="backends/${{ github.event.inputs.environment}}_backend.tfvars" 
-        working-directory: terraformaws/networks
-
-      - name: networks destroy
-        id: destroy-networks
-        run: terraform destroy -auto-approve  --lock=false --var-file=../vars/${{ github.event.inputs.environment}}.tvars
-        working-directory: terraformaws/networks
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: networks
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
