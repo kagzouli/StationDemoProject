@@ -67,7 +67,7 @@ resource "aws_iam_role_policy" "devops_ci" {
 #################### Role policy devops-cd #######################################
 
 resource "aws_iam_role" "devops_cd" {
-  name = "devops-ci"
+  name = "devops-cd"
 
   assume_role_policy = data.aws_iam_policy_document.devops_trust_relationship.json
 }
