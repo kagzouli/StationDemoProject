@@ -13,9 +13,7 @@
 # limitations under the License.
 
 app:
-  # Context path of the repo nexus url
-  repoNexusUrl: ''
-
+ 
   network:
     vpc_cidr:  '12.0.0.0/21'
 
@@ -24,6 +22,9 @@ app:
 image:
   tag: 1.0.10
  
+  # Context path of the repo nexus url
+  repoNexusUrl: 'kagzouli'
+
  
 stationredis:
   
