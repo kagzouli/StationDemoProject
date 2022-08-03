@@ -3,7 +3,14 @@
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": "*",
+            "Action": [
+                "ecr:CompleteLayerUpload",
+                "ecr:GetAuthorizationToken",
+                "ecr:UploadLayerPart",
+                "ecr:InitiateLayerUpload",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage"
+            ],
             "Resource": "*"
         }
     ]

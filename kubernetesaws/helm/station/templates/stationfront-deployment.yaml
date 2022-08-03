@@ -44,7 +44,9 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
+          - weight: 100  
+            podAffinityTerm:
+              labelSelector:
                 matchLabels:
                   app: stationfront
               topologyKey: kubernetes.io/hostname
