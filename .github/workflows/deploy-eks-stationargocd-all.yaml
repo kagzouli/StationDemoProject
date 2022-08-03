@@ -460,7 +460,7 @@ jobs:
       # Synchronize applications
       - name: Synchronize Applications
         id: synchronize-applications
-        run: argocd app sync --prune --retry-limit 2 -l exakaconsulting/strategy=refresh -insecure  
+        run: argocd app sync --prune --retry-limit 2 -l exakaconsulting/strategy=refresh --insecure  
 
 
 
