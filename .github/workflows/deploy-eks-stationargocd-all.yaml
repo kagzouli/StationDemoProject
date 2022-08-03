@@ -122,6 +122,7 @@ jobs:
   # Installation ArgoCD
   install_argocd:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: [eks , rds, redis] 
     steps:
       
@@ -173,7 +174,7 @@ jobs:
       - name: Change NodePort ArgoCD Server
         id: argocd-nodeport
         run: bash changenoport-argocd.sh
-        working-directory: kubernetes/argocd
+        working-directory: kubernetesaws/argocd
       
 
   # Configuration ArgoCD
@@ -226,7 +227,7 @@ jobs:
           --set app.accountidentifier="${{ steps.retrieve-account.outputs.identifier }}" \
           --set app.region="${{ github.event.inputs.region}}" \
           --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" 
-        working-directory: kubernetes/argocd
+        working-directory: kubernetesaws/argocd
    
       # Check that ALB load balancer controller is in state Running, Failed 
       - name: Waiting ALB load balancer to be running
@@ -296,7 +297,7 @@ jobs:
       - name: Open UI Argocd
         id: argocd-openui
         run: helm upgrade -i argocdinstall ./argocd --set argocd.ingress.targetGroupARN="${{ steps.argocd-targetgroupbinding.outputs.targetGroupBinding }}" --set argocd.network.vpc_cidr="${{ steps.argocd-vpc.outputs.cidr }}"
-        working-directory: kubernetes/helm
+        working-directory: kubernetesaws/helm
 
 
       - name: Retrieve argocdpass
@@ -422,7 +423,7 @@ jobs:
           --set station.redis.mode="${{ steps.stationredis-mode.outputs.mode }}" \
           --set station.redis.usessl="${{ steps.stationredis-mode.outputs.usessl }}" \
           --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" 
-        working-directory: kubernetes/argocd
+        working-directory: kubernetesaws/argocd
   
 
   # Synchronize application

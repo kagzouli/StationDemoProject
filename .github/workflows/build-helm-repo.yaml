@@ -61,30 +61,30 @@ jobs:
       - name: Copy value station
         id: copy-value-station
         run: cp awsvalue.yaml station/values.yaml
-        working-directory: current/kubernetes/helm
+        working-directory: current/kubernetesaws/helm
 
 
       # Generate package helm for station
       - name: package station
         id: package-station
         run: helm package station --version ${{ github.event.inputs.helm_project_version}}
-        working-directory: current/kubernetes/helm
+        working-directory: current/kubernetesaws/helm
 
       # Copy station to helm repository
       - name: Copie station helm repo
         id: copy-station
-        run: cp current/kubernetes/helm/station-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
+        run: cp current/kubernetesaws/helm/station-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
 
       # Generate package helm for transverse
       - name: package transverse
         id: package-transverse
         run: helm package transverse --version ${{ github.event.inputs.helm_project_version}}
-        working-directory: current/kubernetes/helm
+        working-directory: current/kubernetesaws/helm
 
       # Copy transverse to helm repository
       - name: Copie transverse helm repo
         id: copy-transverse
-        run: cp current/kubernetes/helm/transverse-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
+        run: cp current/kubernetesaws/helm/transverse-${{ github.event.inputs.helm_project_version}}.tgz helm-repo/
 
       # Index everything
       - name: index helm repo

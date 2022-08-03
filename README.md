@@ -81,9 +81,9 @@ This directory is containing all the tools with docker that will be use for cont
 This directory contains all the jenkins pipeline to build, push image into custom or standard docker registry  and deploy the project using docker-compose.
 
 
-## kubernetes
+## kubernetesaws
 
-This directory contains the template to start kubernetes pod and service for the project. We have an helm directory and in the future a argocd directory
+This directory contains the template to start kubernetes helm ArgoCD for the project in AWS. We have an helm directory and in the future a argocd directory
 
 ## terraformaws
 

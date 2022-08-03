@@ -51,7 +51,7 @@ jobs:
       - name: delete helm station
         id: delete-station
         run: bash deleteAwsStationChart.sh
-        working-directory: kubernetes/helm
+        working-directory: kubernetesaws/helm
 
   delete_eks:
     runs-on: ubuntu-latest

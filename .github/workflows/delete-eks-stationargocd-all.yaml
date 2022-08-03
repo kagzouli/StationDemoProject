@@ -78,7 +78,7 @@ jobs:
           echo "Delete transverse namespace and chart helm"
           helm delete shared
 
-        working-directory: kubernetes/argocd
+        working-directory: kubernetesaws/argocd
 
   delete_cloudwatchalarm:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
@@ -122,6 +122,7 @@ jobs:
   #Delete EKS
   delete_eks:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    if: ${{ always() }}
     needs: [destroy_station , delete_rds]
     with:
       environment: ${{ github.event.inputs.environment}}
