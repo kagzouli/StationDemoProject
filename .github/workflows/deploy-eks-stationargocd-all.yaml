@@ -180,6 +180,7 @@ jobs:
   # Configuration ArgoCD
   install_shared_argocd:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: install_argocd
     steps:
       
@@ -244,6 +245,7 @@ jobs:
   # Configuration ArgoCD
   configuration_argocd:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: install_shared_argocd
     steps:
       
@@ -320,6 +322,7 @@ jobs:
   # Installation application ArgoCD
   install_application_argocd:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: configuration_argocd
     steps:
       
@@ -429,6 +432,7 @@ jobs:
   # Synchronize application
   synchronize_application_argocd:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: install_application_argocd
     steps:
 
@@ -440,27 +444,18 @@ jobs:
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false
-      
-      # Connect EKS cluster
-      - name: Connect EKS cluster
-        id: connect_eks_cluster
-        run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
 
       # Install cli
       - name: Install argocdcli
         id: install-argocdcli
         run: sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && sudo chmod +x /usr/local/bin/argocd
 
-      # Get password
-      - name: Retrieve ArgoCD password
-        id: retrieve-password-argocd
-        run: |
-          echo "::set-output name=value::$( kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
 
-      # Login ArgoCD
-      - name: login ArgoCD
-        id: login-argocd
-        run: argocd login ${{ env.ARGOCD_SERVER }}  --username admin --password ${{ steps.retrieve-password-argocd.outputs.value }} --insecure
+      # Connect EKS cluster
+      - name: Connect EKS cluster
+        id: connect_eks_cluster
+        run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
+        
 
       # Synchronize applications
       - name: Synchronize Applications

@@ -136,6 +136,7 @@ jobs:
   delete_secrets:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: delete_eks
+    if: ${{ always() }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
