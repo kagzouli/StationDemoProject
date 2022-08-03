@@ -7,7 +7,8 @@
              "sts:TagSession"
         ],
         "Resource": [
-          "${ROLE_TO_ASSUME_DEVOPS_CI}"
+          "${ROLE_TO_ASSUME_DEVOPS_CI}",
+          "${ROLE_TO_ASSUME_DEVOPS_CD}"
         ] 
     }
 }
