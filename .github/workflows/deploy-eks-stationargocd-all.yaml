@@ -245,7 +245,6 @@ jobs:
   # Configuration ArgoCD
   configuration_argocd:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     needs: install_shared_argocd
     steps:
       
@@ -322,7 +321,6 @@ jobs:
   # Installation application ArgoCD
   install_application_argocd:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     needs: configuration_argocd
     steps:
       
@@ -432,7 +430,6 @@ jobs:
   # Synchronize application
   synchronize_application_argocd:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     needs: install_application_argocd
     steps:
 
