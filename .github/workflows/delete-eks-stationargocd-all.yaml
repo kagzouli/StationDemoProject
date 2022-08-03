@@ -136,7 +136,7 @@ jobs:
   delete_secrets:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: delete_eks
-    if: ${{ always() }}
+    if: ${{ always() && needs.delete_eks.result == 'success' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -148,6 +148,7 @@ jobs:
   delete_networks:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: delete_secrets
+    if: ${{ always() && needs.delete_secrets.result == 'success' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
