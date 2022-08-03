@@ -455,7 +455,12 @@ jobs:
       - name: Connect EKS cluster
         id: connect_eks_cluster
         run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
-        
+
+      # Change namespace argocd
+      - name: Change namespace argocd
+        id: change_namespace_argocd
+        run: kubectl config set-context --current --namespace=argocd
+
 
       # Synchronize applications
       - name: Synchronize Applications
