@@ -453,7 +453,8 @@ jobs:
           --set station.front.albiplist="${{ steps.stationfront-albiplist.outputs.albiplist }}" \
           --set station.redis.mode="${{ steps.stationredis-mode.outputs.mode }}" \
           --set station.redis.usessl="${{ steps.stationredis-mode.outputs.usessl }}" \
-          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" 
+          --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" \
+          --set image.repoNexusUrl="${{ steps.retrieve-docker-registry.outputs.contextPath }}" 
         working-directory: kubernetesaws/argocd
   
 
