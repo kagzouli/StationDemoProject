@@ -38,6 +38,22 @@ spec:
             value: {{ .Values.stationfront.oktaUrl | quote  }}
           - name: CONTEXT_BACK_URL
             value: {{ include "stationback.contextpath" . | quote }} 
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 6
+            timeoutSeconds: 8
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /80
+              port: index.html
+            initialDelaySeconds: 10
+            periodSeconds: 6
+            timeoutSeconds: 8
           ports:
           - containerPort: 80
             protocol: TCP

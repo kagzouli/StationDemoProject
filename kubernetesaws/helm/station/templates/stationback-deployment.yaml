@@ -60,7 +60,22 @@ spec:
                 key: redis-password
           - name: REDIS_USESSL
             value: {{ .Values.stationredis.usessl | quote   }}
-          
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 8
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 8
           ports:
           - containerPort: 8080
             protocol: TCP 
