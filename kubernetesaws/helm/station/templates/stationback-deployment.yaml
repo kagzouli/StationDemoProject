@@ -63,19 +63,19 @@ spec:
           livenessProbe:
             httpGet:
               scheme: HTTP
-              path: /health
+              path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 8
+            initialDelaySeconds: 8
+            periodSeconds: 5
+            timeoutSeconds: 7
           readinessProbe:
             httpGet:
               scheme: HTTP
-              path: /health
+              path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 8
+            initialDelaySeconds: 8
+            periodSeconds: 5
+            timeoutSeconds: 7
           ports:
           - containerPort: 8080
             protocol: TCP 
