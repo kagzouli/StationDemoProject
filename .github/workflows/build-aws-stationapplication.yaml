@@ -165,6 +165,13 @@ jobs:
           name: backendwar
           path: current/application/spring-java/StationDemoWeb/docker/
  
+      # Debug
+      - name: debug-karim
+        id: debug-karim
+        run: ls -lrt
+        working-directory: current/application/spring-java/StationDemoWeb/docker/
+ 
+
       # Get AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
