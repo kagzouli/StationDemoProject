@@ -17,15 +17,6 @@ on:
           - eu-west-3
         required: true
 
-      supervision:
-        type: choice
-        description: Supervision (Oui/Non)
-        default: non
-        options:
-          - non
-          - oui
-        required: true
-
       deployMode:
         type: choice
         description: Deploy mode (internal, external)
@@ -33,6 +24,15 @@ on:
         options:
           - internal
           - external
+        required: true
+
+      supervision:
+        type: choice
+        description: Supervision (Oui/Non)
+        default: non
+        options:
+          - non
+          - oui
         required: true
 
 

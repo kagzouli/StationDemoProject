@@ -42,6 +42,8 @@ spec:
           value: ""
         - name: stationdb.storage.efsaccesspointid
           value: ""
+        - name: image.repoNexusUrl
+          value: {{ .Values.image.repoNexusUrl | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
     targetRevision: 1.0.10

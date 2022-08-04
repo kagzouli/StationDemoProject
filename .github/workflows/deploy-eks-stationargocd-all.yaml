@@ -18,14 +18,15 @@ on:
           - eu-west-3
         required: true
 
-      supervision:
+      repoDockerType:
         type: choice
-        description: Supervision (Oui/Non)
+        description: repository docker type
         default: non
         options:
-          - non
-          - oui
+          - dockerhub
+          - awsecr
         required: true
+
 
       deployMode:
         type: choice
@@ -35,6 +36,16 @@ on:
           - internal
           - external
         required: true
+
+      supervision:
+        type: choice
+        description: Supervision (Oui/Non)
+        default: non
+        options:
+          - non
+          - oui
+        required: true
+      
 
 env:
   KUBERNETES_VERSION: v1.23.6
@@ -411,6 +422,23 @@ jobs:
           fi
           if [[ "${{ github.event.inputs.deployMode }}" == "external" ]]; then
               echo "::set-output name=mode::externaldb"
+          fi
+
+      # Recuperer account
+      - name: Retrieve account 
+        id: retrieve-account
+        run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
+
+
+      # Recuperer le registryDocker
+      - name: Retrieve docker registry
+        id: retrieve-docker-registry
+        run: |
+          if [[ "${{ github.event.inputs.repoDockerType }}" == "dockerhub" ]]; then
+                echo "::set-output name=contextPath::kagzouli"
+          fi
+          if [[ "${{ github.event.inputs.repoDockerType }}" == "awsecr" ]]; then
+              echo "::set-output name=contextPath::${{ steps.retrieve-account.outputs.identifier }}.dkr.ecr.${{ github.event.inputs.region}}.amazonaws.com/station"
           fi
       
       

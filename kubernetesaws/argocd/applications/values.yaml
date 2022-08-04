@@ -3,6 +3,10 @@ helm:
   repository: https://kagzouli.github.io/helm-charts/
 
 
+image:
+  repoNexusUrl:  
+
+
 station:
 
   redis:
