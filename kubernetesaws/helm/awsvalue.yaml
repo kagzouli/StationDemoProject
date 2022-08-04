@@ -114,7 +114,7 @@ stationback:
     serviceType: NodePort 
 
   image:
-    pullPolicy: IfNotPresent   
+    pullPolicy: Always   
 
   ingress:
     
@@ -165,7 +165,7 @@ stationfront:
     serviceType: NodePort 
  
   image:
-    pullPolicy: IfNotPresent  
+    pullPolicy: Always  
 
   
   ingress:
