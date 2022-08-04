@@ -17,4 +17,4 @@ RUN mkdir /usr/local/tomcat/webapps/ROOT
 COPY page/404.html /usr/local/tomcat/webapps/ROOT/404.html
 
 
-ADD StationDemoSecureWeb.war /usr/local/tomcat/webapps/StationDemoSecureWeb.war
+COPY StationDemoSecureWeb.war /usr/local/tomcat/webapps/StationDemoSecureWeb.war
