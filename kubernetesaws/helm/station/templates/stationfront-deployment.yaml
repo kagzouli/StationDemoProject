@@ -49,8 +49,8 @@ spec:
           readinessProbe:
             httpGet:
               scheme: HTTP
-              path: /80
-              port: index.html
+              path: /index.html
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 6
             timeoutSeconds: 8

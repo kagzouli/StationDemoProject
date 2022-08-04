@@ -163,7 +163,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: backendwar
-          path: current/application/spring-java/StationDemoWeb/docker/StationDemoSecureWeb.war
+          path: current/application/spring-java/StationDemoWeb/docker/
  
       # Get AWS credentials
       - name: Configure AWS credentials
