@@ -168,7 +168,7 @@ jobs:
       # Debug
       - name: debug-karim
         id: debug-karim
-        run: ls -lrt
+        run: ls -lRt
         working-directory: current/application/spring-java/StationDemoWeb/docker/
  
 

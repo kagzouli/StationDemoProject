@@ -45,7 +45,7 @@ stationdb:
   mode: 'internaldb'
 
   # Directory where to put data of the database - Use only if mode=internaldb
-  databaseData: /data
+  databaseData: data
   
   # Mysql root password -Use only for mode=internaldb
   mysqlRootPassword: root123
