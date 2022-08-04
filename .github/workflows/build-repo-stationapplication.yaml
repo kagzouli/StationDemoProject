@@ -130,8 +130,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: backendwar
-          path: current/application/spring-java/StationDemoWeb/docker/StationDemoSecureWeb.war
- 
+          path: /tmp/StationDemoSecureWeb.war
+
+       # Copy stationDemoSecureWeb
+      - name: Copy Station Demo web
+        id: copy-station-web
+        run: cp /tmp/StationDemoSecureWeb.war .
+        directory: current/application/spring-java/StationDemoWeb/docker
+
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
