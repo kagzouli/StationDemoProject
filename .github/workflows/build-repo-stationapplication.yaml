@@ -137,7 +137,7 @@ jobs:
       - name: debug-karim
         id: debug-karim
         run: ls -lRt
-        working-directory: current/application/spring-java/StationDemoWeb/docker/
+        working-directory: /tmp/StationDemoSecureWeb.war
  
 
        # Copy stationDemoSecureWeb
