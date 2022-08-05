@@ -1,6 +1,6 @@
 # TrafficStation application demo  
 
-This project is a simple CRUD application with a MariaDB or H2 database , it allows to create, delete, update and read traffic station information.
+This project is a simple CRUD application with a Mysql or H2 database , it allows to create, delete, update and read traffic station information.
 It will also allow to search traffic stations information by criteria using pagination (With REST call)
 It is based on a file that RATP has made online some years ago (This file is integrated to the database using a batch for the sample).
 This project allows me to test some common concept architecture that are used in enterprise. 
@@ -19,7 +19,7 @@ There is 2 docker images and 2 components for the DB and Redis in the applicatio
 
    - The front-end in Angular using Nginx in a docker image.
    - The back-end in SpringMVC and a little use of Spring boot using Tomcat server in a docker image.
-   - The database with MariaDB (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test), There is also an example with docker-compose. But for AWS, I use a real configuration with RDS.
+   - The database with Mysql (Normally we must use a single datasource but for this test, there will be multiple datasources, one per kubernete pod deployed --> Bad practice, I use it only for test), There is also an example with docker-compose. But for AWS, I use a real configuration with RDS.
    - Redis which is use for AWS using ElastiCache.
        
 Normally, everything must be encrypting with HTTPS but for the POC, I will not do it 
@@ -56,7 +56,7 @@ It takes 5 parameters :
 | ------------ | ------------ |
 | VERSION |The version of the project  |
 | REPO_NEXUS_URL | The URL of the docker container registry|
-| DATABASE_DATA | The directory where the mariadb data is stored|
+| DATABASE_DATA | The directory where the Mysql data is stored|
 | MY_LOGS | The directory where the logs are stored|
 | ANGULAR_CONFIG | The directory where the angular configuration file is stored|
 
@@ -70,7 +70,7 @@ The goal of this job is to stop the application using a docker-compose file.
 
 ## StationDemoDb
 
-It contains the docker image for the MariaDB datasource, it will create the datasource with existing traffic station of the RATP.
+It contains the docker image for the Mysql datasource, it will create the datasource with existing traffic station of the RATP.
 
 ## usinedev
 
@@ -97,7 +97,7 @@ This directory contains all the script to deploy the station backend and the fro
 ## StationDemoBatch
 
 This component contains all the sources for the batch to integrate the RATP traffic information file of 2015 (I'm not sure of the year), and store it in 
-the database (H2 or MariaDB) for the sample. It uses the component StationDemoService to manage traffic station object.
+the database (H2 or Mysql) for the sample. It uses the component StationDemoService to manage traffic station object.
 
 ## StationDemoService
 
