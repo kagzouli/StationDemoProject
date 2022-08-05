@@ -11,7 +11,7 @@
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:PutImage"
             ],
-            "Resource": "*"
+            "Resource": "${POLICY_ECR_STATION}"
         }
     ]
 }
