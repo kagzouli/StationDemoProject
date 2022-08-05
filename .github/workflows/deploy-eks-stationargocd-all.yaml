@@ -59,11 +59,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: networks
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   # Deploy secrets
   secrets:
@@ -72,11 +72,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: secrets
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   # Deploy EKS
   eks:
@@ -85,11 +85,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: eks
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   # Deploy RDS
   rds:
@@ -99,11 +99,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: stationdb_rds
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   # Deploy redis
   redis:
@@ -113,11 +113,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: stationredis
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
 
   # Deploy cloudwatchalarm if supervision is activated.
@@ -128,11 +128,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       component: cloudwatchalarm
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
 
   # Installation ArgoCD
@@ -151,6 +151,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false
@@ -210,6 +211,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false
@@ -274,6 +276,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false
@@ -353,6 +356,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false
@@ -475,6 +479,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
           mask-aws-account-id: false

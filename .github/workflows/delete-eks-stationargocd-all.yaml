@@ -58,6 +58,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
@@ -86,12 +87,12 @@ jobs:
     if: ${{ github.event.inputs.supervision == 'oui' }}
     with:
       environment: ${{ github.event.inputs.environment}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       region: ${{ github.event.inputs.region}}
       component: cloudwatchalarm
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
 
   # Delete RDS
@@ -101,12 +102,12 @@ jobs:
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       region: ${{ github.event.inputs.region}}
       component: stationdb_rds
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   # Delete Redis
   delete_redis:
@@ -115,12 +116,12 @@ jobs:
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       region: ${{ github.event.inputs.region}}
       component: stationredis
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   #Delete EKS
   delete_eks:
@@ -129,12 +130,12 @@ jobs:
     needs: [destroy_station , delete_rds]
     with:
       environment: ${{ github.event.inputs.environment}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       region: ${{ github.event.inputs.region}}
       component: eks
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
  
   delete_secrets:
@@ -143,12 +144,12 @@ jobs:
     if: ${{ always() && needs.delete_eks.result == 'success' }}
     with:
       environment: ${{ github.event.inputs.environment}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
       region: ${{ github.event.inputs.region}}
       component: secrets
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
 
   delete_networks:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
@@ -161,3 +162,4 @@ jobs:
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}

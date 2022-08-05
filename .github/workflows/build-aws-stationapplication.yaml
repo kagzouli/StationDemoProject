@@ -36,11 +36,11 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
-      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
       component: ecr
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
 
   # Push station front to dockerhub
   push_db_dockerhub:
@@ -71,6 +71,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
@@ -179,6 +180,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
@@ -293,6 +295,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
           aws-region: ${{ github.event.inputs.region}}
           role-duration-seconds: 3600
 
