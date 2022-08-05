@@ -22,7 +22,10 @@
                 "ecr:CreateRepository",
                 "ecr:DescribeRepositories",
                 "ecr:ListTagsForResource",
-		"ecr:DeleteRepository"
+                "ecr:SetRepositoryPolicy",
+                "ecr:GetRepositoryPolicy",
+		"ecr:DeleteRepository",
+		"ecr:DeleteRepositoryPolicy"
             ],
             "Resource": "${POLICY_ECR_STATION}"
         },
