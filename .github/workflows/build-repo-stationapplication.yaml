@@ -137,7 +137,7 @@ jobs:
       - name: debug-karim
         id: debug-karim
         run: ls -lRt
-        working-directory: /tmp/StationDemoSecureWeb.war
+        working-directory: /tmp/
  
 
        # Copy stationDemoSecureWeb
