@@ -16,7 +16,17 @@
             "Resource": ["arn:aws:s3:::station-tfstate/station-ecr.tfstate"]
         },
         {
-            "Sid" : "ECRStationCI",
+            "Sid" : "ECRManageStationRegistryCI",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:CreateRepository",
+                "ecr:DescribeRepositories"
+            ],
+            "Resource": "${POLICY_ECR_STATION}"
+        },
+
+        {
+            "Sid" : "ECRPushStationCI",
             "Effect": "Allow",
             "Action": [
                 "ecr:CompleteLayerUpload",
@@ -24,8 +34,7 @@
                 "ecr:UploadLayerPart",
                 "ecr:InitiateLayerUpload",
                 "ecr:BatchCheckLayerAvailability",
-                "ecr:PutImage",
-                "ecr:CreateRepository"
+                "ecr:PutImage"
             ],
             "Resource": "${POLICY_ECR_STATION}"
         }
