@@ -136,7 +136,7 @@ jobs:
       - name: Copy Station Demo web
         id: copy-station-web
         run: cp /tmp/StationDemoSecureWeb.war .
-        directory: current/application/spring-java/StationDemoWeb/docker
+        working-directory: current/application/spring-java/StationDemoWeb/docker
 
 
       - name: Login to DockerHub
