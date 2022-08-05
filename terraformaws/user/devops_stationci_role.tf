@@ -13,7 +13,7 @@ resource "aws_iam_role_policy" "devops_stationci" {
 
   policy = templatefile("policies/devops-stationci-role-policy.json.tpl",
                     { 
-                        POLICY_ECR_STATION = "arn:aws:ecr:${var.region}:${data.aws_caller_identity.current.account_id}:repository/station"
+                        POLICY_ECR_STATION = "arn:aws:ecr:${var.region}:${data.aws_caller_identity.current.account_id}:repository/station/*"
                     }
            ) 
 }
