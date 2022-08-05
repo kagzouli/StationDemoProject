@@ -3,8 +3,8 @@ FROM tomcat:9.0.38-jdk8-openjdk
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
 
-RUN  wget -O mariadb-java-client-2.5.2.jar "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/2.5.2/mariadb-java-client-2.5.2.jar"
-RUN cp mariadb-java-client-2.5.2.jar /usr/local/tomcat/lib/mariadb-java-client-2.5.2.jar
+RUN  wget -O mariadb-java-client-3.0.6.jar "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.0.6/mariadb-java-client-3.0.6.jar"
+RUN cp mariadb-java-client-3.0.6.jar /usr/local/tomcat/lib/mariadb-java-client-3.0.6.jar
 
 ADD bin-set/setenv.sh /usr/local/tomcat/bin/setenv.sh
 ADD conf/context.xml /usr/local/tomcat/conf/context.xml

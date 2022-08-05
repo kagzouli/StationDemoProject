@@ -1,4 +1,4 @@
-FROM mariadb:10.4 
+FROM mariadb:10.7
 
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
