@@ -1,4 +1,4 @@
-FROM mariadb:10.7
+FROM mysql:8.0.30
 
 MAINTAINER Karim GZ "kagzouli@exaka.com"
 
