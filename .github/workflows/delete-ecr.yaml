@@ -29,6 +29,7 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      role-to-assume: ${{ secrets.aws_role }}
       component: "ecr"
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}

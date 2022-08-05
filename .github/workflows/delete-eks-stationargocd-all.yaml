@@ -86,6 +86,7 @@ jobs:
     if: ${{ github.event.inputs.supervision == 'oui' }}
     with:
       environment: ${{ github.event.inputs.environment}}
+      role-to-assume: ${{ secrets.aws_role }}
       region: ${{ github.event.inputs.region}}
       component: cloudwatchalarm
     secrets:
@@ -100,6 +101,7 @@ jobs:
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
+      role-to-assume: ${{ secrets.aws_role }}
       region: ${{ github.event.inputs.region}}
       component: stationdb_rds
     secrets:
@@ -113,6 +115,7 @@ jobs:
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
+      role-to-assume: ${{ secrets.aws_role }}
       region: ${{ github.event.inputs.region}}
       component: stationredis
     secrets:
@@ -126,6 +129,7 @@ jobs:
     needs: [destroy_station , delete_rds]
     with:
       environment: ${{ github.event.inputs.environment}}
+      role-to-assume: ${{ secrets.aws_role }}
       region: ${{ github.event.inputs.region}}
       component: eks
     secrets:
@@ -139,6 +143,7 @@ jobs:
     if: ${{ always() && needs.delete_eks.result == 'success' }}
     with:
       environment: ${{ github.event.inputs.environment}}
+      role-to-assume: ${{ secrets.aws_role }}
       region: ${{ github.event.inputs.region}}
       component: secrets
     secrets:

@@ -20,6 +20,8 @@ on:
         required: true
       aws_secret_key:
         required: true
+      aws_role:
+        required: true
 
 env:
   TERRAFORM_VERSION: 0.15.5
@@ -45,6 +47,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.aws_access_key }}
           aws-secret-access-key: ${{ secrets.aws_secret_key }}
+          role-to-assume: ${{ secrets.aws_role }}
           aws-region: ${{ inputs.region}}
           role-duration-seconds: 3600
 

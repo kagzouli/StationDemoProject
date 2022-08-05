@@ -36,6 +36,7 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
+      role: ${{ secrets.AWS_ROLE_DEVOPS_STATION_CI }}
       component: ecr
     secrets:
       aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
