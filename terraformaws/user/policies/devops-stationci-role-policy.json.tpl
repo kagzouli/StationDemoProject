@@ -20,7 +20,9 @@
             "Effect": "Allow",
             "Action": [
                 "ecr:CreateRepository",
-                "ecr:DescribeRepositories"
+                "ecr:DescribeRepositories",
+                "ecr:ListTagsForResource",
+		"ecr:DeleteRepository"
             ],
             "Resource": "${POLICY_ECR_STATION}"
         },
