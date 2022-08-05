@@ -5,12 +5,12 @@
             "Sid": "S3StationCI",
             "Effect": "Allow",
             "Action": [
-                "s3:*
-            "],
+                "s3:*"
+            ],
             "Resource": ["arn:aws:s3:::station-tfstate/station-ecr.tfstate"]
         },
         {
-            "Sid" : "ECRStationCI"
+            "Sid" : "ECRStationCI",
             "Effect": "Allow",
             "Action": [
                 "ecr:CompleteLayerUpload",
