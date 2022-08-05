@@ -132,6 +132,14 @@ jobs:
           name: backendwar
           path: /tmp/StationDemoSecureWeb.war
 
+
+      # Debug
+      - name: debug-karim
+        id: debug-karim
+        run: ls -lRt
+        working-directory: current/application/spring-java/StationDemoWeb/docker/
+ 
+
        # Copy stationDemoSecureWeb
       - name: Copy Station Demo web
         id: copy-station-web
