@@ -7,8 +7,6 @@ spec:
   # A deployment's specification really only 
   # has a few useful options
   
-  # 1. How many copies of each pod do we want?
-  replicas: {{ .Values.stationback.nbReplicas }}
 
   # 2. Which pods are managed by this deployment?
   selector:
@@ -60,6 +58,10 @@ spec:
                 key: redis-password
           - name: REDIS_USESSL
             value: {{ .Values.stationredis.usessl | quote   }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512mi
           livenessProbe:
             httpGet:
               scheme: HTTP

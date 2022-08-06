@@ -21,7 +21,7 @@ spec:
           value: {{ .Values.app.region | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.0.16
+    targetRevision: 1.0.17
   syncPolicy:
     automated:
       prune: true
