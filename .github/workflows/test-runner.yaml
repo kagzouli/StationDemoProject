@@ -4,23 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-      
-     #Get Kubernetes version
-    - name: Get Kubernetes version
-      id: get_kubernetes_version
-      run: kubectl version
 
-    - name: Get Helm version
-      id: get_helm_version
-      run: helm version
+  test: 
+    runs-on: ubuntu-latest
+    steps:
+        
+      #Get Kubernetes version
+      - name: Get Kubernetes version
+        id: get_kubernetes_version
+        run: kubectl version
 
-    - name: Get docker version
-      id: get_docker_version
-      run: docker version
+      - name: Get Helm version
+        id: get_helm_version
+        run: helm version
 
-    - name: Get Terraform version
-      id: get_terraform_version
-      run: terraform version
+      - name: Get docker version
+        id: get_docker_version
+        run: docker version
+
+      - name: Get Terraform version
+        id: get_terraform_version
+        run: terraform version
 
