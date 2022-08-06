@@ -38,9 +38,9 @@ spec:
             value: {{ include "stationback.contextpath" . | quote }} 
           resources:
             limits:
-              cpu: 200m
+              cpu: 300m
             requests:
-              cpu: 100m
+              cpu: 200m
           livenessProbe:
             httpGet:
               scheme: HTTP
