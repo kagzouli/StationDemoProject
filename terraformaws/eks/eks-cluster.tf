@@ -51,7 +51,7 @@ resource "aws_launch_template" "station_eks_launch_template" {
     }
   }
 
-  instance_type = "t3.large" 
+  instance_type = "t3.xlarge" 
   
 
   tag_specifications {
@@ -72,6 +72,7 @@ resource "aws_eks_node_group" "nodes" {
   node_group_name = "station"
   node_role_arn   = aws_iam_role.aws_eks_nodes_role.arn
   subnet_ids      = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id  ]
+  capacity_type   = var.node_capacity_type
 
   # We start with a minimal setup
   scaling_config {

@@ -63,3 +63,8 @@ variable "shared_namespace" {
     type        =  string
     description = "Nom du sharepoint pour les outils communs"
 }
+
+variable "node_capacity_type"{
+    type        = string
+    description = "Node capacity type"
+}

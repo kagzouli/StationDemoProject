@@ -15,6 +15,7 @@ station_privatedomainname="interne.exakaconsulting.org"
 stationkubenamespace="stationdev"
 nbNodeInstanceEks=2
 shared_namespace="transverse"
+node_capacity_type="SPOT"
 
 # Station Db
 station_db_host_port=3306
