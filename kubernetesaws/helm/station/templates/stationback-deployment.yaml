@@ -59,6 +59,9 @@ spec:
           - name: REDIS_USESSL
             value: {{ .Values.stationredis.usessl | quote   }}
           resources:
+            limits:
+              cpu: 200m
+              memory: 1024mi
             requests:
               cpu: 100m
               memory: 512mi

@@ -37,6 +37,9 @@ spec:
           - name: CONTEXT_BACK_URL
             value: {{ include "stationback.contextpath" . | quote }} 
           resources:
+            limits:
+              cpu: 200m
+              memory: 512mi
             requests:
               cpu: 100m
               memory: 256mi
