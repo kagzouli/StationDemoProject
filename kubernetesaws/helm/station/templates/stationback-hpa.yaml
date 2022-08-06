@@ -4,8 +4,8 @@ metadata:
   name: stationback-hpa
   namespace: {{ .Release.Namespace | quote }}
 spec:
-  minReplicas: 1
-  maxReplicas: 6
+  minReplicas: {{ .Values.stationback.nbReplicas }}
+  maxReplicas: 4
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
