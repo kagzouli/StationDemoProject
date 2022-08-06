@@ -60,10 +60,10 @@ spec:
             value: {{ .Values.stationredis.usessl | quote   }}
           resources:
             limits:
-              cpu: 600m
+              cpu: 800m
               memory: 1024Mi
             requests:
-              cpu: 500m
+              cpu: 600m
               memory: 512Mi
           livenessProbe:
             httpGet:
