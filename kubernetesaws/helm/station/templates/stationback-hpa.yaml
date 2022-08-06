@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: stationback-hpa
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  minReplicas: 1
+  maxReplicas: 6
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: stationback-deploy
+    namespace: {{ .Release.Namespace | quote }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        # On mettrait plus une valeur de 60% dans la vraie vie.
+        averageUtilization: 50
