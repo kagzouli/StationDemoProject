@@ -48,7 +48,8 @@ resource "aws_iam_policy" "eks_autoscaler_iam_policy" {
         "autoscaling:DescribeAutoScalingInstances",
         "autoscaling:DescribeLaunchConfigurations",
         "ec2:DescribeInstanceTypes",
-        "ec2:DescribeLaunchTemplateVersions"
+        "ec2:DescribeLaunchTemplateVersions",
+        "autoscaling:DescribeTags"
       ],
       "Resource": ["*"]
     },
