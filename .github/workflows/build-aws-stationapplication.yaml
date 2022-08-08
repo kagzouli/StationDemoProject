@@ -128,7 +128,7 @@ jobs:
       - name: Build Backend
         id: build_backend
         run: mvn --batch-mode --update-snapshots package
-        working-directory: current/application
+        working-directory: current/application/spring-java
  
       - name: Upload backend WAR
         id: upload-backendwar

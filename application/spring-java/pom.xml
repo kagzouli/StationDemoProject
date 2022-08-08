@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-dependencies</artifactId>
-		<version>2.2.2.RELEASE</version>
+		<version>2.7.2</version>
 	</parent>
 	<groupId>com.exakaconsulting.poc</groupId>
 	<artifactId>StationDemoProject</artifactId>
@@ -12,19 +12,19 @@
 	<packaging>pom</packaging>
 	<properties>
 	   <java.version>1.8</java.version>
-	   <spring.version>5.2.2.RELEASE</spring.version>
+	   <spring.version>5.3.22</spring.version>
 	   <springfox.swagger.version>2.8.0</springfox.swagger.version>
-	   <log4j.version>1.2.17</log4j.version>
+	   <log4j2.version>2.18.0</log4j2.version>
 	   <servletapi.version>3.1.0</servletapi.version>
-	   <springbatch.version>4.2.1.RELEASE</springbatch.version>
-	   <springboot.version>2.2.2.RELEASE</springboot.version>
-	   <springsecurity.version>5.2.1.RELEASE</springsecurity.version>
-	   <springredis.version>2.2.3.RELEASE</springredis.version>
+	   <springbatch.version>4.3.6</springbatch.version>
+	   <springboot.version>2.7.2</springboot.version>
+	   <springsecurity.version>5.7.2</springsecurity.version>
+	   <springredis.version>2.7.2</springredis.version>
 	   <springjwt.version>1.1.0.RELEASE</springjwt.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
 	   <jacoco.version>0.7.6.201602180812</jacoco.version>
-	   <mockito.version>2.13.0</mockito.version>
+	   <mockito.version>4.6.1</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
 	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   
@@ -114,9 +114,20 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-slf4j-impl</artifactId>
+    		<version>${log4j2.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -130,12 +141,12 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-bom.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
+			<version>${jackson-bom.version}</version>
 		</dependency>
 		
 		<!-- JEE -->
@@ -342,9 +353,9 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>spring-java/StationDemoService</module>
-		<module>spring-java/StationDemoWeb</module>
-		<module>spring-java/StationDemoBatch</module>
+		<module>StationDemoService</module>
+		<module>StationDemoWeb</module>
+		<module>StationDemoBatch</module>
 		<!-- Bad practice - Client Angular must not be here but it's only to show how to do if we have to make this bad conception -->
 	<!--	<module>StationDemoClient/station-angular4-poc</module> -->
 	</modules>
