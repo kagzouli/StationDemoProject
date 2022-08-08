@@ -15,12 +15,16 @@ spec:
     helm:
       releaseName: cluster-autoscaler
       parameters: 
+        - name: awsRegion
+          value: {{ .Values.app.region | quote }}
         - name: rbac.serviceAccount.create
           value: "false"
         - name: rbac.serviceAccount.name
           value: "cluster-autoscaler-sa"
         - name: replicaCount
           value: "2" 
+        - name: autoDiscovery.clusterName
+          value: station-eks-cluster
 
     repoURL: https://kubernetes.github.io/autoscaler
     targetRevision: 9.19.2
