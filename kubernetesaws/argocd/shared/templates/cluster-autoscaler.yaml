@@ -22,7 +22,7 @@ spec:
         - name: rbac.serviceAccount.name
           value: "cluster-autoscaler-sa"
         - name: replicaCount
-          value: "1" 
+          value: "2" 
         - name: autoDiscovery.clusterName
           value: station-eks-cluster
 
