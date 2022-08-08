@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 spec:
   minReplicas: {{ .Values.stationback.nbReplicas }}
-  maxReplicas: 3
+  maxReplicas: 4
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
@@ -16,5 +16,4 @@ spec:
       name: cpu
       target:
         type: Utilization
-        # On mettrait plus une valeur de 80% dans la vraie vie.
-        averageUtilization: 50
+        averageUtilization: 80

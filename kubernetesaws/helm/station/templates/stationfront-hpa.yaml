@@ -16,5 +16,4 @@ spec:
       name: cpu
       target:
         type: Utilization
-        # On mettrait plus une valeur de 80% dans la vraie vie.
-        averageUtilization: 50
+        averageUtilization: 80

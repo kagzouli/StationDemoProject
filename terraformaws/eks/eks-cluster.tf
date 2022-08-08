@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "eks_cluster" {
 
   tags = {
     Name        = "station-eks-cloudwatch-log-group"
-    Environment = var.application
+    Application = var.application
   }
 }
 
@@ -51,7 +51,7 @@ resource "aws_launch_template" "station_eks_launch_template" {
     }
   }
 
-  instance_type = "t3.xlarge" 
+  instance_type = "t3.large" 
   
 
   tag_specifications {
@@ -74,17 +74,20 @@ resource "aws_eks_node_group" "nodes" {
   subnet_ids      = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id  ]
   capacity_type   = var.node_capacity_type
 
-  # We start with a minimal setup
-  scaling_config {
-    desired_size = var.nbNodeInstanceEks 
-    max_size     = var.nbNodeInstanceEks
-    min_size     = var.nbNodeInstanceEks 
+  launch_template {
+      name = aws_launch_template.station_eks_launch_template.name
+      version = aws_launch_template.station_eks_launch_template.latest_version
   }
 
-  launch_template {
-    name = aws_launch_template.station_eks_launch_template.name
-    version = aws_launch_template.station_eks_launch_template.latest_version
+  # We start with a minimal setup
+  scaling_config {
+    min_size     = var.nbNodeInstanceEks 
+    desired_size = var.nbNodeInstanceEks 
+    max_size     = 4
+   
   }
+
+  
 
 
 
@@ -99,8 +102,62 @@ resource "aws_eks_node_group" "nodes" {
   tags = {
       Name = "station_eks_nodes"
       Application= var.application
+      "k8s.io/cluster/${aws_eks_cluster.station_eks_cluster.name}" = "owned"
+      "k8s.io/cluster-autoscaler/enabled" = "true"
+      "k8s.io/cluster-autoscaler/${aws_eks_cluster.station_eks_cluster.name}" = "owned"
+
   }
 }
+
+/*resource "aws_autoscaling_group" "station_eks_autoscaling_group" {
+    name                      = "eks-station-autoscaling"
+    vpc_zone_identifier       = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id  ]
+    launch_template {
+      name = aws_launch_template.station_eks_launch_template.name
+      version = aws_launch_template.station_eks_launch_template.latest_version
+    }
+
+    min_size                  = var.nbNodeInstanceEks 
+    desired_capacity          = var.nbNodeInstanceEks 
+    max_size                  = 4
+
+    tag {
+      key                 = "name"
+      value               = "eks-station-autoscaling"
+      propagate_at_launch = true
+    }
+
+    tag {
+      key                 = "k8s.io/cluster/${aws_eks_cluster.station_eks_cluster.name}"
+      value               = "owned"
+      propagate_at_launch = true
+    }
+
+    tag {
+      key                 = "k8s.io/cluster-autoscaler/enabled"
+      value               = "true"
+      propagate_at_launch = true
+    }
+
+    tag {
+      key                 = "k8s.io/cluster-autoscaler/${aws_eks_cluster.station_eks_cluster.name}"
+      value               = "owned"
+      propagate_at_launch = true
+    }
+
+    tag {
+      key                 = "k8s.io/cluster-autoscaler/node-template/label/node-role.kubernetes.io/${var.instance_group_prefix}"
+      value               = var.instance_group_prefix
+      propagate_at_launch = true
+    }
+
+     tag {
+      key                 = "Application"
+      value               = var.application
+      propagate_at_launch = true
+    }
+
+}*/
 
 
 data "tls_certificate" "eks_tls" {

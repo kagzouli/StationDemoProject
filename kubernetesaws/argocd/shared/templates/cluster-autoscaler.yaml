@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-autoscaler
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: default
+  source:
+    chart: cluster-autoscaler
+    helm:
+      releaseName: cluster-autoscaler
+      parameters: 
+        - name: rbac.serviceAccount.create
+          value: "false"
+        - name: rbac.serviceAccount.name
+          value: "cluster-autoscaler-sa"
+        - name: replicaCount
+          value: "2" 
+
+    repoURL: https://kubernetes.github.io/autoscaler
+    targetRevision: 9.19.2
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
