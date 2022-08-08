@@ -28,10 +28,14 @@ else
      echo "AWS_SESSION_TOKEN : ${AWS_SESSION_TOKEN}"
 
      
-     aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID  
-     aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY  
-     aws configure set aws_session_token $AWS_SESSION_TOKEN 
+     aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID  --profile iam
+     aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY   --profile iam
+     aws configure set aws_session_token $AWS_SESSION_TOKEN  --profile iam
 
+     echo "Change aws profile"
+     export AWS_PROFILE=iam
+     export AWS_DEFAULT_PROFILE=iam
+     echo $AWS_DEFAULT_PROFILE
 fi
 
 
