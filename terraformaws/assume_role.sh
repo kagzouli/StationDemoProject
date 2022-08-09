@@ -12,6 +12,7 @@ elif [[ -z $2 ]]; then
     echo Usage: . assume_role profile-name role_name [--show]
     echo
 else
+     export AWS_DEFAULT_PROFILE=default
      ACCOUNT_NUMBER=$( aws sts get-caller-identity --query 'Account' --output text)
      echo ACCOUNT_NUMBER : ${ACCOUNT_NUMBER}
      OUT=$( aws sts assume-role --duration-seconds 3600   --role-arn arn:aws:iam::${ACCOUNT_NUMBER}:role/$2 --role-session-name $1); \
