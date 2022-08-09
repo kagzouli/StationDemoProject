@@ -20,10 +20,10 @@ app:
     region: 'eu-west-3' 
 
 image:
-  tag: 1.0.10
+  tag: 1.1.0
  
   # Context path of the repo nexus url
-  repoNexusUrl: 'kagzouli'
+  repoNexusUrl: 'kagzouli3'
 
  
 stationredis:
