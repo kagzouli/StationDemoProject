@@ -13,8 +13,8 @@ spec:
     namespace: cicd
   project: cicd
   source:
-    path: custom-runner-github
-    repoURL: https://github.com/kagzouli/StationDemoProject/kubernetesaws
+    path: kubernetesaws/custom-runner-github
+    repoURL: https://github.com/kagzouli/StationDemoProject.git
     targetRevision: master
   syncPolicy:
     syncOptions:
