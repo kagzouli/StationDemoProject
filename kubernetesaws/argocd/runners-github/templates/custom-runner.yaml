@@ -14,7 +14,7 @@ spec:
   project: cicd
   source:
     path: custom-runner-github
-    repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetesaws
+    repoURL: https://github.com/kagzouli/StationDemoProject/kubernetesaws
     targetRevision: master
   syncPolicy:
     syncOptions:
