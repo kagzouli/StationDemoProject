@@ -10,6 +10,8 @@ spec:
   destinations:
     - server: "https://kubernetes.default.svc"
       namespace: "transverse"
+    - server: "https://kubernetes.default.svc"
+      namespace: "kube-system"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
