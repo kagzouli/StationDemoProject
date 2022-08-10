@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: custom-runner
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "8"
+  
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cicd
+  project: cicd
+  source:
+    path: custom-runner-github
+    repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetesaws
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - Replace=true
+
+    automated:
+      prune: true
+      selfHeal: true

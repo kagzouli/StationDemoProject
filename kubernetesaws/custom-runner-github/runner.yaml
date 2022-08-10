@@ -1,0 +1,7 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: Runner
+metadata:
+  name: exaka-runner
+spec:
+  repository: summerwind/actions-runner-controller
+  env: []
