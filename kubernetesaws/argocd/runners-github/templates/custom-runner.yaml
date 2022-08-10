@@ -4,6 +4,7 @@ metadata:
   name: custom-runner
   namespace: argocd
   annotations:
+    argocd.argoproj.io/sync-options: Replace=true
     argocd.argoproj.io/sync-wave: "8"
   
 spec:
