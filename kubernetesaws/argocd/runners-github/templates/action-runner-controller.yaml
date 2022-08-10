@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actions-runner-controller
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+  
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stationdev
+  project: default
+  source:
+    chart: actions-runner-controller
+    helm:
+      releaseName: actions-runner-controller
+      parameters: 
+        - name: authSecret.create
+          value: "true"
+        - name: authSecret.github_app_id
+          value: {{ .Values.app.applicationId | quote }}
+        - name: authSecret.github_app_private_key
+          value: {{ .Values.app.applicationPrivateKey | quote }}
+
+    repoURL: https://actions-runner-controller.github.io/actions-runner-controller
+    targetRevision: 0.20.0
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
