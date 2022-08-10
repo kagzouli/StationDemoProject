@@ -543,7 +543,7 @@ jobs:
 
       # Installation runner Github
       - name: Installation Runners Github
-        id:  installation runners-github
+        id:  installation-runners-github
         run: |
           helm upgrade -i runners-github ./runners-github \
           --set app.applicationId="${{ secrets.APPLICATION_ID }}" \
