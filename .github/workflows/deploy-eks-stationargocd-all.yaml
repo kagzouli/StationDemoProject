@@ -547,5 +547,6 @@ jobs:
         run: |
           helm upgrade -i runners-github ./runners-github \
           --set app.applicationId="${{ secrets.APPLICATION_ID }}" \
-          --set app.applicationPrivateKey="${{ secrets.APPLICATION_PRIVATE_KEY }}"
+          --set app.applicationPrivateKey="${{ secrets.APPLICATION_PRIVATE_KEY }}" \
+          --set app.githubTokenController="${{ secrets.TOKEN_RUNNER_CONTROLLER }}"
         working-directory: kubernetesaws/argocd

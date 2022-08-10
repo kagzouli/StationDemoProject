@@ -19,10 +19,13 @@ spec:
       parameters: 
         - name: authSecret.create
           value: "true"
-        - name: authSecret.github_app_id
-          value: {{ .Values.app.applicationId | quote }}
-        - name: authSecret.github_app_private_key
-          value: {{ .Values.app.applicationPrivateKey | quote }}
+       # - name: authSecret.github_app_id
+       #   value: {{ .Values.app.applicationId | quote }}
+       # - name: authSecret.github_app_private_key
+       #   value: {{ .Values.app.applicationPrivateKey | quote }}
+        - name: authSecret.github_token
+          value: {{ .Values.app.githubTokenController | quote }}
+       
 
     repoURL: https://actions-runner-controller.github.io/actions-runner-controller
     targetRevision: 0.20.0
