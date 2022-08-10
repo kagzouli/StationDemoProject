@@ -14,7 +14,7 @@ spec:
   source:
     path: custom-runner-github
     repoURL: https://github.com/kagzouli/StationDemoProject/tree/master/kubernetesaws
-    targetRevision: main
+    targetRevision: master
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
