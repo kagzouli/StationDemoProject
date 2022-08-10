@@ -11,7 +11,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: cicd
-  project: default
+  project: cicd
   source:
     chart: actions-runner-controller
     helm:

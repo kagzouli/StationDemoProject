@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
+  name: cicd
   namespace: argocd
 spec:
-  description: Applications
+  description: cicd
   sourceRepos:
     - "*"
   destinations:
     - server: "https://kubernetes.default.svc"
-      namespace: "stationdev"
+      namespace: "cicd"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
