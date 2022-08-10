@@ -63,7 +63,7 @@ jobs:
 
       - name: Setup Terraform
         id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
@@ -97,7 +97,7 @@ jobs:
 
       - name: Setup Terraform
         id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
@@ -131,7 +131,7 @@ jobs:
 
       - name: Setup Terraform
         id: setup_terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
