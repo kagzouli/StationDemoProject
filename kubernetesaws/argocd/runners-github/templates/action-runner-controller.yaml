@@ -9,7 +9,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: stationdev
+    namespace: cicd
   project: default
   source:
     chart: actions-runner-controller
