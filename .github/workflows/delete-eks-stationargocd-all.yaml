@@ -37,7 +37,7 @@ on:
 
 
 env:
-  TERRAFORM_VERSION: 0.15.5
+  TERRAFORM_VERSION: 1.0.11
 
 
 jobs:

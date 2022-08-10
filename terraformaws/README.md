@@ -2,7 +2,7 @@
 
 The architecture of the projet is based on AWS component. This is the AWS architecture schema of the project : <br/>
 
-We use Terraform version 0.15.5
+We use Terraform version 1.0.11
 <br/><br/>
 
 
