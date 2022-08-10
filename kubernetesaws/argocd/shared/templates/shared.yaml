@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: shared
+  namespace: argocd
+spec:
+  description: Shared
+  sourceRepos:
+    - "*"
+  destinations:
+    - server: "https://kubernetes.default.svc"
+      namespace: "transverse"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

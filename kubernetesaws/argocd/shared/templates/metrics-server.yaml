@@ -9,7 +9,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: transverse
-  project: default
+  project: shared
   source:
     chart: metrics-server
     helm:
