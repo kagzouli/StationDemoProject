@@ -6,8 +6,12 @@ metadata:
 spec:
   # A deployment's specification really only 
   # has a few useful options
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
   
- 
   # 2. Which pods are managed by this deployment?
   selector:
     # This must match the labels we set on the pod!

@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: stationback-deploy
   namespace: {{ .Release.Namespace | quote }}
@@ -7,6 +7,13 @@ spec:
   # A deployment's specification really only 
   # has a few useful options
   
+  strategy:
+    canary:
+      steps:
+      # On passe 50% du traffic pendant 45 secondes et apres tout le traffic. 
+      - setWeight: 50
+      - pause:
+          duration: "45s"
 
   # 2. Which pods are managed by this deployment?
   selector:
