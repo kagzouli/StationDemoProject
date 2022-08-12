@@ -1,0 +1,62 @@
+name:  "[Repo] Build custom image Runner"
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+
+      image_custom_version:
+        type: string
+        default: 1.1.1
+        description: Image custom version.
+        required: true
+
+env:
+  REPO_DOCKER_HUB: kagzouli3
+
+
+jobs:
+
+  build_runner_image:
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
+      # Login to dockerhub
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Build image runner
+        id: build-image-runner
+        run: docker build -t ${{ env.REPO_DOCKER_HUB }}/station-image-runner .
+        working-directory: current/kubernetesaws/custom-runner-github
+
+      - name: Tag image runner
+        id: tag-image-runner
+        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-image-runner:latest ${{ env.REPO_DOCKER_HUB }}/station-image-runner-db:${{ github.event.inputs.image_custom_version}}
+
+      - name: Push db docker
+        id: push-image-runner
+        run: docker push ${{ env.REPO_DOCKER_HUB }}station-image-runner:${{ github.event.inputs.image_custom_version}}
+ 
+
+      
