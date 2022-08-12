@@ -56,7 +56,7 @@ jobs:
 
       - name: Push db docker
         id: push-image-runner
-        run: docker push ${{ env.REPO_DOCKER_HUB }}station-image-runner:${{ github.event.inputs.image_custom_version}}
+        run: docker push ${{ env.REPO_DOCKER_HUB }}/station-image-runner:${{ github.event.inputs.image_custom_version}}
  
 
       
