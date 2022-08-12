@@ -52,9 +52,9 @@ jobs:
 
       - name: Tag image runner
         id: tag-image-runner
-        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-image-runner:latest ${{ env.REPO_DOCKER_HUB }}/station-image-runner-db:${{ github.event.inputs.image_custom_version}}
+        run: docker tag ${{ env.REPO_DOCKER_HUB }}/station-image-runner:latest ${{ env.REPO_DOCKER_HUB }}/station-image-runner:${{ github.event.inputs.image_custom_version}}
 
-      - name: Push db docker
+      - name: Push image runner
         id: push-image-runner
         run: docker push ${{ env.REPO_DOCKER_HUB }}/station-image-runner:${{ github.event.inputs.image_custom_version}}
  
