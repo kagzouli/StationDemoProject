@@ -8,6 +8,7 @@ spec:
   template:
     spec:
       repository: kagzouli/StationDemoProject
+      image: YOUR_CUSTOM_DOCKER_IMAGE
       labels:
         - station
         - deploy
