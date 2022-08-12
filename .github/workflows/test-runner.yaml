@@ -8,6 +8,12 @@ jobs:
   test: 
     runs-on: self-hosted
     steps:
+
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
         
       - name: Get Helm version
         id: get_helm_version
