@@ -4,6 +4,7 @@ metadata:
   name: exaka-runner-deployment
   namespace: cicd
 spec:
+  replicas: 2
   template:
     spec:
       repository: kagzouli/StationDemoProject
