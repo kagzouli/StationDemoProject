@@ -1,0 +1,14 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: exaka-runner-deployment
+  namespace: cicd
+spec:
+  replicas: 1
+  template:
+    spec:
+      repository: kagzouli/StationDemoProject
+      image: kagzouli3/station-image-runner:1.1.1
+      labels:
+        - station
+        - build
