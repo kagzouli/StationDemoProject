@@ -1,4 +1,4 @@
-name: "[Test] Test Runner"
+name: "[Test] Test Custom Runner"
 
 on: 
   workflow_dispatch:
