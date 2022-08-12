@@ -6,4 +6,4 @@ metadata:
 spec:
   template:
     spec:
-      repository: kagzouli/self-hosted-runner
+      repository: kagzouli/StationDemoProject
