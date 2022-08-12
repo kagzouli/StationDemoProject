@@ -1,8 +1,9 @@
 apiVersion: actions.summerwind.dev/v1alpha1
-kind: Runner
+kind: RunnerDeployment
 metadata:
-  name: exaka-runner
+  name: exaka-runner-deployment
   namespace: cicd
 spec:
-  repository: summerwind/actions-runner-controller
-  env: []
+  template:
+    spec:
+      repository: kagzouli/self-hosted-runner
