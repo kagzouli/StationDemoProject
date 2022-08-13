@@ -6,7 +6,7 @@ on:
 jobs:
 
   test: 
-    runs-on: [self-hosted , station , deploy ]
+    runs-on: [self-hosted , station , build ]
     steps:
 
       - name: Get kubectl version
