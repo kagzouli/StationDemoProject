@@ -17,10 +17,6 @@ jobs:
         id: get_helm_version
         run: helm version
 
-      - name: Get docker version
-        id: get_docker_version
-        run: docker version
-
       - name: Get Terraform version
         id: get_terraform_version
         run: terraform version
