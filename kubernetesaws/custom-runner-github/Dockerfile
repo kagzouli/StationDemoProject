@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM summerwind/actions-runner:latest
 
 # Install tools
 RUN apt-get update \
