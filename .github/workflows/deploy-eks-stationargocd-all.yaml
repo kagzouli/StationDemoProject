@@ -68,7 +68,7 @@ jobs:
   # Deploy secrets
   secrets:
     uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
-    needs: networks
+    #needs: networks
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
