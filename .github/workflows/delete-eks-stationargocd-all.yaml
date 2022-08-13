@@ -99,7 +99,7 @@ jobs:
   delete_rds:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'external' }}
-    needs: destroy_station
+    #needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -113,7 +113,7 @@ jobs:
   delete_redis:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     if: ${{ github.event.inputs.deployMode == 'external' }}
-    needs: destroy_station
+   # needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
