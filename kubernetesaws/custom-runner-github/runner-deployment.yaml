@@ -9,6 +9,7 @@ spec:
     spec:
       repository: kagzouli/StationDemoProject
       image: kagzouli3/station-image-runner:1.1.1
+      imagePullPolicy: Always
       dockerdWithinRunnerContainer: true
       labels:
         - station
