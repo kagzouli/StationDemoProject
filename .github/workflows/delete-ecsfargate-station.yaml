@@ -1,0 +1,91 @@
+name: "[AWS] Delete all ECS Fargate"
+
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
+      region:
+        type: choice
+        description: The region where we can create objects
+        options:
+          - eu-west-3
+        required: true
+
+
+env:
+  TERRAFORM_VERSION: 1.2.7
+
+
+jobs:
+
+
+  # Delete RDS
+  delete_rds:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'external' }}
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationdb_rds
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Delete Redis
+  delete_redis:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'external' }}
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationredis
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  #Delete ECS Fargate
+  delete_ecsfargate:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    needs: [delete_redis , delete_rds]
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: ecsfargate
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+ 
+  delete_secrets:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    needs: delete_ecsfargate
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: secrets
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  delete_networks:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    needs: delete_secrets
+    if: ${{ always() && needs.delete_secrets.result == 'success' }}
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: networks
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}

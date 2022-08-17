@@ -1,0 +1,123 @@
+name: "[AWS] Deploy ECS Fargate station"
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
+      region:
+        type: choice
+        description: The region where we can create objects
+        options:
+          - eu-west-3
+        required: true
+      
+
+jobs:
+  # Deploy networks
+  networks:
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: networks
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Deploy secrets
+  secrets:
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    needs: networks
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: secrets
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Deploy ECS fargate
+  ecsfargate:
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    needs: secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: ecsfargate
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Deploy RDS
+  rds:
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'external' }}
+    needs: secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationdb_rds
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Deploy redis
+  redis:
+    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    if: ${{ github.event.inputs.deployMode == 'external' }}
+    needs: secrets
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: stationredis
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Installation ArgoCD
+  redeploy_back_and_front:
+    runs-on: ubuntu-latest
+    needs: [ecsfargate , rds, redis] 
+    steps:
+      
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+          aws-region: ${{ github.event.inputs.region}}
+          role-duration-seconds: 3600
+          mask-aws-account-id: false
+      
+      - name: Redeploy back and front 
+      - id: redeploy-back-front
+        run: |
+          # Relaunch the back-end to take into account the new task definition
+          echo "Relaunch the backend to take into account the new task definition"
+          aws ecs list-tasks --cluster station-back-ecs-cluster --service-name station-back-ecs-service | jq -r ".taskArns[]" | awk '{print "aws ecs stop-task --cluster station-back-ecs-cluster --task \""$0"\""}' | sh
+
+          # Relaunch the front to take into account the new task definition
+          echo "Relaunch the frontend to take into account the new task definition"
+          aws ecs list-tasks --cluster station-front-ecs-cluster --service-name station-front-ecs-service | jq -r ".taskArns[]" | awk '{print "aws ecs stop-task --cluster station-front-ecs-cluster --task \""$0"\""}' | sh
+
+
+
+
+ 
