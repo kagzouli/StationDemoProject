@@ -19,9 +19,11 @@ spec:
           value: {{ .Values.app.accountidentifier | quote }}
         - name: app.region
           value: {{ .Values.app.region | quote }}
+        - name: app.noderolearn
+          value: {{ .Values.app.noderolearn | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.1.2
+    targetRevision: 1.1.1
   syncPolicy:
     automated:
       prune: true
