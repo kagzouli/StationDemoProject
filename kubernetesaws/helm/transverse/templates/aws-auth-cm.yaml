@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+  labels:
+    k8s-app: aws-iam-authenticator
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/devops-cd 
+      username: devops
+      groups:
+        - system:masters
+  
+  mapUsers: |
+    - userarn: arn:aws:iam::{{ .Values.app.accountidentifier }}:user/Kaka
+      username: Kaka
+      groups:
+        - system:masters
+    
