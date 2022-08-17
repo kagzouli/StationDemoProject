@@ -107,7 +107,7 @@ jobs:
           mask-aws-account-id: false
       
       - name: Redeploy back and front 
-      - id: redeploy-back-front
+        id: redeploy-back-front
         run: |
           # Relaunch the back-end to take into account the new task definition
           echo "Relaunch the backend to take into account the new task definition"
