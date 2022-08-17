@@ -28,7 +28,6 @@ jobs:
   # Delete RDS
   delete_rds:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'external' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -41,7 +40,6 @@ jobs:
   # Delete Redis
   delete_redis:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'external' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
