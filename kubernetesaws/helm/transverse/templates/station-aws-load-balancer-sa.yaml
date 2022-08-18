@@ -7,5 +7,5 @@ metadata:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: station-aws-load-balancer-controller-sa 
   annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-alb-iam-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-alb-iam-role
 
