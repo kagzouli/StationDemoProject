@@ -198,6 +198,7 @@ jobs:
   install_shared_argocd:
     runs-on: ubuntu-latest
     needs: install_argocd
+    timeout-minutes: 20
     if: ${{ always() && needs.install_argocd.result == 'success' }}
     steps:
       
@@ -245,7 +246,8 @@ jobs:
           helm upgrade -i shared ./shared \
           --set app.accountidentifier="${{ steps.retrieve-account.outputs.identifier }}" \
           --set app.region="${{ github.event.inputs.region}}" \
-          --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" 
+          --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" \
+          --set app.noderolearn=
         working-directory: kubernetesaws/argocd
    
       # Check that ALB load balancer controller is in state Running, Failed 
