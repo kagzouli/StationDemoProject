@@ -37,7 +37,6 @@ else
      export AWS_PROFILE=iam
      export AWS_DEFAULT_PROFILE=iam
      echo $AWS_DEFAULT_PROFILE
-     bash
 fi
 
 
