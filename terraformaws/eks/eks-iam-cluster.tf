@@ -1,7 +1,7 @@
 ############### EKS nodes ##################################
 
 resource "aws_iam_role" "aws_eks_nodes_role" {
-  name_prefix = "aws-eks-nodes-role"
+  name = "aws-eks-nodes-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -142,7 +142,7 @@ resource "aws_iam_role_policy_attachment" "nodes_eks_cloudwatch_policy_attachmen
 
 resource "aws_iam_role" "aws_eks_iam_role" {
   # Using a prefix ensures a unique name
-  name_prefix = "aws-eks-iam-role"
+  name = "aws-eks-iam-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
