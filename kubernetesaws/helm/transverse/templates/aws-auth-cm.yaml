@@ -12,8 +12,8 @@ data:
       groups:
         - system:masters
     - groups:
-      - system:bootstrappers
-      - system:nodes
+        - system:bootstrappers
+        - system:nodes
       rolearn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/aws-eks-nodes-role
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
