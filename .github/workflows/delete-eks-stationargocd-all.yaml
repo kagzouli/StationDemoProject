@@ -17,24 +17,6 @@ on:
           - eu-west-3
         required: true
 
-      deployMode:
-        type: choice
-        description: Deploy mode (internal, external)
-        default: internal
-        options:
-          - internal
-          - external
-        required: true
-
-      supervision:
-        type: choice
-        description: Supervision (Oui/Non)
-        default: non
-        options:
-          - non
-          - oui
-        required: true
-
 
 env:
   TERRAFORM_VERSION: 1.2.7
@@ -84,7 +66,6 @@ jobs:
   delete_cloudwatchalarm:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     needs: destroy_station
-    if: ${{ github.event.inputs.supervision == 'oui' }}
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -98,7 +79,7 @@ jobs:
   # Delete RDS
   delete_rds:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'external' }}
+    if: ${{ always() }}
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
@@ -112,7 +93,7 @@ jobs:
   # Delete Redis
   delete_redis:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
-    if: ${{ github.event.inputs.deployMode == 'external' }}
+    if: ${{ always() }}
     needs: destroy_station
     with:
       environment: ${{ github.event.inputs.environment}}
@@ -127,7 +108,7 @@ jobs:
   delete_eks:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
     if: ${{ always() }}
-    needs: [destroy_station , delete_rds]
+    needs: [delete_rds, delete_redis]
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
