@@ -17,7 +17,7 @@ data:
       rolearn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/aws-eks-nodes-role
       username: system:node:{{ "{{" }}EC2PrivateDNSName}}
   mapUsers: |
-    - userarn: arn:aws:iam::{{ .Values.app.accountidentifier }}:user/Kaka
+    - userarn: arn:aws:iam::{{ .Values.app.accountidentifier }}:user/Gbol
       username: Kaka
       groups:
         - system:masters
