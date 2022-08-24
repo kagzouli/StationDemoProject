@@ -1,3 +1,7 @@
+# Application
+
+The application is divided into multiple modules : 
+
 ## StationDemoBatch
 
 This component contains all the sources for the batch to integrate the RATP traffic information file of 2015 (I'm not sure of the year), and store it in 
