@@ -68,9 +68,7 @@ The goal of this job is to stop the application using a docker-compose file.
 # TrafficStation organization source
 
 
-## StationDemoDb
 
-It contains the docker image for the Mysql datasource, it will create the datasource with existing traffic station of the RATP.
 
 ## usinedev
 
