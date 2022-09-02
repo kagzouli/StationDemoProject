@@ -18,9 +18,11 @@ spec:
         - name: awsRegion
           value: {{ .Values.app.region | quote }}
         - name: rbac.serviceAccount.create
-          value: "false"
+          value: "true"
         - name: rbac.serviceAccount.name
           value: "cluster-autoscaler-sa"
+        - name: rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn
+          value: "arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-cluster-autoscaler-iam-role"
         - name: replicaCount
           value: "2" 
         - name: autoDiscovery.clusterName

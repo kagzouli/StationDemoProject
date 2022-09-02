@@ -18,7 +18,9 @@ spec:
         - name: clusterName
           value: station-eks-cluster
         - name: serviceAccount.create
-          value: "false" 
+          value: "true" 
+        - name: serviceAccount.annotations.eks\.amazonaws\.com/role-arn
+          value: "arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-alb-iam-role" 
         - name: region
           value: {{ .Values.app.region | quote }}
         - name: vpcId

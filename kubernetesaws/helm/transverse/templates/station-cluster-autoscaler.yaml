@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: cluster-autoscaler-sa
-  namespace: {{ .Release.Namespace | quote }}
-  labels:
-    app.kubernetes.io/name: cluster-autoscaler-sa
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-cluster-autoscaler-iam-role
