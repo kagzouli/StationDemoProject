@@ -17,8 +17,6 @@ spec:
       parameters: 
         - name: serviceAccount.create
           value: "true"
-        - name: serviceAccount.name
-          value: "station-metrics-server-sa"
         - name: replicas
           value: "2" 
 
