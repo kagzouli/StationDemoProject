@@ -19,6 +19,8 @@ spec:
           value: station-eks-cluster
         - name: serviceAccount.create
           value: "true" 
+        - name: serviceAccount.name
+          value: "aws-load-balancer-controller-sa" 
         - name: serviceAccount.annotations.eks\.amazonaws\.com/role-arn
           value: "arn:aws:iam::{{ .Values.app.accountidentifier }}:role/station-alb-iam-role" 
         - name: region

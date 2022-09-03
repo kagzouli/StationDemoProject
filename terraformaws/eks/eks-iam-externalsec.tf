@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "eks_secret_webidentity_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks_openid.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:${var.shared_namespace}:external-secrets"]
+      values   = ["system:serviceaccount:${var.shared_namespace}:external-secrets-sa"]
     }
 
     principals {
