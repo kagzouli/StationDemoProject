@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "eks_alb_webidentity_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks_openid.url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:${var.shared_namespace}:station-aws-load-balancer-controller-sa"]
+      values   = ["system:serviceaccount:${var.shared_namespace}:aws-load-balancer-controller"]
     }
 
     principals {
