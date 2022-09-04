@@ -228,6 +228,24 @@ jobs:
           chmod 700 get_helm.sh
           ./get_helm.sh
 
+      # Install secret manager kubernetes secrets
+      - name: Get Kubernetes secrets - Secret manager
+        id: get kubernetes-secrets-manager
+        run: |
+          kubectl get secret awssm-secret -n default
+          EXEC_GET_SECRETMANAGER="$?"
+          echo "Resultat get secret manager : ${EXEC_GET_SECRETMANAGER}"
+          if [ "${EXEC_GET_SECRETMANAGER}" -ne 0 ]; then
+            # Create access key
+            RESULT_ACCESS_KEY_SM=$( aws iam create-access-key --user-name external-secrets)
+            ACCESS_KEY_ID_SM=$( echo $RESULT_ACCESS_KEY_SM | jq -r .AccessKey.AccessKeyId)
+            SECRET_ACCESS_KEY_SM=$( echo $RESULT_ACCESS_KEY_SM | jq -r .AccessKey.SecretAccessKey)
+            kubectl create secret generic awssm-secret --from-literal=access-key=$ACCESS_KEY_ID_SM --from-literal=secret-access-key=$SECRET_ACCESS_KEY_SM -n default
+            echo "awssm-secret create with access"
+          else
+            echo "Generic secret already exists"
+          fi
+
       # Recuperer account
       - name: Retrieve account 
         id: retrieve-account
