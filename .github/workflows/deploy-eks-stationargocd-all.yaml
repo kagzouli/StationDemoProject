@@ -230,7 +230,7 @@ jobs:
 
       # Install secret manager kubernetes secrets
       - name: Get Kubernetes secrets - SM
-        id: get kubernetes-sm
+        id: get-kubernetes-sm
         run: |
           kubectl get secret awssm-secret -n default
           EXEC_GET_SECRETMANAGER="$?"
