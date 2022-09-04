@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: station-metrics-server
+  name: metrics-server
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
