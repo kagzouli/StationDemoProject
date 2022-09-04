@@ -232,10 +232,9 @@ jobs:
       - name: Get Kubernetes secrets - SM
         id: get-kubernetes-sm
         run: |
-          kubectl get secret awssm-secret -n default
-          EXEC_GET_SECRETMANAGER="$?"
-          echo "Resultat get secret manager : ${EXEC_GET_SECRETMANAGER}"
-          if [ "${EXEC_GET_SECRETMANAGER}" -ne 0 ]; then
+          RESULT_SEARCH_SM=$( kubectl get secret -n default | grep awssm-secret)
+          echo "Result search SM : ${RESULT_SEARCH_SM}"
+          if [ "${RESULT_SEARCH_SM}" -eq 0 ]; then
             # Create access key
             RESULT_ACCESS_KEY_SM=$( aws iam create-access-key --user-name external-secrets)
             ACCESS_KEY_ID_SM=$( echo $RESULT_ACCESS_KEY_SM | jq -r .AccessKey.AccessKeyId)
