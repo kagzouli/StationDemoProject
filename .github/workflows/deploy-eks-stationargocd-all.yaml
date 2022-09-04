@@ -221,12 +221,16 @@ jobs:
         id: connect_eks_cluster
         run: aws eks --region ${{ github.event.inputs.region}} update-kubeconfig --name station-eks-cluster
 
+      - name: Installation Kubernetes
+        id: kubernetes_installation
+        run: curl -LO https://storage.googleapis.com/kubernetes-release/release/${{ env.KUBERNETES_VERSION }}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
 
       - name: Install Helm
         run: |
           curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
           chmod 700 get_helm.sh
           ./get_helm.sh
+
 
       # Install secret manager kubernetes secrets
       - name: Get Kubernetes secrets - SM
