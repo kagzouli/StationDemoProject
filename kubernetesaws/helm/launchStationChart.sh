@@ -1,1 +1,1 @@
-sudo helm install stationdev ./station -n stationdev
+sudo helm install stationdev ./station -n stationdev --create-namespace
