@@ -24,6 +24,11 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
 
+      - name: init
+        id: init
+        run: terraform init  -backend-config="backends/dev_backend.tfvars"
+        working-directory: terraformaws/eks
+
 
       - name: Validate terraform
         run:  terraform validate
@@ -33,7 +38,7 @@ jobs:
       - name: Download tfsec
         run:  curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
 
-        
+
       - name: Execute tfsec
         run: tfsec .
         working-directory: terraformaws/eks
