@@ -39,5 +39,6 @@ jobs:
 
 
       - name: Execute tfsec
+        if: ${{ always() }}
         run: tfsec .
         working-directory: terraformaws/eks
