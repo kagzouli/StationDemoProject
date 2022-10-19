@@ -7,6 +7,7 @@ on:
       - terraformaws/eks/**
 
 env:
+  TERRAFORM_VERSION: 1.2.7
   NODEJS_VERSION: 14
 
 jobs:
