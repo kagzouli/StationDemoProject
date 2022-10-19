@@ -1,0 +1,32 @@
+name: "[AWS] Build docker station on AWS"
+
+#on: [pull_request]
+on: 
+  push:
+    paths:
+      - terraformaws/eks/**
+
+env:
+  NODEJS_VERSION: 14
+
+jobs:
+  validate_eks:
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        id: setup_terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION}} 
+          terraform_wrapper: false
+
+      - name: Download tfsec
+        run:  curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+
+      - name: Execute tfsec
+        run: tfsec .
+        working-directory: terraformaws/eks
