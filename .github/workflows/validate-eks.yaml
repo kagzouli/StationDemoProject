@@ -25,27 +25,16 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-to-assume: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
-          aws-region: eu-west-3
-          role-duration-seconds: 3600
+      - name: Download tflint
+        run: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-      - name: init
-        id: init
-        run: terraform init  -backend-config="backends/dev_backend.tfvars"
-        working-directory: terraformaws/eks
-
-
-      - name: Validate terraform
-        run:  terraform validate
+      - name: Execute tflint
+        run: tflint .
         working-directory: terraformaws/eks
 
 
       - name: Download tfsec
+        if: ${{ always() }}
         run:  curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
 
 
