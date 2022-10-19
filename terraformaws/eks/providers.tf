@@ -11,6 +11,10 @@ terraform {
       source = "hashicorp/aws"
       version = "~> 4.25.0"
     }
+
+    tls = {
+      version = "~> 2.2"
+    }
   
   }
 }
