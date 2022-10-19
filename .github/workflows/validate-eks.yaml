@@ -24,9 +24,16 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_VERSION}} 
           terraform_wrapper: false
 
+
+      - name: Validate terraform
+        run:  terraform validate
+        working-directory: terraformaws/eks
+
+
       - name: Download tfsec
         run:  curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
 
+        
       - name: Execute tfsec
         run: tfsec .
         working-directory: terraformaws/eks
