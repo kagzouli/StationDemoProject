@@ -270,7 +270,7 @@ jobs:
   tag_version_git:
     runs-on: ubuntu-latest
     needs: [push_db_dockerhub, push_back_dockerhub, push_front_dockerhub]
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
 
       # Retrieve a token for pull
