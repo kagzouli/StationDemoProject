@@ -3,11 +3,11 @@ import json
 def scaleUpHandler(event, context):
     return {
         'statusCode': 200,
-        'body': 'Call the addiinfo get method'
+        'body': 'Scale up'
     }
 
 def scaleDownHandler(event, context):
     return {
         'statusCode': 200,
-        'body': 'Call the addiinfo get method'
+        'body': 'Scale Down'
     }
