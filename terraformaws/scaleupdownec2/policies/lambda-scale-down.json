@@ -5,10 +5,7 @@
             "Effect": "Allow",
             "Action": [
                 "ec2:DescribeInstances",
-                "ec2:DescribeTags",
-                "ec2:RunInstances",
-                "ec2:CreateFleet",
-                "ec2:CreateTags"
+                "ec2:DescribeTags"
             ],
             "Resource": [
                 "*"
@@ -17,9 +14,16 @@
         {
             "Effect": "Allow",
             "Action": [
-                "ssm:PutParameter"
+                "ec2:TerminateInstances"
             ],
-            "Resource": "*"
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/Application": "runner"
+                }
+            }
         }
     ]
 }

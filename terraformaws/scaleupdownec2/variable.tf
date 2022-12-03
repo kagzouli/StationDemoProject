@@ -4,13 +4,6 @@ variable "region" {
 }
 
 
-variable "lambda_runtime" {
-  description = "AWS Lambda runtime."
-  type        = string
-  default     = "nodejs16.x"
-}
-
-
 variable "lambda_architecture" {
   type        = string
   default     = "x86_64"
