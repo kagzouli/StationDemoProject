@@ -8,6 +8,16 @@ resource "aws_lambda_function" "scale_down" {
     reserved_concurrent_executions = 1
     memory_size                    = 512
     architectures                  = [var.lambda_architecture]
+
+    environment {
+      variables = {
+        launch_template_id = aws_launch_template.scaleupdown_launch_template.id
+        asg_name           = aws_autoscaling_group.scaleupdown_asg.name
+        region             = var.region
+        
+      }
+    }
+
     tags = {
       Name = "scale-downec2-lambda"
       Application= var.application

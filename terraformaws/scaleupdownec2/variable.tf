@@ -19,3 +19,8 @@ variable "application"{
   description = "Application"
   default     = "STATION"
 }
+
+variable "station_publicdomainname" {
+    type        =  string
+    description = "Public Domaine name"
+}

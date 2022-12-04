@@ -8,7 +8,9 @@
                 "ec2:DescribeTags",
                 "ec2:RunInstances",
                 "ec2:CreateFleet",
-                "ec2:CreateTags"
+                "ec2:CreateTags",
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:SetDesiredCapacity"
             ],
             "Resource": [
                 "*"
