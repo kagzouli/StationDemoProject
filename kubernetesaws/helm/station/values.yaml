@@ -63,7 +63,7 @@ stationdb:
   storage: 
     
     # Storage type
-    storageClass: manual
+    storageClass: none
 
     # Data Capacity
     dataCapacity: 150Mi 
