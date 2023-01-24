@@ -64,6 +64,9 @@ sudo kubeadm init --pod-network-cidr=${cidr_block_vpc}
 #sudo chown $(id -u):$(id -g) ~/.kube/config
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
+mkdir -p ~/.kube
+cp /etc/kubernetes/admin.conf ~/.kube/config
+
 kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
 
 #Installation helm
