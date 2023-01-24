@@ -1,4 +1,5 @@
 kubectl create namespace transverse --dry-run=client -o yaml | kubectl apply -f -
+mkdir -p /var/lib/mysql 
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 -n transverse
 helm repo add argo https://argoproj.github.io/argo-helm
