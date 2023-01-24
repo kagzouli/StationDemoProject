@@ -48,7 +48,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF'
 
 # Install kubernetes component
-sudo yum install -y docker kubelet kubeadm kubernetes-cni
+sudo yum install -y docker kubelet-1.23.16-0 kubeadm-1.23.16-0 kubernetes-cni-1.1.1-0
 
 
 #Enable kubelet

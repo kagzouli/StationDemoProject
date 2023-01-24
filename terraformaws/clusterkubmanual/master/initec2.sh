@@ -48,7 +48,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF'
 
 # Install kubernetes component
-sudo yum install -y docker kubelet kubeadm kubectl kubernetes-cni
+sudo yum install -y docker kubelet-1.23.16-0 kubeadm-1.23.16-0 kubectl-1.23.16-0 kubernetes-cni-1.1.1-0
 
 
 #Enable kubelet
@@ -56,7 +56,7 @@ sudo systemctl enable kubelet
 
 sudo kubeadm config images pull
 
-sudo kubeadm init --pod-network-cidr=${cidr_block_vpc}
+sudo kubeadm init --kubernetes-version 1.23.16  --pod-network-cidr=${cidr_block_vpc}
 
 # Copy config
 #sudo mkdir -p ~/.kube
@@ -74,6 +74,8 @@ sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/maste
 sudo chmod 700 get_helm.sh
 sudo sh get_helm.sh
 helm repo add eks https://aws.github.io/eks-charts
+
+sudo yum install -y git
 
 --===============BOUNDARY==
 MIME-Version: 1.0
