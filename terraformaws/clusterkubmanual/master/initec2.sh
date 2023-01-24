@@ -67,7 +67,7 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 mkdir -p ~/.kube
 cp /etc/kubernetes/admin.conf ~/.kube/config
 
-kubectl apply -f https://docs.projectcalico.org/v3.14/manifests/calico.yaml
+kubectl create -f https://docs.projectcalico.org/manifests/calico.yaml
 
 #Installation helm
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3

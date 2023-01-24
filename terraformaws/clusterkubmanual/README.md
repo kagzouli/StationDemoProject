@@ -7,3 +7,5 @@
 
 kubeadm join 12.0.3.6:6443 --token $TOKEN --discovery-token-ca-cert-hash 
 $DISCOVERY_TOKEN_HASH
+
+7 - yum install git
