@@ -48,7 +48,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 EOF'
 
 # Install kubernetes component
-sudo yum install -y docker kubelet-1.23.16-0 kubeadm-1.23.16-0 kubectl-1.23.16-0 kubernetes-cni-1.1.1-0
+sudo yum install -y docker kubelet-1.24.9-0 kubeadm-1.24.9-0 kubectl-1.24.9-0 kubernetes-cni-1.1.1-0
 
 
 #Enable kubelet
@@ -56,7 +56,7 @@ sudo systemctl enable kubelet
 
 sudo kubeadm config images pull
 
-sudo kubeadm init --kubernetes-version 1.23.16  --pod-network-cidr=${cidr_block_vpc}
+sudo kubeadm init --kubernetes-version 1.24.0  --pod-network-cidr=${cidr_block_vpc}
 
 # Copy config
 #sudo mkdir -p ~/.kube
