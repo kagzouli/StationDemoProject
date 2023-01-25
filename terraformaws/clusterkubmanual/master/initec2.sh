@@ -84,11 +84,10 @@ sudo iptables -F
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo sh get_helm.sh
-sudo helm repo add calico https://docs.projectcalico.org/charts
+helm repo add calico https://docs.projectcalico.org/charts
+helm repo update
 
-sudo helm repo update
-
-sudo helm upgrade -i calico calico/tigera-operator --version v3.24.2
+helm upgrade -i calico calico/tigera-operator --version v3.24.2
 
 sudo yum install -y git
 
