@@ -30,7 +30,7 @@ resource "aws_security_group" "kubworkermanual_sg" {
 
   ingress {
     from_port = 2379
-    to_port = 2380
+    to_port = 2381
     protocol = "tcp"
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
   }

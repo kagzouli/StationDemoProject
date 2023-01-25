@@ -55,7 +55,7 @@ EOF
 sudo sysctl --system
 
 # Install kubernetes component
-sudo yum install -y docker kubelet-1.24.9-0 kubeadm-1.24.9-0 kubectl-1.24.9-0 kubernetes-cni-1.1.1-0
+sudo yum install -y docker kubelet-1.25.4-0 kubeadm-1.25.4-0 kubectl-1.25.4-0 kubernetes-cni-1.1.1-0
 
 
 #Enable kubelet
@@ -63,7 +63,7 @@ sudo systemctl enable kubelet
 
 sudo kubeadm config images pull
 
-sudo kubeadm init --kubernetes-version 1.24.0  --pod-network-cidr=${cidr_block_vpc}
+sudo kubeadm init --kubernetes-version 1.25.0  --pod-network-cidr=${cidr_block_vpc}
 
 # Copy config
 #sudo mkdir -p ~/.kube
@@ -84,11 +84,11 @@ sudo iptables -F
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo sh get_helm.sh
-helm repo add calico https://docs.projectcalico.org/charts
+sudo helm repo add calico https://docs.projectcalico.org/charts
 
-helm repo update
+sudo helm repo update
 
-helm upgrade -i calico calico/tigera-operator --version v3.23.5
+sudo helm upgrade -i calico calico/tigera-operator --version v3.24.2
 
 sudo yum install -y git
 
