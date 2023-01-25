@@ -21,8 +21,16 @@ resource "aws_security_group" "kubworkermanual_sg" {
   }
 
   ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+
+  ingress {
     from_port = 2379
-    to_port = 2380
+    to_port = 2381
     protocol = "tcp"
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
   }
@@ -31,17 +39,30 @@ resource "aws_security_group" "kubworkermanual_sg" {
     from_port = 10250
     to_port = 10252
     protocol = "tcp"
-    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
   }
 
   ingress {
     from_port = 30000
     to_port = 32767
     protocol = "tcp"
-    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
   }
 
+  # BGP
+  ingress {
+    from_port = 179
+    to_port = 179
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
 
+  ingress {
+    from_port = 5473 
+    to_port = 5473 
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
 
 
   egress {

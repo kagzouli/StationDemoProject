@@ -47,8 +47,15 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF'
 
+sudo cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+sudo sysctl --system
+
 # Install kubernetes component
-sudo yum install -y docker kubelet-1.24.9-0 kubeadm-1.24.9-0 kubectl-1.24.9-0 kubernetes-cni-1.1.1-0
+sudo yum install -y docker kubelet-1.25.4-0 kubeadm-1.25.4-0 kubectl-1.25.4-0 kubernetes-cni-1.1.1-0
 
 
 #Enable kubelet
@@ -56,7 +63,7 @@ sudo systemctl enable kubelet
 
 sudo kubeadm config images pull
 
-sudo kubeadm init --kubernetes-version 1.24.0  --pod-network-cidr=${cidr_block_vpc}
+sudo kubeadm init --kubernetes-version 1.25.0  --pod-network-cidr=${cidr_block_vpc}
 
 # Copy config
 #sudo mkdir -p ~/.kube
@@ -67,15 +74,25 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 mkdir -p ~/.kube
 cp /etc/kubernetes/admin.conf ~/.kube/config
 
-kubectl create -f https://docs.projectcalico.org/manifests/calico.yaml
+# Ip tables
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -F
 
 #Installation helm
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo sh get_helm.sh
-helm repo add eks https://aws.github.io/eks-charts
+sudo helm repo add calico https://docs.projectcalico.org/charts
+
+sudo helm repo update
+
+sudo helm upgrade -i calico calico/tigera-operator --version v3.24.2
 
 sudo yum install -y git
+
+alias k=kubectl
 
 --===============BOUNDARY==
 MIME-Version: 1.0
