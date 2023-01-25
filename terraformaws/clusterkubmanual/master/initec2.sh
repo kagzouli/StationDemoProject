@@ -67,13 +67,16 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 mkdir -p ~/.kube
 cp /etc/kubernetes/admin.conf ~/.kube/config
 
-kubectl create -f https://docs.projectcalico.org/manifests/calico.yaml
 
 #Installation helm
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo sh get_helm.sh
-helm repo add eks https://aws.github.io/eks-charts
+helm repo add calico https://docs.projectcalico.org/charts
+
+helm repo update
+
+helm upgrade -i calico calico/tigera-operator --version v3.23.5
 
 sudo yum install -y git
 

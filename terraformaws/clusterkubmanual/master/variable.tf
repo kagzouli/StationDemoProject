@@ -9,3 +9,8 @@ variable "application"{
   default     = "STATION"
 }
 
+variable "docker_cidr"{
+  type        =  string
+  description =  "Docker CIDR"
+  default     =  "172.17.0.0/16"
+}
