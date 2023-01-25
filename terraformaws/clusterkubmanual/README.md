@@ -5,6 +5,7 @@
 5 - Se connecter à un worker 
  et lancer la commande 
 
+kubeadm token create --print-join-command
 kubeadm join 12.0.3.6:6443 --token $TOKEN --discovery-token-ca-cert-hash 
 $DISCOVERY_TOKEN_HASH
 

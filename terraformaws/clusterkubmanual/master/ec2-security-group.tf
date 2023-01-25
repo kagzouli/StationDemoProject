@@ -27,6 +27,21 @@ resource "aws_security_group" "kubmastermanual_sg" {
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
   }
 
+  # Core DNS
+  ingress {
+    from_port = 53
+    to_port = 53
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+  ingress {
+    from_port = 53
+    to_port = 53
+    protocol = "udp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
 
   ingress {
     from_port = 2379
@@ -43,8 +58,37 @@ resource "aws_security_group" "kubmastermanual_sg" {
   }
 
   ingress {
+    from_port = 8090
+    to_port = 8091
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
+
+  ingress {
+    from_port = 10255
+    to_port = 10255
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
+
+  ingress {
     from_port = 30000
     to_port = 32767
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
+
+  # BGP
+  ingress {
+    from_port = 179
+    to_port = 179
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
+
+  ingress {
+    from_port = 5473 
+    to_port = 5473 
     protocol = "tcp"
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
   }

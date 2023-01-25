@@ -47,6 +47,13 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF'
 
+sudo cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+sudo sysctl --system
+
 # Install kubernetes component
 sudo yum install -y docker kubelet-1.24.9-0 kubeadm-1.24.9-0 kubectl-1.24.9-0 kubernetes-cni-1.1.1-0
 
@@ -67,6 +74,11 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 mkdir -p ~/.kube
 cp /etc/kubernetes/admin.conf ~/.kube/config
 
+# Ip tables
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -F
 
 #Installation helm
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
@@ -79,6 +91,8 @@ helm repo update
 helm upgrade -i calico calico/tigera-operator --version v3.23.5
 
 sudo yum install -y git
+
+alias k=kubectl
 
 --===============BOUNDARY==
 MIME-Version: 1.0

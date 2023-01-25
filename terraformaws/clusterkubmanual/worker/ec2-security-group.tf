@@ -49,7 +49,20 @@ resource "aws_security_group" "kubworkermanual_sg" {
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
   }
 
+  # BGP
+  ingress {
+    from_port = 179
+    to_port = 179
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
 
+  ingress {
+    from_port = 5473 
+    to_port = 5473 
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block , var.docker_cidr]
+  }
 
 
   egress {
