@@ -4,7 +4,7 @@ helm delete argo-rollout  -n transverse
 
 helm delete metrics-server  -n transverse
 
-helm delete --install ingress-nginx -n transverse
+helm delete ingress-nginx -n transverse
 
 
 kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
