@@ -9,7 +9,10 @@ kubeadm token create --print-join-command
 kubeadm join 12.0.3.6:6443 --token $TOKEN --discovery-token-ca-cert-hash 
 $DISCOVERY_TOKEN_HASH
 
-7 - yum install git
+7 - Ajouter dans /etc/hosts du master : 
+
+172.16.16.210 station.exakaconsulting.org
+172.16.16.210 stationback.exakaconsulting.org
 
 
 yum list --showduplicates kubeadm
