@@ -18,4 +18,4 @@ do
   NOTPENDING_ARGO_ROLLOUT=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("argo-rollout")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
 done
 
-helm install stationdev ./station -n stationdev --create-namespace
+helm upgrade --install stationdev ./station -n stationdev --create-namespace
