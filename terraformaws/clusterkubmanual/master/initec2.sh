@@ -87,7 +87,7 @@ sudo sh get_helm.sh
 helm repo add calico https://docs.projectcalico.org/charts
 helm repo update
 
-helm upgrade -i calico calico/tigera-operator --version v3.24.2
+sudo kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 sudo yum install -y git
 
