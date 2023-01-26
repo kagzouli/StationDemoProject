@@ -18,4 +18,8 @@ do
   NOTPENDING_ARGO_ROLLOUT=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("argo-rollout")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
 done
 
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
+
 helm upgrade --install stationdev ./station -n stationdev --create-namespace
+
+kubectl apply -f ipaddress_pools.yaml
