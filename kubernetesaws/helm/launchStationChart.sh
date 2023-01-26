@@ -9,4 +9,13 @@ helm upgrade --install metrics-server metrics-server/metrics-server --version 3.
 helm upgrade --install argo-rollout argo/argo-rollouts --version 2.21.3 --set installCRDs=true -n transverse
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx    --version 4.4.2 -n transverse --create-namespace
 
+# Check that Argo Rollout are is Running or failed state 
+NOTPENDING_ARGO_ROLLOUT=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("argo-rollout")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+while [[ -z "${NOTPENDING_ARGO_ROLLOUT}" ]]
+do
+  echo "Les pods ${NOTPENDING_ARGO_ROLLOUT} de ArgoRollout sont encore en cours"
+  sleep 5s
+  NOTPENDING_ARGO_ROLLOUT=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("argo-rollout")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
+done
+
 helm install stationdev ./station -n stationdev --create-namespace

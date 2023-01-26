@@ -90,6 +90,7 @@ helm repo update
 sudo kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 
 sudo yum install -y git
+sudo yum install -y jq
 
 alias k=kubectl
 
