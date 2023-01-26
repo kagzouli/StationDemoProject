@@ -45,10 +45,28 @@ resource "aws_security_group" "kubmastermanual_sg" {
 
   ingress {
     from_port = 2379
-    to_port = 2380
+    to_port = 2381
     protocol = "tcp"
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
   }
+
+  # Weave
+  ingress {
+    from_port = 6783
+    to_port = 6783
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+  # Weave
+  ingress {
+    from_port = 6783
+    to_port = 6784
+    protocol = "udp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+
 
   ingress {
     from_port = 10250

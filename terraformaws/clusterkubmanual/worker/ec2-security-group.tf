@@ -27,6 +27,21 @@ resource "aws_security_group" "kubworkermanual_sg" {
     cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
   }
 
+  # Core DNS
+  ingress {
+    from_port = 53
+    to_port = 53
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+  ingress {
+    from_port = 53
+    to_port = 53
+    protocol = "udp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
 
   ingress {
     from_port = 2379
