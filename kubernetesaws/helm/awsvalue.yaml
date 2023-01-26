@@ -151,6 +151,9 @@ stationfront:
 
   # Liste des ip alb du station front
   albiplist: []
+
+  # Hostname
+  hostname: station.exakaconsulting.org
   
   service:
     # External port

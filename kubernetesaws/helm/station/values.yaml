@@ -88,7 +88,7 @@ stationback:
   albiplist: []
   
   # Hostname
-  hostname: 51.254.36.120
+  hostname: stationback.exakaconsulting.org
   
   # External port
   externalPort: 80
@@ -142,6 +142,8 @@ stationfront:
   # Liste des ip alb du station front
   albiplist: []
   
+  # Hostname
+  hostname: station.exakaconsulting.org
 
   service:
     # External port
