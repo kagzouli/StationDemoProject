@@ -12,7 +12,8 @@ metadata:
   
 spec:
   rules:
-  - http:
+  - host: {{ .Values.stationback.hostname }}
+    http:
       paths:
       - path: /StationDemoSecureWeb 
         pathType: Prefix

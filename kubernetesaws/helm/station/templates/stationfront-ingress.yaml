@@ -10,7 +10,8 @@ metadata:
 {{- end }}
 spec:
   rules:
-  - http:
+  - host: {{ .Values.stationfront.hostname }}
+    http:
       paths:
       - path: /station-angular4-poc
         pathType: Prefix
