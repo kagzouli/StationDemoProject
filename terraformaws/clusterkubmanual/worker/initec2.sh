@@ -63,6 +63,12 @@ sudo systemctl enable kubelet
 
 sudo kubeadm config images pull
 
+# For load tests
+sudo yum install -y wget
+sudo wget https://github.com/grafana/k6/releases/download/v0.42.0/k6-v0.42.0-linux-amd64.tar.gz
+sudo tar -xvf k6-v0.42.0-linux-amd64.tar.gz
+sudo mv k6-v0.42.0-linux-amd64/k6 /usr/local/bin/k6
+
 
 --===============BOUNDARY==
 MIME-Version: 1.0
