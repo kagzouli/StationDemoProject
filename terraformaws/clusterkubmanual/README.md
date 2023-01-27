@@ -13,5 +13,5 @@ Etape 3 : Générer les workers du cluster kubernetes.<br/>
 Etape 4 : Initialiser l'application station dans le cluster : <br/>
     Aller sur kubernetes/helm et lancer plusieurs fois launchStationChart.sh afin que le cluster s'initialise.<br/>
 Etape 5 :  Ajouter dans /etc/hosts du master et des workers : <br/> 
-172.16.16.210 station.exakaconsulting.org 
+172.16.16.210 station.exakaconsulting.org    <br/>
 172.16.16.210 stationback.exakaconsulting.org
