@@ -11,7 +11,7 @@ data "template_file" "user_data" {
 
 resource "aws_instance" "kubernatevaultonprem" {
   ami           = data.aws_ami.ecs_optimized.id
-  instance_type = "t3.large"
+  instance_type = "t3.medium"
 
   user_data     = data.template_file.user_data.rendered 
 
