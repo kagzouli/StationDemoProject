@@ -14,6 +14,7 @@
 
 app:
  
+
   network:
     vpc_cidr:  '12.0.0.0/21'
 
@@ -25,13 +26,20 @@ image:
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli3'
 
- 
+secrets:
+  # Mode can be 'internal' if it's for local development, 'aws' if it comes from AWS, and 'vault' for secure on premise
+  mode: 'aws'
+
+  vault:
+
+    url: ''
+
 stationredis:
   
   # Mode : internalredis or externalredis
   mode: 'internalredis'
 
-  # redis password - Use only for mode=internalredis
+  # redis password - Use only for secrets.mode=internal
   redisPassword: 'redis60'
 
   # Host name of the redis - Use only for mode=externalredis
@@ -51,7 +59,7 @@ stationdb:
   # Directory where to put data of the database - Use only if mode=internaldb
   databaseData: /data
   
-  # Mysql root password -Use only for mode=internaldb
+  # Mysql root password -Use only for secrets.mode=internal
   mysqlRootPassword: root123
   
   # Mysql user
