@@ -26,9 +26,9 @@ resource "aws_autoscaling_group" "kubworker_autoscalinggroup" {
     vpc_zone_identifier       = [data.aws_subnet.station_privatesubnet1.id, data.aws_subnet.station_privatesubnet2.id] 
     launch_configuration      = aws_launch_configuration.kubworker_launch_config.name
 
-    desired_capacity          = 1
-    min_size                  = 1 
-    max_size                  = 1 
+    desired_capacity          = 2
+    min_size                  = 2 
+    max_size                  = 2 
     health_check_grace_period = 300
     health_check_type         = "EC2"
 

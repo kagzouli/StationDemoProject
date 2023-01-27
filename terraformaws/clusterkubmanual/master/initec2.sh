@@ -92,6 +92,18 @@ sudo kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8
 sudo yum install -y git
 sudo yum install -y jq
 
+sudo yum -y install pkgconfig
+ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/csbuild:/DBA/CentOS_CentOS-7/x86_64/libmozjs185-1_0-1.8.5-2.4.x86_64.rpm
+sudo yum install elinks -y
+
+curl -o browsh.rpm -L https://github.com/browsh-org/browsh/releases/download/v1.8.0/browsh_1.8.0_linux_amd64.rpm
+
+# For load tests
+sudo yum install -y wget
+sudo wget https://github.com/grafana/k6/releases/download/v0.42.0/k6-v0.42.0-linux-amd64.tar.gz
+sudo tar -xvf k6-v0.42.0-linux-amd64.tar.gz
+sudo mv k6-v0.42.0-linux-amd64/k6 /usr/local/bin/k6
+
 alias k=kubectl
 
 --===============BOUNDARY==
