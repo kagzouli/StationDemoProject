@@ -10,6 +10,13 @@ const params = {
       'Content-Type': 'application/json',
       'Authorization' : "Bearer " + token
     },
+};
+
+export const options = {
+    thresholds: {
+      http_req_failed: ['rate<0.1'], // http errors should be less than 1%
+      http_req_duration: ['p(95)<200'], // 95% of requests should be below 200ms
+    },
   };
 
 export default function () {
