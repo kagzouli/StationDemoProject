@@ -32,6 +32,8 @@ spec:
         {{- end }}
         - name: stationredis.mode
           value: {{ .Values.station.redis.mode | quote }}
+        - name: stationredis.redisPassword
+          value: {{ .Values.station.redis.password | quote }}
         - name: stationredis.usessl
           value: {{ .Values.station.redis.usessl | quote  }}
         - name: stationdb.mode
@@ -46,7 +48,7 @@ spec:
           value: {{ .Values.image.repoNexusUrl | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.1.16
+    targetRevision: 1.1.17
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
