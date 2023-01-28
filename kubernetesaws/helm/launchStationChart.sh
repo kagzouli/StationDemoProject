@@ -51,14 +51,14 @@ helm repo update
 helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true" -n ${SHARED_NAMESPACE}
 # Check that metrics server are is Running or failed state 
 while [[ $(kubectl get pods -l app.kubernetes.io/name=metrics-server -n ${SHARED_NAMESPACE} -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-   sleep 5
+   sleep 3
    displayMessage "Les pods metrics-server sont encore en cours de démarrage"
 done
 
 helm upgrade --install argo-rollout argo/argo-rollouts --version 2.21.3 --set installCRDs=true -n ${SHARED_NAMESPACE}
 # Check that Argo Rollout are is Running or failed state 
 while [[ $(kubectl get pods -l app.kubernetes.io/name=argo-rollouts -n ${SHARED_NAMESPACE} -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-   sleep 5
+   sleep 3
    displayMessage "Les pods ArgoRollout sont encore en cours de démarrage"
 done
 
@@ -66,21 +66,21 @@ done
 # Check that Ingress nginx are is Running or failed state
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx    --version 4.4.2 -n ${SHARED_NAMESPACE} --create-namespace
 while [[ $(kubectl get pods -l app.kubernetes.io/instance=ingress-nginx -n ${SHARED_NAMESPACE} -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-   sleep 5
+   sleep 3
    displayMessage "Les pods ingress-nginx sont encore en cours de démarrage"
 done
 
 # Check that external secrets are is Running or failed state
 helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2 -n ${SHARED_NAMESPACE} --create-namespace
 while [[ $(kubectl get pods -l app.kubernetes.io/name=external-secrets -n ${SHARED_NAMESPACE} -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-   sleep 5
+   sleep 3
    displayMessage "Les pods external-secrets sont encore en cours de démarrage"
 done
 
 # Check that metallb are is Running or failed state
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
 while [[ $(kubectl get pods -l app=metallb -n metallb-system -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-   sleep 5
+   sleep 3
    displayMessage "Les pods external-secrets sont encore en cours de démarrage"
 done
 
