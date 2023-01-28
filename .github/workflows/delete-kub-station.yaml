@@ -63,6 +63,7 @@ jobs:
   # Delete networks
   networks:
     uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    if: ${{ always() }}
     needs: [kubevaultinstance, kubeworkerinstance, kubemasterinstance]
     with:
       environment: ${{ github.event.inputs.environment}}

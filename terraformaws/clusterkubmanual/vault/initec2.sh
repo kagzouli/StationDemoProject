@@ -41,6 +41,64 @@ sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install vault
 
+# Insertion repertoire pour vault
+sudo mkdir -p /etc/vault
+chown vault:vault /etc/vault
+sudo mkdir -p /opt/vault-data
+chown vault:vault /opt/vault-data
+
+
+
+# Fichier de configuration vault
+sudo bash -c 'cat << EOF > /etc/vault/config.hcl
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = "true"
+}
+
+api_addr = "http://stationvault.interne.exakaconsulting.org:8200"
+storage "file" {
+  path    = "/opt/vault-data"
+}
+max_lease_ttl = "10h"
+default_lease_ttl = "10h"
+ui = true
+EOF'
+
+# Creation fichier service
+sudo bash -c 'cat << EOF > /etc/systemd/system/vault.service
+[Unit]
+Description=vault service
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/vault/config.hcl
+
+[Service]
+User=vault
+Group=vault
+ExecStart=/usr/bin/vault server -config=/etc/vault/config.hcl
+ExecReload=/usr/local/bin/kill --signal HUP $MAINPID
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+AmbientCapabilities=CAP_IPC_LOCK
+EnvironmentFile=-/etc/sysconfig/vault
+Restart=on-failure
+LimitMEMLOCK=infinity
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# Restart vault
+systemctl start vault
+
+# Init vault
+sleep 5
+sudo vault operator init -address=http://stationvault.interne.exakaconsulting.org:8200 -key-shares=3 -key-threshold=2 
+
+
+
 --===============BOUNDARY==
 MIME-Version: 1.0
 Content-Type: text/cloud-boothook; charset="us-ascii"

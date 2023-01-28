@@ -13,6 +13,22 @@ resource "aws_security_group" "kubvaultonprem_sg" {
 
   }
 
+  # Port for Vault
+  ingress {
+    from_port = 8200
+    to_port = 8200
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+  ingress {
+    from_port = 8201
+    to_port = 8201
+    protocol = "tcp"
+    cidr_blocks = [data.aws_vpc.station_vpc.cidr_block]
+  }
+
+  # Egress
   egress {
     from_port = 0
     to_port = 0

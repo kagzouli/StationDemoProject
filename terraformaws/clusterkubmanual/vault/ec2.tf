@@ -7,15 +7,13 @@ data "template_file" "user_data" {
 }
 
 
-
-
 resource "aws_instance" "kubernatevaultonprem" {
   ami           = data.aws_ami.ecs_optimized.id
   instance_type = "t3.medium"
 
   user_data     = data.template_file.user_data.rendered 
 
-  subnet_id     = data.aws_subnet.station_privatesubnet1.id
+  subnet_id     = data.aws_subnet.station_privatesubnet2.id
 
   security_groups = [ aws_security_group.kubvaultonprem_sg.id ]
 
