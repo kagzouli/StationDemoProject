@@ -69,6 +69,14 @@ sudo wget https://github.com/grafana/k6/releases/download/v0.42.0/k6-v0.42.0-lin
 sudo tar -xvf k6-v0.42.0-linux-amd64.tar.gz
 sudo mv k6-v0.42.0-linux-amd64/k6 /usr/local/bin/k6
 
+# Install tools
+sudo yum install -y git
+sudo yum install -y jq
+
+# Add entry for DNS simulation
+sudo echo "172.16.16.210 stationback.exakaconsulting.org" >> /etc/hosts
+sudo echo "172.16.16.210 station.exakaconsulting.org" >> /etc/hosts
+
 
 --===============BOUNDARY==
 MIME-Version: 1.0

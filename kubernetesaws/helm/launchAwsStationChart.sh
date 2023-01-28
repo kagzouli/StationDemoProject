@@ -60,7 +60,7 @@ case $TYPE_INSTALL in
         displayMessage "On est en mode installation external - la db et redis sont des services managees AWS RDS et Redis"
         REDIS_MODE="externalredis"
         REDIS_USESSL=true
-	DB_MODE="externaldb"
+        DB_MODE="externaldb"
         ;;
 
       *)

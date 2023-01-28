@@ -1,3 +1,20 @@
+#!/bin/bash
+# Fixe les variables
+
+displayError(){
+  RED='\033[0;31m'
+  NORMAL='\033[0m' 
+  echo -e "${RED}$1${NORMAL}"
+}
+
 NB_USERS=20
 DURATION=60
-k6 run --vus=$NB_USERS --duration="${DURATION}s" script.js
+
+
+if [ -z $1 ]
+then
+   displayError "Il manque le 1er argument. La valeur doit être le token de l'utilisateur pour se connecter"
+   exit 1
+fi
+
+k6 run -e TOKEN=$1 --vus=$NB_USERS --duration="${DURATION}s" script.js
