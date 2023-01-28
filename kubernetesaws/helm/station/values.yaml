@@ -14,6 +14,10 @@
 
 app:
 
+  # For cloud provider (Not used in on premise kubernetes)
+  network:
+    vpc_cidr:  ''
+    region: '' 
 
 image:
   tag: 1.1.0
@@ -29,7 +33,6 @@ secrets:
   vault:
 
     url: ''
-
 
 stationredis:
   
@@ -50,7 +53,6 @@ stationredis:
     pullPolicy: IfNotPresent
 
 stationdb:
-
   mode: 'internaldb'
 
   # Directory where to put data of the database - Use only if mode=internaldb
@@ -79,8 +81,11 @@ stationdb:
  
     # Global Capacity
     globalCapacity: 1Gi
+
+    # Use for AWS only
+    efsid: '' 
+    efsaccesspointid: ''
        
-   
   image:
     pullPolicy: IfNotPresent
 

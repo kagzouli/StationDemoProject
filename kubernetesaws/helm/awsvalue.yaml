@@ -14,10 +14,9 @@
 
 app:
  
-
+  # For cloud provider (Not used in on premise kubernetes)
   network:
     vpc_cidr:  '12.0.0.0/21'
-
     region: 'eu-west-3' 
 
 image:
@@ -30,6 +29,7 @@ secrets:
   # Mode can be 'internal' if it's for local development, 'aws' if it comes from AWS, and 'vault' for secure on premise
   mode: 'aws'
 
+  # For vault option (Not used in cloud mode)
   vault:
 
     url: ''
@@ -51,7 +51,6 @@ stationredis:
 
   image:
     pullPolicy: IfNotPresent
-
 
 stationdb:
   mode: 'internaldb'
@@ -85,10 +84,8 @@ stationdb:
     globalCapacity: 250Mi
 
     efsid: '' 
-
     efsaccesspointid: ''
        
-   
   image:
     pullPolicy: IfNotPresent
 

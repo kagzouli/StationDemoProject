@@ -12,6 +12,3 @@
     3.4 Copier le résultat de la commande en 2.5 et l'éxecuter sur l'ensemble des workers.<br/><br/>
 <br>Etape 4 :</b> Initialiser l'application station dans le cluster : <br/>
     Aller sur kubernetes/helm et lancer plusieurs fois launchStationChart.sh afin que le cluster s'initialise.<br/><br/>
-<br>Etape 5 :</b>  Ajouter dans /etc/hosts du master et des workers : <br/> 
-172.16.16.210 station.exakaconsulting.org    <br/>
-172.16.16.210 stationback.exakaconsulting.org
