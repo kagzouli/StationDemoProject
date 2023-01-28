@@ -26,6 +26,9 @@ station_db_url_external="stationdb"
 station_db_count=2
 station_db_instance_type="db.t3.small"
 
+# Station Vault
+station_vault_url_internal = "stationvault"
+
 
 # Station redis
 station_redis_host_port=6379

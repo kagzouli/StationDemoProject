@@ -43,20 +43,21 @@ sudo yum -y install vault
 
 # Insertion repertoire pour vault
 sudo mkdir -p /etc/vault
-sudo mkdir -p opt/vault-data
-sudo mkdir -p /logs/vault
+chown vault:vault /etc/vault
+sudo mkdir -p /opt/vault-data
+chown vault:vault /opt/vault-data
 
 
 
 # Fichier de configuration vault
-sudo bash -c 'cat << EOF > /etc/vault/config.json
+sudo bash -c 'cat << EOF > /etc/vault/config.hcl
 
 listener "tcp" {
   address     = "0.0.0.0:8200"
   tls_disable = "true"
 }
 
-api_addr = "http://stationvault.exakaconsulting.org:8200"
+api_addr = "http://stationvault.interne.exakaconsulting.org:8200"
 storage "file" {
   path    = "/opt/vault-data"
 }
@@ -71,22 +72,30 @@ sudo bash -c 'cat << EOF > /etc/systemd/system/vault.service
 Description=vault service
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty=/etc/vault/config.json
+ConditionFileNotEmpty=/etc/vault/config.hcl
 
 [Service]
+User=vault
+Group=vault
+ExecStart=/usr/bin/vault server -config=/etc/vault/config.hcl
+ExecReload=/usr/local/bin/kill --signal HUP $MAINPID
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+AmbientCapabilities=CAP_IPC_LOCK
 EnvironmentFile=-/etc/sysconfig/vault
-Environment=GOMAXPROCS=2
 Restart=on-failure
-ExecStart=/usr/bin/vault server -config=/etc/vault/config.json
-StandardOutput=/logs/vault/output.log
-StandardError=/logs/vault/error.log
 LimitMEMLOCK=infinity
-ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGTERM
 
 [Install]
 WantedBy=multi-user.target
 EOF'
+
+# Restart vault
+systemctl start vault
+
+# Init vault
+sleep 5
+sudo vault operator init -address=http://stationvault.interne.exakaconsulting.org:8200 -key-shares=3 -key-threshold=2 
 
 
 
