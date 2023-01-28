@@ -61,7 +61,7 @@ helm repo update
 
 # Launch and Check that metrics server are is Running or failed state 
 helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true" -n ${SHARED_NAMESPACE}
-checkIfPodsReady "metrics-server" "app.kubernetes.io/name=metrics" "${SHARED_NAMESPACE}"
+checkIfPodsReady "metrics-server" "app.kubernetes.io/name=metrics-server" "${SHARED_NAMESPACE}"
 
 # Launch and check that Argo Rollout are is Running or failed state 
 helm upgrade --install argo-rollout argo/argo-rollouts --version 2.21.3 --set installCRDs=true -n ${SHARED_NAMESPACE}
