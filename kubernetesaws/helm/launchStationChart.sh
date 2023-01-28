@@ -51,7 +51,7 @@ helm repo update
 helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true" -n ${SHARED_NAMESPACE}
 helm upgrade --install argo-rollout argo/argo-rollouts --version 2.21.3 --set installCRDs=true -n ${SHARED_NAMESPACE}
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx    --version 4.4.2 -n ${SHARED_NAMESPACE} --create-namespace
-helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2
+helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2 -n ${SHARED_NAMESPACE} --create-namespace
 
 # Check that Argo Rollout are is Running or failed state 
 NOTPENDING_ARGO_ROLLOUT=$( kubectl get pods -n ${SHARED_NAMESPACE} -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("argo-rollout")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
