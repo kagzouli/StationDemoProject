@@ -41,6 +41,55 @@ sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install vault
 
+# Insertion repertoire pour vault
+sudo mkdir -p /etc/vault
+sudo mkdir -p opt/vault-data
+sudo mkdir -p /logs/vault
+
+
+
+# Fichier de configuration vault
+sudo bash -c 'cat << EOF > /etc/vault/config.json
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = "true"
+}
+
+api_addr = "http://stationvault.exakaconsulting.org:8200"
+storage "file" {
+  path    = "/opt/vault-data"
+}
+max_lease_ttl = "10h"
+default_lease_ttl = "10h"
+ui = true
+EOF'
+
+# Creation fichier service
+sudo bash -c 'cat << EOF > /etc/systemd/system/vault.service
+[Unit]
+Description=vault service
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/vault/config.json
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/vault
+Environment=GOMAXPROCS=2
+Restart=on-failure
+ExecStart=/usr/bin/vault server -config=/etc/vault/config.json
+StandardOutput=/logs/vault/output.log
+StandardError=/logs/vault/error.log
+LimitMEMLOCK=infinity
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+
+
 --===============BOUNDARY==
 MIME-Version: 1.0
 Content-Type: text/cloud-boothook; charset="us-ascii"

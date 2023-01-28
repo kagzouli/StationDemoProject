@@ -6,15 +6,6 @@ data "aws_vpc" "station_vpc" {
   }
 }
 
-// Filter in private subnet 1
-data "aws_subnet" "station_privatesubnet1" {
-
-  filter {
-    name   = "tag:Name"
-    values = ["station_privatesubnet1"]
-  }
-}
-
 // Filter in private subnet 2
 data "aws_subnet" "station_privatesubnet2" {
 
