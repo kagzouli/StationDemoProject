@@ -1,0 +1,84 @@
+name: "[Kuber] Delete infra Station Kub"
+
+#on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: The environment to create
+        options:
+          - dev
+        required: true
+
+      region:
+        type: choice
+        description: The region where we can create objects
+        options:
+          - eu-west-3
+        required: true
+
+      secretsMode:
+        type: choice
+        description: secrets mode (internal, vault)
+        default: internal
+        options:
+          - internal
+          - vault
+        required: true
+
+env:
+  KUBERNETES_VERSION: v1.23.6
+
+
+jobs:
+
+  # Delete clusterKubeVault
+  kubevaultinstance:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: clusterkubmanual/vault
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+  
+  # Delete clusterKubeWorker
+  kubeworkerinstance:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: clusterkubmanual/worker
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Delete clusterKubeMaster
+  kubemasterinstance:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: clusterkubmanual/master
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
+  # Delete networks
+  networks:
+    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    needs: [kubevaultinstance, kubeworkerinstance, kubemasterinstance]
+    with:
+      environment: ${{ github.event.inputs.environment}}
+      region: ${{ github.event.inputs.region}}
+      component: networks
+    secrets:
+      aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      aws_role: ${{ secrets.AWS_ROLE_DEVOPS_CD }}
+
