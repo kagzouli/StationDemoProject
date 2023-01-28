@@ -34,7 +34,7 @@ env:
 jobs:
   # Deploy networks
   networks:
-    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -46,7 +46,7 @@ jobs:
 
   # Deploy clusterKubeMaster
   kubemasterinstance:
-    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
     if: ${{ github.event.inputs.secretsMode == 'internal' }}
     needs: networks
     with:
@@ -60,7 +60,7 @@ jobs:
 
   # Deploy clusterKubeWorker
   kubeworkerinstance:
-    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
     if: ${{ github.event.inputs.secretsMode == 'internal' }}
     needs: networks
     with:
@@ -74,7 +74,7 @@ jobs:
 
   # Deploy clusterKubeVault
   kubevaultinstance:
-    uses: ./.github/workflows/terraform-aws-apply-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
     if: ${{ github.event.inputs.secretsMode == 'vault' }}
     needs: networks
     with:

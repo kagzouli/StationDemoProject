@@ -26,7 +26,7 @@ jobs:
 
   # Delete clusterKubeVault
   kubevaultinstance:
-    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-destroy-reusable_2level.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -38,7 +38,7 @@ jobs:
   
   # Delete clusterKubeWorker
   kubeworkerinstance:
-    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-destroy-reusable_2level.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -50,7 +50,7 @@ jobs:
 
   # Delete clusterKubeMaster
   kubemasterinstance:
-    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-destroy-reusable_2level.yaml
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
@@ -62,7 +62,7 @@ jobs:
 
   # Delete networks
   networks:
-    uses: ./.github/workflows/terraform-aws-destroy-reusable.yaml
+    uses: ./.github/workflows/terraform-aws-destroy-reusable_2level.yaml
     needs: [kubevaultinstance, kubeworkerinstance, kubemasterinstance]
     with:
       environment: ${{ github.event.inputs.environment}}
