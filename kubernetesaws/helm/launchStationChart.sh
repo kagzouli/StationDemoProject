@@ -19,7 +19,7 @@ displayMessage(){
 checkIfPodsReady(){
   echo "Test : $1, $2, $3"
   while [[ $(kubectl get pods -l $2  -n $3 -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != *"True"* ]]; do
-    sleep 3
+    sleep 5
     displayMessage "Les pods $1 sont encore en cours de démarrage"
   done
 }
