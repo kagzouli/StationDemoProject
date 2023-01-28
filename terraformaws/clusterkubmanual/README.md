@@ -11,4 +11,4 @@
     3.3 Se connecter à la machine et faire un sudo su -<br/>
     3.4 Copier le résultat de la commande en 2.5 et l'éxecuter sur l'ensemble des workers.<br/><br/>
 <br>Etape 4 :</b> Initialiser l'application station dans le cluster : <br/>
-    Aller sur kubernetes/helm et lancer plusieurs fois launchStationChart.sh afin que le cluster s'initialise.<br/><br/>
+    Aller sur kubernetesaws/helm et lancer launchStationChart.sh afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/><br/>
