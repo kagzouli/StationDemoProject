@@ -472,6 +472,13 @@ jobs:
               echo "::set-output name=contextPath::${{ steps.retrieve-account.outputs.identifier }}.dkr.ecr.${{ github.event.inputs.region}}.amazonaws.com/station"
           fi
       
+      # Recupère le mot de passe de stationredis pour AWS
+      - name: Retrieve stationredis password
+        id: stationredis-password
+        run: |
+          echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text  |jq -r .stationredispassword)"
+
+      
       
       # Installation composant applications
       - name: Installation application on argocd
@@ -483,6 +490,7 @@ jobs:
           --set station.front.ingressarn="${{ steps.stationfront-targetgroupbinding.outputs.targetGroupBinding }}" \
           --set station.front.albiplist="${{ steps.stationfront-albiplist.outputs.albiplist }}" \
           --set station.redis.mode="${{ steps.stationredis-mode.outputs.mode }}" \
+          --set station.redis.password="${{ steps.stationredis-password.outputs.password }}" \
           --set station.redis.usessl="${{ steps.stationredis-mode.outputs.usessl }}" \
           --set station.db.mode="${{ steps.stationdb-mode.outputs.mode }}" \
           --set image.repoNexusUrl="${{ steps.retrieve-docker-registry.outputs.contextPath }}" 
