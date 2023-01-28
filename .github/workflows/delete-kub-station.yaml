@@ -18,15 +18,6 @@ on:
           - eu-west-3
         required: true
 
-      secretsMode:
-        type: choice
-        description: secrets mode (internal, vault)
-        default: internal
-        options:
-          - internal
-          - vault
-        required: true
-
 env:
   KUBERNETES_VERSION: v1.23.6
 
