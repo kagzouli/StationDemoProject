@@ -34,6 +34,9 @@ fi
 
 TYPE_INSTALL=$1
 
+# Creation namespace
+kubectl create namespace ${SHARED_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+
 case $TYPE_INSTALL in
      "internal")
         displayMessage "On est en mode installation internal - le mot de passe est stocké en interne."
@@ -73,7 +76,7 @@ esac
 
 
 
-kubectl create namespace ${SHARED_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
