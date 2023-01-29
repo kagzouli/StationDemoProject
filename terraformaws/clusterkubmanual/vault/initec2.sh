@@ -57,7 +57,7 @@ listener "tcp" {
   tls_disable = "true"
 }
 
-api_addr = "http://stationvault.interne.exakaconsulting.org:8200"
+api_addr = "http://stationvault.exakaconsulting.org:8200"
 storage "file" {
   path    = "/opt/vault-data"
 }
@@ -92,10 +92,6 @@ EOF'
 
 # Restart vault
 systemctl start vault
-
-# Init vault
-sleep 5
-sudo vault operator init -address=http://stationvault.interne.exakaconsulting.org:8200 -key-shares=3 -key-threshold=2 
 
 
 

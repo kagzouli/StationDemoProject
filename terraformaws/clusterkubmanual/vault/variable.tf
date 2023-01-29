@@ -9,12 +9,12 @@ variable "application"{
   default     = "STATION"
 }
 
-variable "station_vault_url_internal"{
+variable "station_vault_url_external"{
   type        = string
-  description = "debut url Vault réseaux privé"
+  description = "debut url Vault réseaux public"
 }
 
-variable "station_privatedomainname" {
+variable "station_publicdomainname" {
     type        =  string
-    description = "Private domaine name"
+    description = "Public Domaine name"
 }

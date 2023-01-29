@@ -15,7 +15,7 @@ resource "aws_instance" "kubernatevaultonprem" {
 
   subnet_id     = data.aws_subnet.station_privatesubnet2.id
 
-  security_groups = [ aws_security_group.kubvaultonprem_sg.id ]
+  security_groups = [ aws_security_group.kubernatesvaultec2-sg.id ]
 
   iam_instance_profile = aws_iam_instance_profile.kubvaultonprem_agent.name
 

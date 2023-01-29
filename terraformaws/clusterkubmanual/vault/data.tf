@@ -6,6 +6,24 @@ data "aws_vpc" "station_vpc" {
   }
 }
 
+// Filter on public subnet 1
+data "aws_subnet" "station_publicsubnet1" {
+
+  filter {
+    name   = "tag:Name"
+    values = ["station_publicsubnet1"]
+  }
+}
+
+// Filter on public subnet 2
+data "aws_subnet" "station_publicsubnet2" {
+
+  filter {
+    name   = "tag:Name"
+    values = ["station_publicsubnet2"]
+  }
+}
+
 // Filter in private subnet 2
 data "aws_subnet" "station_privatesubnet2" {
 
