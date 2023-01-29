@@ -31,10 +31,14 @@ secrets:
   # Mode can be 'internal' if it's for local development, 'aws' if it comes from AWS, and 'vault' for secure on premise
   mode: 'aws'
 
-  # For vault option (Not used in cloud mode)
+  # For vault option (Not used in aws mode)
   vault:
 
+    # Url of the vault
     url: ''
+    
+    # Version of the kv vault
+    version: ''
 
 stationredis:
   

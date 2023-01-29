@@ -1,6 +1,8 @@
 #!/bin/bash
 # Fixe les variables
 
+SHARED_NAMESPACE="transverse"
+
 displayError(){
   RED='\033[0;31m'
   NORMAL='\033[0m' 
@@ -39,8 +41,27 @@ case $TYPE_INSTALL in
         ;;
       
      "vault")
-        displayMessage "On est en mode installation internal - le mot de passe est stocké dans la vault."
+        displayMessage "On est en mode installation vault - le mot de passe est stocké dans la vault."
         SECRETS_MODE="vault"
+
+        if [ -z $2 ]
+        then
+          displayError "Il manque le 2eme argument. La valeur doit être le token de la vault."
+          exit 1
+        fi
+
+        TOKEN=$2
+
+        # Fait pour creer le secret stockant le token 
+        RESULT_VAULT_SECRETS=$( kubectl get secret vault-secret -n ${SHARED_NAMESPACE} | wc -l)
+          echo "Result Vault Secrets : ${RESULT_SEARCH_SM}"
+          if [ "${RESULT_SEARCH_SM}" -eq 0 ]; then
+            kubectl create secret generic vault-secret  --from-literal=token=${TOKEN} -n ${SHARED_NAMESPACE}
+            echo "vault-secret-store create with access"
+          else
+            echo "vault-secret-store already exists"
+          fi
+
         ;;
 
       *)
@@ -50,7 +71,7 @@ case $TYPE_INSTALL in
 esac
 
 
-SHARED_NAMESPACE="transverse"
+
 
 kubectl create namespace ${SHARED_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/

@@ -47,7 +47,6 @@ jobs:
   # Deploy clusterKubeMaster
   kubemasterinstance:
     uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
-    if: ${{ github.event.inputs.secretsMode == 'internal' }}
     needs: networks
     with:
       environment: ${{ github.event.inputs.environment}}
@@ -61,7 +60,6 @@ jobs:
   # Deploy clusterKubeWorker
   kubeworkerinstance:
     uses: ./.github/workflows/terraform-aws-apply-reusable_2level.yaml
-    if: ${{ github.event.inputs.secretsMode == 'internal' }}
     needs: networks
     with:
       environment: ${{ github.event.inputs.environment}}
