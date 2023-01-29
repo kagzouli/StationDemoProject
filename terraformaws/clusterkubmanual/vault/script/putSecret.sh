@@ -17,20 +17,20 @@ fi
 # Varible
 TOKEN=$1
 ENVIRONMENT="dev"
-VAULT_ADDRESS="http://stationvault.exakaconsulting.org:8200"
+export VAULT_ADDR='http://127.0.0.1:8200'
 
 
 # Login to vault
-vault login -address=${VAULT_ADDRESS} $TOKEN
+vault login $TOKEN
 
 # Enable kv for Vault.
-vault secrets -address=${VAULT_ADDRESS} enable kv
+vault secrets  enable kv
 
 # Put secret - It's only for test purpose and not to be done in production
 # For the backend
-vault kv -address=${VAULT_ADDRESS} put secrets/exaka/${ENVIRONMENT}/station stationdbrootpassword=rootpassword
-vault kv -address=${VAULT_ADDRESS} put secrets/exaka/${ENVIRONMENT}/station stationdbpassword=passwordtest
+vault kv  put secrets/exaka/${ENVIRONMENT}/station stationdbrootpassword=rootpassword
+vault kv  put secrets/exaka/${ENVIRONMENT}/station stationdbpassword=passwordtest
 # For redis
-vault kv -address=${VAULT_ADDRESS} put secrets/exaka/${ENVIRONMENT}/station stationredispassword=redis60
+vault kv  put secrets/exaka/${ENVIRONMENT}/station stationredispassword=redis60
 
 
