@@ -1,3 +1,3 @@
-path "secrets/data/exaka/dev/station/*" {
+path "secrets/data/exaka/dev/station" {
   capabilities = ["read", "list"]
 }
