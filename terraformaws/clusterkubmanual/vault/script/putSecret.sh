@@ -24,13 +24,17 @@ export VAULT_ADDR='http://127.0.0.1:8200'
 vault login $TOKEN
 
 # Enable kv for Vault.
-vault secrets enable -path=secrets kv
+vault secrets enable -version=2 -path=secrets kv
 
 # Put secret - It's only for test purpose and not to be done in production
 # For the backend
-vault kv  put secrets/exaka/${ENVIRONMENT}/station stationdbrootpassword=rootpassword
-vault kv  put secrets/exaka/${ENVIRONMENT}/station stationdbpassword=passwordtest
+vault kv  put    secrets/exaka/${ENVIRONMENT}/station stationdbrootpassword=rootpassword
+vault kv  patch  secrets/exaka/${ENVIRONMENT}/station stationdbpassword=passwordtest
 # For redis
-vault kv  put secrets/exaka/${ENVIRONMENT}/station stationredispassword=redis60
+vault kv  patch  secrets/exaka/${ENVIRONMENT}/station stationredispassword=redis60
+
+# Create policy for stationread
+vault policy write stationread stationread.hcl
+vault token create -policy=stationread
 
 
