@@ -51,6 +51,7 @@ jobs:
   # Delete clusterKubeMaster
   kubemasterinstance:
     uses: ./.github/workflows/terraform-aws-destroy-reusable_2level.yaml
+    needs: kubeworkerinstance
     with:
       environment: ${{ github.event.inputs.environment}}
       region: ${{ github.event.inputs.region}}
