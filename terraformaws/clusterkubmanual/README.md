@@ -9,7 +9,7 @@
     3.1 Aller sur terraformaws/clusterkubmanual/worker<br/>
     2.2 Lancer generateworker.sh<br/>
     3.3 Se connecter à la machine et faire un sudo su -<br/>
-    3.4 Attendre que la machine s'initialise bien (On peut utiliser journalctl -u cloud-final)
+    3.4 Attendre que la machine s'initialise bien (On peut utiliser journalctl -u cloud-final).<br/>
     3.5 Copier le résultat de la commande en 2.5 et l'éxecuter sur l'ensemble des workers.<br/><br/>
 <br><b>Etape 4 (Si secretsMode=vault) :</b> Créer la vault.<br/>
     4.1 Aller sur terraformaws/clusterkubmanual/vault<br/>
