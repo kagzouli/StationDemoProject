@@ -36,6 +36,7 @@ TYPE_INSTALL=$1
 
 # Creation namespace
 kubectl create namespace ${SHARED_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace stationdev --dry-run=client -o yaml | kubectl apply -f -
 
 case $TYPE_INSTALL in
      "internal")
@@ -56,13 +57,13 @@ case $TYPE_INSTALL in
         TOKEN=$2
 
         # Fait pour creer le secret stockant le token 
-        RESULT_VAULT_SECRETS=$( kubectl get secret -n ${SHARED_NAMESPACE} | grep vault-secret | wc -l)
-          echo "Result Vault Secrets : ${RESULT_SEARCH_SM}"
+        RESULT_VAULT_SECRETS=$( kubectl get secret -n stationdev | grep vault-secret | wc -l)
+          echo "Result Vault Secrets : ${RESULT_VAULT_SECRETS}"
           if [[ "${RESULT_SEARCH_SM}" -eq 0 ]]; then
-            kubectl create secret generic vault-secret  --from-literal=token=${TOKEN} -n ${SHARED_NAMESPACE}
-            echo "vault-secret-store create with access"
+            kubectl create secret generic vault-secret  --from-literal=token=${TOKEN} -n stationdev
+            displayMessage "vault-secret-store create with access"
           else
-            echo "vault-secret-store already exists"
+            displayMessage "vault-secret-store already exists"
           fi
 
         ;;
