@@ -1,6 +1,6 @@
 # AWS Route 53 Record
 resource "aws_route53_record" "station_vault_url_internal" {
-  zone_id      =  data.aws_route53_zone.private.zone_id
+  zone_id      =  data.aws_route53_zone.public.zone_id
   name         = "${var.station_vault_url_external}.${var.station_publicdomainname}" 
   type         = "CNAME"
   ttl          = "10"

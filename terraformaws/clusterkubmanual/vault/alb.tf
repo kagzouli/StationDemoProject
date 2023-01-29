@@ -16,7 +16,7 @@ resource "aws_alb_target_group" "station_vault_target_group" {
   port = 8200
   protocol = "HTTP"
   vpc_id = data.aws_vpc.station_vpc.id 
-  target_type = "ip"
+  target_type = "instance"
   health_check {
     healthy_threshold = "2"
     interval = "30"
@@ -34,7 +34,7 @@ resource "aws_alb_target_group" "station_vault_target_group" {
 }
 
 resource "aws_lb_target_group_attachment" "station_vault_target_group_attach" {
-  target_group_arn = aws_lb_target_group.station_vault_target_group.arn
+  target_group_arn = aws_alb_target_group.station_vault_target_group.arn
   target_id        = aws_instance.kubernatevaultonprem.id
   port             = 8200
 }

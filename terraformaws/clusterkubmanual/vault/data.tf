@@ -33,10 +33,9 @@ data "aws_subnet" "station_privatesubnet2" {
   }
 }
 
-# AWS Route 53 Private Zone
-data "aws_route53_zone" "private" {
-  name         = var.station_privatedomainname 
-  private_zone = true
+# Public zone
+data "aws_route53_zone" "public" {
+  name         = var.station_publicdomainname
 }
 
 // Datasources

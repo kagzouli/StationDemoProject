@@ -19,6 +19,8 @@ app:
     vpc_cidr:  '12.0.0.0/21'
     region: 'eu-west-3' 
 
+environment: 'dev'
+
 image:
   tag: 1.1.0
  
