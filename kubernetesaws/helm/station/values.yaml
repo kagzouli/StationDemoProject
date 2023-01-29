@@ -19,6 +19,8 @@ app:
     vpc_cidr:  ''
     region: '' 
 
+  environment: 'dev'
+
 image:
   tag: 1.1.0
 
