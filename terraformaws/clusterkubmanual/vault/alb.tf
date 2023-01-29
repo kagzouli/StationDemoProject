@@ -16,7 +16,7 @@ resource "aws_alb_target_group" "station_vault_target_group" {
   port = 8200
   protocol = "HTTP"
   vpc_id = data.aws_vpc.station_vpc.id 
-  target_type = "ip"
+  target_type = "instance"
   health_check {
     healthy_threshold = "2"
     interval = "30"
