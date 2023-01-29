@@ -11,6 +11,9 @@ helm delete ingress-nginx -n ${SHARED_NAMESPACE}
 helm delete external-secrets -n ${SHARED_NAMESPACE}
 
 
+kubectl delete secret vault-secret -n ${SHARED_NAMESPACE}
+
+
 kubectl delete -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
 
 kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/aws/deploy.yaml
