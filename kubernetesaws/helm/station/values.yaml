@@ -42,7 +42,7 @@ stationredis:
   mode: 'internalredis'
 
   # redis password - Use only for secrets.mode=internal
-  redisPassword: ''
+  redisPassword: 'redis60'
 
   # Host name of the redis - Use only for mode=externalredis
   hostname: '' 
