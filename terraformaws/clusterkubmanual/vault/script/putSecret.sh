@@ -24,7 +24,7 @@ export VAULT_ADDR='http://127.0.0.1:8200'
 vault login $TOKEN
 
 # Enable kv for Vault.
-vault secrets  enable kv
+vault secrets enable -path=secrets kv
 
 # Put secret - It's only for test purpose and not to be done in production
 # For the backend
