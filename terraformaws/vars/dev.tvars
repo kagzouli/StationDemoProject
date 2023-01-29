@@ -27,7 +27,7 @@ station_db_count=2
 station_db_instance_type="db.t3.small"
 
 # Station Vault
-station_vault_url_internal = "stationvault"
+station_vault_url_external = "stationvault"
 
 
 # Station redis
