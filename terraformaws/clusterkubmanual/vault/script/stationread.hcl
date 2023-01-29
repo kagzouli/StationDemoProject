@@ -1,3 +1,3 @@
-path "secrets/exaka/*" {
+path "secrets/data/exaka/*" {
   capabilities = ["read", "list"]
 }
