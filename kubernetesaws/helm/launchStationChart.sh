@@ -59,7 +59,7 @@ case $TYPE_INSTALL in
         # Fait pour creer le secret stockant le token 
         RESULT_VAULT_SECRETS=$( kubectl get secret -n stationdev | grep vault-secret | wc -l)
           echo "Result Vault Secrets : ${RESULT_VAULT_SECRETS}"
-          if [[ "${RESULT_SEARCH_SM}" -eq 0 ]]; then
+          if [[ "${RESULT_VAULT_SECRETS}" -eq 0 ]]; then
             kubectl create secret generic vault-secret  --from-literal=token=${TOKEN} -n stationdev
             displayMessage "vault-secret-store create with access"
           else
