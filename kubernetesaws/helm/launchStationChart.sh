@@ -55,7 +55,7 @@ case $TYPE_INSTALL in
         # Fait pour creer le secret stockant le token 
         RESULT_VAULT_SECRETS=$( kubectl get secret -n ${SHARED_NAMESPACE} | grep vault-secret | wc -l)
           echo "Result Vault Secrets : ${RESULT_SEARCH_SM}"
-          if [ "${RESULT_SEARCH_SM}" -eq 0 ]; then
+          if [[ "${RESULT_SEARCH_SM}" -eq 0 ]]; then
             kubectl create secret generic vault-secret  --from-literal=token=${TOKEN} -n ${SHARED_NAMESPACE}
             echo "vault-secret-store create with access"
           else
