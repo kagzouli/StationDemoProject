@@ -17,7 +17,7 @@ fi
 # Varible
 TOKEN=$1
 ENVIRONMENT="dev"
-export VAULT_ADDR='http://127.0.0.1:8200'
+export VAULT_ADDR='http://stationvault.exakaconsulting.org:8200'
 
 
 # Login to vault
@@ -33,8 +33,8 @@ vault kv  patch  secrets/exaka/${ENVIRONMENT}/station stationdbpassword=password
 # For redis
 vault kv  patch  secrets/exaka/${ENVIRONMENT}/station stationredispassword=redis60
 
-# Create policy for stationread
-vault policy write stationread stationread.hcl
-vault token create -policy=stationread
+# Create policy for stationdevread
+vault policy write stationdevread stationdevread.hcl
+vault token create -policy=stationdevread
 
 

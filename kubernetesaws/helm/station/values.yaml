@@ -31,10 +31,14 @@ secrets:
   # Mode can be 'internal' if it's for local development, 'aws' if it comes from AWS, and 'vault' for secure on premise
   mode: 'internal'
 
-  # For vault option
+  # For vault option (Not used in aws mode)
   vault:
 
-    url: ''
+    # Url of the vault
+    url: 'http://stationvault.exakaconsulting.org:8200'
+
+    # Version of the kv vault
+    version: 'v2'
 
 stationredis:
   
