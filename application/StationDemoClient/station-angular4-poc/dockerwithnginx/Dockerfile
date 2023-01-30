@@ -17,7 +17,7 @@ RUN chmod u+rx,a+x /usr/local/bin/setup.sh \
     && chown -R nginx:nginx /var/cache/nginx \
     && chown -R nginx:nginx /var/run \
     && chown -R nginx:nginx /etc/nginx/conf.d  \
-    && touch /var/run/nginx.pid && \
+    && touch /var/run/nginx.pid \
     && chown -R nginx:nginx /var/run/nginx.pid
         
 
