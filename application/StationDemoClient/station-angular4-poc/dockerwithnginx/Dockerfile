@@ -14,8 +14,12 @@ ADD dist /usr/share/nginx/html/
 RUN chmod u+rx,a+x /usr/local/bin/setup.sh \
     && chown -R nginx:nginx /usr/share/nginx \
     && chown -R nginx:nginx /var/log/nginx\
-    && chown -R nginx:nginx /var/cache/nginx
-
+    && chown -R nginx:nginx /var/cache/nginx \
+    && chown -R nginx:nginx /var/run \
+    && chown -R nginx:nginx /etc/nginx/conf.d  \
+    && touch /var/run/nginx.pid && \
+    && chown -R nginx:nginx /var/run/nginx.pid
+        
 
 # On se connecte avec l'utilisateur nginx
 USER nginx 
