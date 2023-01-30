@@ -25,10 +25,7 @@ pipeline {
 		
 		sh "cp StationDemoWeb/target/StationDemoSecureWeb.war StationDemoWeb/docker/StationDemoSecureWeb.war"
                 sh "docker build -t kagzouli/station-back StationDemoWeb/docker"
-                
-		sh "cp  StationDemoClient/station-angular4-poc/target/station-angular4-poc.war StationDemoClient/station-angular4-poc/dockerwithtomcat/station-angular4-poc.war"
-		sh "docker build -t kagzouli/station-front-tomcat StationDemoClient/station-angular4-poc/dockerwithtomcat"
-	
+       
 		sh "cp -rf StationDemoClient/station-angular4-poc/dist StationDemoClient/station-angular4-poc/dockerwithnginx/"
 		sh "docker build -t kagzouli/station-front-nginx StationDemoClient/station-angular4-poc/dockerwithnginx"
                 
@@ -50,7 +47,6 @@ pipeline {
                 sh "docker tag kagzouli/station-db:latest kagzouli/station-db:${VERSION}"
                 sh "docker tag kagzouli/station-back:latest kagzouli/station-back:${VERSION}"
                 sh "docker tag kagzouli/station-front-nginx:latest kagzouli/station-front-nginx:${VERSION}"
-                sh "docker tag kagzouli/station-front-tomcat:latest kagzouli/station-front-tomcat:${VERSION}"
             }
         }
 
@@ -59,7 +55,6 @@ pipeline {
                 sh "docker push ${REPO_NEXUS_URL}kagzouli/station-db:${VERSION}"
                 sh "docker push ${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
                 sh "docker push ${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
-                sh "docker push ${REPO_NEXUS_URL}kagzouli/station-front-tomcat:${VERSION}"
             }
         }
 
