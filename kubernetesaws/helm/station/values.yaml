@@ -111,7 +111,7 @@ stationback:
   hostname: stationback.exakaconsulting.org
   
   # External port
-  externalPort: 80
+  externalPort: 8080
 
   service:
     

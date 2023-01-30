@@ -58,7 +58,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /station-angular4-poc/index.html
-              port: 80
+              port: 8080
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 7
@@ -66,12 +66,12 @@ spec:
             httpGet:
               scheme: HTTP
               path: /station-angular4-poc/index.html
-              port: 80
+              port: 8080
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 7
           ports:
-          - containerPort: 80
+          - containerPort: 8080
             protocol: TCP
       affinity:
         podAntiAffinity:
