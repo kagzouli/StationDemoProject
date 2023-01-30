@@ -33,6 +33,8 @@ spec:
         - name: stationredis
           image: "redis:6.0.10"
           imagePullPolicy: {{ .Values.stationredis.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
           command: ["redis-server"]
           args: ["--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
           ports:

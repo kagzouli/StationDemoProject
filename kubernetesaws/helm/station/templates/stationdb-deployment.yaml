@@ -33,6 +33,8 @@ spec:
         - name: stationdb
           image: {{ template "stationdb.image.label" .  }}
           imagePullPolicy: {{ .Values.stationdb.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
           env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:

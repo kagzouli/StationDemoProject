@@ -35,6 +35,7 @@ spec:
           image: {{ include "stationfront.image.label" . | quote }} 
           imagePullPolicy: {{ .Values.stationfront.image.pullPolicy | quote }}
           securityContext:
+            runAsNonRoot: true
             capabilities:
               drop:
                 - all

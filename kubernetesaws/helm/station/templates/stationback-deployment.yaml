@@ -31,13 +31,14 @@ spec:
         app: stationback
     spec:
       securityContext:
-        runAsUser: 2050
-        runAsGroup: 2050
+        runAsUser: 20050
+        runAsGroup: 20050
       containers:
         - name: stationback
           image: {{ template "stationback.image.label" . }} 
           imagePullPolicy: {{ .Values.stationback.image.pullPolicy | quote }}
           securityContext:
+            runAsNonRoot: true
             capabilities:
               drop:
                 - all

@@ -3,7 +3,7 @@ FROM tomcat:9.0.38-jdk8-openjdk
 LABEL application.contact = "kagzouli@exaka.com"
 
 
-RUN  groupadd -r -g 2050 tomcat && useradd -u 2050 -r -g tomcat tomcat \ 
+RUN  groupadd -r -g 20050 tomcat && useradd -u 20050 -r -g tomcat tomcat \ 
  &&  wget -O mysql-connector-java-8.0.30.jar "https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.30/mysql-connector-java-8.0.30.jar" \
  &&  cp mysql-connector-java-8.0.30.jar /usr/local/tomcat/lib/mysql-connector-java-8.0.30.jar \
  &&  rm -rf /usr/local/tomcat/webapps/* \
