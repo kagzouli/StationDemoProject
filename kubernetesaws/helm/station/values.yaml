@@ -22,7 +22,7 @@ app:
   environment: 'dev'
 
 image:
-  tag: 1.1.0
+  tag: 1.2.1
 
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli3'
