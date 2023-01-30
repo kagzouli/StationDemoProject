@@ -27,6 +27,9 @@ spec:
       labels:
         app: stationfront
     spec:
+      securityContext:
+        runAsUser: 101
+        runAsGroup: 101
       containers:
         - name: stationfront-nginx
           image: {{ include "stationfront.image.label" . | quote }} 

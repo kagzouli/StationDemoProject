@@ -30,6 +30,9 @@ spec:
       labels:
         app: stationback
     spec:
+      securityContext:
+        runAsUser: 2050
+        runAsGroup: 2050
       containers:
         - name: stationback
           image: {{ template "stationback.image.label" . }} 
