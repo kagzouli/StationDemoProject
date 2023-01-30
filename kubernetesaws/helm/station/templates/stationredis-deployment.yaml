@@ -26,6 +26,9 @@ spec:
       labels:
         app: stationredis
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
       containers:
         - name: stationredis
           image: "redis:6.0.10"

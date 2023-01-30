@@ -26,6 +26,9 @@ spec:
       labels:
         app: stationdb
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
       containers:
         - name: stationdb
           image: {{ template "stationdb.image.label" .  }}
