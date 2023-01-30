@@ -22,7 +22,7 @@ app:
   environment: 'dev'
 
 image:
-  tag: 1.1.0
+  tag: 1.2.1
 
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli3'
@@ -56,7 +56,7 @@ stationredis:
   usessl: false
 
   image:
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
 stationdb:
   mode: 'internaldb'
@@ -93,7 +93,7 @@ stationdb:
     efsaccesspointid: ''
        
   image:
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
 
 stationback:
@@ -111,7 +111,7 @@ stationback:
   hostname: stationback.exakaconsulting.org
   
   # External port
-  externalPort: 80
+  externalPort: 8080
 
   service:
     
@@ -125,7 +125,7 @@ stationback:
     serviceType: ClusterIP 
 
   image:
-    pullPolicy: IfNotPresent   
+    pullPolicy: Always   
 
   ingress:
  
@@ -176,7 +176,7 @@ stationfront:
     serviceType: ClusterIP 
  
   image:
-    pullPolicy: IfNotPresent  
+    pullPolicy: Always  
 
   ingress:
 

@@ -26,10 +26,15 @@ spec:
       labels:
         app: stationdb
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
       containers:
         - name: stationdb
           image: {{ template "stationdb.image.label" .  }}
           imagePullPolicy: {{ .Values.stationdb.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
           env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:

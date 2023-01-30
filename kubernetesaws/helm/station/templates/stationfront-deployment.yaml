@@ -27,10 +27,20 @@ spec:
       labels:
         app: stationfront
     spec:
+      securityContext:
+        runAsUser: 101
+        runAsGroup: 101
       containers:
         - name: stationfront-nginx
           image: {{ include "stationfront.image.label" . | quote }} 
           imagePullPolicy: {{ .Values.stationfront.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_BIND_SERVICE
           env:
           - name: AWS_REGION
             value: {{ .Values.stationfront.region | quote  }}
@@ -49,7 +59,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /station-angular4-poc/index.html
-              port: 80
+              port: 8080
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 7
@@ -57,12 +67,12 @@ spec:
             httpGet:
               scheme: HTTP
               path: /station-angular4-poc/index.html
-              port: 80
+              port: 8080
             initialDelaySeconds: 8
             periodSeconds: 5
             timeoutSeconds: 7
           ports:
-          - containerPort: 80
+          - containerPort: 8080
             protocol: TCP
       affinity:
         podAntiAffinity:

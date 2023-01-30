@@ -26,10 +26,15 @@ spec:
       labels:
         app: stationredis
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
       containers:
         - name: stationredis
           image: "redis:6.0.10"
           imagePullPolicy: {{ .Values.stationredis.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
           command: ["redis-server"]
           args: ["--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
           ports:

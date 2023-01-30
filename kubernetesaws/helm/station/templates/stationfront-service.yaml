@@ -11,7 +11,7 @@ spec:
     {{- if or (eq .Values.stationfront.service.serviceType "NodePort") (eq .Values.stationfront.service.serviceType "LoadBalancer")  }}
     nodePort: {{ .Values.stationfront.service.nodePort }}
      {{- end }}
-    targetPort: 80 
+    targetPort: 8080 
     protocol: TCP
   selector:
     app: stationfront

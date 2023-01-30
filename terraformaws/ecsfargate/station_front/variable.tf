@@ -53,7 +53,7 @@ variable "station_front_host_port"{
 
 variable "station_front_container_port"{
    type        = number
-   default     = 80
+   default     = 8080
    description = "Port de station_back affiché à l'exterieur."
 }
 
