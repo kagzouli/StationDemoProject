@@ -23,6 +23,7 @@ resource "aws_alb_target_group" "station_front_target_group" {
     healthy_threshold = "2"
     interval = "30"
     protocol = "HTTP"
+    port     = var.station_front_container_port
     matcher = "200"
     timeout = "3"
     path = "/station-angular4-poc/"
