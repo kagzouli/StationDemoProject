@@ -48,7 +48,7 @@ spec:
           value: {{ .Values.image.repoNexusUrl | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.1.17
+    targetRevision: 1.2.1
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
