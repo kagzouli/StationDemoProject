@@ -13,7 +13,7 @@ station_privatedomainname="interne.exakaconsulting.org"
 
 # EKS parameters
 stationkubenamespace="stationdev"
-nbNodeInstanceEks=2
+nbNodeInstanceEks=3
 shared_namespace="transverse"
 node_capacity_type="SPOT"
 
