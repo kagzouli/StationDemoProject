@@ -56,7 +56,6 @@ spec:
               secretKeyRef:
                 name: stationdb-secret 
                 key: database-password 
-          {{- if (ne .Values.stationdb.storage.storageClass "none")   }} 
           resources:
             requests:
               cpu: 300m
@@ -64,6 +63,7 @@ spec:
             limits:
               cpu: 500m
               memory: 1024Mi
+          {{- if (ne .Values.stationdb.storage.storageClass "none")   }} 
           volumeMounts:
           - name: datastationdb  
             mountPath: /var/lib/mysql
