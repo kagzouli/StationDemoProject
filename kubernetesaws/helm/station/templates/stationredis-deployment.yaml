@@ -40,4 +40,5 @@ spec:
           ports:
           - containerPort: 6379 
             protocol: TCP
+      serviceAccountName: station
  {{- end }}
