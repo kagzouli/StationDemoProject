@@ -5,7 +5,7 @@
       "portMappings": [
         {
           "containerPort":  ${station_front_container_port},
-          "hostPort": ${station_front_host_port},
+          "hostPort": ${station_front_container_port},
           "protocol": "tcp"
 
         }

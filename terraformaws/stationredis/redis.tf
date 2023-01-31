@@ -18,7 +18,7 @@ resource "aws_elasticache_replication_group" "station_redis_cluster" {
   availability_zones             =  ["${var.az_zone1}", "${var.az_zone2}"] 
   security_group_ids             =  [aws_security_group.secgroup_station_redis.id] 
   subnet_group_name              =  aws_elasticache_subnet_group.station_redis_subnet_group.name
-  parameter_group_name           =  "default.redis6.x"
+  parameter_group_name           =  "default.redis7"
   port                           =  var.station_redis_host_port
 
   tags = {
