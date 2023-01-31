@@ -36,6 +36,7 @@ spec:
           imagePullPolicy: {{ .Values.stationfront.image.pullPolicy | quote }}
           securityContext:
             runAsNonRoot: true
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - all
@@ -51,10 +52,12 @@ spec:
           - name: CONTEXT_BACK_URL
             value: {{ include "stationback.contextpath" . | quote }} 
           resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
             limits:
               cpu: 200m
-            requests:
-              cpu: 200m
+              memory: 256Mi
           livenessProbe:
             httpGet:
               scheme: HTTP
