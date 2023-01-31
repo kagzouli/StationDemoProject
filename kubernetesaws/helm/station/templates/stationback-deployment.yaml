@@ -39,6 +39,7 @@ spec:
           imagePullPolicy: {{ .Values.stationback.image.pullPolicy | quote }}
           securityContext:
             runAsNonRoot: true
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - all
@@ -76,12 +77,12 @@ spec:
           - name: REDIS_USESSL
             value: {{ .Values.stationredis.usessl | quote   }}
           resources:
+            requests:
+              cpu: 500m
+              memory: 1024Mi
             limits:
               cpu: 800m
               memory: 1024Mi
-            requests:
-              cpu: 600m
-              memory: 512Mi
           livenessProbe:
             httpGet:
               scheme: HTTP
