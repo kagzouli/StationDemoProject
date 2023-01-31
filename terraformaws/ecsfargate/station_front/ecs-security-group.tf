@@ -36,6 +36,12 @@ resource "aws_security_group" "sg_station_front_ecs" {
     to_port = var.station_front_host_port
     security_groups = [aws_security_group.sg_station_front_alb.id]
   }
+  ingress {
+    protocol = "tcp"
+    from_port = var.station_front_container_port
+    to_port = var.station_front_container_port
+    security_groups = [aws_security_group.sg_station_front_alb.id]
+  }
   egress {
     protocol = "-1"
     from_port = 0
