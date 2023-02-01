@@ -30,7 +30,6 @@ export default function () {
   let counter = exec.scenario.iterationInTest;
   let index   = counter%nbrData;
   let urlTest = url + data[index];
-  console.log("Url test : " + urlTest);
 
   const res = http.get(urlTest, params);
   check(res, {
