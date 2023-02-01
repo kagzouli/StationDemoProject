@@ -3,7 +3,7 @@ import { sleep, check } from 'k6';
 import exec from 'k6/execution';
 
 const token = `${__ENV.TOKEN}`
-const wait  = 1
+const wait  = `${__ENV.WAIT_TIME}`
 const url   = "http://stationback.exakaconsulting.org/StationDemoSecureWeb/station/stations"
 
 const params = {
