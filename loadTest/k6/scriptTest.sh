@@ -17,4 +17,4 @@ then
    exit 1
 fi
 
-k6 run -e TOKEN=$1 --vus=$NB_USERS --duration="${DURATION}s" script.js
+k6 run -e TOKEN=$1 --vus=$NB_USERS --duration="${DURATION}s" -e LOAD_FILE_TEST=data.txt script.js

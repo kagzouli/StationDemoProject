@@ -12,6 +12,10 @@ const params = {
     },
 };
 
+// Read data file
+let data = open(__ENV.LOAD_FILE_TEST).split("\n");
+let nbrData = data.length;
+
 export const options = {
     thresholds: {
       http_req_failed: ['rate<3'], // http errors should be less than 3%
@@ -20,7 +24,14 @@ export const options = {
   };
 
 export default function () {
-  const res = http.get(url, params);
+
+  // Calcul index
+  let counter = exec.scenario.iterationInTest;
+  let index   = counter%nbrData;
+  let urlTest = url + data[index];
+  console.log("Url test : " + urlTest);
+
+  const res = http.get(urlTest, params);
   check(res, {
     'is status 200': (r) => r.status === 200,
   });
