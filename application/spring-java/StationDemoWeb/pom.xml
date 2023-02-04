@@ -32,14 +32,10 @@
 		 </dependency>	 
 		
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-		</dependency>
-	    <dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-		</dependency>
-		
+    		<groupId>org.springdoc</groupId>
+    		<artifactId>springdoc-openapi-ui</artifactId>
+ 		</dependency>
+	
 		
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -68,9 +64,24 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
+        	<groupId>jakarta.servlet</groupId>
+        	<artifactId>jakarta.servlet-api</artifactId>
+        	<scope>provided</scope>
+  	    </dependency>
+		
+		<dependency>
+    		<groupId>javax.validation</groupId>
+    		<artifactId>validation-api</artifactId>
+   		</dependency>
+   		
+   		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-core</artifactId>
+    	</dependency>
+		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-metadata</artifactId>
+ 		</dependency>
 				
 
 

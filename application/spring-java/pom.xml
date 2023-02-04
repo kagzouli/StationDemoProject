@@ -4,29 +4,30 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-dependencies</artifactId>
-		<version>2.7.2</version>
+		<version>3.0.2</version>
 	</parent>
 	<groupId>com.exakaconsulting.poc</groupId>
 	<artifactId>StationDemoProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-	   <java.version>1.8</java.version>
-	   <spring.version>5.3.22</spring.version>
-	   <springfox.swagger.version>2.8.0</springfox.swagger.version>
-	   <log4j2.version>2.18.0</log4j2.version>
-	   <servletapi.version>3.1.0</servletapi.version>
-	   <springbatch.version>4.3.6</springbatch.version>
-	   <springboot.version>2.7.2</springboot.version>
-	   <springsecurity.version>5.7.2</springsecurity.version>
-	   <springredis.version>2.7.2</springredis.version>
-	   <springjwt.version>1.1.0.RELEASE</springjwt.version>
+	   <java.version>17</java.version>
+	   <spring.version>6.0.4</spring.version>
+	   <springdocopenapi.version>1.6.14</springdocopenapi.version>
+	   <log4j2.version>2.19.0</log4j2.version>
+	   <jakarta-servlet.version>6.0.0</jakarta-servlet.version>
+	   <springbatch.version>5.0.0</springbatch.version>
+	   <springboot.version>3.0.2</springboot.version>
+	   <springsecurity.version>6.0.1</springsecurity.version>
+	   <springredis.version>3.0.1</springredis.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
 	   <okta-jwt.version>0.3.0</okta-jwt.version>
-	   <jacoco.version>0.7.6.201602180812</jacoco.version>
-	   <mockito.version>4.6.1</mockito.version>
+	   <jacoco.version>0.8.8</jacoco.version>
+	   <mockito.version>4.8.1</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
 	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
+	   <validationapi.version>2.0.1.Final</validationapi.version>
+	   <springplugin.version>3.0.0</springplugin.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
@@ -97,16 +98,23 @@
 		 </dependency>
 
 		 
-		 <dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox.swagger.version}</version>
+		<dependency>
+    		<groupId>org.springdoc</groupId>
+    		<artifactId>springdoc-openapi-ui</artifactId>
+    		<version>${springdocopenapi.version}</version>
 		</dependency>
-	    <dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox.swagger.version}</version>
+		
+		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-core</artifactId>
+    		 <version>${springplugin.version}</version>
 		</dependency>
+		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-metadata</artifactId>
+    		 <version>${springplugin.version}</version>
+		</dependency>
+
 		
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -151,11 +159,10 @@
 		
 		<!-- JEE -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${servletapi.version}</version>
-			<scope>provided</scope>
-		</dependency>
+        	<groupId>jakarta.servlet</groupId>
+        	<artifactId>jakarta.servlet-api</artifactId>
+        	<version>${jakarta-servlet.version}</version>
+      	</dependency>
 		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -242,6 +249,12 @@
 				<artifactId>spring-core</artifactId>
 			  </exclusion>
 		    </exclusions>
+		</dependency>
+		
+		<dependency>
+    		<groupId>javax.validation</groupId>
+    		<artifactId>validation-api</artifactId>
+    		<version>${validationapi.version}</version>
 		</dependency>
 
 		
