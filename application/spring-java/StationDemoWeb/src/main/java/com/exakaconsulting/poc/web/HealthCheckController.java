@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.exakaconsulting.poc.service.TrafficStationBean;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
-@Api(value = "/")
+@Tag(name = "health")
 public class HealthCheckController {
 	
-	@ApiOperation(value = "This method is use to search a traffic stations by criteria")
+	@Operation(summary = "This method is use to search a traffic stations by criteria")
 	@ApiResponses(
 		value = {
-				@ApiResponse(code = 200, message = "OK", response = TrafficStationBean.class , responseContainer="List"),
-				@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+				@ApiResponse(responseCode = "200", description = "OK", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))}),
+				@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 		}
 	)	
 	@GetMapping(value = "/health", produces = { MediaType.APPLICATION_JSON_VALUE })

@@ -47,7 +47,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 
 @CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
-@Tag(value = "/")
+@Tag(name="station")
 public class StationDemoController {
 	
 	
@@ -305,15 +305,15 @@ public class StationDemoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to delete a traffic station")
+	@Operation(summary = "This method is use to delete a traffic station")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 204, message = "No Content", response = Void.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+					@ApiResponse(responseCode = "204", description = "No Content", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 		                    
 	})
 	@DeleteMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
