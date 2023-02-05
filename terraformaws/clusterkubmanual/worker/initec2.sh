@@ -23,8 +23,17 @@ systemctl restart amazon-ssm-agent
 
 sudo apt-get update
 
-sudo setenforce 0
 
+# Install containerd
+wget https://github.com/containerd/containerd/releases/download/v1.6.2/containerd-1.6.2-linux-amd64.tar.gz
+sudo tar Czxvf /usr/local containerd-1.6.2-linux-amd64.tar.gz
+wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+sudo mv containerd.service /usr/lib/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now containerd
+sudo systemctl status containerd
+rm /etc/containerd/config.toml
+systemctl restart containerd
 
 #Restart the Docker daemon
 sudo apt install docker.io -y
@@ -37,7 +46,8 @@ sudo apt-get install -y apt-transport-https ca-certificates curl
 curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/kubernetes.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
 sudo apt-get update
-sudo apt-get install -y docker kubelet=1.25.4-00 kubeadm=1.25.4-00 kubernetes=cni-1.1.1-00
+sudo setenforce 0
+sudo apt-get install -y docker kubelet=1.25.4-00 kubeadm=1.25.4-00 kubernetes-cni=1.1.1-00
 
 
 #Enable kubelet
