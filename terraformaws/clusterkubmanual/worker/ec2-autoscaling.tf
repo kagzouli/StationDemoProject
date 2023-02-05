@@ -7,7 +7,7 @@ data "template_file" "user_data" {
 resource "aws_launch_configuration" "kubworker_launch_config" {
     # Optimiser pour docker
     name_prefix          = "kubworker-ec2-instance"
-    image_id             = data.aws_ami.ecs_optimized.id
+    image_id             = data.aws_ami.ubuntu-linux.id
     iam_instance_profile = data.aws_iam_instance_profile.kubworkermanual_agent.name
     security_groups      = [aws_security_group.kubworkermanual_sg.id]
     user_data            = data.template_file.user_data.rendered 

@@ -17,45 +17,27 @@ EOF
 sudo sysctl --system
 
 export PATH=$PATH:/usr/local/bin
-sudo yum install amazon-ssm-agent -y
-sudo yum update -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
-#Restart SSM agent
+sudo snap install amazon-ssm-agent --classic
+sudo snap start amazon-ssm-agent
 systemctl restart amazon-ssm-agent
 
-sudo yum update -y
-
-# Patch
-yum install -y yum-plugin-kernel-livepatch
-yum kernel-livepatch enable -y
-yum update kpatch-runtime -y
-systemctl enable kpatch.service
-sudo amazon-linux-extras enable livepatch
-sudo bash -c 'cat << EOF > /home/ec2-user/security_patches.log
-0 1 * * * sudo yum update --security -y 
-EOF'
-chmod 600 /var/spool/cron/ec2-user
-chown ec2-user:ec2-user /var/spool/cron/ec2-user
-sudo systemctl reload crond.service
+sudo apt-get update
 
 sudo setenforce 0
 
 
 #Restart the Docker daemon
-sudo systemctl restart docker
+sudo apt install docker.io -y
+sudo systemctl enable docker
+sudo systemctl start docker
 
-
-sudo bash -c 'cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOF'
 
 # Install kubernetes component
-sudo yum install -y docker kubelet-1.25.4-0 kubeadm-1.25.4-0 kubernetes-cni-1.1.1-0
+sudo apt-get install -y apt-transport-https ca-certificates curl
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/kubernetes.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get install -y docker kubelet=1.25.4-00 kubeadm=1.25.4-00 kubernetes=cni-1.1.1-00
 
 
 #Enable kubelet
@@ -64,14 +46,14 @@ sudo systemctl enable kubelet
 sudo kubeadm config images pull
 
 # For load tests
-sudo yum install -y wget
+sudo apt-get install -y wget
 sudo wget https://github.com/grafana/k6/releases/download/v0.42.0/k6-v0.42.0-linux-amd64.tar.gz
 sudo tar -xvf k6-v0.42.0-linux-amd64.tar.gz
 sudo mv k6-v0.42.0-linux-amd64/k6 /usr/local/bin/k6
 
 # Install tools
-sudo yum install -y git
-sudo yum install -y jq
+sudo apt-get install -y git
+sudo apt-get install -y jq
 
 # Add entry for DNS simulation
 sudo echo "172.16.16.210 stationback.exakaconsulting.org" >> /etc/hosts
