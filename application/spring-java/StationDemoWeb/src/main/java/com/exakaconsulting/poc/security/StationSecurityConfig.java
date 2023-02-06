@@ -3,32 +3,26 @@ package com.exakaconsulting.poc.security;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.exakaconsulting.poc.web.StationDemoController;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class StationSecurityConfig  {
 	
-	/** Logger **/
-	private static final Logger LOGGER = LoggerFactory.getLogger(StationSecurityConfig.class);
 	
 	@Autowired
     private JWTUnauthorizedAuthentEntryPoint unauthorizedHandler;
@@ -58,23 +52,24 @@ public class StationSecurityConfig  {
 
 
     @Bean
-	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    @Order(1)
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		http.httpBasic().disable().formLogin().disable().authorizeHttpRequests
-				((requests ) -> {
-			try {
+		return http.httpBasic().disable().
+			   //addFilterBefore(this.authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class).
+			   cors(cors -> cors.disable()).
+			 //  formLogin(formLogin -> formLogin.disable()).
+			   exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+			 //  .csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests
+				(requests -> 
 				requests
 				        .requestMatchers(HttpMethod.GET,"/health").permitAll()
 				        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				        .anyRequest().authenticated().and().csrf().disable().
-				addFilterBefore(this.authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().cors();
-			} catch (Exception e) {
-				LOGGER.error(e.getMessage() ,e );
-			}
-		});
+				        .anyRequest().authenticated() 
+				        
+				 ).build();
 		
-		return http.build();
 	}
 	
 	
