@@ -25,6 +25,7 @@
 	   <jacoco.version>0.8.8</jacoco.version>
 	   <mockito.version>4.8.1</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
+	   <slf4j.version>1.7.25</slf4j.version>
 	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   <validationapi.version>2.0.1.Final</validationapi.version>
 	   <springplugin.version>3.0.0</springplugin.version>
@@ -116,11 +117,6 @@
 		</dependency>
 
 		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
