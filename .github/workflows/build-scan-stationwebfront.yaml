@@ -35,7 +35,7 @@ jobs:
 
   scan_frontend:
     runs-on: ubuntu-latest
-   
+    steps:
       - name: Run Trivy vulnerability Front
         id: trivy_scanner
         uses: aquasecurity/trivy-action@master
