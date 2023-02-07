@@ -2,16 +2,17 @@ FROM nginx:latest
 
 LABEL  application.contact = "kagzouli@exaka.com"
 
+RUN rm -rf /usr/share/nginx/html/*
+ADD dist /usr/share/nginx/html/
 
-COPY setup.sh /usr/local/bin/
+
+COPY setup.sh /usr/share/nginx/setup.sh
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/configuration.json /usr/share/nginx/html/station-angular4-poc/assets/config/
 ADD page/404.html /usr/share/nginx/404.html
 
-RUN rm -rf /usr/share/nginx/html/*
-ADD dist /usr/share/nginx/html/
 
-RUN chmod u+rx,a+x /usr/local/bin/setup.sh \
+RUN chmod u+rx,a+x /usr/share/nginx/setup.sh \
     && chown -R nginx:nginx /usr/share/nginx \
     && chown -R nginx:nginx /var/log/nginx\
     && chown -R nginx:nginx /var/cache/nginx \
@@ -26,4 +27,4 @@ USER nginx
 
 WORKDIR /usr/share/nginx
 
-CMD ["setup.sh"]
+CMD ["/usr/share/nginx/setup.sh"]
