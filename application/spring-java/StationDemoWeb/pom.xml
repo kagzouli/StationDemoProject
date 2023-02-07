@@ -11,7 +11,7 @@
 	</parent>
 
 	<properties>
-		<swagger-maven-plugin-version>3.1.7</swagger-maven-plugin-version>
+		<springdoc.maven.plugin>1.4</springdoc.maven.plugin>
 		<swagger.host>localhost</swagger.host>
 	</properties>
 
@@ -162,43 +162,43 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
 			</plugin>
+
+			<plugin>
+    			<groupId>org.springframework.boot</groupId>
+    			<artifactId>spring-boot-maven-plugin</artifactId>
+    			<version>2.7.0</version>
+    			<configuration>
+					<mainClass>com.exakaconsulting.poc.Application</mainClass>
+        			<jvmArguments>-Dspring.application.admin.enabled=true</jvmArguments>
+    			</configuration>
+    			<executions>
+        			<execution>
+            			<goals>
+                			<goal>start</goal>
+              				<goal>stop</goal>
+            			</goals>
+       				</execution>
+    			</executions>
+			</plugin>
 			
 			<plugin>
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<version>${swagger-maven-plugin-version}</version>
-				<configuration>
-					<apiSources>
-						<apiSource>
-							<springmvc>true</springmvc>
-							<host>${swagger.host}</host>
-							<locations>
-								<location>com.exakaconsulting.poc</location>
-							</locations>
-							<basePath>/StationDemoSecureWeb</basePath>
-							<info>
-								<title>POCMetierExaka</title>
-								<version>${project.version}</version>
-								<description>POC metier exaka consulting</description>
-								<contact>
-									<email>exaka@exaka.com</email>
-									<name>Exaka consulting</name>
-								</contact>
-							</info>
-							<swaggerDirectory>${basedir}/target/swagger</swaggerDirectory>
-							<outputFormats>json</outputFormats>
-						</apiSource>
-					</apiSources>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-maven-plugin</artifactId>
+            <version>${springdoc.maven.plugin}</version>
+            <executions>
+                <execution>
+                    <id>integration-test</id>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+ 			<configuration>
+    			<apiDocsUrl>http://localhost:8080/v3/api-docs.yaml</apiDocsUrl>
+    			<outputFileName>${project.build.directory}/swagger/openapi.yaml</outputFileName>
+    			<skip>false</skip>
+			</configuration>
+        </plugin>
 
 		</plugins>
 	</build>
