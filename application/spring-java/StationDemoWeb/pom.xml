@@ -11,7 +11,7 @@
 	</parent>
 
 	<properties>
-		<swagger-maven-plugin-version>3.1.7</swagger-maven-plugin-version>
+		<springdoc.maven.plugin>1.4</springdoc.maven.plugin>
 		<swagger.host>localhost</swagger.host>
 	</properties>
 
@@ -32,19 +32,17 @@
 		 </dependency>	 
 		
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-		</dependency>
-	    <dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-		</dependency>
+    		<groupId>org.springdoc</groupId>
+    		<artifactId>springdoc-openapi-ui</artifactId>
+    		<exclusions>
+            	<exclusion>
+                	<groupId>org.slf4j</groupId>
+                	<artifactId>slf4j-api</artifactId>
+            	</exclusion>
+        	</exclusions>
+ 		</dependency>
+	
 		
-		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -68,9 +66,24 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
+        	<groupId>jakarta.servlet</groupId>
+        	<artifactId>jakarta.servlet-api</artifactId>
+        	<scope>provided</scope>
+  	    </dependency>
+		
+		<dependency>
+    		<groupId>javax.validation</groupId>
+    		<artifactId>validation-api</artifactId>
+   		</dependency>
+   		
+   		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-core</artifactId>
+    	</dependency>
+		<dependency>
+   			 <groupId>org.springframework.plugin</groupId>
+   			 <artifactId>spring-plugin-metadata</artifactId>
+ 		</dependency>
 				
 
 
@@ -96,7 +109,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 		
 		<!--  Test -->
@@ -148,43 +161,6 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-			</plugin>
-			
-			<plugin>
-				<groupId>com.github.kongchen</groupId>
-				<artifactId>swagger-maven-plugin</artifactId>
-				<version>${swagger-maven-plugin-version}</version>
-				<configuration>
-					<apiSources>
-						<apiSource>
-							<springmvc>true</springmvc>
-							<host>${swagger.host}</host>
-							<locations>
-								<location>com.exakaconsulting.poc</location>
-							</locations>
-							<basePath>/StationDemoSecureWeb</basePath>
-							<info>
-								<title>POCMetierExaka</title>
-								<version>${project.version}</version>
-								<description>POC metier exaka consulting</description>
-								<contact>
-									<email>exaka@exaka.com</email>
-									<name>Exaka consulting</name>
-								</contact>
-							</info>
-							<swaggerDirectory>${basedir}/target/swagger</swaggerDirectory>
-							<outputFormats>json</outputFormats>
-						</apiSource>
-					</apiSources>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 		</plugins>

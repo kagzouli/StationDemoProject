@@ -37,14 +37,17 @@ import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TrafficStationBean;
 import com.exakaconsulting.poc.service.TrafficStationNotExists;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Content;
 
 @CrossOrigin(origins="*" , allowedHeaders= "*" , exposedHeaders= {"Access-Control-Allow-Origin"}, methods={RequestMethod.GET , RequestMethod.POST, RequestMethod.PUT , RequestMethod.DELETE, RequestMethod.PATCH,RequestMethod.OPTIONS})
 @RestController
-@Api(value = "/")
+@Tag(name="station")
 public class StationDemoController {
 	
 	
@@ -62,15 +65,15 @@ public class StationDemoController {
 	
 	private static final String ERROR_ID_MUST_BE_SET = "The id must be set";
 		
-	
-	@ApiOperation(value = "This method is use to search a traffic stations by criteria")
+
+	@Operation(summary = "This method is use to search a traffic stations by criteria")
 	@ApiResponses(
 		value = {
-				@ApiResponse(code = 200, message = "OK", response = TrafficStationBean.class , responseContainer="List"),
-				@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-				@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-				@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-				@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+				@ApiResponse(responseCode  = "200", description = "OK", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TrafficStationBean.class)))}),
+				@ApiResponse(responseCode  = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+				@ApiResponse(responseCode  = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+				@ApiResponse(responseCode  = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+				@ApiResponse(responseCode  = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 		}
 	)	
 	@GetMapping(value = FIND_STAT_CRIT, consumes = {
@@ -133,14 +136,13 @@ public class StationDemoController {
 		return new ResponseEntity<>(listStationBean,HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to count the number of traffic stations by criteria")
-	@ApiResponses(
-			value = {
-					@ApiResponse(code = 200, message = "OK", response = Integer.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+	@Operation(summary = "This method is use to count the number of traffic stations by criteria",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "OK", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 			}
 	)	
 	@GetMapping(value = "/station/stations/count", consumes = {
@@ -182,15 +184,15 @@ public class StationDemoController {
 		return new ResponseEntity<>(countStations,HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to search a traffic stations by id", response = TrafficStationBean.class)
+	@Operation(summary = "This method is use to search a traffic stations by id")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 200, message = "OK", response = TrafficStationBean.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+					@ApiResponse(responseCode = "200", description = "OK", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = TrafficStationBean.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 			}
 	)
 	@GetMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -225,15 +227,15 @@ public class StationDemoController {
 	}
 	
 
-	@ApiOperation(value = "This method is use to insert a traffic station")
+	@Operation(summary = "This method is use to insert a traffic station")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 201, message = "OK", response = Integer.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 409, message = "Conflict", response = String.class , responseContainer="List"),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+					@ApiResponse(responseCode = "201", description = "OK", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "409", description = "Conflict", content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 			}
 	)
 	@PutMapping(value = "/station/stations", consumes = {
@@ -268,15 +270,15 @@ public class StationDemoController {
 		return new ResponseEntity<>(returnValue,HttpStatus.CREATED);
 	}
 	
-	@ApiOperation(value = "This method is use to update a traffic station")
+	@Operation(summary = "This method is use to update a traffic station")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 200, message = "OK", response = Void.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 404, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+					@ApiResponse(responseCode = "200", description = "OK", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "404", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 			}
 	)
 	@PatchMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -303,15 +305,15 @@ public class StationDemoController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "This method is use to delete a traffic station")
+	@Operation(summary = "This method is use to delete a traffic station")
 	@ApiResponses(
 			value = {
-					@ApiResponse(code = 204, message = "No Content", response = Void.class),
-					@ApiResponse(code = 400, message = "Bad Request", response = Void.class),
-					@ApiResponse(code = 401, message = "Unauthorized", response = Void.class),
-					@ApiResponse(code = 403, message = "Forbidden", response = Void.class),
-					@ApiResponse(code = 404, message = "Not Found", response = Void.class),
-					@ApiResponse(code = 500, message = "Internal Server Error", response = Void.class),
+					@ApiResponse(responseCode = "204", description = "No Content", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "400", description = "Bad Request", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "401", description = "Unauthorized", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "403", description = "Forbidden", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "404", description = "Not Found", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
+					@ApiResponse(responseCode = "500", description = "Internal Server Error", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))}),
 		                    
 	})
 	@DeleteMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

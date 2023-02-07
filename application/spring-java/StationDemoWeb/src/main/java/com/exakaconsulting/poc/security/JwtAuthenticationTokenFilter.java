@@ -2,58 +2,56 @@ package com.exakaconsulting.poc.security;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.exakaconsulting.poc.security.exception.JwtTokenMissingException;
 
-public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-    public JwtAuthenticationTokenFilter() {
-        super("/**");
-    }
+@Component
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
+	
+	@Autowired
+	private JwtAuthenticationProvider authenticationProvider;
 
     /**
      * Attempt to authenticate request - basically just pass over to another method to authenticate request headers
+     * @throws ServletException 
+     * @throws IOException 
      */
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+    public final void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
 
-        if (header == null || !header.startsWith("Bearer ")) {
-            throw new JwtTokenMissingException("No JWT token found in request headers");
+        if (header == null || !header.startsWith("Bearer ") || header.length() < 8) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        String authToken = header.substring(7);
+        try {
+        	String authToken = header.substring(7);
 
-        JwtAuthenticationTokenBean authRequest = new JwtAuthenticationTokenBean(authToken);
+        	JwtAuthenticationTokenBean authRequest = new JwtAuthenticationTokenBean(authToken);
 
-        return getAuthenticationManager().authenticate(authRequest);
-    }
-
-    /**
-     * Make sure the rest of the filterchain is satisfied
-     *
-     * @param request
-     * @param response
-     * @param chain
-     * @param authResult
-     * @throws IOException
-     * @throws ServletException
-     */
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
-            throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
-
-        // As this authentication is in HTTP header, after success we need to continue the request normally
-        // and return the response as if the resource was not secured at all
-        chain.doFilter(request, response);
+        	final Authentication authentication = this.authenticationProvider.authenticate(authRequest);
+        	SecurityContextHolder.getContext().setAuthentication(authentication);
+        	
+        	filterChain.doFilter(request, response);
+        }catch(Exception exception) {
+        	LOGGER.error(exception.getMessage() , exception);
+        	response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        }
     }
 }
 

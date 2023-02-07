@@ -1,4 +1,4 @@
-FROM tomcat:9.0.38-jdk8-openjdk
+FROM tomcat:10.1.5-jdk17-temurin
 
 LABEL application.contact = "kagzouli@exaka.com"
 
