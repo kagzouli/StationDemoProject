@@ -26,4 +26,4 @@ USER nginx
 
 WORKDIR /usr/share/nginx
 
-CMD ["setup.sh"]
+CMD ["/usr/local/bin/setup.sh"]
