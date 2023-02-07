@@ -7,6 +7,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,13 +27,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 
 @Configuration
-@EnableSwagger2
 // @Import(StationSecurityConfig.class)
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
@@ -52,11 +49,13 @@ public class Application extends AbstractApplication {
 
 	/** For swagger-ui **/
 	@Bean
-	public Docket banqueSwaggerApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.exakaconsulting.poc.web"))
-				/* .paths(PathSelectors.regex("/*")) */
-				.build();
+	public GroupedOpenApi  stationSwaggerUi() {
+
+		return GroupedOpenApi.builder()
+	              .group("station").
+	              packagesToScan("com.exakaconsulting.poc.web")	              
+	              .build();
+	  
 	}
 
 	@Bean(ConstantStationDemo.DATASOURCE_STATION)
