@@ -45,6 +45,7 @@ public class StationSecurityConfig {
 		 authorizeHttpRequests().
 		 requestMatchers(HttpMethod.GET,"/health").permitAll().
 		 requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().
+		 requestMatchers(HttpMethod.GET,"/v3/api-docs.yaml").permitAll().
 		 anyRequest().authenticated().and().
 		 sessionManagement().
 		 sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
