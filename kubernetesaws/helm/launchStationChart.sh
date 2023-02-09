@@ -112,3 +112,6 @@ helm upgrade --install stationdev ./station \
    -n stationdev --create-namespace
 
 kubectl apply -f ipaddress_pools.yaml
+
+# Change current context
+kubectl config set-context --current --namespace=stationdev

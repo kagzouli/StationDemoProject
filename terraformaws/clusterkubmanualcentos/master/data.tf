@@ -24,6 +24,15 @@ data "aws_subnet" "station_publicsubnet2" {
   }
 }
 
+// Filter in private subnet 1
+data "aws_subnet" "station_privatesubnet1" {
+
+  filter {
+    name   = "tag:Name"
+    values = ["station_privatesubnet1"]
+  }
+}
+
 // Filter in private subnet 2
 data "aws_subnet" "station_privatesubnet2" {
 
@@ -33,22 +42,21 @@ data "aws_subnet" "station_privatesubnet2" {
   }
 }
 
-# Public zone
-data "aws_route53_zone" "public" {
-  name         = var.station_publicdomainname
-}
-
 // Datasources
-data "aws_ami" "ubuntu-linux" {
+data "aws_ami" "ecs_optimized" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["*ecs-hvm-*-x86_64-ebs"]
+  }
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+  owners = ["amazon"]
 }
 

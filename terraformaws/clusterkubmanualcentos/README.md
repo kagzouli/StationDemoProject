@@ -22,5 +22,5 @@
     4.8 Aller sur terraformaws/clusterkubmanual/vault/script et lancer putSecret $rootToken.<br/>
     4.9 Garder bien le token généré qui est celui de l'ulitisateur de la vault.<br/><br/>
 <br><b>Etape 5 :</b> Initialiser l'application station dans le cluster : <br/>
-    5.1 Si secrets=internal, aller sur kubernetesaws/helm et lancer bash launchStationChart.sh internal afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/>
-    5.2 Si secrets=vault, aller sur kubernetesaws/helm et lancer bash launchStationChart.sh vault $token (Recupéré en 4.9) afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/>
+    5.1 Si secrets=internal, aller sur kubernetesaws/helm et lancer launchStationChart.sh internal afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/>
+    5.2 Si secrets=vault, aller sur kubernetesaws/helm et lancer launchStationChart.sh vault $token (Recupéré en 4.9) afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/>

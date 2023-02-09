@@ -42,22 +42,18 @@ data "aws_subnet" "station_privatesubnet2" {
   }
 }
 
-// Datasources
-data "aws_ami" "ecs_optimized" {
+
+data "aws_ami" "ubuntu-linux" {
   most_recent = true
+  owners      = ["099720109477"] # Canonical
   filter {
     name   = "name"
-    values = ["*ecs-hvm-*-x86_64-ebs"]
-  }
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-  owners = ["amazon"]
 }
 
 data "aws_iam_instance_profile" "kubworkermanual_agent" {
