@@ -25,6 +25,12 @@ spec:
   # nested inside the deployment spec
   template:
     metadata:
+      # AppArmor
+      {{- if (eq .Values.app.apparmor "enable")   }}
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/stationback: localhost/k8s-stationback
+      {{- end }}
+      
       # Set labels on the pod.
       # This is used in the deployment selector.
       labels:
