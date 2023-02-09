@@ -19,7 +19,7 @@
     4.5 Se connecter sur http://stationvault.exakaconsulting.org:8200/ui/ et saisir 1 et 1 pour les 2 paramètres.<br/>
     4.6 Penser bien à copier le token root ainsi que la clé pour unsteal vault.<br/>
     4.7 Saisir le token root pour s'authentifier.<br/>
-    4.8 Aller sur terraform/clusterkubemanual/vault/script et lancer putSecret $rootToken.<br/>
+    4.8 Aller sur terraformaws/clusterkubmanual/vault/script et lancer putSecret $rootToken.<br/>
     4.9 Garder bien le token généré qui est celui de l'ulitisateur de la vault.<br/><br/>
 <br><b>Etape 5 :</b> Initialiser l'application station dans le cluster : <br/>
     5.1 Si secrets=internal, aller sur kubernetesaws/helm et lancer launchStationChart.sh internal afin que le cluster s'initialise avec l'application station et les add-ons necéssaires pour l'application.<br/>
