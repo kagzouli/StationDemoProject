@@ -93,6 +93,10 @@
 			<groupId>com.okta.jwt</groupId>
 			<artifactId>okta-jwt-verifier</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.okta.jwt</groupId>
+			<artifactId>okta-jwt-verifier-impl</artifactId>
+		</dependency>
 		
 		
 		<!--  Redis -->
