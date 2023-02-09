@@ -12,7 +12,7 @@ displayError(){
 displayMessage(){
   BLUE='\033[0;34m'
   NORMAL='\033[0m' 
-  echo -e "${BLUE}$1${NORMAL}"
+  echo  "${BLUE}$1${NORMAL}"
 }
 
 # Parametre 1 : Nom du pod a tester
@@ -20,7 +20,7 @@ displayMessage(){
 # Parametre 3 : namespace
 checkIfPodsReady(){
   echo "Test : $1, $2, $3"
-  while [ $(kubectl get pods -l $2  -n $3 -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != *"True"* ]; do
+  while [ $(kubectl get pods -l $2  -n $3 -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != *"True"* ] do
     sleep 5
     displayMessage "Les pods $1 sont encore en cours de démarrage"
   done
