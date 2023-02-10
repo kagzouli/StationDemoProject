@@ -64,6 +64,3 @@ network inet tcp,
 owner /usr/local/tomcat/** rw,
 }
 EOF
-
-sudo  ~/k8s-stationfront-nginx
-sudo apparmor_parser -q ~/k8s-stationback
