@@ -88,7 +88,6 @@ systemctl start vault
 # Install app-armor profile k8s-stationfront-nginx
 sudo apparmor_parser -q <<EOF
 #include <tunables/global>
-
 profile k8s-stationfront-nginx flags=(attach_disconnected) {
   #include <abstractions/base>
   #include <abstractions/nameservice>
@@ -140,7 +139,6 @@ EOF
 # Install app-armor profile k8s-stationback
 sudo apparmor_parser -q <<EOF
 #include <tunables/global>
-
 profile k8s-stationback flags=(attach_disconnected) {
   #include <abstractions/base>
   #include <abstractions/nameservice>
