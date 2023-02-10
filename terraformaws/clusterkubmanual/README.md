@@ -10,7 +10,8 @@
     2.2 Lancer generateworker.sh<br/>
     3.3 Se connecter à la machine et faire un sudo su -<br/>
     3.4 Attendre que la machine s'initialise bien (On peut utiliser journalctl -u cloud-final).<br/>
-    3.5 Copier le résultat de la commande en 2.5 et l'éxecuter sur l'ensemble des workers.<br/><br/>
+    3.5 Copier le résultat de la commande en 2.5 et l'éxecuter sur l'ensemble des workers.<br/>
+    3.6 Lancer le script d'initialisation des profiles apparmor. Aller sur terraformaws/clusterkubmanual/worker et lancer le script bash apparmor.sh
 <br><b>Etape 4 (Si secretsMode=vault) :</b> Créer la vault.<br/>
     4.1 Aller sur terraformaws/clusterkubmanual/vault<br/>
     4.2 Lancer generatevault.sh<br/>

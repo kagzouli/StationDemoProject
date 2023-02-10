@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Execute apparmor front nginx
 sudo apparmor_parser -q <<EOF
 #include <tunables/global>
