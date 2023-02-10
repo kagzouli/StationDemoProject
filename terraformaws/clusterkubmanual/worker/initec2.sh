@@ -94,7 +94,7 @@ profile k8s-stationfront-nginx flags=(attach_disconnected) {
   # binary, pid
   /usr/bin/nginx mr,
   /run/nginx.pid rw
- + rw
+  /var/run/nginx.pid rw
 
   # configuration
   /etc/nginx r,
