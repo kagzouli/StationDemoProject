@@ -40,7 +40,7 @@ sudo apparmor_parser -q <<EOF
    owner /var/www/html/** rw,
    owner /usr/share/nginx/html/** rw,
    # logs
-   owner /var/log/nginx/* rw
+   owner /var/log/nginx/* rw,
 }
 EOF
 
