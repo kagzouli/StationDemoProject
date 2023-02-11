@@ -21,7 +21,7 @@
 	   <springsecurity.version>6.0.1</springsecurity.version>
 	   <springredis.version>3.0.1</springredis.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
-	   <okta-jwt.version>0.3.0</okta-jwt.version>
+	   <okta-jwt.version>0.5.7</okta-jwt.version>
 	   <jacoco.version>0.8.8</jacoco.version>
 	   <mockito.version>4.8.1</mockito.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
@@ -334,6 +334,13 @@
 			<artifactId>okta-jwt-verifier</artifactId>
 			<version>${okta-jwt.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.okta.jwt</groupId>
+			<artifactId>okta-jwt-verifier-impl</artifactId>
+			<version>${okta-jwt.version}</version>
+		</dependency>
+		
+		
 		
 		<!-- Tuckey -->
 		<dependency>

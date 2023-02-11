@@ -7,11 +7,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.exakaconsulting.poc.service.ConstantStationDemo;
+import com.okta.jwt.AccessTokenVerifier;
 import com.okta.jwt.Jwt;
-import com.okta.jwt.JwtVerifier;
 
-import net.minidev.json.JSONArray;
-
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.util.Assert;
@@ -29,9 +28,6 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 
 	@Value("${okta.issuerUrl}")
 	private String issuerUrl;
-
-	@Value("${okta.clientId}")
-	private String oktaClientId;
 	
 	@Override
 	public JwtUserDto parseToken(String token) {
@@ -40,10 +36,10 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 		try {
 			
 			// Initialise the JWT Verifier
-			final JwtVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(this.issuerUrl , this.oktaClientId);
+			final AccessTokenVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(this.issuerUrl);
 			Assert.notNull(jwtVerifier, "The JWT verifier must be initialized.");
 			
-			final Jwt jwt = jwtVerifier.decodeAccessToken(token);
+			final Jwt jwt = jwtVerifier.decode(token);
 			Map<String, Object> claims = jwt.getClaims();
 			
 			if (claims != null && !claims.isEmpty()){
@@ -51,10 +47,11 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 				
 				jwtUserDto.setUsername((String) claims.get("sub"));
 				
-				final JSONArray jsonArrayGroups = (JSONArray) claims.get("groups");
-				if (jsonArrayGroups != null && !jsonArrayGroups.isEmpty()){
-					jwtUserDto.setRole((String) jsonArrayGroups.get(0));
+				final List<String> listGroups = (List<String>) claims.get("groups");
+				if (listGroups != null && !listGroups.isEmpty()){
+					jwtUserDto.setRole(listGroups.get(0));
 				}
+			
 			}
 			
 			
