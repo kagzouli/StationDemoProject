@@ -22,6 +22,7 @@ sudo apparmor_parser -q <<EOF
    /dev/pts/[0-9] rw,
    # binary, pid
    /usr/bin/nginx mr,
+   /docker-entrypoint.sh mr,
    /run/nginx.pid rw,
    /var/run/nginx.pid rw,
    # configuration
