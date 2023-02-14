@@ -74,6 +74,12 @@ jobs:
           wget https://github.com/controlplaneio/kubesec/releases/download/v2.12.0/kubesec_linux_amd64.tar.gz
           tar -xvf kubesec_linux_amd64.tar.gz 
 
+      - name: Install Helm
+        run: |
+          curl -fsSLo get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
       - name: Scan template
         id: scan-helm-template
         run: helm template station > station.yaml && kubesec station.yaml
