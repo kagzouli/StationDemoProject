@@ -71,5 +71,5 @@ jobs:
       - name: Get kubesec
         id: get-kube-sec
         run: |
-        wget https://github.com/controlplaneio/kubesec/releases/download/v2.12.0/kubesec_linux_amd64.tar.gz
-        tar -xvf kubesec_linux_amd64.tar.gz
+          wget https://github.com/controlplaneio/kubesec/releases/download/v2.12.0/kubesec_linux_amd64.tar.gz
+          tar -xvf kubesec_linux_amd64.tar.gz
