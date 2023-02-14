@@ -46,3 +46,30 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+  scan_helm:
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Retrieve a token for pull
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v1
+        with:
+          application_id: ${{ secrets.APPLICATION_ID }}
+          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+
+
+      # Retrieve current source
+      - name: Checkout current 
+        id: checkout-current
+        uses: actions/checkout@v3
+        with:
+          path: current
+          token: ${{ steps.get_workflow_token.outputs.token }}
+
+      - name: Get kubesec
+        id: get-kube-sec
+        run: |
+        wget https://github.com/controlplaneio/kubesec/releases/download/v2.12.0/kubesec_linux_amd64.tar.gz
+        tar -xvf kubesec_linux_amd64.tar.gz
