@@ -82,5 +82,5 @@ jobs:
 
       - name: Scan template
         id: scan-helm-template
-        run: helm template current/kubernetesaws/helm/station > station.yaml && ./kubesec -f station.yaml
+        run: helm template current/kubernetesaws/helm/station > station.yaml && ./kubesec scan station.yaml
         working-directory: 
