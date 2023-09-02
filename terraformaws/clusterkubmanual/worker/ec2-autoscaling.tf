@@ -28,7 +28,7 @@ resource "aws_autoscaling_group" "kubworker_autoscalinggroup" {
 
     desired_capacity          = 2
     min_size                  = 2 
-    max_size                  = 5
+    max_size                  = 4
     health_check_grace_period = 300
     health_check_type         = "EC2"
 
