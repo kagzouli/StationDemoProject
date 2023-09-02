@@ -42,12 +42,16 @@ sudo systemctl start docker
 
 
 # Install kubernetes component
+sudo apt-get update
+# apt-transport-https may be a dummy package; if so, you can skip that package
 sudo apt-get install -y apt-transport-https ca-certificates curl
-curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /usr/share/keyrings/kubernetes.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+sudo mkdir -m 755 /etc/apt/keyrings
+curl -fsSL https://dl.k8s.io/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+# This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo setenforce 0
-sudo apt-get install -y docker kubelet=1.25.4-00 kubeadm=1.25.4-00 kubernetes-cni=1.1.1-00
+sudo apt-get install -y docker kubelet=1.25.4-00 kubeadm=1.25.4-00  kubernetes-cni=1.1.1-00
 
 
 #Enable kubelet
