@@ -109,7 +109,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/confi
 checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 
 # Launch cluster-autoscaler
-helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set "autoscalingGroups[0].name=kubworker_autoscalinggroup" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=8"
+helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set "autoscalingGroups[0].name=kubworker_autoscalinggroup" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=5"
     
 
 helm upgrade --install stationdev ./station \

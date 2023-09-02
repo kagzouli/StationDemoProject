@@ -1,8 +1,19 @@
 
 
+data "aws_iam_policy_document" "autoscaler_ec2" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
 resource "aws_iam_role" "autoscaler_iam_role" {
   name               = "station-cluster-autoscaler-iam-role"
-  assume_role_policy = data.aws_iam_policy_document.eks_autoscaler_webidentity_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.autoscaler_ec2.json
   tags = {
     Name        = "station-cluster-autoscaler-iam-role"
     Environment = var.application
