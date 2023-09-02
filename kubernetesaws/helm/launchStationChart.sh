@@ -2,6 +2,7 @@
 # Fixe les variables
 
 SHARED_NAMESPACE="transverse"
+AWS_REGION="eu-west-3"
 
 displayError(){
   RED='\033[0;31m'
@@ -109,7 +110,7 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/confi
 checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 
 # Launch cluster-autoscaler
-helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=5" -n ${SHARED_NAMESPACE} --create-namespace
+helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=5" -n ${SHARED_NAMESPACE} --create-namespace
     
 
 helm upgrade --install stationdev ./station \
