@@ -1,16 +1,16 @@
 package com.exakaconsulting.poc.service;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.exakaconsulting.poc.service.jwt.IJwtUserService;
 import com.exakaconsulting.poc.service.jwt.JwtUserDto;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.Test;
 
 @ActiveProfiles({ConstantStationDemo.JWT_USER_SIMPLE_PROFILE})
 public class TestJwtUserSimpleService extends AbstractServiceTest{

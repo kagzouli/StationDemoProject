@@ -1,18 +1,14 @@
 package com.exakaconsulting.poc.service;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.exakaconsulting.poc.dao.IStationDemoDao;
-import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
-import com.exakaconsulting.poc.service.OrderBean;
-import com.exakaconsulting.poc.service.TrafficStationBean;
 
 public class TestStationDemoDao extends AbstractServiceTest{
 	

@@ -1,30 +1,32 @@
 package com.exakaconsulting.poc.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.exakaconsulting.poc.service.TrafficStationBean;
 import com.exakaconsulting.poc.ApplicationTest;
 
-@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ApplicationTest.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
 @Transactional
+@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public abstract class AbstractServiceTest {
 	
@@ -41,8 +43,8 @@ public abstract class AbstractServiceTest {
 	@MockBean
 	private ValueOperations<String, TrafficStationBean> valuesOperation;
 	
-	@Before
-	public void beforeTest(){
+	@BeforeAll
+	public  void beforeTest(){
 		
 		Logger logger = Mockito.mock(Logger.class);
         Mockito.when(logger.isInfoEnabled()).thenReturn(true);
