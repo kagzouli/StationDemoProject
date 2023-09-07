@@ -16,8 +16,6 @@ import org.springframework.util.Assert;
 
 import com.exakaconsulting.poc.dao.IStationDemoDao;
 
-import static com.exakaconsulting.poc.service.ConstantStationDemo.TRANSACTIONAL_DATASOURCE_STATION;
-
 
 /**
  * 
@@ -87,7 +85,7 @@ public class StationDemoServiceImpl implements IStationDemoService{
 
 
 	@Override
-	@Transactional(rollbackFor=Throwable.class, propagation = Propagation.REQUIRED, transactionManager=TRANSACTIONAL_DATASOURCE_STATION)
+	@Transactional(rollbackFor=Throwable.class, propagation = Propagation.REQUIRED)
 
 	public Integer insertTrafficStation(TrafficStationBean trafficStationBean) throws AlreadyStationExistsException {
 		Assert.notNull(trafficStationBean , "The traffic station must be set");

@@ -8,18 +8,16 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
-import org.apache.commons.lang3.StringUtils;
 
 import com.exakaconsulting.poc.service.AbstractCriteriaSearch;
-import com.exakaconsulting.poc.service.ConstantStationDemo;
 import com.exakaconsulting.poc.service.CriteriaSearchTrafficStation;
 import com.exakaconsulting.poc.service.OrderBean;
 import com.exakaconsulting.poc.service.TechnicalException;
@@ -53,7 +51,6 @@ public class StationDemoDaoImpl implements IStationDemoDao{
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Autowired
-	@Qualifier(ConstantStationDemo.DATASOURCE_STATION)
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
