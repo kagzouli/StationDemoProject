@@ -7,9 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +24,6 @@ import com.exakaconsulting.poc.ApplicationTest;
 @SpringBootTest(classes = ApplicationTest.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
 @Transactional
-@TestInstance(Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
 public abstract class AbstractServiceTest {
 	
@@ -43,7 +40,7 @@ public abstract class AbstractServiceTest {
 	@MockBean
 	private ValueOperations<String, TrafficStationBean> valuesOperation;
 	
-	@BeforeAll
+	@BeforeEach
 	public  void beforeTest(){
 		
 		Logger logger = Mockito.mock(Logger.class);
