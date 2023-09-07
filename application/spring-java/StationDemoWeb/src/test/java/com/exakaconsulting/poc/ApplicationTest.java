@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc.test;
+package com.exakaconsulting.poc;
 
 
 import javax.sql.DataSource;

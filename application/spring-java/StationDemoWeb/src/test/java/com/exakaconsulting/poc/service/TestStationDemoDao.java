@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc;
+package com.exakaconsulting.poc.service;
 
 import java.util.Arrays;
 import java.util.List;

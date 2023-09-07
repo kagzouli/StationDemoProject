@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc;
+package com.exakaconsulting.poc.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

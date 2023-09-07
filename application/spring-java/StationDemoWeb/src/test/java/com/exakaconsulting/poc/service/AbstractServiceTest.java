@@ -1,4 +1,4 @@
-package com.exakaconsulting.poc;
+package com.exakaconsulting.poc.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +20,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.exakaconsulting.poc.service.TrafficStationBean;
-import com.exakaconsulting.poc.test.ApplicationTest;
+import com.exakaconsulting.poc.ApplicationTest;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(loader=AnnotationConfigContextLoader.class,classes=ApplicationTest.class)
