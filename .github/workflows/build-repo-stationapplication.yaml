@@ -101,7 +101,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: backendwar
-          path: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.war
+          path: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.jar
 
   push_back_dockerhub:
     runs-on: ubuntu-latest
