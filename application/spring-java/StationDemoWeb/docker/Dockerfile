@@ -15,8 +15,8 @@ ENV REDIS_USESSL "false"
 
 COPY StationDemoSecureWeb.jar StationDemoSecureWeb.jar
 
-RUN  groupadd -r -g 20050 exakagroup && useradd -u 20050 -r -g exakauser exakagroup \
-    chown -R exakauser:exakagroup StationDemoSecureWeb.jar
+RUN  groupadd -r -g 20050 exakagroup && useradd -u 20050 -r -g exakagroup exakauser \
+    && chown -R exakauser:exakagroup StationDemoSecureWeb.jar
 
 
 # Run with user tomcat
