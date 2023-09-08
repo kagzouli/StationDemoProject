@@ -23,7 +23,7 @@ pipeline {
 			
                 sh "docker build -t kagzouli/station-db StationDemoDb"
 		
-		sh "cp StationDemoWeb/target/StationDemoSecureWeb.war StationDemoWeb/docker/StationDemoSecureWeb.war"
+		sh "cp StationDemoWeb/target/StationDemoSecureWeb.jar StationDemoWeb/docker/StationDemoSecureWeb.jar"
                 sh "docker build -t kagzouli/station-back StationDemoWeb/docker"
        
 		sh "cp -rf StationDemoClient/station-angular4-poc/dist StationDemoClient/station-angular4-poc/dockerwithnginx/"

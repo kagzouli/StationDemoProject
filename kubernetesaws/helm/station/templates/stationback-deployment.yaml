@@ -59,6 +59,8 @@ spec:
             {{ else }}
             value: {{ .Values.stationdb.jdbcDatabaseUrl | quote }}
             {{- end }}
+          - name: DB_TRAFSTAT_DRIVERCLASS
+            value: "com.mysql.jdbc.Driver"
           - name: DB_TRAFSTAT_MAXACTIVE
             value: {{ .Values.stationback.nbConnectionDbMaxActive | quote}}
           - name: DB_TRAFSTAT_USERNAME
@@ -85,17 +87,17 @@ spec:
             value: {{ .Values.stationredis.usessl | quote   }}
           resources:
             requests:
-              cpu: 500m
-              memory: 1024Mi
+              cpu: 100m
+              memory: 768Mi
             limits:
-              cpu: 800m
-              memory: 1024Mi
+              cpu: 300m
+              memory: 768Mi
           livenessProbe:
             httpGet:
               scheme: HTTP
               path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 25
+            initialDelaySeconds: 45
             periodSeconds: 20
             timeoutSeconds: 17
           readinessProbe:
@@ -103,7 +105,7 @@ spec:
               scheme: HTTP
               path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 25
+            initialDelaySeconds: 45
             periodSeconds: 20
             timeoutSeconds: 17
           ports:

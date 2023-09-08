@@ -1,37 +1,30 @@
 package com.exakaconsulting.poc;
 
-import com.exakaconsulting.poc.service.ConstantStationDemo;
-
-import redis.clients.jedis.JedisPoolConfig;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration.JedisClientConfigurationBuilder;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import redis.clients.jedis.JedisPoolConfig;
 
 
-@Configuration
-// @Import(StationSecurityConfig.class)
-@PropertySource("classpath:application.properties")
+
+@SpringBootApplication
+//@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class Application extends AbstractApplication {
 
@@ -46,6 +39,10 @@ public class Application extends AbstractApplication {
 	
 	@Value("${redis.usessl}")
 	private Boolean redisUseSsl;
+	
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
 	/** For swagger-ui **/
 	@Bean
@@ -56,13 +53,6 @@ public class Application extends AbstractApplication {
 	              packagesToScan("com.exakaconsulting.poc.web")	              
 	              .build();
 	  
-	}
-
-	@Bean(ConstantStationDemo.DATASOURCE_STATION)
-	@Primary
-	public DataSource datasource() {
-		JndiDataSourceLookup jndiBanqueDatasourceLookup = new JndiDataSourceLookup();
-		return jndiBanqueDatasourceLookup.getDataSource("java:comp/env/jdbc/StationDemoDb");
 	}
 
 	@Bean

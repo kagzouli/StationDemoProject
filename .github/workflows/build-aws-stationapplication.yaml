@@ -14,7 +14,7 @@ on:
 
       docker_project_version:
         type: string
-        default: 1.3.1
+        default: 1.4.0
         description: station  project version
         required: true
 
@@ -131,12 +131,12 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
         working-directory: current/application/spring-java
  
-      - name: Upload backend WAR
-        id: upload-backendwar
+      - name: Upload backend JAR
+        id: upload-backendjar
         uses: actions/upload-artifact@v3
         with:
-          name: backendwar
-          path: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.war
+          name: backendjar
+          path: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.jar
 
   push_back_dockerhub:
     runs-on: ubuntu-latest
@@ -161,11 +161,11 @@ jobs:
           token: ${{ steps.get_workflow_token.outputs.token }}
 
       # Download artifact
-      - name: download backend WAR
-        id: download-backendwar
+      - name: download backend JAR
+        id: download-backendjar
         uses: actions/download-artifact@v3
         with:
-          name: backendwar
+          name: backendjar
           path: current/application/spring-java/StationDemoWeb/docker/
  
       # Debug
