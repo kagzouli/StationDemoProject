@@ -31,6 +31,10 @@
           "value": "jdbc:mysql://${context_db}/StationDemoDb?connectTimeout=0"
         },
         {
+          "name": "DB_TRAFSTAT_DRIVERCLASS",
+          "value": "com.mysql.jdbc.Driver"
+        },
+        {
           "name": "DB_TRAFSTAT_MAXACTIVE",
           "value": "20"
         },

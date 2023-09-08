@@ -25,6 +25,7 @@
 	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   <validationapi.version>2.0.1.Final</validationapi.version>
 	   <springplugin.version>3.0.0</springplugin.version>
+	   <mysqlconnector.version>8.0.33</mysqlconnector.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
@@ -184,15 +185,7 @@
 			<version>${okta-jwt.version}</version>
 		</dependency>
 		
-		
-		
-		<!-- Tuckey -->
-		<dependency>
-			<groupId>org.tuckey</groupId>
-			<artifactId>urlrewritefilter</artifactId>
-			<version>${urlrewriterfilter.version}</version>
-		</dependency>
-		
+				
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
@@ -203,7 +196,14 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
-      </dependency>
+    	</dependency>
+
+		<dependency>
+    		<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${mysqlconnector.version}</version>
+		</dependency>
+
  
 
 			

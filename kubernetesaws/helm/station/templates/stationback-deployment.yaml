@@ -59,6 +59,8 @@ spec:
             {{ else }}
             value: {{ .Values.stationdb.jdbcDatabaseUrl | quote }}
             {{- end }}
+          - name: DB_TRAFSTAT_DRIVERCLASS
+            value: "com.mysql.jdbc.Driver"
           - name: DB_TRAFSTAT_MAXACTIVE
             value: {{ .Values.stationback.nbConnectionDbMaxActive | quote}}
           - name: DB_TRAFSTAT_USERNAME
