@@ -97,7 +97,7 @@ spec:
               scheme: HTTP
               path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 25
+            initialDelaySeconds: 45
             periodSeconds: 20
             timeoutSeconds: 17
           readinessProbe:
@@ -105,7 +105,7 @@ spec:
               scheme: HTTP
               path: /StationDemoSecureWeb/health
               port: 8080
-            initialDelaySeconds: 25
+            initialDelaySeconds: 45
             periodSeconds: 20
             timeoutSeconds: 17
           ports:
