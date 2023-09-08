@@ -2,16 +2,23 @@ FROM eclipse-temurin:17-jre
 
 LABEL application.contact = "kagzouli@exaka.com"
 
+# Variabl environnement
+ENV DB_TRAFSTAT_URL "jdbc:h2:file:~/data/trafstats1;INIT=create schema if not exists trafstats1\\;RUNSCRIPT FROM 'classpath:db-data-h2-trafstat.sql'"
+ENV DB_TRAFSTAT_DRIVERCLASS "org.h2.Driver"
+ENV DB_TRAFSTAT_USERNAME "sa"
+ENV DB_TRAFSTAT_PASSWORD ""
+ENV DB_TRAFSTAT_MAXACTIVE "10"
+ENV REDIS_HOSTNAME "localhost"
+ENV REDIS_PORT "6379"
+ENV REDIS_PASS "test650"
+ENV REDIS_USESSL "false"
 
-RUN  groupadd -r -g 20050 exakagroup && useradd -u 20050 -r -g exakauser exakagroup \ 
-
-
-# Raison de sécurité - On desactive les applications par default et on met une 404.html
-COPY page/404.html /usr/local/tomcat/webapps/ROOT/404.html
 COPY StationDemoSecureWeb.war StationDemoSecureWeb.war
 
-# Give this directory the tomcat right
-RUN chown -R exakauser:exakagroup StationDemoSecureWeb.war
+RUN  groupadd -r -g 20050 exakagroup && useradd -u 20050 -r -g exakauser exakagroup \
+    chown -R exakauser:exakagroup StationDemoSecureWeb.war
+
+
 # Run with user tomcat
 USER exakauser
-WORKDIR /usr/local/tomcat/
+ENTRYPOINT ["java" , "-XX:MaxRAMPercentage=75.0" , "-XX:+UseContainerSupport" , "-jar" , "StationDemoSecureWeb.war"]
