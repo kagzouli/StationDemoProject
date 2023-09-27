@@ -24,7 +24,7 @@ app:
   # Apparmor : enable or disable
   apparmor: disable
 
-  # HPA / Keda
+  # hscaler : hpa or keda
   hscaler: 'hpa'
 
 image:
