@@ -111,7 +111,9 @@ checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 
 #helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
 # Launch keda
-helm install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
+helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
+checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
+
 
 helm upgrade --install stationdev ./station \
    --set secrets.mode="${SECRETS_MODE}" \
