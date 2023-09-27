@@ -83,7 +83,7 @@ helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add external-secrets https://charts.external-secrets.io
-helm repo add autoscaler https://kubernetes.github.io/autoscaler
+helm repo add kedacore https://kedacore.github.io/charts
 helm repo update
 
 # Launch and Check that metrics server are is Running or failed state 
@@ -109,9 +109,9 @@ checkIfPodsReady "external-secrets" "app.kubernetes.io/name=external-secrets" "$
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
 checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 
-# Launch cluster-autoscaler
-helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
-    
+#helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
+# Launch keda
+helm install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
 
 helm upgrade --install stationdev ./station \
    --set secrets.mode="${SECRETS_MODE}" \
