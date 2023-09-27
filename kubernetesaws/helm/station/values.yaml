@@ -24,6 +24,9 @@ app:
   # Apparmor : enable or disable
   apparmor: disable
 
+  # HPA / Keda
+  hscaler: 'hpa'
+
 image:
   tag: 1.4.0
 

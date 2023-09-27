@@ -3,6 +3,8 @@ SHARED_NAMESPACE="transverse"
 helm delete stationdev -n stationdev
 kubectl delete secret vault-secret -n stationdev
 
+helm delete keda -n ${SHARED_NAMESPACE}
+
 helm delete argo-rollout  -n ${SHARED_NAMESPACE}
 
 helm delete metrics-server  -n ${SHARED_NAMESPACE}
