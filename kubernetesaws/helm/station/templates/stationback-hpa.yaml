@@ -18,5 +18,5 @@ spec:
         name: http_server_requests_per_second
       target:
         type: AverageValue
-        averageUtilization: 2
+        averageValue: 2
 {{- end }}
