@@ -116,10 +116,10 @@ helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namesp
 checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
 
 # Install prometheus operator
-helm upgrade --install prometheus-op  prometheus-community/prometheus-operator --version 9.3.0 -n ${SHARED_NAMESPACE}
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 -n ${SHARED_NAMESPACE}
 
 # Install prometheus adapter
-helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --set prometheus.url="http://prom-prometheus-operator-prometheus.monitoring.svc",prometheus.port="9090"  --set rbac.create="true" -n ${SHARED_NAMESPACE} 
+helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 --set prometheus.url="http://prom-prometheus-operator-prometheus.monitoring.svc",prometheus.port="9090"  --set rbac.create="true" -n ${SHARED_NAMESPACE} 
 
 # Install stationdev
 helm upgrade --install stationdev ./station \

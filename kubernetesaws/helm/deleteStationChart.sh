@@ -6,7 +6,7 @@ kubectl delete secret vault-secret -n stationdev
 
 helm delete prom-adapter -n ${SHARED_NAMESPACE}
 
-helm delete prometheus-op   -n ${SHARED_NAMESPACE}
+helm delete prometheus   -n ${SHARED_NAMESPACE}
 
 helm delete keda -n ${SHARED_NAMESPACE}
 
