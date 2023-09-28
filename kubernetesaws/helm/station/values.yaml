@@ -28,7 +28,7 @@ app:
   hscaler: 'hpa'
 
 image:
-  tag: 1.4.0
+  tag: 1.4.1
 
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli3'
