@@ -84,6 +84,7 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add external-secrets https://charts.external-secrets.io
 helm repo add kedacore https://kedacore.github.io/charts
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
 # Launch and Check that metrics server are is Running or failed state 
@@ -114,7 +115,13 @@ checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
 checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
 
+# Install prometheus operator
+helm upgrade --install prometheus-op  prometheus-community/prometheus-operator --version 9.3.0 -n ${SHARED_NAMESPACE}
 
+# Install prometheus adapter
+helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --set prometheus.url="http://prom-prometheus-operator-prometheus.monitoring.svc",prometheus.port="9090"  --set rbac.create="true" -n ${SHARED_NAMESPACE} 
+
+# Install stationdev
 helm upgrade --install stationdev ./station \
    --set secrets.mode="${SECRETS_MODE}" \
    -n stationdev --create-namespace

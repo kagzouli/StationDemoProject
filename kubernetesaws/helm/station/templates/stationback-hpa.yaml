@@ -12,10 +12,11 @@ spec:
     kind: Rollout
     name: stationback-deploy
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
+  - type: Pods
+    pods:
+      metric: cpu
+        name: http_server_requests_per_second
       target:
-        type: Utilization
-        averageUtilization: 80
+        type: AverageValue
+        averageUtilization: 2
 {{- end }}
