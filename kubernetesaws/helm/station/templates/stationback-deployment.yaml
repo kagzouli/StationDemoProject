@@ -25,14 +25,11 @@ spec:
   # nested inside the deployment spec
   template:
     metadata:
-      annotations:
       # AppArmor
       {{- if (eq .Values.app.apparmor "enable")   }}
+      annotations:
         container.apparmor.security.beta.kubernetes.io/stationback: localhost/k8s-stationback
       {{- end }}
-        prometheus.io/path: /StationDemoSecureWeb/actuator/prometheus
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
       
       # Set labels on the pod.
       # This is used in the deployment selector.
