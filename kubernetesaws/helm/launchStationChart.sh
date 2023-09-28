@@ -117,7 +117,7 @@ helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namesp
 checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}" --create-namespace
 
 # Install prometheus operator
-helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 -n ${MONITORING_NAMESPACE} --create-namespace
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" -n ${MONITORING_NAMESPACE} --create-namespace
 
 # Install prometheus adapter
 helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 --set prometheus.url="http://prom-prometheus-operator-prometheus.${MONITORING_NAMESPACE}.svc",prometheus.port="9090"  --set rbac.create="true" -n ${MONITORING_NAMESPACE} --create-namespace
