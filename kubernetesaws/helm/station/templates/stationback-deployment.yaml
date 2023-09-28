@@ -25,9 +25,9 @@ spec:
   # nested inside the deployment spec
   template:
     metadata:
+      annotations:
       # AppArmor
       {{- if (eq .Values.app.apparmor "enable")   }}
-      annotations:
         container.apparmor.security.beta.kubernetes.io/stationback: localhost/k8s-stationback
       {{- end }}
         prometheus.io/path: /StationDemoSecureWeb/actuator/prometheus
