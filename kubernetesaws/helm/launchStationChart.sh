@@ -3,6 +3,7 @@
 
 SHARED_NAMESPACE="transverse"
 AWS_REGION="eu-west-3"
+MONITORING_NAMESPACE="monitoring"
 
 displayError(){
   RED='\033[0;31m'
@@ -113,13 +114,13 @@ checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 #helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
 # Launch keda
 helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
-checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
+checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}" --create-namespace
 
 # Install prometheus operator
-helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 -n ${SHARED_NAMESPACE}
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 -n ${MONITORING_NAMESPACE} --create-namespace
 
 # Install prometheus adapter
-helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 --set prometheus.url="http://prom-prometheus-operator-prometheus.monitoring.svc",prometheus.port="9090"  --set rbac.create="true" -n ${SHARED_NAMESPACE} 
+helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 --set prometheus.url="http://prom-prometheus-operator-prometheus.monitoring.svc",prometheus.port="9090"  --set rbac.create="true" -n ${MONITORING_NAMESPACE} --create-namespace
 
 # Install stationdev
 helm upgrade --install stationdev ./station \

@@ -1,12 +1,13 @@
 SHARED_NAMESPACE="transverse"
+MONITORING_NAMESPACE="monitoring"
 
 helm delete stationdev -n stationdev
 kubectl delete secret vault-secret -n stationdev
 
 
-helm delete prom-adapter -n ${SHARED_NAMESPACE}
+helm delete prom-adapter -n ${MONITORING_NAMESPACE}
 
-helm delete prometheus   -n ${SHARED_NAMESPACE}
+helm delete prometheus   -n ${MONITORING_NAMESPACE}
 
 helm delete keda -n ${SHARED_NAMESPACE}
 
