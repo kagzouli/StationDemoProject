@@ -22,6 +22,18 @@ spec:
     - protocol: TCP
       port: 8080
 
+  # Prometheus
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: transverse
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: prometheus
+    ports:
+      - protocol: TCP
+        port: 80
+
   - ports:
     - protocol: TCP
       port: 53
