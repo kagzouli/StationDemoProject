@@ -120,7 +120,7 @@ checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPA
 helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" -n ${MONITORING_NAMESPACE} --create-namespace
 
 # Install prometheus adapter
-helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 --set prometheus.url="http://prometheus-server.${MONITORING_NAMESPACE}.svc",prometheus.port="80"  --set rbac.create="true" -n ${MONITORING_NAMESPACE} --create-namespace
+helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 -f prometheus.yaml  -n ${MONITORING_NAMESPACE} --create-namespace
 
 # Install stationdev
 helm upgrade --install stationdev ./station \
