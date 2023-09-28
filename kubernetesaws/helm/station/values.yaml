@@ -105,7 +105,7 @@ stationdb:
 stationback:
 
   # Nb replicas
-  nbReplicas: 2
+  nbReplicas: 1
 
   # Nbr connexion datasource active db
   nbConnectionDbMaxActive: 15
@@ -152,7 +152,7 @@ stationback:
 stationfront:
 
   # Nb replicas
-  nbReplicas: 2
+  nbReplicas: 1
 
 
   # Region 
