@@ -44,6 +44,8 @@ public class StationSecurityConfig {
 		 csrf(csrf -> csrf.disable()).
 		 authorizeHttpRequests().
 		 requestMatchers(HttpMethod.GET,"/health").permitAll().
+		 requestMatchers(HttpMethod.GET,"/actuator").permitAll().
+		 requestMatchers(HttpMethod.GET,"/actuator/**").permitAll().
 		 requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().
 		 requestMatchers(HttpMethod.GET,"/v3/api-docs.yaml").permitAll().
 		 anyRequest().authenticated().and().
