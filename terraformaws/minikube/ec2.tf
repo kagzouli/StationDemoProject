@@ -11,7 +11,7 @@ data "template_file" "user_data" {
 
 resource "aws_instance" "minikube" {
   ami           = data.aws_ami.ubuntu-linux.id
-  instance_type = "t3.large"
+  instance_type = "t3.xlarge"
 
   user_data     = data.template_file.user_data.rendered 
 
