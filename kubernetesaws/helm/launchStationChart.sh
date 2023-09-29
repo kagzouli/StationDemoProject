@@ -119,9 +119,6 @@ checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPA
 # Install prometheus operator
 helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" -n ${MONITORING_NAMESPACE} --create-namespace
 
-# Install prometheus adapter
-helm upgrade --install prom-adapter prometheus-community/prometheus-adapter --version 4.5.0 -f prometheus.yaml  -n ${MONITORING_NAMESPACE} --create-namespace
-
 # Install stationdev
 helm upgrade --install stationdev ./station \
    --set secrets.mode="${SECRETS_MODE}" \
