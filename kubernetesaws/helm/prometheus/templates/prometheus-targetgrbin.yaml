@@ -6,8 +6,8 @@ metadata:
   
 spec:
   serviceRef:
-    name: prometheus
-    port: 443
+    name: prometheus-server
+    port: 80
   targetGroupARN: {{ .Values.prometheus.ingress.targetGroupARN }} 
   networking:
     ingress:
