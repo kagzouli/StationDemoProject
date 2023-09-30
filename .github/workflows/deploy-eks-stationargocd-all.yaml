@@ -272,7 +272,6 @@ jobs:
    
       # Check that ALB load balancer controller is in state Running, Failed 
       - name: Waiting ALB load balancer to be running
-        timeout: 30 
         id:  albloadbalancercontroller-isrunnin
         run: |
           NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
