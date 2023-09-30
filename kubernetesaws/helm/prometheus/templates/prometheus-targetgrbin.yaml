@@ -1,0 +1,19 @@
+apiVersion: elbv2.k8s.aws/v1beta1 
+kind: TargetGroupBinding
+metadata:
+  name: prometheus-tgb
+  namespace: transverse
+  
+spec:
+  serviceRef:
+    name: prometheus
+    port: 80
+  targetGroupARN: {{ .Values.prometheus.ingress.targetGroupARN }} 
+  networking:
+    ingress:
+      - from:
+        - ipBlock:
+            cidr: {{ .Values.argocd.network.vpc_cidr | quote }} 
+        ports:
+        - port: 80
+          protocol: TCP
