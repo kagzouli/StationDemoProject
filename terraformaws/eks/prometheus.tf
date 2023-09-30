@@ -15,10 +15,10 @@ resource "aws_alb" "prometheus_alb"{
 }
 
 
-resource "aws_alb_listener" "prometheus_http_target_groups" {
-  load_balancer_arn = aws_alb.prometheus_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+resource "aws_alb_target_group" "prometheus_target_group" {
+  name = "prometheus-target-group"
+  port = 80 
+  protocol = "HTTP"
   vpc_id = data.aws_vpc.station_vpc.id 
   target_type = "ip"
   health_check {
@@ -35,8 +35,8 @@ resource "aws_alb_listener" "prometheus_http_target_groups" {
     Name = "prometheus-alb-target-group"
     Application= var.application
   }
-
 }
+
 
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "prometheus_alb_listener" {
