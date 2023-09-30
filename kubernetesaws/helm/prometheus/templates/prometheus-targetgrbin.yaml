@@ -13,7 +13,7 @@ spec:
     ingress:
       - from:
         - ipBlock:
-            cidr: {{ .Values.argocd.network.vpc_cidr | quote }} 
+            cidr: {{ .Values.prometheus.network.vpc_cidr | quote }} 
         ports:
         - port: 443
           protocol: TCP
