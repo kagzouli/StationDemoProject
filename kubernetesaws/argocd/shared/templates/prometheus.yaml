@@ -16,7 +16,7 @@ spec:
       releaseName: prometheus
       parameters: 
         - name: server.persistentVolume.enabled
-          value: "false"
+          value: "true"
         - name: server.service.type
           value: "NodePort"
         - name:  server.service.nodePort

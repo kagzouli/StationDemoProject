@@ -1,0 +1,14 @@
+{{- if (ne .Values.stationdb.mode "externaldb")   }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-pv
+  namespace: transverse
+spec:
+  storageClassName: "gp2"
+  capacity:
+    storage: "10Gi"
+  accessModes: 
+    -  ReadWriteOnce
+  hostPath:
+    path: /data
