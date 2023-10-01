@@ -14,34 +14,18 @@ resource "aws_alb" "prometheus_alb"{
     }
 }
 
-resource "aws_alb_listener" "prometheus_http_target_groups" {
-    load_balancer_arn = aws_alb.prometheus_alb.arn
-    port              = "80"
-    protocol          = "HTTP"
-    default_action {
-    type = "redirect"
-    redirect {
-
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-
-    }
-
-  }
-
-}
 
 resource "aws_alb_target_group" "prometheus_target_group" {
   name = "prometheus-target-group"
-  port = 443 
-  protocol = "HTTPS"
-  vpc_id = data.aws_vpc.station_vpc.id 
+  port = 80
+  protocol = "HTTP"
+  vpc_id = data.aws_vpc.station_vpc.id  
   target_type = "ip"
   health_check {
     healthy_threshold = "2"
     interval = "30"
-    protocol = "HTTPS"
+    protocol = "HTTP"
+    port     = "80"
     matcher = "200"
     timeout = "3"
     path = "/-/healthy"
@@ -57,10 +41,9 @@ resource "aws_alb_target_group" "prometheus_target_group" {
 
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "prometheus_alb_listener" {
-  load_balancer_arn = aws_alb.prometheus_alb.id
-  port = 443
-  protocol = "HTTPS"
-  certificate_arn   = data.aws_acm_certificate.public_domain.arn
+  load_balancer_arn =  aws_alb.prometheus_alb.id
+  port = 80
+  protocol = "HTTP"
 
   default_action {
     target_group_arn = aws_alb_target_group.prometheus_target_group.id
