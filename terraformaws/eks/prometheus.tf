@@ -28,7 +28,7 @@ resource "aws_alb_target_group" "prometheus_target_group" {
     port     = "80"
     matcher = "200"
     timeout = "3"
-    path = "/-/healthy"
+    path = "/"
     unhealthy_threshold = "2"
   }
 
