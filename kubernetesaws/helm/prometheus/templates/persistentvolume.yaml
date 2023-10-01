@@ -1,4 +1,3 @@
-{{- if (ne .Values.stationdb.mode "externaldb")   }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
