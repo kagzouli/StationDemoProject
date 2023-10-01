@@ -3,6 +3,7 @@
 
 SHARED_NAMESPACE="transverse"
 AWS_REGION="eu-west-3"
+MONITORING_NAMESPACE="monitoring"
 
 displayError(){
   RED='\033[0;31m'
@@ -84,6 +85,7 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add external-secrets https://charts.external-secrets.io
 helm repo add kedacore https://kedacore.github.io/charts
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
 # Launch and Check that metrics server are is Running or failed state 
@@ -112,9 +114,12 @@ checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 #helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
 # Launch keda
 helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
-checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
+checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}" --create-namespace
 
+# Install prometheus operator
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" -n ${MONITORING_NAMESPACE} --create-namespace
 
+# Install stationdev
 helm upgrade --install stationdev ./station \
    --set secrets.mode="${SECRETS_MODE}" \
    -n stationdev --create-namespace

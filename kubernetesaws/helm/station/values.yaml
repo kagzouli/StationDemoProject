@@ -25,10 +25,10 @@ app:
   apparmor: disable
 
   # hscaler : hpa or keda
-  hscaler: 'hpa'
+  hscaler: 'keda'
 
 image:
-  tag: 1.4.0
+  tag: 1.4.1
 
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli3'
@@ -105,7 +105,7 @@ stationdb:
 stationback:
 
   # Nb replicas
-  nbReplicas: 2
+  nbReplicas: 1
 
   # Nbr connexion datasource active db
   nbConnectionDbMaxActive: 15
@@ -152,7 +152,7 @@ stationback:
 stationfront:
 
   # Nb replicas
-  nbReplicas: 2
+  nbReplicas: 1
 
 
   # Region 

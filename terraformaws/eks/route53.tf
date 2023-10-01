@@ -34,3 +34,13 @@ resource "aws_route53_record" "argocd_url_external" {
 
 }
 
+# Prometheus Route53
+resource "aws_route53_record" "prometheus_url_external" {
+  zone_id      =  data.aws_route53_zone.public.zone_id
+  name         = "prometheus.${var.station_publicdomainname}"
+  type         = "CNAME"
+  ttl          = "10"
+  records      = [aws_alb.prometheus_alb.dns_name]
+
+}
+

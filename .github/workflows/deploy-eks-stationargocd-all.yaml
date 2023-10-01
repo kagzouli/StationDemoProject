@@ -325,7 +325,7 @@ jobs:
           chmod 700 get_helm.sh
           ./get_helm.sh
 
-      - name: Retrieve targetGroupBinding
+      - name: Retrieve ArgoCD targetGroupBinding
         id: argocd-targetgroupbinding
         run: |
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
@@ -347,6 +347,21 @@ jobs:
         id: argocd-pass
         run: |
           echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)"
+
+      - name: Retrieve Prometheus targetGroupBinding
+        id: prometheus-targetgroupbinding
+        run: |
+          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name prometheus-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+
+      - name: Change NodePort Prometheus Server
+        id: prometheus-nodeport
+        run: |
+          kubectl patch svc prometheus-server -n transverse -p '{"spec": {"type": "NodePort"}}'
+
+      - name: Prometheus-chart
+        id: prometheus-chart
+        run: helm upgrade -i prometheusinstall ./prometheus --set prometheus.ingress.targetGroupARN="${{ steps.prometheus-targetgroupbinding.outputs.targetGroupBinding }}" --set prometheus.network.vpc_cidr="${{ steps.argocd-vpc.outputs.cidr }}"
+        working-directory: kubernetesaws/helm
 
       # Not working
       #- name: Change argocd password argocd-initsecret
