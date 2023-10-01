@@ -44,7 +44,7 @@ resource "aws_alb_target_group" "prometheus_target_group" {
     protocol = "HTTPS"
     matcher = "200"
     timeout = "3"
-    path = "/"
+    path = "/-/healthy"
     unhealthy_threshold = "2"
   }
 
