@@ -18,7 +18,7 @@ spec:
     metadata:
       serverAddress: http://prometheus-server.monitoring.svc
       metricName: http_server_requests_seconds # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
-      query: sum(rate(http_server_requests_seconds_count{kubernetes_name="stationbackservice"}[1m])) # Note: query must return a vector/scalar single element response
+      query: sum(rate(http_server_requests_seconds_count{service="stationbackservice"}[1m])) # Note: query must return a vector/scalar single element response
       threshold: '1'
       # Optional fields:
       ignoreNullValues: "true" # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
