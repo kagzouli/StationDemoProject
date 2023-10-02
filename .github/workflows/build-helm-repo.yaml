@@ -7,7 +7,7 @@ on:
 
       helm_project_version:
         type: string
-        default: 1.4.3
+        default: 1.4.4
         description: station  project version
         required: true
 
