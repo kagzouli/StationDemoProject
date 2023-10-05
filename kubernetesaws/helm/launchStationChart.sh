@@ -98,9 +98,13 @@ checkIfPodsReady "ArgoRollout" "app.kubernetes.io/name=argo-rollouts" "${SHARED_
 
 
 # Launch and check that Ingress nginx are is Running or failed state
-helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx    --version 4.4.2 -n ${SHARED_NAMESPACE} --create-namespace
-checkIfPodsReady "ingress-nginx" "app.kubernetes.io/instance=ingress-nginx" "${SHARED_NAMESPACE}"
-
+NS_INGRESS_NUMBER=$( kubectl get ns |grep ingress-nginx |wc -l )
+if [[ "${NS_INGRESS_NUMBER}" -eq 0 ]]; then
+  helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx    --version 4.4.2 -n ${SHARED_NAMESPACE} --create-namespace
+  checkIfPodsReady "ingress-nginx" "app.kubernetes.io/instance=ingress-nginx" "${SHARED_NAMESPACE}"
+else
+  displayMessage "Le namespace ingress-nginx existe."
+fi
 
 # Launch and check that external secrets are is Running or failed state
 helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2 -n ${SHARED_NAMESPACE} --create-namespace
@@ -117,7 +121,8 @@ helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namesp
 checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}" --create-namespace
 
 # Install prometheus operator
-helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" -n ${MONITORING_NAMESPACE} --create-namespace
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" --set server.service.type="NodePort" --set server.service.nodePort="30001"  -n ${MONITORING_NAMESPACE} --create-namespace
+kubectl apply -f prometheus-ing.yaml
 
 # Install stationdev
 helm upgrade --install stationdev ./station \

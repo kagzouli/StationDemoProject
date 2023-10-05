@@ -25,7 +25,7 @@ app:
   apparmor: disable
 
   # hscaler : hpa or keda
-  hscaler: 'hpa'
+  hscaler: 'keda'
 
 image:
   tag: 1.4.1
@@ -117,7 +117,7 @@ stationback:
   hostname: stationback.exakaconsulting.org
   
   # External port
-  externalPort: 8080
+  externalPort: 80
 
   service:
     
