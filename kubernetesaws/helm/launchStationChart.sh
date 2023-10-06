@@ -118,11 +118,16 @@ checkIfPodsReady "metallb" "app=metallb" "metallb-system"
 #helm upgrade --install cluster-autoscaler autoscaler/cluster-autoscaler --set awsRegion=${AWS_REGION} --set "autoscalingGroups[0].name=kubworker-ec2" --set "autoscalingGroups[0].minSize=2" --set "autoscalingGroups[0].maxSize=4" --set cloudProvider=aws -n ${SHARED_NAMESPACE} --create-namespace
 # Launch keda
 helm upgrade --install keda kedacore/keda -n ${SHARED_NAMESPACE} --create-namespace  
-checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}" --create-namespace
+checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPACE}"
 
-# Install prometheus operator
-helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" --set server.service.type="NodePort" --set server.service.nodePort="30001"  -n ${MONITORING_NAMESPACE} --create-namespace
+# Install kube-state-metrics
+helm upgrade --install kube-state-metrics prometheus-community/kube-state-metrics --version 5.14.0 -n ${MONITORING_NAMESPACE} --create-namespace
+checkIfPodsReady "kube-state-metrics" "app.kubernetes.io/name=kube-state-metrics" "${MONITORING_NAMESPACE}"
+
+# Install prometheus server
+helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" --set server.service.type="NodePort" --set server.service.nodePort="30001" -f values_prometheus.yaml  -n ${MONITORING_NAMESPACE} --create-namespace
 kubectl apply -f prometheus-ing.yaml
+
 
 # Install stationdev
 helm upgrade --install stationdev ./station \
