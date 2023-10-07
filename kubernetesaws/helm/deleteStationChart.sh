@@ -4,6 +4,7 @@ MONITORING_NAMESPACE="monitoring"
 helm delete stationdev -n stationdev
 kubectl delete secret vault-secret -n stationdev
 
+helm delete kube-state-metrics -n ${MONITORING_NAMESPACE}     
 
 helm delete prometheus   -n ${MONITORING_NAMESPACE}
 
