@@ -7,7 +7,7 @@ displayError(){
   echo -e "${RED}$1${NORMAL}"
 }
 
-NB_USERS=20
+NB_USERS=100
 DURATION=60
 WAIT_TIME=1
 

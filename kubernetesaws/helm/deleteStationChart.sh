@@ -1,8 +1,14 @@
 SHARED_NAMESPACE="transverse"
 MONITORING_NAMESPACE="monitoring"
+VAULT_MONITORING="vault"
+
+
 
 helm delete stationdev -n stationdev
 kubectl delete secret vault-secret -n stationdev
+
+helm delete vault -n ${VAULT_MONITORING} 
+
 
 helm delete kube-state-metrics -n ${MONITORING_NAMESPACE}     
 
@@ -13,8 +19,6 @@ helm delete keda -n ${SHARED_NAMESPACE}
 helm delete argo-rollout  -n ${SHARED_NAMESPACE}
 
 helm delete metrics-server  -n ${SHARED_NAMESPACE}
-
-helm delete ingress-nginx -n ${SHARED_NAMESPACE}
 
 helm delete external-secrets -n ${SHARED_NAMESPACE}
 
