@@ -20,8 +20,6 @@ helm delete argo-rollout  -n ${SHARED_NAMESPACE}
 
 helm delete metrics-server  -n ${SHARED_NAMESPACE}
 
-helm delete ingress-nginx -n ${SHARED_NAMESPACE}
-
 helm delete external-secrets -n ${SHARED_NAMESPACE}
 
 
