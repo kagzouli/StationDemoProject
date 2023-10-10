@@ -30,8 +30,10 @@ export default function () {
   let counter = exec.scenario.iterationInTest;
   let index   = counter%nbrData;
   let urlTest = url + data[index];
+  
 
   const res = http.get(urlTest, params);
+  console.log("Url test : " + urlTest + " /// Code retour : " + res.status)
   check(res, {
     'is status 200': (r) => r.status === 200,
   });

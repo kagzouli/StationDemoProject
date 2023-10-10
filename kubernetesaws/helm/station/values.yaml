@@ -41,7 +41,7 @@ secrets:
   vault:
 
     # Url of the vault
-    url: 'http://stationvault.exakaconsulting.org:8200'
+    url: 'http://vault.vault.svc.cluster.local:8200'
 
     # Version of the kv vault
     version: 'v2'
