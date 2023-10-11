@@ -8,6 +8,7 @@ VAULT_MONITORING="vault"
 # Only for testing , not in production
 ROOT_TOKEN_VAULT="token123"
 ENVIRONMENT="dev"
+FALCO_NAMESPACE="falco"
 
 displayError(){
   RED='\033[0;31m'
@@ -48,6 +49,7 @@ helm repo add external-secrets https://charts.external-secrets.io
 helm repo add kedacore https://kedacore.github.io/charts
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 
 # Creation namespace
@@ -116,6 +118,8 @@ case $TYPE_INSTALL in
         ;;
 esac
 
+# Install falco - Audit cluster
+helm upgrade --install falco falcosecurity/falco --version 3.7.1 --set driver.kind=modern-bpf -n ${FALCO_NAMESPACE}  --create-namespace 
 
 
 # Launch and Check that metrics server are is Running or failed state 
