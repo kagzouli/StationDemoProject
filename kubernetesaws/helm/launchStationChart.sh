@@ -119,8 +119,8 @@ case $TYPE_INSTALL in
 esac
 
 # Install falco - Audit cluster
-helm upgrade --install falco falcosecurity/falco --version 3.7.1 --set driver.kind=modern-bpf -n ${FALCO_NAMESPACE}  --create-namespace 
-
+helm upgrade --install falco falcosecurity/falco --version 3.7.1 --set falcosidekick.enabled=true --set falcosidekick.webui.enabled=true --set driver.kind=modern-bpf -n ${FALCO_NAMESPACE}  --create-namespace 
+kubectl apply -f falco-ing.yaml
 
 # Launch and Check that metrics server are is Running or failed state 
 helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true" -n ${SHARED_NAMESPACE}
