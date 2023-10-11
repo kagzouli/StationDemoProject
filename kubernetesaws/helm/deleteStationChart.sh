@@ -1,6 +1,7 @@
 SHARED_NAMESPACE="transverse"
 MONITORING_NAMESPACE="monitoring"
 VAULT_MONITORING="vault"
+FALCO_NAMESPACE="falco"
 
 
 
@@ -8,6 +9,9 @@ helm delete stationdev -n stationdev
 kubectl delete secret vault-secret -n stationdev
 
 helm delete vault -n ${VAULT_MONITORING} 
+
+
+helm delete falco -n ${FALCO_NAMESPACE}
 
 
 helm delete kube-state-metrics -n ${MONITORING_NAMESPACE}     
