@@ -10,6 +10,10 @@ kubectl delete secret vault-secret -n stationdev
 
 helm delete vault -n ${VAULT_MONITORING} 
 
+helm delete cadvisor -n ${MONITORING_NAMESPACE}
+
+helm delete prometheus-operator-crds -n ${MONITORING_NAMESPACE}
+
 
 helm delete falco -n ${FALCO_NAMESPACE}
 

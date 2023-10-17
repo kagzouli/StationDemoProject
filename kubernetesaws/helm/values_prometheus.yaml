@@ -809,6 +809,11 @@ serverFiles:
             target_label: __metrics_path__
             replacement: /api/v1/nodes/$1/proxy/metrics
 
+      - job_name: cadvisor
+        scrape_interval: 5s
+        static_configs:
+        - targets:
+          - cadvisor:8080
 
       - job_name: 'kubernetes-nodes-cadvisor'
 
