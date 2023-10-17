@@ -50,6 +50,7 @@ helm repo add kedacore https://kedacore.github.io/charts
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add hashicorp https://helm.releases.hashicorp.com
 helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
 helm repo update
 
 # Creation namespace
@@ -150,10 +151,19 @@ checkIfPodsReady "keda" "app.kubernetes.io/name=keda-operator" "${SHARED_NAMESPA
 helm upgrade --install kube-state-metrics prometheus-community/kube-state-metrics --version 5.14.0 -n ${MONITORING_NAMESPACE} --create-namespace
 checkIfPodsReady "kube-state-metrics" "app.kubernetes.io/name=kube-state-metrics" "${MONITORING_NAMESPACE}"
 
+# Install prometheus operator CRD
+helm upgrade --install prometheus-operator-crds prometheus-community/prometheus-operator-crds --version 5.1.0 -n ${MONITORING_NAMESPACE} --create-namespace
+
+# Install cadvisor
+helm upgrade --install cadvisor ckotzbauer/cadvisor --version 2.2.4 -n ${MONITORING_NAMESPACE} --create-namespace
+checkIfPodsReady "cadvisor" "app=cadvisor" "${MONITORING_NAMESPACE}"
+kubectl apply -f cadvisor_sm.yaml
+
+
 # Install prometheus server
 helm upgrade --install prometheus  prometheus-community/prometheus --version 25.0.0 --set server.persistentVolume.enabled="false" --set server.service.type="NodePort" --set server.service.nodePort="30001" -f values_prometheus.yaml  -n ${MONITORING_NAMESPACE} --create-namespace
 kubectl apply -f prometheus-ing.yaml
-
+ 
 
 # Install stationdev
 helm upgrade --install stationdev ./station \
