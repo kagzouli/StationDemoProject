@@ -9,14 +9,14 @@ setup(
     author='Exaka Consulting',
     author_email='exa@exaka.com',
     license="Unlicensed",
-    packages=[''],
+    packages=['loadtest'],
     python_requires=">=3.11",
     install_requires=[
         "requests", "kubernetes"
     ], #external packages as dependencies
     entry_points={
         "console_scripts": [
-            "loadtest=main.__main__:main"
+            "loadtest=loadtest.__main__:main"
         ]
     },
     include_package_data=True,
