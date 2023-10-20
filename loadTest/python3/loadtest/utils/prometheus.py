@@ -14,8 +14,6 @@ def container_memory_usage(namespace_name: str, container_name: str, start_time:
             f")&start={start_time}&end={end_time}&step={step}"
     )
 
-    print(f"URL memory usage : {url_memory_usage}")
-
     # Lancement requete
     response = requests.get(url_memory_usage, verify=False)
     # Si c ok
@@ -42,14 +40,12 @@ def container_cpu_usage(namespace_name: str, container_name: str, start_time: in
             f")&start={start_time}&end={end_time}&step={step}"
     )
 
-    print(f"URL cpu usage : {url_cpu_usage}")
-
     # Lancement requete
     response = requests.get(url_cpu_usage, verify=False)
     if response.status_code == 200:
         result_json = response.json()
         values = [
-            float(data[1]) for data in result_json["data"]["result"][0]["values"] if float(data[1] > 0.01)
+            float(data[1]) for data in result_json["data"]["result"][0]["values"] if float(data[1]) > 0.001
         ]
     else:
         raise Exception(f"Erreur lors de l'appel container_usage_memory avec un status code : {response.status_code}")

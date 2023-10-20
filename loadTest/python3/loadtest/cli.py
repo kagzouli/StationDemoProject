@@ -35,9 +35,9 @@ def main(
 
     print(f"Start time : {start_time} , End time : {end_time}")
 
-    # Attente 10 secondes
-    print("Attente 10 secondes avant de scanner les resultats")
-    time.sleep(10) # Attente 10 secondes
+    # Attente 20 secondes
+    print("Attente 20 secondes avant de scanner les resultats")
+    time.sleep(20)  # Attente 10 secondes
 
     # Get usage memory
     memory_usage = prometheus.container_memory_usage(namespace_name, container_name, start_time, end_time, 1)
@@ -48,10 +48,10 @@ def main(
 
     # Get CPU usage
     cpu_usage = prometheus.container_cpu_usage(namespace_name, container_name, start_time, end_time, 1)
-    cpu_min = min(cpu_usage)
-    cpu_max = max(cpu_usage)
-    cpu_avg = sum(cpu_usage) / len(cpu_usage)
-    print(f"Utilisation CPU min : {cpu_min} // CPU max : {cpu_max} // CPU avg : {cpu_avg}")
+    cpu_min = round(min(cpu_usage) * 1000, 3)
+    cpu_max = round(max(cpu_usage) * 1000, 3)
+    cpu_avg = round((sum(cpu_usage) / len(cpu_usage)) * 1000, 3)
+    print(f"Utilisation CPU min : {cpu_min}m // CPU max : {cpu_max}m // CPU avg : {cpu_avg}m")
 
 
 def get_epochtime_ms(date_time: datetime) -> int:
