@@ -1,2 +1,2 @@
 pip install  .
-loadtest https://www.toto.com --nbr-users=15 --wait-time=12 --namespace-name=stationdev --container-name=stationback
+loadtest http://stationback.exakaconsulting.org/StationDemoSecureWeb/station/stations --nbr-users=15 --wait-time=12 --namespace-name=stationdev --container-name=stationback

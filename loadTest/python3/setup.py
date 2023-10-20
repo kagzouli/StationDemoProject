@@ -22,6 +22,6 @@ setup(
         ]
     },
     include_package_data=True,
-    package_data={"" : ["utils/*"]},
+    package_data={"" : ["utils/*", "utils/k6/*"]},
     zip_safe=False
 )

@@ -1,6 +1,7 @@
 import time
 import typer
 from loadtest.utils import prometheus
+from loadtest.utils.k6 import k6
 
 
 def url_callback(value: str):
@@ -16,15 +17,12 @@ def main(
         wait_time: float = typer.Option(default=1, help="Wait time during the test"),
         token: str = typer.Option(default="", help="The token for test"),
         namespace_name: str = typer.Option(default="", help="The Namespace name"),
-        container_name: str = typer.Option(default="", help="The Container name")
+        container_name: str = typer.Option(default="", help="The Container name"),
+        load_file : str=typer.Option(default="data.txt" , help = "The load files for the data.")
 ):
-    print(f"URL : {url}")
-    print(f"Number users : {nbr_users}")
-    print("Duration : " + str(duration))
-    print("Wait time : " + str(wait_time))
-    print("Token : " + str(token))
-    print("Namespace name : " + str(namespace_name))
-    print("Container name : " + str(container_name))
+
+    # Launch the test
+    k6.run_test(url , nbr_users , duration , wait_time  , token, load_file )
 
     start_time = int(time.time())
     end_time = int(time.time())
