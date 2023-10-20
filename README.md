@@ -6,7 +6,7 @@ It is based on a file that RATP has made online some years ago (This file is int
 This project allows me to test some common concept architecture that are used in enterprise. 
 
 
-# TrafficStation architecture
+# TrafficStation architecture 
 
 This project is divided into multiples parts, a web application with the front-end in Angular and the back-end in SpringMVC (Little use also of Spring boot).
 I use Okta for identity providing (More easy to manage). I use JWT token for the communication between the front-end and the back-end (Standard in industry).
