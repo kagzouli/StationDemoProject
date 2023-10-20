@@ -1,2 +1,3 @@
 requests
 kubernetes
+typer[all]

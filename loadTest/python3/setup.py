@@ -12,7 +12,7 @@ setup(
     packages=['loadtest'],
     python_requires=">=3.11",
     install_requires=[
-        "requests", "kubernetes"
+        "requests", "kubernetes" , "typer[all]"
     ], #external packages as dependencies
     entry_points={
         "console_scripts": [
