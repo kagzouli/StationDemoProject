@@ -703,7 +703,17 @@ serverFiles:
 
   ## Records configuration
   ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/
-  recording_rules.yml: {}
+  recording_rules.yml: 
+    groups:
+    - name: k8s.rules
+      rules:
+      - expr: |-
+          sum by (cluster, namespace, pod, container) (
+            irate(container_cpu_usage_seconds_total{job="cadvisor", image!=""}[5m])
+          ) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (
+            1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=""})
+          )
+        record: node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate
   ## DEPRECATED DEFAULT VALUE, unless explicitly naming your files, please use recording_rules.yml
   rules: {}
 
