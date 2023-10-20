@@ -35,6 +35,10 @@ def main(
 
     print(f"Start time : {start_time} , End time : {end_time}")
 
+    # Attente 10 secondes
+    time.sleep(10) # Attente 10 secondes
+    print("Attente 10 secondes avant de scanner les resultats")
+
     # Get usage memory
     memory_usage = prometheus.container_memory_usage(namespace_name, container_name, start_time, end_time, 1)
     memory_min = min(memory_usage)
