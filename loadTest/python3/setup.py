@@ -9,7 +9,7 @@ setup(
     author='Exaka Consulting',
     author_email='exa@exaka.com',
     license="Unlicensed",
-    packages=['loadtest'],
+    packages=["loadtest"],
     python_requires=">=3.11",
     install_requires=[
         "requests", "kubernetes" , "typer[all]"
