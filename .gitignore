@@ -72,3 +72,6 @@ terraformaws/networks/output/
 **/sources/**/*.zip
 
 loadTest/python3/.idea/
+loadtest.egg-info/
+__pycache__/
+build/
