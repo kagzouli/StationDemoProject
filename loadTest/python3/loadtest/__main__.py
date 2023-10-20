@@ -37,4 +37,4 @@ def main(
 
 
 if __name__ == "__main__":
-    typer.run(main2)
+    typer.run(main)
