@@ -11,7 +11,7 @@ def run_test(url: str, nbr_users: int, duration: int, wait_time: float,  token: 
             f"--vus={nbr_users}",
             f"--duration={duration}s",
             "-e",
-            f"LOAD_FILE_TEST={load_file}"
+            f"LOAD_FILE_TEST={load_file}",
             "-e",
             f"TOKEN={token}",
             "-e",
@@ -20,4 +20,5 @@ def run_test(url: str, nbr_users: int, duration: int, wait_time: float,  token: 
             f"URL={url}",
             os.path.join(os.path.dirname(__file__), "script.js"),
         ]
+
     )
