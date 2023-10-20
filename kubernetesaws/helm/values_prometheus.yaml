@@ -819,9 +819,6 @@ serverFiles:
               - role: pod
                 label: "app=cadvisor"  # and only select the cadvisor pods with this label set as source
         scrape_timeout: 5s
-        static_configs:
-          - targets:
-            - cadvisor:8080
         metric_relabel_configs:  # we relabel some labels inside the scraped metrics
           # this should look at the scraped metric and replace/add the label inside
           - source_labels: [container_label_io_kubernetes_pod_namespace]
