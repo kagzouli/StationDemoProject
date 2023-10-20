@@ -6,7 +6,7 @@ def run_test(url: str, nbr_users: int, duration: int, wait_time: float,  token: 
 
     subprocess.run(
         [
-            os.path.join(os.path.dirname(__file__), "k6"),
+            "k6",
             "run",
             f"--vus={nbr_users}",
             f"--duration={duration}s",
