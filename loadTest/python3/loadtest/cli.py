@@ -35,9 +35,9 @@ def main(
 
     print(f"Start time : {start_time} , End time : {end_time}")
 
-    # Attente 5 secondes
-    print("Attente 5 secondes avant de scanner les resultats")
-    time.sleep(5) # Attente 10 secondes
+    # Attente 10 secondes
+    print("Attente 10 secondes avant de scanner les resultats")
+    time.sleep(10) # Attente 10 secondes
 
     # Get usage memory
     memory_usage = prometheus.container_memory_usage(namespace_name, container_name, start_time, end_time, 1)
