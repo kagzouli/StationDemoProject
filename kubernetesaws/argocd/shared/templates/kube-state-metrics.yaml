@@ -1,24 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: kube-state-metrics
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
   project: shared
   source:
-    chart: prometheus
+    chart: kube-state-metrics
     helm:
-      releaseName: prometheus
-      valueFiles:
-      - values_prometheus.yaml
-
+      releaseName: kube-state-metrics
     repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 25.0.0
+    targetRevision: 5.14.0
   syncPolicy:
     automated:
       prune: true
