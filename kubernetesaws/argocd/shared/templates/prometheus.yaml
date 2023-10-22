@@ -10,15 +10,17 @@ spec:
     server: https://kubernetes.default.svc
     namespace: monitoring
   project: shared
-  source:
-    chart: prometheus
+  sources:
+  - chart: prometheus
     helm:
       releaseName: prometheus
-      valueFiles:
-      - values_prometheus.yaml
-
+      valuesObject:
+      - $values/kubernetesaws/helm/values_prometheus.yaml
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 25.0.0
+  - repoURL: 'https://github.com/kagzouli/StationDemoProject.git'
+    targetRevision: main
+    ref: values
   syncPolicy:
     automated:
       prune: true
