@@ -14,7 +14,7 @@ spec:
   - chart: prometheus
     helm:
       releaseName: prometheus
-      valuesObject:
+      valueFiles:
       - $values/kubernetesaws/helm/values_prometheus.yaml
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 25.0.0
