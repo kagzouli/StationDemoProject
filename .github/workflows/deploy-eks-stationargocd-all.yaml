@@ -353,11 +353,6 @@ jobs:
         run: |
           echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name prometheus-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
 
-      - name: Change NodePort Prometheus Server
-        id: prometheus-nodeport
-        run: |
-          kubectl patch svc prometheus-server -n transverse -p '{"spec": {"type": "NodePort"}}'
-
       - name: Prometheus-chart
         id: prometheus-chart
         run: helm upgrade -i prometheusinstall ./prometheus --set prometheus.ingress.targetGroupARN="${{ steps.prometheus-targetgroupbinding.outputs.targetGroupBinding }}" --set prometheus.network.vpc_cidr="${{ steps.argocd-vpc.outputs.cidr }}"
