@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: falco
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: falco
+  project: shared
+  source:
+    chart: falco
+    helm:
+      releaseName: falco
+      parameters: 
+        - name: falcosidekick.enabled
+          value: "true"
+        - name: falcosidekick.webui.enabled
+          value: "true" 
+        - name: driver.kind
+          value: "modern-bpf" 
+    repoURL: https://falcosecurity.github.io/charts
+    targetRevision: 3.7.1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
