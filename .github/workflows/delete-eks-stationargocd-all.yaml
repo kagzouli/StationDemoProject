@@ -66,7 +66,7 @@ jobs:
       - name: get Access key for user external-secrets
         id: get-access-key-external-users
         run: |
-          echo "::set-output name=key::$( aws iam list-access-keys --user-name external-secrets | jq -r '.AccessKeyMetadata[0].AccessKeyId')"
+          echo "key=$( aws iam list-access-keys --user-name external-secrets | jq -r '.AccessKeyMetadata[0].AccessKeyId')" >> $GITHUB_OUTPUT
 
       - name: delete Access key user external-secrets
         id: delete-access-key-external-secrets

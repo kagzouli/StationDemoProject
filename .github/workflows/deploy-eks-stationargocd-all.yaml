@@ -409,36 +409,36 @@ jobs:
       - name: Retrieve back ingress
         id: stationback-targetgroupbinding
         run: |
-          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name station-back-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+          echo "targetGroupBinding=$( aws elbv2 describe-target-groups --name station-back-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)" >> $GITHUB_OUTPUT
 
       # Recuperer stationback - ALB list
       - name: Retrieve back albiplist temp
         id: stationback-albiplisttemp
         run: |
-          echo "::set-output name=albiplist::$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-back-alb/$(aws elbv2 describe-load-balancers --names station-back-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g'  )"
+          echo "albiplist=$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-back-alb/$(aws elbv2 describe-load-balancers --names station-back-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g'  )" >> $GITHUB_OUTPUT
 
       - name: Retrieve back albiplist
         id: stationback-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {"${{ steps.stationback-albiplisttemp.outputs.albiplist }}"} )"
+          echo "albiplist=$( echo {"${{ steps.stationback-albiplisttemp.outputs.albiplist }}"} )" >> $GITHUB_OUTPUT
   
 
       # Recuperer stationfront - TargetGroupBinding
       - name: Retrieve front ingress 
         id: stationfront-targetgroupbinding
         run: |
-          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+          echo "targetGroupBinding=$( aws elbv2 describe-target-groups --name station-front-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)" >> $GITHUB_OUTPUT
 
       # Recuperer stationfront - ALB list
       - name: Retrieve front albiplist temp
         id: stationfront-albiplisttemp
         run: |
-          echo "::set-output name=albiplist::$(  aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-front-alb/$(aws elbv2 describe-load-balancers --names station-front-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g' )"
+          echo "albiplist=$( aws ec2 describe-network-interfaces --filters "Name=description,Values=ELB app/station-front-alb/$(aws elbv2 describe-load-balancers --names station-front-alb | grep -wE 'LoadBalancerArn' | xargs | cut -d / -f 4 | cut -d , -f 1)" --query 'NetworkInterfaces[*].PrivateIpAddresses[*].PrivateIpAddress' --output text | xargs | sed 's/ /,/g' )" >> $GITHUB_OUTPUT
 
       - name: Retrieve front albiplist
         id: stationfront-albiplist
         run: |
-          echo "::set-output name=albiplist::$( echo {"${{ steps.stationfront-albiplisttemp.outputs.albiplist }}"}  )"
+          echo "albiplist=$( echo {"${{ steps.stationfront-albiplisttemp.outputs.albiplist }}"}  )" >> $GITHUB_OUTPUT
 
 
 
@@ -447,12 +447,12 @@ jobs:
         id: stationredis-mode
         run: |
           if [[ "${{ github.event.inputs.deployMode }}" == "internal" ]]; then
-                echo "::set-output name=mode::internalredis"
-                echo "::set-output name=usessl::false"
+                echo "mode=internalredis" >> $GITHUB_OUTPUT
+                echo "usessl=false" >> $GITHUB_OUTPUT
           fi
           if [[ "${{ github.event.inputs.deployMode }}" == "external" ]]; then
-              echo "::set-output name=mode::externalredis"
-              echo "::set-output name=usessl::true"
+              echo "mode=externalredis" >> $GITHUB_OUTPUT
+              echo "usessl=true" >> $GITHUB_OUTPUT
           fi
 
       # Recuperer db - mode
@@ -460,35 +460,33 @@ jobs:
         id: stationdb-mode
         run: |
           if [[ "${{ github.event.inputs.deployMode }}" == "internal" ]]; then
-                echo "::set-output name=mode::internaldb"
+              echo "mode=internaldb" >> $GITHUB_OUTPUT
           fi
           if [[ "${{ github.event.inputs.deployMode }}" == "external" ]]; then
-              echo "::set-output name=mode::externaldb"
+              echo "mode=externaldb" >> $GITHUB_OUTPUT
           fi
 
       # Recuperer account
       - name: Retrieve account 
         id: retrieve-account
-        run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
-
+        run: echo "identifier=$( aws sts get-caller-identity --query 'Account' --output text )" >> $GITHUB_OUTPUT
 
       # Recuperer le registryDocker
       - name: Retrieve docker registry
         id: retrieve-docker-registry
         run: |
           if [[ "${{ github.event.inputs.repoDockerType }}" == "dockerhub" ]]; then
-                echo "::set-output name=contextPath::kagzouli3"
+                echo "contextPath=kagzouli3" >> $GITHUB_OUTPUT
           fi
           if [[ "${{ github.event.inputs.repoDockerType }}" == "awsecr" ]]; then
-              echo "::set-output name=contextPath::${{ steps.retrieve-account.outputs.identifier }}.dkr.ecr.${{ github.event.inputs.region}}.amazonaws.com/station"
+              echo "contextPath=${{ steps.retrieve-account.outputs.identifier }}.dkr.ecr.${{ github.event.inputs.region}}.amazonaws.com/station" >> $GITHUB_OUTPUT
           fi
       
       # Recupère le mot de passe de stationredis pour AWS
       - name: Retrieve stationredis password
         id: stationredis-password
         run: |
-          echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text  |jq -r .stationredispassword)"
-
+          echo "password=$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text  |jq -r .stationredispassword)" >> $GITHUB_OUTPUT
       
       
       # Installation composant applications
