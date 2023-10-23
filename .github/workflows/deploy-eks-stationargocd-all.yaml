@@ -269,18 +269,21 @@ jobs:
           --set app.vpcId="${{ steps.argocd-vpc.outputs.id }}" \
           --set app.noderolearn=
         working-directory: kubernetesaws/argocd
-   
+
+      # Install cli
+      - name: Install argocdcli
+        id: install-argocdcli
+        run: sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && sudo chmod +x /usr/local/bin/argocd
+
+      # Change namespace argocd
+      - name: Change namespace argocd
+        id: change_namespace_argocd
+        run: kubectl config set-context --current --namespace=argocd
+
       # Check that ALB load balancer controller is in state Running, Failed 
       - name: Waiting ALB load balancer to be running
         id:  albloadbalancercontroller-isrunnin
-        run: |
-          NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
-          while [[ -z "${NOTPENDING_ALB_CONTROLLER}" ]]
-          do
-            echo "Les pods ${NOTPENDING_ALB_CONTROLLER} de l'ALB load balancer controller sont encore en cours"
-            sleep 5s
-            NOTPENDING_ALB_CONTROLLER=$( kubectl get pods -n transverse -o json  | jq -r '.items[] |  select( (.metadata.name |  contains("aws-load-balancer-controller")) and (.status.phase=="Running" or .status.phase=="Failed"))' | jq -jr '.metadata | .name, ", " ')
-          done
+        run: argocd --core app wait aws-load-balancer-controller
 
   # Configuration ArgoCD
   configuration_argocd:
