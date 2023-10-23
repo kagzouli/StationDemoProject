@@ -179,8 +179,8 @@ jobs:
       - name: Retrieve VPC CIDR
         id: argocd-vpc
         run: |
-          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
-          echo "::set-output name=cidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text )"
+          echo "id=$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)" >> $GITHUB_OUTPUT
+          echo "cidr=$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text )" >> $GITHUB_OUTPUT
      
 
       - name: Installation argoCD
@@ -251,13 +251,11 @@ jobs:
       # Recuperer account
       - name: Retrieve account 
         id: retrieve-account
-        run: echo "::set-output name=identifier::$( aws sts get-caller-identity --query 'Account' --output text )"
+        run: echo "identifier=$( aws sts get-caller-identity --query 'Account' --output text )" >> $GITHUB_OUTPUT
 
       - name: Retrieve VPC
         id: argocd-vpc
-        run: |
-          echo "::set-output name=id::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)"
-    
+        run: echo "id=$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].VpcId' --output text)" >> $GITHUB_OUTPUT
 
       # Installation composant transverse
       - name: Installation shared on argocd
@@ -332,13 +330,12 @@ jobs:
       - name: Retrieve ArgoCD targetGroupBinding
         id: argocd-targetgroupbinding
         run: |
-          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
-
+          echo "targetGroupBinding=$( aws elbv2 describe-target-groups --name argocd-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)" >> $GITHUB_OUTPUT
 
       - name: Retrieve VPC CIDR
         id: argocd-vpc
         run: |
-          echo "::set-output name=cidr::$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text )"
+          echo "cidr=$( aws ec2 describe-vpcs --filter Name=tag:Name,Values=station_vpc --query 'Vpcs[].CidrBlock' --output text )" >> $GITHUB_OUTPUT
 
 
       - name: Open UI Argocd
@@ -350,12 +347,12 @@ jobs:
       - name: Retrieve argocdpass
         id: argocd-pass
         run: |
-          echo "::set-output name=password::$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)"
+          echo "password=$( aws secretsmanager get-secret-value --secret-id stationsec-secretmanager --query SecretString --output text |jq -r .argocdpassword |base64)" >> $GITHUB_OUTPUT
 
       - name: Retrieve Prometheus targetGroupBinding
         id: prometheus-targetgroupbinding
         run: |
-          echo "::set-output name=targetGroupBinding::$( aws elbv2 describe-target-groups --name prometheus-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)"
+          echo "targetGroupBinding=$( aws elbv2 describe-target-groups --name prometheus-target-group  --query 'TargetGroups[0].TargetGroupArn' --output text)" >> $GITHUB_OUTPUT
 
       - name: Prometheus-chart
         id: prometheus-chart
