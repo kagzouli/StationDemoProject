@@ -13,7 +13,7 @@ resource "aws_cloudwatch_log_group" "eks_cluster" {
 resource "aws_eks_cluster" "station_eks_cluster" {
   name     = "station-eks-cluster"
   role_arn = aws_iam_role.aws_eks_iam_role.arn
-  version  = "1.27"
+  version  = "1.28"
   
   vpc_config {
     subnet_ids = [ data.aws_subnet.station_privatesubnet1.id , data.aws_subnet.station_privatesubnet2.id ]
