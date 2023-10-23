@@ -284,6 +284,7 @@ jobs:
       - name: Waiting ALB load balancer to be running
         id:  albloadbalancercontroller-isrunnin
         run: argocd --core app wait aws-load-balancer-controller
+        
 
   # Configuration ArgoCD
   configuration_argocd:
