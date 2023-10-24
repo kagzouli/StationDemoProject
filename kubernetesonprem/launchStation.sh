@@ -3,7 +3,7 @@ ARGO_NAMESPACE="argocd"
 ROOT_TOKEN_VAULT="token123"
 VAULT_MONITORING="vault"
 STATION_NAMESPACE="stationdev"
-
+ENVIRONMENT="dev"
 
 # Repo helm chart
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -24,8 +24,6 @@ helm upgrade --install --wait argocd argo/argo-cd --set server.ingress.enabled=t
     --set configs.secret.argocdServerAdminPasswordMtime="2023-10-01T10:11:12Z" \
     --set server.ingress.hosts[0]="argocd.exakaconsulting.org" \
     -n ${ARGO_NAMESPACE} --create-namespace
-
-# Wait until argocd is installed
 
 # Install shared
 helm upgrade --install --wait shared ./argocd/shared \
