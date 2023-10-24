@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: calico
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: Replace=true
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: shared
+  source:
+    chart: tigera-operator
+    helm:
+      releaseName: tigera-operator
+    repoURL: https://docs.projectcalico.org/charts
+    targetRevision: 3.26.3
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true

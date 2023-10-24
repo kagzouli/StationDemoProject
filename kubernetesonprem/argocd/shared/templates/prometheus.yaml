@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  project: shared
+  sources:
+  - chart: prometheus
+    helm:
+      releaseName: prometheus
+      valueFiles:
+      - $values/kubernetesaws/helm/values_prometheus.yaml
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 25.0.0
+  - repoURL: 'https://github.com/kagzouli/StationDemoProject.git'
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true

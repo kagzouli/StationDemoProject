@@ -35,7 +35,7 @@ image:
 
 secrets:
   # Mode can be 'internal' if it's for local development, 'aws' if it comes from AWS, and 'vault' for secure on premise
-  mode: 'internal'
+  mode: 'vault'
 
   # For vault option (Not used in aws mode)
   vault:

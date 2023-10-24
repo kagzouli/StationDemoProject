@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-rollout
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: transverse
+  project: shared
+  source:
+    chart: argo-rollouts
+    helm:
+      releaseName: argo-rollouts
+      parameters: 
+        - name: installCRDs
+          value: "true"
+
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 2.18.0
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

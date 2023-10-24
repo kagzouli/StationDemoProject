@@ -1,0 +1,3 @@
+# Value of station application
+helm:
+  repository: https://kagzouli.github.io/helm-charts/
