@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: station
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  labels:
+    exakaconsulting/strategy: "refresh"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stationdev
+  project: applications
+  sources:
+  - chart: station
+    helm:
+      releaseName: station
+      parameters: 
+        - name: secrets.mode
+          value: "vault"
+      valueFiles:
+      - $values/kubernetesaws/helm/station/values.yaml
+    repoURL: https://kagzouli.github.io/helm-charts/
+    targetRevision: 1.4.13
+  - repoURL: 'https://github.com/kagzouli/StationDemoProject.git'
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
