@@ -2,11 +2,16 @@
 ARGO_NAMESPACE="argocd"
 ROOT_TOKEN_VAULT="token123"
 VAULT_MONITORING="vault"
+STATION_NAMESPACE="stationdev"
 
 
 # Repo helm chart
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
+
+# Install namespace stationdev
+kubectl create namespace ${STATION_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+
 
 # Install argocd - Mot de passe argocd123 (bcrypt hash)
 # You have to install ingress-nginx , we use minikube
@@ -44,7 +49,7 @@ kubectl apply -f ingress/prometheus-ing.yaml
 # Install service monitor
 kubectl apply -f cadvisor_sm.yaml
 
-RESULT_VAULT_SECRETS=$( kubectl get secret -n stationdev | grep vault-secret | wc -l)
+RESULT_VAULT_SECRETS=$( kubectl get secret -n ${STATION_NAMESPACE} | grep vault-secret | wc -l)
 echo "Result Vault Secrets : ${RESULT_VAULT_SECRETS}"
 if [[ "${RESULT_VAULT_SECRETS}" -eq 0 ]]; then
     # Login to vault
@@ -63,7 +68,7 @@ if [[ "${RESULT_VAULT_SECRETS}" -eq 0 ]]; then
     kubectl exec vault-0 -n ${VAULT_MONITORING} -- vault token create -policy=stationdevread -format json > tokenfile.json
     TOKEN_VAULT=$( cat tokenfile.json | jq -r '.auth.client_token')
         
-    kubectl create secret generic vault-secret  --from-literal=token=${TOKEN_VAULT} -n stationdev
+    kubectl create secret generic vault-secret  --from-literal=token=${TOKEN_VAULT} -n ${STATION_NAMESPACE}
     echo "vault-secret-store create with access"
     rm -f tokenfile.json
 fi
