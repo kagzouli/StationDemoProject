@@ -19,15 +19,17 @@ helm upgrade --install argocd argo/argo-cd --set server.ingress.enabled=true \
 
 # Install shared
 helm upgrade --install shared ./argocd/shared \
-    set vault.devRootToken="${ROOT_TOKEN_VAULT}"
+    --set vault.devRootToken="${ROOT_TOKEN_VAULT}"
 
 # Wait for vault - to initialise it
-argocd --core app vault
+argocd --core app wait vault
+argocd --core app wait falco
+argocd --core app wait prometheus
 
 # Initialise ingress
-kubectl apply -f vault-ing.yaml
-kubectl apply -f falco-ing.yaml
-kubectl apply -f prometheus-ing.yaml
+kubectl apply -f ingress/vault-ing.yaml
+kubectl apply -f ingress/falco-ing.yaml
+kubectl apply -f ingress/prometheus-ing.yaml
 
 # Install service monitor
 kubectl apply -f cadvisor_sm.yaml
