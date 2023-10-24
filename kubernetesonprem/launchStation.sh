@@ -1,6 +1,8 @@
 # Parameters
 ARGO_NAMESPACE="argocd"
 ROOT_TOKEN_VAULT="token123"
+VAULT_MONITORING="vault"
+
 
 # Repo helm chart
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -21,16 +23,18 @@ helm upgrade --install --wait argocd argo/argo-cd --set server.ingress.enabled=t
 # Wait until argocd is installed
 
 # Install shared
-helm upgrade --install shared ./argocd/shared \
-    --set vault.devRootToken="${ROOT_TOKEN_VAULT}"
+helm upgrade --install --wait shared ./argocd/shared \
+    --set vault.devRootToken="${ROOT_TOKEN_VAULT}" \
+        
 
 # Change namespace to argocd
 kubectl config set-context --current --namespace=argocd
 
 # Wait for vault - to initialise it
+echo "Wait vault"
 argocd --core app wait vault
+echo "Wait falco"
 argocd --core app wait falco
-argocd --core app wait prometheus
 
 # Initialise ingress
 kubectl apply -f ingress/vault-ing.yaml
