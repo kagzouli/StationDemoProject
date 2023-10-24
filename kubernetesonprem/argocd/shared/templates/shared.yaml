@@ -16,6 +16,8 @@ spec:
       namespace: "monitoring"
     - server: "https://kubernetes.default.svc"
       namespace: "falco"
+    - server: "https://kubernetes.default.svc"
+      namespace: "vault"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"

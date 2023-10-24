@@ -9,17 +9,23 @@ helm repo update
 # Install argocd - Mot de passe argocd123 (bcrypt hash)
 # You have to install ingress-nginx , we use minikube
 # so we don't need
-helm upgrade --install argocd argo/argo-cd --set server.ingress.enabled=true \
+helm upgrade --install --wait argocd argo/argo-cd --set server.ingress.enabled=true \
     --set server.ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
     --set server.ingress.annotations."nginx\.ingress\.kubernetes\.io/force-ssl-redirect"="true" \
     --set server.ingress.annotations."nginx\.ingress\.kubernetes\.io/backend-protocol"="HTTPS" \
     --set configs.secret.argocdServerAdminPassword='$2y$10$8LaHsCQS1hd74MIYj4jinuVni14FBL4PlDJ0SKAg9f/pQvolxVlRS' \
     --set configs.secret.argocdServerAdminPasswordMtime="2023-10-01T10:11:12Z" \
-    --set server.ingress.hosts[0]="argocd.exakaconsulting.org" -n ${ARGO_NAMESPACE} --create-namespace
+    --set server.ingress.hosts[0]="argocd.exakaconsulting.org" \
+    -n ${ARGO_NAMESPACE} --create-namespace
+
+# Wait until argocd is installed
 
 # Install shared
 helm upgrade --install shared ./argocd/shared \
     --set vault.devRootToken="${ROOT_TOKEN_VAULT}"
+
+# Change namespace to argocd
+kubectl config set-context --current --namespace=argocd
 
 # Wait for vault - to initialise it
 argocd --core app wait vault
@@ -61,11 +67,6 @@ fi
 
 # Install applications
 helm upgrade -i applications ./argocd/applications
-
-# Install applications
-
-# Change namespace to argocd
-kubectl config set-context --current --namespace=argocd
 
 # Synchronize applications
 argocd --core app sync --prune --retry-limit 2 -l exakaconsulting/strategy=refresh --insecure  
