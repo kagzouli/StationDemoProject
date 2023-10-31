@@ -1,5 +1,7 @@
 ARGO_NAMESPACE="argocd"
 
+kubectl config set-context --current --namespace=argocd
+
 # Delete applications 
 helm delete applications
 

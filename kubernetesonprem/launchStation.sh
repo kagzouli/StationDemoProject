@@ -25,13 +25,12 @@ helm upgrade --install --wait argocd argo/argo-cd --set server.ingress.enabled=t
     --set server.ingress.hosts[0]="argocd.exakaconsulting.org" \
     -n ${ARGO_NAMESPACE} --create-namespace
 
+# Change namespace to argocd
+kubectl config set-context --current --namespace=argocd
+
 # Install shared
 helm upgrade --install --wait shared ./argocd/shared \
     --set vault.devRootToken="${ROOT_TOKEN_VAULT}" \
-        
-
-# Change namespace to argocd
-kubectl config set-context --current --namespace=argocd
 
 # Wait for vault - to initialise it
 echo "Wait vault"
