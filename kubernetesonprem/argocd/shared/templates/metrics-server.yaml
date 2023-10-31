@@ -19,6 +19,8 @@ spec:
           value: "true"
         - name: replicas
           value: "2" 
+        - name: args[0]
+          value: "--kubelet-insecure-tls"
 
     repoURL: https://kubernetes-sigs.github.io/metrics-server/
     targetRevision: 3.8.2
