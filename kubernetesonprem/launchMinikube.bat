@@ -1,2 +1,4 @@
-minikube start — vm-driver hyperv —- cpus 3 —-memory 6144 — hyperv-virtual-switch --no-vtx-check
+minikube config set cpus 5
+minikube config set memory 9216
+minikube start --memory 9216 --cpus 5
 minikube addons enable ingress

@@ -13,19 +13,14 @@ spec:
     namespace: stationdev
   project: applications
   sources:
-  - chart: station
+  - path: kubernetesaws/helm/station
+    repoURL: 'https://github.com/kagzouli/StationDemoProject.git'
+    targetRevision: main
     helm:
       releaseName: station
-      parameters: 
-        - name: secrets.mode
-          value: "vault"
       valueFiles:
-      - $values/kubernetesaws/helm/station/values.yaml
-    repoURL: https://kagzouli.github.io/helm-charts/
-    targetRevision: 1.4.13
-  - repoURL: 'https://github.com/kagzouli/StationDemoProject.git'
-    targetRevision: main
-    ref: values
+        - "values.yaml"
   syncPolicy:
+    prune: true
     syncOptions:
     - CreateNamespace=true

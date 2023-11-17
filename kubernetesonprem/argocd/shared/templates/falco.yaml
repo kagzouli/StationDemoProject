@@ -16,9 +16,9 @@ spec:
       releaseName: falco
       parameters: 
         - name: falcosidekick.enabled
-          value: "false"
+          value: "true"
         - name: falcosidekick.webui.enabled
-          value: "false" 
+          value: "true" 
         - name: driver.kind
           value: "modern-bpf" 
     repoURL: https://falcosecurity.github.io/charts
