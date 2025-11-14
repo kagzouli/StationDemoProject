@@ -1,0 +1,21 @@
+{{- if (eq .Values.app.hscaler "hpa")   }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: stationback-hpa
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  minReplicas: {{ .Values.stationback.nbReplicas }}
+  maxReplicas: 3
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: stationback-deploy
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+{{- end }}

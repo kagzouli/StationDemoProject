@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stationredis-deploy
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  # A deployment's specification really only 
+  # has a few useful options
+  
+  # 1. How many copies of each pod do we want?
+  replicas: 1 
+
+  # 2. Which pods are managed by this deployment?
+  selector:
+    # This must match the labels we set on the pod!
+    matchLabels:
+      app:  stationredis
+  
+  # This template field is a regular pod configuration 
+  # nested inside the deployment spec
+  template:
+    metadata:
+      # Set labels on the pod.
+      # This is used in the deployment selector.
+      labels:
+        app: stationredis
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+      containers:
+        - name: stationredis
+          image: "redis:6.0.10"
+          imagePullPolicy: {{ .Values.stationredis.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_BIND_SERVICE
+          command: ["redis-server"]
+          args: ["--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
+          ports:
+          - containerPort: 6379 
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 400Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi 
+      serviceAccountName: station

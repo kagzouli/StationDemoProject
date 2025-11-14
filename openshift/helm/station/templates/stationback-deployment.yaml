@@ -1,0 +1,123 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: stationback-deploy
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  # A deployment's specification really only 
+  # has a few useful options
+  
+  strategy:
+    canary:
+      steps:
+      # On passe 50% du traffic pendant 45 secondes et apres tout le traffic. 
+      - setWeight: 50
+      - pause:
+          duration: "45s"
+
+  # 2. Which pods are managed by this deployment?
+  selector:
+    # This must match the labels we set on the pod!
+    matchLabels:
+      app:  stationback
+  
+  # This template field is a regular pod configuration 
+  # nested inside the deployment spec
+  template:
+    metadata:
+      # AppArmor
+      {{- if (eq .Values.app.apparmor "enable")   }}
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/stationback: localhost/k8s-stationback
+      {{- end }}
+      
+      # Set labels on the pod.
+      # This is used in the deployment selector.
+      labels:
+        app: stationback
+    spec:
+      securityContext:
+        runAsUser: 20050
+        runAsGroup: 20050
+      containers:
+        - name: stationback
+          image: {{ template "stationback.image.label" . }} 
+          imagePullPolicy: {{ .Values.stationback.image.pullPolicy | quote }}
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - all
+              add:
+                - NET_BIND_SERVICE
+          env: 
+          - name: DB_TRAFSTAT_URL
+            {{- if (ne .Values.stationdb.mode "externaldb")   }}
+            value: {{ template "stationback.databaseUrl" . }}
+            {{ else }}
+            value: {{ .Values.stationdb.jdbcDatabaseUrl | quote }}
+            {{- end }}
+          - name: DB_TRAFSTAT_DRIVERCLASS
+            value: "com.mysql.jdbc.Driver"
+          - name: DB_TRAFSTAT_MAXACTIVE
+            value: {{ .Values.stationback.nbConnectionDbMaxActive | quote}}
+          - name: DB_TRAFSTAT_USERNAME
+            value: {{ .Values.stationdb.mysqlUser | quote  }}
+          - name: DB_TRAFSTAT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: stationdb-secret
+                key: database-password
+          - name: REDIS_HOSTNAME
+           {{- if (ne .Values.stationredis.mode "externalredis")   }}
+            value: {{ template "stationredis.hostname" .  }}
+           {{ else }}
+            value: {{ .Values.stationredis.hostname | quote }}
+           {{- end }}
+          - name: REDIS_PORT
+            value: {{ .Values.stationredis.port | quote}}
+          - name: REDIS_PASS 
+            valueFrom:
+              secretKeyRef:
+                name: stationredis-secret
+                key: redis-password
+          - name: REDIS_USESSL
+            value: {{ .Values.stationredis.usessl | quote   }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 768Mi
+            limits:
+              cpu: 460m
+              memory: 768Mi
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /StationDemoSecureWeb/health
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 17
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /StationDemoSecureWeb/health
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 17
+          ports:
+          - containerPort: 8080
+            protocol: TCP 
+      serviceAccountName: station
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100  
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: stationback
+              topologyKey: kubernetes.io/hostname

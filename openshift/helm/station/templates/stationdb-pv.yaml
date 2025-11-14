@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: station-pv
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  storageClassName: {{ .Values.stationdb.storage.storageClass | quote}} 
+  capacity:
+    storage: {{ .Values.stationdb.storage.globalCapacity | quote}} 
+  accessModes: 
+    -  ReadWriteOnce
+  {{- if (eq .Values.stationdb.storage.storageClass "efs-sc")   }}
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: "{{ .Values.stationdb.storage.efsid }}::{{ .Values.stationdb.storage.efsaccesspointid }}"
+  {{- end }}
+  {{- if (ne .Values.stationdb.storage.storageClass "efs-sc")   }} 
+  hostPath:
+    path: {{ .Values.stationdb.databaseData | quote  }} 
+  {{- end }}

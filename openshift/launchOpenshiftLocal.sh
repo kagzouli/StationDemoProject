@@ -1,1 +1,2 @@
+crc stop
 crc start
