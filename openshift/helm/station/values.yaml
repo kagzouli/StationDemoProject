@@ -73,7 +73,7 @@ stationdb:
   storage: 
     
     # Storage type
-    #storageClass: crc-csi-hostpath-provisioner   # Complique sur Windows car les disques sont en lecture seules. 
+    #storageClass: crc-csi-hostpath-provisioner   # Complique sur Windows car les disques sont en lecture
     storageClass: none
 
        
@@ -127,11 +127,11 @@ stationfront:
 
   
   # Client id traf stat
-  clientIdTrafStat: 0oaeg3yghaL9mQalz0h7
+  clientIdTrafStat: WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A
   
   
   #Okta URL
-  oktaUrl: https://dev-884254.oktapreview.com
+  oktaUrl: https://dev-yqv4qm6lycv6w51d.okta.com
 
   # Liste des ip alb du station front
   albiplist: []
