@@ -1,12 +1,13 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
   name: station-pv
-  namespace: {{ .Release.Namespace | quote }}
 spec:
+  capacity:
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  storageClassName: {{ .Values.stationdb.storage.storageClass | quote}} 
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Values.stationdb.storage.storageClass | quote }}
+  hostPath:
+    path: /mnt/data/station-pv
