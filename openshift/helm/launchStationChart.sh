@@ -36,8 +36,7 @@ checkIfPodsReady(){
 # Repository helm
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm repo add external-secrets https://charts.external-secrets.io
-helm repo add hashicorp https://helm.releases.hashicorp.com
-helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo add cyberark https://cyberark.github.io/helm-charts  
 helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
 helm repo update
 
