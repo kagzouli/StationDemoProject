@@ -10,4 +10,5 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: {{ .Values.stationdb.storage.storageClass | quote }}
   hostPath:
-    path: /mnt/data/station-pv
+    path: C:\OpenshiftStorage
+    type: DirectoryOrCreate
