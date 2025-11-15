@@ -72,9 +72,17 @@ fi
 # Install external secrets
 # Launch and check that external secrets are is Running or failed state
 oc project ${SHARED_PROJECT_NAME}
+
+# Add policy for openshift
+# En dev uniquement 
+oc adm policy add-scc-to-user anyuid -z metrics-server  -n $SHARED_PROJECT_NAME
+
+
 helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2
 checkIfPodsReady "external-secrets" "app.kubernetes.io/name=external-secrets" "${SHARED_PROJECT_NAME}"
 
+helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true"
+checkIfPodsReady "metrics-server" "app.kubernetes.io/name=metrics-server" "${SHARED_PROJECT_NAME}"
 
 
 # Install transverse
