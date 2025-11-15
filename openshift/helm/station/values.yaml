@@ -21,7 +21,7 @@ app:
   apparmor: disable
 
   # hscaler : hpa or keda
-  hscaler: 'keda'
+  hscaler: 'hpa'
 
 image:
   tag: 1.4.1
