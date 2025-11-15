@@ -73,17 +73,8 @@ stationdb:
   storage: 
     
     # Storage type
-    storageClass: none
+    storageClass: crc-csi-hostpath-provisioner
 
-    # Data Capacity
-    dataCapacity: 150Mi 
- 
-    # Global Capacity
-    globalCapacity: 1Gi
-
-    # Use for AWS only
-    efsid: '' 
-    efsaccesspointid: ''
        
   image:
     pullPolicy: Always

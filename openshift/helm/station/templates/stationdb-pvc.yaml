@@ -9,5 +9,5 @@ spec:
     -  ReadWriteOnce
   resources:
     requests: 
-      storage: {{ .Values.stationdb.storage.dataCapacity | quote}}
+      storage: 3G
   volumeName: station-pv 
