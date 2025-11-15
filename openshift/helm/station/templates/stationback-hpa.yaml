@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 spec:
   minReplicas: {{ .Values.stationback.nbReplicas }}
-  maxReplicas: 3
+  maxReplicas: 2
   scaleTargetRef:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
