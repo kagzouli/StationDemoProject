@@ -1,5 +1,5 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   name: stationback-deploy
   namespace: {{ .Release.Namespace | quote }}
