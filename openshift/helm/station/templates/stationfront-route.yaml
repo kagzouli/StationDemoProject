@@ -11,3 +11,6 @@ spec:
     weight: 100      # 100% traffic
   port:
     targetPort: stationfrontnginx
+  tls:
+    termination: edge                 # OpenShift router handles TLS
+    insecureEdgeTerminationPolicy: Redirect  # redirect HTTP -> HTTPS
