@@ -9,5 +9,5 @@ spec:
     -  ReadWriteOnce
   resources:
     requests: 
-      storage: 3G
+      storage: 3Gi
   volumeName: station-pv 
