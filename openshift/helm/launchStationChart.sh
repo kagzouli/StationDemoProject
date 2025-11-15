@@ -71,13 +71,24 @@ fi
 
 # Install external secrets
 # Launch and check that external secrets are is Running or failed state
-helm
-helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2 -n ${SHARED_PROJECT_NAME} --create-namespace
+oc project ${SHARED_PROJECT_NAME}
+helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2
 checkIfPodsReady "external-secrets" "app.kubernetes.io/name=external-secrets" "${SHARED_PROJECT_NAME}"
 
 
 
+# Install transverse
+helm upgrade --install $SHARED_PROJECT_NAME ./transverse 
+
+
+oc project $STATION_PROJECT_NAME
+
+# Add policy for openshift
+# En dev uniquement 
+oc adm policy add-scc-to-user anyuid -z station -n $STATION_PROJECT_NAME
+oc adm policy add-scc-to-user 20050-securityconstraints system:serviceaccount:$STATION_PROJECT_NAME:station
+
+
 # Install stationdev
 helm upgrade --install $STATION_PROJECT_NAME ./station \
-   --set secrets.mode="${SECRETS_MODE}" \
-   -n $STATION_PROJECT_NAME --create-namespace
+   --set secrets.mode="${SECRETS_MODE}" 

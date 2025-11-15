@@ -39,8 +39,6 @@ spec:
             capabilities:
               drop:
                 - all
-              add:
-                - NET_BIND_SERVICE
           command: ["redis-server"]
           args: ["--requirepass", {{ .Values.stationredis.redisPassword | quote }}]
           ports:
