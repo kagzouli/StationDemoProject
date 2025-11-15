@@ -1,5 +1,5 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: stationback-deploy
   namespace: {{ .Release.Namespace | quote }}
@@ -8,12 +8,10 @@ spec:
   # has a few useful options
   
   strategy:
-    canary:
-      steps:
-      # On passe 50% du traffic pendant 45 secondes et apres tout le traffic. 
-      - setWeight: 50
-      - pause:
-          duration: "45s"
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
 
   # 2. Which pods are managed by this deployment?
   selector:
