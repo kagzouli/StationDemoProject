@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stationbackservice 
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    prometheus.io/path: /StationDemoSecureWeb/actuator/prometheus
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+spec:
+  type: {{ .Values.stationback.service.serviceType | quote }}
+  ports:
+  - port: {{ .Values.stationback.service.internalPort }}
+    name: stationback
+    {{- if or (eq .Values.stationback.service.serviceType "NodePort") (eq .Values.stationback.service.serviceType "LoadBalancer")  }}
+    nodePort: {{ .Values.stationback.service.nodePort }}
+     {{- end }}
+    targetPort: 8080 
+    protocol: TCP
+  selector:
+    app: stationback

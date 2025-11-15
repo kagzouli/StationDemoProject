@@ -1,0 +1,154 @@
+# Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+app:
+
+ 
+  environment: 'dev'
+
+  # Apparmor : enable or disable
+  apparmor: disable
+
+  # hscaler : hpa or keda
+  hscaler: 'hpa'
+
+image:
+  tag: 1.4.1
+
+  # Context path of the repo nexus url
+  repoNexusUrl: 'kagzouli3'
+
+secrets:
+ 
+  # For vault option (Not used in aws mode)
+  vault:
+
+    # Url of the vault
+    url: 'http://vault.vault.svc.cluster.local:8200'
+
+    # Version of the kv vault
+    version: 'v2'
+
+stationredis:
+  
+  # redis password - Use only for secrets.mode=internal
+  redisPassword: 'redis60'
+
+  port:  6379 
+
+  usessl: false
+
+  image:
+    pullPolicy: Always
+
+stationdb:
+
+  # Directory where to put data of the database - Use only if mode=internaldb
+  databaseData: data
+  
+  # Mysql root password -Use only for secrets.mode=internal
+  mysqlRootPassword: root123
+  
+  # Mysql user
+  mysqlUser: stationUser
+  
+  # Mysql password - Use only for secrets.mode=internal
+  mysqlPassword: stationpwd
+
+  # Use only if mode=externaldb for url external database
+  jdbcDatabaseUrl: ''
+  
+  # Storage data - Use only if mode=internaldb
+  storage: 
+    
+    # Storage type
+    #storageClass: crc-csi-hostpath-provisioner   # Complique sur Windows car les disques sont en lecture
+    storageClass: none
+
+       
+  image:
+    pullPolicy: Always
+
+
+stationback:
+
+  # Nb replicas
+  nbReplicas: 1
+
+  # Nbr connexion datasource active db
+  nbConnectionDbMaxActive: 15
+
+  # Liste des ip alb du station back
+  albiplist: []
+  
+  # Hostname
+  hostname: stationback.exakaconsulting.org
+  
+  # External port
+  externalPort: 80
+
+  service:
+    
+    # Node port
+    nodePort: 32610
+
+    # Internal port
+    internalPort: 4000
+    
+    # Type service:
+    serviceType: ClusterIP 
+
+  image:
+    pullPolicy: Always   
+
+  ingress:
+ 
+    # type Ingress or TargetGroupBinding
+    type: "Ingress"
+
+    annotations:  
+      
+
+stationfront:
+
+  # Nb replicas
+  nbReplicas: 1
+
+  
+  # Client id traf stat
+  clientIdTrafStat: WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A
+  
+  
+  #Okta URL
+  oktaUrl: https://dev-yqv4qm6lycv6w51d.okta.com
+
+  # Liste des ip alb du station front
+  albiplist: []
+  
+  # Hostname
+  hostname: station.exakaconsulting.org
+
+  service:
+    # External port
+    internalPort: 5000
+    
+    # Node port
+    nodePort: 32601
+    
+    # Type service:
+    serviceType: ClusterIP 
+ 
+  image:
+    pullPolicy: Always  
+  

@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: stationback-route
+spec:
+  host: {{ .Values.stationback.hostname }}
+  path: /StationDemoSecureWeb 
+  to:
+    kind: Service
+    name: stationbackservice
+    weight: 100      # 100% traffic
+  port:
+    targetPort: stationback

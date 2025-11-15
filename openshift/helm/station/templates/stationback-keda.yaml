@@ -1,0 +1,25 @@
+{{- if (eq .Values.app.hscaler "keda")   }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: stationback-scaledobject
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  minReplicaCount: {{ .Values.stationback.nbReplicas }}
+  maxReplicaCount: 3
+  pollingInterval: 10 # Each time the request will be made
+  cooldownPeriod: 60 # CoolDown 
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: stationback-deploy
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus.exakaconsulting.org
+      metricName: http_server_requests_seconds # Note: name to identify the metric, generated value would be `prometheus-http_requests_total`
+      query: sum(rate(http_server_requests_seconds_count{service="stationbackservice"}[2m])) # Note: query must return a vector/scalar single element response
+      threshold: '1'
+      # Optional fields:
+      ignoreNullValues: "true" # Default is `true`, which means ignoring the empty value list from Prometheus. Set to `false` the scaler will return error when Prometheus target is lost
+{{- end }}
