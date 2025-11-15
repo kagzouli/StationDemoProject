@@ -126,15 +126,7 @@ stationback:
     type: "Ingress"
 
     annotations:  
-      kubernetes.io/ingress.class: "nginx"
-      # kubernetes.io/ingress.class: alb
-      # alb.ingress.kubernetes.io/scheme: internet-facing
-      # alb.ingress.kubernetes.io/target-type: "ip"
-      # alb.ingress.kubernetes.io/tags: Name=stationback-alb, Application=STATION
-      # alb.ingress.kubernetes.io/healthcheck-path: "/StationDemoSecureWeb/health"
-      # alb.ingress.kubernetes.io/listen-ports:   '[{"HTTP": 8080}]'
-      # external-dns.alpha.kubernetes.io/hostname: stationback.exakaconsulting.org
-      # alb.ingress.kubernetes.io/load-balancer-name: station-back-alb
+      
 
 stationfront:
 
@@ -167,12 +159,4 @@ stationfront:
  
   image:
     pullPolicy: Always  
-
-  ingress:
-
-     # type Ingress or TargetGroupBinding
-    type: "Ingress"    
-
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
   
