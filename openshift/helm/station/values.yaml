@@ -73,7 +73,8 @@ stationdb:
   storage: 
     
     # Storage type
-    storageClass: crc-csi-hostpath-provisioner
+    #storageClass: crc-csi-hostpath-provisioner   # Complique sur Windows car les disques sont en lecture seules. 
+    storageClass: none
 
        
   image:

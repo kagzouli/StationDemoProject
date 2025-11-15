@@ -8,7 +8,12 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: kubevirt.io.hostpath-provisioner
+    volumeAttributes:
+      csi.storage.k8s.io/pv/name: station-pv
+      storage.kubernetes.io/csiProvisionerIdentity: 1750081315727-7640-kubevirt.io.hostpath-provisioner-crc
+      storagePool: local
+    volumeHandle: station-pv   # you choose
+
   storageClassName: {{ .Values.stationdb.storage.storageClass | quote }}
-  hostPath:
-    path: C:\OpenshiftStorage
-    type: DirectoryOrCreate

@@ -57,10 +57,10 @@ spec:
           resources:
             requests:
               cpu: 300m
-              memory: 1024Mi
+              memory: 768Mi
             limits:
               cpu: 500m
-              memory: 1024Mi
+              memory: 768Mi
           {{- if (ne .Values.stationdb.storage.storageClass "none")   }} 
           volumeMounts:
           - name: datastationdb  

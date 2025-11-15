@@ -15,8 +15,8 @@ oc delete all --all
 oc delete configmap --all
 oc delete secret --all
 oc delete route --all
-oc delete pvc --all --force
-oc delete pv --all --force
+oc delete pvc stationdb-data --force
+oc delete pv station-pv --all --force
 oc delete serviceaccount --all
 oc delete rolebinding --all
 oc delete role --all
