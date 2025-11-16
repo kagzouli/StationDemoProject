@@ -5,12 +5,15 @@ SHARED_PROJECT_NAME="transverse"
 STATION_PROJECT_NAME="stationdev"
 ENVIRONMENT="dev"
 ADMIN_CONJUR_PASSWORD="StationDemo*01"
-DATA_KEY="admin-password"
 
 VAULT_MONITORING="vault"
 # Only for testing , not in production
 ROOT_TOKEN_VAULT="token123"
 FALCO_NAMESPACE="falco"
+
+export DATA_KEY=$(docker run --rm cyberark/conjur data-key generate)
+
+echo "Data key is ${DATA_KEY}"
 
 displayError(){
   RED='\033[0;31m'
@@ -40,6 +43,7 @@ helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
 helm repo add external-secrets https://charts.external-secrets.io
 helm repo add cyberark https://cyberark.github.io/helm-charts  
 helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
+helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 
@@ -91,12 +95,37 @@ checkIfPodsReady "metrics-server" "app.kubernetes.io/name=metrics-server" "${SHA
 # Add sa conjur-sa
 oc create sa conjur-sa -n ${SHARED_PROJECT_NAME}
 oc adm policy add-scc-to-user anyuid system:serviceaccount:${SHARED_PROJECT_NAME}:conjur-sa
-helm upgrade --install conjur cyberark/conjur-oss --wait --set serviceAccount.name=conjur-sa --set serviceAccount.create=false --version 2.0.7 --skip-crds  -n ${SHARED_PROJECT_NAME} \
-      --set adminPassword.value="${ADMIN_CONJUR_PASSWORD}" --set adminPassword.dataKey="${DATA_KEY}" --set dataKey="${DATA_KEY}"
+oc adm policy add-scc-to-user anyuid -z system:serviceaccount:${SHARED_PROJECT_NAME}:default
+
+# Install database postgresql for conjur
+helm upgrade --install postgresql bitnami/postgresql --version 18.1.9 \
+  --namespace ${SHARED_PROJECT_NAME} \
+  --set global.postgresql.auth.username=conjur \
+  --set global.postgresql.auth.postgresPassword=conjurpass \
+  --set auth.username=conjur \
+  --set auth.password=conjurpass \
+  --set auth.database=conjur \
+  --set global.postgresql.auth.database=conjur \
+  --set primary.persistence.enabled=false --wait
 
 
-oc delete route conjur 
-oc create route passthrough conjur --service=conjur-conjur-oss --hostname="conjur.exakaconsulting.org" 
+helm upgrade --install conjur  cyberark/conjur-oss --set serviceAccount.name=conjur-sa --set serviceAccount.create=false --set database.external=false --version 2.0.7   -n ${SHARED_PROJECT_NAME} \
+      --set adminPassword.value="${ADMIN_CONJUR_PASSWORD}" --set adminPassword.dataKey="${DATA_KEY}" --set dataKey="${DATA_KEY}" \
+      --set database.type=postgres \
+      --set database.external=true \
+      --set database.host=postgresql.transverse.svc.cluster.local \
+      --set database.url=postgresql://conjur:conjurpass@postgresql.transverse.svc.cluster.local:5432/conjur \
+      --set database.port=5432 \
+      --set database.name=conjur \
+      --set database.user=conjur \
+      --set database.password=conjurpass \
+      --set expose.type=route \
+      --set expose.tls=false
+
+
+
+#oc delete route conjur 
+#oc create route passthrough conjur --service=conjur-conjur-oss --hostname="conjur.exakaconsulting.org" 
      
 
 
