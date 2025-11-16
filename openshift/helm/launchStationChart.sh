@@ -4,6 +4,8 @@
 SHARED_PROJECT_NAME="transverse"
 STATION_PROJECT_NAME="stationdev"
 ENVIRONMENT="dev"
+ADMIN_CONJUR_PASSWORD="StationDemo*01"
+DATA_KEY="admin-password"
 
 VAULT_MONITORING="vault"
 # Only for testing , not in production
@@ -77,15 +79,29 @@ oc project ${SHARED_PROJECT_NAME}
 oc adm policy add-scc-to-user anyuid -z metrics-server  -n $SHARED_PROJECT_NAME
 
 
-helm upgrade --install external-secrets external-secrets/external-secrets --version 0.7.2
+
+
+helm upgrade --install external-secrets external-secrets/external-secrets --wait  --version 0.7.2 -n ${SHARED_PROJECT_NAME}
 checkIfPodsReady "external-secrets" "app.kubernetes.io/name=external-secrets" "${SHARED_PROJECT_NAME}"
 
-helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true"
+helm upgrade --install metrics-server metrics-server/metrics-server --version 3.8.2 --set  args[0]="--kubelet-insecure-tls=true" -n ${SHARED_PROJECT_NAME} --wait 
 checkIfPodsReady "metrics-server" "app.kubernetes.io/name=metrics-server" "${SHARED_PROJECT_NAME}"
+
+# Install cyberark
+# Add sa conjur-sa
+oc create sa conjur-sa -n ${SHARED_PROJECT_NAME}
+oc adm policy add-scc-to-user anyuid system:serviceaccount:${SHARED_PROJECT_NAME}:conjur-sa
+helm upgrade --install conjur cyberark/conjur-oss --wait --set serviceAccount.name=conjur-sa --set serviceAccount.create=false --version 2.0.7 --skip-crds  -n ${SHARED_PROJECT_NAME} \
+      --set adminPassword.value="${ADMIN_CONJUR_PASSWORD}" --set adminPassword.dataKey="${DATA_KEY}" --set dataKey="${DATA_KEY}"
+
+
+oc delete route conjur 
+oc create route passthrough conjur --service=conjur-conjur-oss --hostname="conjur.exakaconsulting.org" 
+     
 
 
 # Install transverse
-helm upgrade --install $SHARED_PROJECT_NAME ./transverse 
+helm upgrade --install $SHARED_PROJECT_NAME --wait  ./transverse -n ${SHARED_PROJECT_NAME} 
 
 
 oc project $STATION_PROJECT_NAME
@@ -97,5 +113,5 @@ oc adm policy add-scc-to-user 20050-securityconstraints system:serviceaccount:$S
 
 
 # Install stationdev
-helm upgrade --install $STATION_PROJECT_NAME ./station \
+helm upgrade --install $STATION_PROJECT_NAME ./station -n $STATION_PROJECT_NAME --wait  \
    --set secrets.mode="${SECRETS_MODE}" 
