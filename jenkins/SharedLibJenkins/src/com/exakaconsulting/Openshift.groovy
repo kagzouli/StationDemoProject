@@ -41,6 +41,7 @@ class Openshift {
                                 "--strategy=docker", \
                                 "--binary=true", \
                                 "--to=docker.io/kagzouli/station-back:0.0.99",
+                                // Create the regi-secret for pushing on dockerhub with auths. 
                                 "--push-secret=regi-secret" 
                             )
                 }
