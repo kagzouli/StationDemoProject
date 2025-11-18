@@ -9,7 +9,10 @@ STATION_PROJECT_NAME="stationdev"
 oc project $STATION_PROJECT_NAME
 
 # Delete all standard resources
+oc delete pvc stationdb-data --force
+oc delete pv station-pv --all --force
 oc delete all --all
+
 
 # Delete other resources
 oc delete configmap --all
