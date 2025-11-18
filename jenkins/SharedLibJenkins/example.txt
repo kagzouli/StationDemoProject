@@ -1,0 +1,7 @@
+@Library('karim-sharedlib') _   // Name defined in Jenkins Global Libraries
+
+pipelineTemplate {
+    gitUrl = 'https://github.com/kagzouli/StationDemoProject.git'
+    gitBranch = 'main'
+    subRepository = 'application/spring-java'
+}
