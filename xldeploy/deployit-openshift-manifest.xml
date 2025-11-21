@@ -162,7 +162,7 @@
 
   <metadata>
     <property name="creator">Exaka Test</property>
-    <property name="version">{{APP_VERSION}}</property>
+    <property name="version">{{station.version}}</property>
   </metadata>
 
 </udm.DeploymentPackage>
