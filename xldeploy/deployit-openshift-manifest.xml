@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<udm.DeploymentPackage version="1.0" application="my-openshift-app">
+<udm.DeploymentPackage version="1.0" application="TEST/EXAKA/station-app">
 
   <deployables>
     <openshift.ResourcesFile name="openshift/stationdevdb-sa" file="/station-service-account.yaml">

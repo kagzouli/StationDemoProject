@@ -1,0 +1,16 @@
+ node {
+        stage('Checkout') {
+            git branch: "xldeploy", url: "https://github.com/kagzouli/StationDemoProject.git"
+        }
+
+        //serverCredentials : String
+        // XL Deploy server credentials used to connect to the XL Deploy server. *
+        // This must be configured under Manage Jenkins >> Configure System >> XL Deploy
+        stage('Create .dar'){
+            xldCreatePackage artifactsPath: 'xldeploy/openshift', manifestPath: 'xldeploy/deployit-openshift-manifest.xml', darPath: 'stationdev_${BUILD_NUMBER}.dar'
+        }
+        
+        stage('Publish .dar to XLD'){
+            xldPublishPackage serverCredentials: 'xldeploy-cred', darPath: 'stationdev_${BUILD_NUMBER}.dar'
+        }
+}
