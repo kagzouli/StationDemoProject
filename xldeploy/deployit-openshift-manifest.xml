@@ -160,9 +160,4 @@
   <dependencyResolution>LATEST</dependencyResolution>
   <undeployDependencies>false</undeployDependencies>
 
-  <metadata>
-    <property name="creator">Exaka Test</property>
-    <property name="version">{{station.version}}</property>
-  </metadata>
-
 </udm.DeploymentPackage>
