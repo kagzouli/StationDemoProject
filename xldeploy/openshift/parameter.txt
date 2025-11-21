@@ -1,0 +1,11 @@
+station_namespace  --> stationdev
+stationback.nbReplicas ---> 1
+stationback.hostname   --->  stationback.exakaconsulting.org
+station.version=1.4.1
+stationdb.mysqlPassword64---->   c3RhdGlvbnB3ZA==
+stationdb.mysqlRootPassword64   ---->  cm9vdDEyMw==
+stationfront.clientIdTrafStat: WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A
+stationfront.oktaUrl  ---->  https://dev-yqv4qm6lycv6w51d.okta.com
+stationfront.nbReplicas ---->  1
+stationredis.redisPassword --->  redis60
+stationredis.redisPassword64 --> cmVkaXM2MA==

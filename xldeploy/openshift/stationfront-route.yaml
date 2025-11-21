@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: stationfront-route
+spec:
+  host: {{station_namespace}}
+  path: /station-angular4-poc
+  to:
+    kind: Service
+    name: stationfrontservice
+    weight: 100      # 100% traffic
+  port:
+    targetPort: stationfrontnginx
+  tls:
+    termination: edge                 # OpenShift router handles TLS
+    insecureEdgeTerminationPolicy: Redirect  # redirect HTTP -> HTTPS
