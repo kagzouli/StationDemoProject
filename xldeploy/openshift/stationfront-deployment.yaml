@@ -44,7 +44,7 @@ spec:
                 - all
           env:
           - name: AWS_REGION
-            value: "notuse""
+            value: "notuse"
           - name: CLIENT_ID_TRAF_STAT
             value: {{stationfront.clientIdTrafStat}}
           - name: OKTA_URL
