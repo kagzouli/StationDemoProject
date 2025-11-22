@@ -1,4 +1,4 @@
-station_namespace  --> stationdev
+station_namespace  --> stationdev2
 stationback.nbReplicas ---> 1
 stationback.hostname   --->  stationback.exakaconsulting.org
 station.version=1.4.1
