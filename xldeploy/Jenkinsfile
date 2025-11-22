@@ -3,7 +3,7 @@
 // This must be configured under Manage Jenkins >> Configure System >> XL Deploy
  node {
         stage('Checkout') {
-            git branch: "xldeploy", url: "https://github.com/kagzouli/StationDemoProject.git"
+            git branch: "develop", url: "https://github.com/kagzouli/StationDemoProject.git"
         }
 
         // Create the .dar to prepare it to deploy to XLDeploy
