@@ -30,7 +30,7 @@ spec:
         runAsGroup: 999
       containers:
         - name: stationdb
-          image: kagzouli3/station-db:1.4.1
+          image: kagzouli3/station-db:{{station.version}}
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true
