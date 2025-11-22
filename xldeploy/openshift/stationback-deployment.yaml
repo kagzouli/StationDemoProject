@@ -45,7 +45,7 @@ spec:
                 - all
           env: 
           - name: DB_TRAFSTAT_URL
-            value: "jdbc:mysql://stationdbservice.stationdev.svc.cluster.local:3306/StationDemoDb?connectTimeout=0"
+            value: "jdbc:mysql://stationdbservice.stationdev2.svc.cluster.local:3306/StationDemoDb?connectTimeout=0"
           - name: DB_TRAFSTAT_DRIVERCLASS
             value: "com.mysql.jdbc.Driver"
           - name: DB_TRAFSTAT_MAXACTIVE
