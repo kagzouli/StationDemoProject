@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stationfront-deploy
+  namespace: {{station_namespace}}
+spec:
+  # A deployment's specification really only 
+  # has a few useful options
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  
+  # 2. Which pods are managed by this deployment?
+  selector:
+    # This must match the labels we set on the pod!
+    matchLabels:
+      app:  stationfront
+  
+  # This template field is a regular pod configuration 
+  # nested inside the deployment spec
+  template:
+    metadata:
+      
+      # Set labels on the pod.
+      # This is used in the deployment selector.
+      labels:
+        app: stationfront
+    spec:
+      securityContext:
+        runAsUser: 101
+        runAsGroup: 101
+      containers:
+        - name: stationfront-nginx
+          image: kagzouli3/station-front-nginx:{{station.version}}
+          imagePullPolicy: Always
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - all
+          env:
+          - name: AWS_REGION
+            value: "notuse"
+          - name: CLIENT_ID_TRAF_STAT
+            value: {{stationfront.clientIdTrafStat}}
+          - name: OKTA_URL
+            value: {{stationfront.oktaUrl}}
+          - name: CONTEXT_BACK_URL
+            value: "http://{{stationback.hostname}}:4000" 
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /station-angular4-poc/index.html
+              port: 8080
+            initialDelaySeconds: 8
+            periodSeconds: 5
+            timeoutSeconds: 7
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /station-angular4-poc/index.html
+              port: 8080
+            initialDelaySeconds: 8
+            periodSeconds: 5
+            timeoutSeconds: 7
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+      serviceAccountName: station
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100  
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: stationfront
+              topologyKey: kubernetes.io/hostname

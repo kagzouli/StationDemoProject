@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stationfront-networkpolicy
+  namespace: {{station_namespace}}
+spec:
+  podSelector:
+    matchLabels:
+      app: stationfront
+
+  policyTypes:
+  - Ingress
+  ingress:
+
+  # Autorise les IP de l'ALB front
+  - from:
+    ports:
+    - protocol: TCP
+      port: 8080
+
+  # Prometheus
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: transverse
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: prometheus
+    ports:
+      - protocol: TCP
+        port: 80
+
+     
+  # Ouverture Port DNS
+  - ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+      

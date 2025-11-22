@@ -106,7 +106,8 @@ helm upgrade --install conjur  cyberark/conjur-oss --set serviceAccount.name=con
       --set database.user=conjur \
       --set database.password=conjurpass \
       --set expose.type=route \
-      --set expose.tls=false
+      --set expose.tls=false \
+      --set account.create=true
 
 
 

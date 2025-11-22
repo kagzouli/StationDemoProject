@@ -1,0 +1,31 @@
+//serverCredentials : String
+// XL Deploy server credentials used to connect to the XL Deploy server. *
+// This must be configured under Manage Jenkins >> Configure System >> XL Deploy
+ node {
+        stage('Checkout') {
+            git branch: "develop", url: "https://github.com/kagzouli/StationDemoProject.git"
+        }
+
+        // Give service account right to namespace.
+        stage('Give right to namespace'){
+            bat """
+                oc adm policy add-scc-to-user anyuid -z station -n stationdev2
+                oc adm policy add-scc-to-user 20050-securityconstraints system:serviceaccount:stationdev2:station
+            """
+        }
+
+        // Create the .dar to prepare it to deploy to XLDeploy
+        stage('Create .dar'){
+            xldCreatePackage artifactsPath: 'xldeploy/openshift', manifestPath: 'xldeploy/deployit-openshift-manifest.xml', darPath: 'stationdev_${BUILD_NUMBER}.dar'
+        }
+
+        // Deploy the .dar into the application XLDeploy
+        stage('Publish .dar to XLD'){
+            xldPublishPackage serverCredentials: 'xldeploy-cred', darPath: 'stationdev_${BUILD_NUMBER}.dar'
+        }
+
+        // Deploy to the right environment (dev)
+        stage('Deploy to env'){
+            xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/stationdev', packageId: 'Applications/TEST/EXAKA/station-app/1.4.1'
+        }
+}
