@@ -3,10 +3,10 @@
   <application />
   <orchestrator />
   <deployables>
-    <openshift.ProjectSpec name="/test">
+    <openshift.ProjectSpec name="/stationdev">
       <containerTags />
       <tags />
-      <projectName>test</projectName>
+      <projectName>stationdev</projectName>
       <createOrder>49</createOrder>
       <modifyOrder>41</modifyOrder>
       <destroyOrder>31</destroyOrder>
