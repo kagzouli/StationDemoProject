@@ -8,8 +8,10 @@
 
         // Give service account right to namespace.
         stage('Give right to namespace'){
-            oc adm policy add-scc-to-user anyuid -z station -n stationdev2
-            oc adm policy add-scc-to-user 20050-securityconstraints system:serviceaccount:stationdev2:station
+            bat """
+                oc adm policy add-scc-to-user anyuid -z station -n stationdev2
+                oc adm policy add-scc-to-user 20050-securityconstraints system:serviceaccount:stationdev2:station
+            """
         }
 
         // Create the .dar to prepare it to deploy to XLDeploy
