@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <udm.DeploymentPackage version="1.4.1" application="TEST/EXAKA/station-app">
-
+  <application />
+  <orchestrator />
   <deployables>
+    <openshift.ProjectSpec name="/test">
+      <containerTags />
+      <tags />
+      <projectName>test</projectName>
+      <createOrder>49</createOrder>
+      <modifyOrder>41</modifyOrder>
+      <destroyOrder>31</destroyOrder>
+    </openshift.ProjectSpec>
     <openshift.ResourcesFile name="openshift/stationdevdb-sa" file="/station-service-account.yaml">
       <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
       <createOrder>50</createOrder>
-      <modifyOrder>50</modifyOrder>
-      <destroyOrder>50</destroyOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevdb-secret" file="/stationdb-secret-internal.yaml">
       <tags/>
