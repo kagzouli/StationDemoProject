@@ -3,106 +3,157 @@
 
   <deployables>
     <openshift.ResourcesFile name="openshift/stationdevdb-sa" file="/station-service-account.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>51</order>
+      <createOrder>50</createOrder>
+      <modifyOrder>50</modifyOrder>
+      <destroyOrder>50</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevdb-secret" file="/stationdb-secret-internal.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>51</order>
+      <createOrder>51</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevdb-deployment" file="/stationdb-deployment.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>52</order>
+      <createOrder>52</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevdb-service" file="/stationdb-service.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>53</order>
+      <createOrder>53</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevredis-secret" file="/stationredis-secret-internal.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>60</order>
+      <createOrder>60</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevredis-deployment" file="/stationredis-deployment.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>61</order>
+      <createOrder>61</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevredis-service" file="/stationredis-service.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>62</order>
+      <createOrder>62</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevback-networkpolicy" file="/stationback-networkpolicy.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>70</order>
+      <createOrder>70</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevback-deployment" file="/stationback-deployment.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>71</order>
+      <createOrder>71</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevback-hpa" file="/stationback-hpa.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>72</order>
+      <createOrder>72</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevback-service" file="/stationback-service.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>73</order>
+      <createOrder>73</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevback-route" file="/stationback-route.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>74</order>
+      <createOrder>74</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevfront-networkpolicy" file="/stationfront-networkpolicy.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>80</order>
+      <createOrder>80</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevfront-deployment" file="/stationfront-deployment.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>81</order>
+      <createOrder>81</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevfront-hpa" file="/stationfront-hpa.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>82</order>
+      <createOrder>82</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevfront-service" file="/stationfront-service.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>83</order>
+      <createOrder>83</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
     <openshift.ResourcesFile name="openshift/stationdevfront-route" file="/stationfront-route.yaml">
+      <tags/>
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <delimiters>{{ }}</delimiters>
-      <order>84</order>
+      <createOrder>84</createOrder>
+      <modifyOrder>40</modifyOrder>
+      <destroyOrder>30</destroyOrder>
     </openshift.ResourcesFile>
 
   </deployables>
