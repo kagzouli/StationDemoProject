@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TrafficStationBean } from '../../bean/trafficstationbean';
 
 import { TrafficstationService } from '../../service/trafficstation.service';
-import { Params } from '@angular/router/src/shared';
+import { Params } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
