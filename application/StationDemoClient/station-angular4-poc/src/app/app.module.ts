@@ -21,7 +21,7 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
-
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthModule } from '@auth0/auth0-angular';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -60,6 +60,7 @@ export function initializeApp(configService: ConfigurationLoaderService) {
     MatSortModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    OAuthModule.forRoot(),
     AuthModule.forRoot({
       domain: '',      // will be replaced dynamically
       clientId: '',    // will be replaced dynamically
