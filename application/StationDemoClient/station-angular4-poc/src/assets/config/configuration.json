@@ -1,5 +1,5 @@
 {
        "clientIdTrafStat": "WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A",
-       "oktaUrl": "https://dev-yqv4qm6lycv6w51d.okta.com",
+       "oktaUrl": "dev-yqv4qm6lycv6w51d.okta.com",
        "contextPathTrafStation": "http://localhost:8080/StationDemoSecureWeb"
 }

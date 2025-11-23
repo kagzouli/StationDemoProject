@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
+import { AuthService } from '@auth0/auth0-angular';
 import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,28 +17,11 @@ export class AppComponent {
 
   jwtHelper = new JwtHelperService();
 
-  constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
-    this.configurationLoaderService.loadConfigurations().subscribe(configuration =>
-    {
+  constructor(private authService: AuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
       
-      this.oauthService.configure({
-        clientId: configuration.clientIdTrafStat,
-        scope: 'openid profile email',
-        issuer: `${configuration.oktaUrl}/oauth2/default`,
-        redirectUri: window.location.origin + window.location.pathname, 
-        oidc: true,
-        responseType: 'code',   // Authorization Code Flow with PKCE
-        showDebugInformation: true, // optional, for debugging
-        strictDiscoveryDocumentValidation: false, // optional, depends on Okta setup
-        disablePKCE: false
-      });
-
- 
-      // Load Discovery Document and then try to login the user
-      this.oauthService.loadDiscoveryDocument().then((doc) => {
-        this.oauthService.tryLogin().then(_ => {
-
-          const decodedToken = this.jwtHelper.decodeToken(this.oauthService.getAccessToken());  
+    this.authService.getAccessTokenSilently().subscribe({
+      next: (token) => {
+          const decodedToken = this.jwtHelper.decodeToken(token);  
         
           if (decodedToken != null){
             let groups : string[]  =  decodedToken['groups'];
@@ -55,14 +38,17 @@ export class AppComponent {
           }
         }
         this.router.navigate([this.router.url]);
-      })
+      },
+      error: (err) => console.error('Error getting access token', err)
     });
 
-    });
- }
 
- ngOnInit() {
-}
+    }
+
+
+
+   ngOnInit() {
+  }
 
 
    /**
@@ -70,7 +56,7 @@ export class AppComponent {
     *
     */
    login() {
-      this.oauthService.initImplicitFlow();
+      this.authService.loginWithRedirect();
    }
 
 
@@ -79,11 +65,12 @@ export class AppComponent {
    * 
    */
   get givenName() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    return claims['name'];
+    //const claims = this.authService.user$.name;
+    //if (!claims) {
+     // return null;
+   // }
+   // return claims['name'];
+   return "TEMPORARY"
   }
 
   }

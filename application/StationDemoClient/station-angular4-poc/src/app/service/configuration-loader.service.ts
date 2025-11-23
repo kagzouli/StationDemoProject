@@ -8,17 +8,21 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class ConfigurationLoaderService {
 
+  private configuration: Configuration;
+
  
   private readonly CONFIG_URL = 'assets/config/configuration.json'; 
 
   constructor(private http: HttpClient) {
   }
 
-  public loadConfigurations():  Observable<Configuration>{
+  public loadConfigurations(){
     let observableConfiguration :Observable<Configuration>;
-    return this.http.get<Configuration>(this.CONFIG_URL).pipe(
-        shareReplay(1)
-      );
+    return this.http.get<Configuration>(this.CONFIG_URL).toPromise()
+      .then(config => {
+        this.configuration = config;
+        this.setConfiguration(this.configuration);
+      });
     }
 
   public setConfiguration(configuration : Configuration){
@@ -31,10 +35,13 @@ export class ConfigurationLoaderService {
 
   public getURLTrafficService(){
      let urlTrafficStation = null;
-     const configuration = this.getConfiguration();
-     if (configuration != null){
-        urlTrafficStation = configuration.contextPathTrafStation + '/station';
+     if (this.configuration != null){
+        urlTrafficStation = this.configuration.contextPathTrafStation + '/station';
      }
      return urlTrafficStation;
+  }
+
+   public get(key: string) :string {
+    return this.configuration[key];
   }
 }
