@@ -42,7 +42,7 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
   const cfg =  {
     domain: configService.get('oktaUrl'),
     clientId: configService.get('clientIdTrafStat'),
-    redirectUri: window.location.origin + "/station-angular4-poc"
+    redirectUri: window.location.origin + "/station-angular4-poc/"
   };
 
   return {
