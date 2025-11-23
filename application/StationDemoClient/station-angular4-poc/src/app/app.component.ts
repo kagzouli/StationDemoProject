@@ -4,6 +4,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { ConfigurationLoaderService } from './service/configuration-loader.service';
 
@@ -14,6 +15,9 @@ import { ConfigurationLoaderService } from './service/configuration-loader.servi
 })
 export class AppComponent {
   title = 'app';
+
+  isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;
+  user$ = this.authService.user$;
 
   jwtHelper = new JwtHelperService();
 
@@ -47,8 +51,10 @@ export class AppComponent {
 
 
 
-   ngOnInit() {
+  //NgOnInit
+  async ngOnInit() {
   }
+  
 
 
    /**
@@ -59,27 +65,6 @@ export class AppComponent {
       this.authService.loginWithRedirect();
    }
 
-   loginPopup() {
-    this.authService.loginWithPopup().subscribe({
-      next: (result) => console.log('Logged in', result),
-      error: (err) => console.error(err)
-    });
-  }
 
-
-
-  /**
-   * Get the given name
-   * 
-   */
-  get givenName() {
-    //const claims = this.authService.user$.name;
-    //if (!claims) {
-     // return null;
-   // }
-   // return claims['name'];
-   return ""
-  }
-
-  }
+}
   
