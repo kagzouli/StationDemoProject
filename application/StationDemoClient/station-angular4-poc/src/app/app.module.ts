@@ -39,8 +39,6 @@ export function initializeApp(configService: ConfigurationLoaderService) {
 }
 
 export function authConfigFactory(configService: ConfigurationLoaderService) {
-  console.log("OktaURL : " + configService.get('oktaUrl'))
-  console.log("ClientId : " + configService.get('clientIdTrafStat'))
   const cfg =  {
     domain: configService.get('oktaUrl'),
     clientId: configService.get('clientIdTrafStat'),
