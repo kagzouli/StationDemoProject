@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,15 +20,20 @@ export class AppComponent {
   constructor(private oauthService: OAuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
     this.configurationLoaderService.loadConfigurations().subscribe(configuration =>
     {
-      this.configurationLoaderService.setConfiguration(configuration);
+      
+      this.oauthService.configure({
+        clientId: configuration.clientIdTrafStat,
+        scope: 'openid profile email',
+        issuer: `${configuration.oktaUrl}/oauth2/default`,
+        redirectUri: window.location.origin + window.location.pathname, 
+        oidc: true,
+        responseType: 'code',   // Authorization Code Flow with PKCE
+        showDebugInformation: true, // optional, for debugging
+        strictDiscoveryDocumentValidation: false, // optional, depends on Okta setup
+        disablePKCE: false
+      });
 
-      this.oauthService.clientId = configuration.clientIdTrafStat;
-      this.oauthService.scope = 'openid profile email';
-      this.oauthService.issuer = configuration.oktaUrl + '/oauth2/default';
-      this.oauthService.redirectUri = window.location.origin +  window.location.pathname;
-      this.oauthService.oidc= true;
-      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-
+ 
       // Load Discovery Document and then try to login the user
       this.oauthService.loadDiscoveryDocument().then((doc) => {
         this.oauthService.tryLogin().then(_ => {
