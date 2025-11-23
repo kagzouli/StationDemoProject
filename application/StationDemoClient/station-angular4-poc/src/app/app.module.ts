@@ -22,7 +22,7 @@ import { SelectStationComponent } from './component/select-station/select-statio
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthModule , AuthClientConfig  } from '@auth0/auth0-angular';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HeaderStationComponent } from './component/header-station/header-station.component';
@@ -38,6 +38,20 @@ export function initializeApp(configService: ConfigurationLoaderService) {
   return () => configService.loadConfigurations();
 }
 
+export function authConfigFactory(configService: ConfigurationLoaderService) {
+  console.log("OktaURL : " + configService.get('oktaUrl'))
+  console.log("ClientId : " + configService.get('clientIdTrafStat'))
+  const cfg =  {
+    domain: configService.get('oktaUrl'),
+    clientId: configService.get('clientIdTrafStat'),
+    redirectUri: window.location.origin
+  };
+
+  return {
+    get: () => cfg // provide the old `.get()` API
+  };
+
+}
 
 @NgModule({
   declarations: [
@@ -61,14 +75,7 @@ export function initializeApp(configService: ConfigurationLoaderService) {
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     OAuthModule.forRoot(),
-    AuthModule.forRoot({
-      domain: '',      // will be replaced dynamically
-      clientId: '',    // will be replaced dynamically
-      authorizationParams: {
-        redirect_uri: window.location.origin,
-        audience: ''   // dynamically replaced
-      }
-    }),
+    AuthModule.forRoot(), // leave empty here
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -85,18 +92,12 @@ export function initializeApp(configService: ConfigurationLoaderService) {
       deps: [ConfigurationLoaderService],
       multi: true
     },
+    {
+      provide: AuthClientConfig,
+      useFactory: authConfigFactory,
+      deps: [ConfigurationLoaderService]
+    }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor(configService: ConfigurationLoaderService) {
-    // Dynamically patch the AuthModule configuration
-    const authModuleConfig = (AuthModule as any)._forRootConfig;
-    if (authModuleConfig) {
-      authModuleConfig.domain = configService.get('oktaUrl')
-      authModuleConfig.clientId = configService.get('clientIdTrafStat');
-      authModuleConfig.authorizationParams.audience = '';
-    }
-  }
-
- }
+export class AppModule {}
