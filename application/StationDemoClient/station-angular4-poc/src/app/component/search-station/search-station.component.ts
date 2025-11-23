@@ -13,7 +13,8 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
 import { tap } from 'rxjs/operators/tap';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { OrderBean } from '../../bean/orderbean';
 
 import {merge} from "rxjs/observable/merge";
