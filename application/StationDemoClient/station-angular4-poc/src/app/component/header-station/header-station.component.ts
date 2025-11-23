@@ -14,9 +14,8 @@ import { AuthService , User  } from '@auth0/auth0-angular';
 export class HeaderStationComponent implements OnInit {
 
   roleStore: string = '';  
-  username: string | '';
 
-  paramsHelloMessage = {name: this.givenName};
+  paramsHelloMessage = {name: ""};
   
   paramsRoleMessage = {roleStore: this.roleStore};
   
@@ -32,7 +31,7 @@ export class HeaderStationComponent implements OnInit {
     // Subscribe to the user observable
     this.authService.user$.subscribe((user: User | null | undefined) => {
       if (user) {
-        this.username = user.name; // <-- This is the user's name
+        this.paramsHelloMessage = {name: user.nickname};
       }
     });
   }
@@ -41,16 +40,12 @@ export class HeaderStationComponent implements OnInit {
     this.translateService.use(lang);
   }
 
-  get givenName() {
-    return this.username;
-  }
-
  /**
    * Logout to the application
    */
   logout() {
       this.authService.logout();
-    }
+  }
 
   
   /**

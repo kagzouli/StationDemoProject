@@ -21,10 +21,12 @@ export class AppComponent {
 
   jwtHelper = new JwtHelperService();
 
+
   constructor(private authService: AuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
-      
+    this.translateService.use("fr");
     this.authService.getAccessTokenSilently().subscribe({
       next: (token) => {
+          
           const decodedToken = this.jwtHelper.decodeToken(token);  
         
           if (decodedToken != null){
@@ -39,6 +41,8 @@ export class AppComponent {
             // On doit utiliser une classe Locale mais pour le POC, je fais simple.
             let substr = locale.substring(0,2);
             this.translateService.use(substr);
+          }else{
+            this.translateService.use("fr");
           }
         }
         this.router.navigate([this.router.url]);
@@ -49,11 +53,32 @@ export class AppComponent {
 
     }
 
+    async ngOnInit(): Promise<void> {
+      const isAuthenticated = await this.authService.isAuthenticated$.toPromise();
 
-
-  //NgOnInit
-  async ngOnInit() {
+      if (isAuthenticated) {
+        try {
+          const token = await this.authService.getAccessTokenSilently().toPromise();
+          if (token){
+            const decodedToken = this.jwtHelper.decodeToken(token); 
+            const locale =  decodedToken['locale'];
+            if (locale != null && locale.length >= 2){
+              // On doit utiliser une classe Locale mais pour le POC, je fais simple.
+              let substr = locale.substring(0,2);
+              this.translateService.use(substr);
+            }else{
+              this.translateService.use("fr");
+            }
+          } 
+        } catch (err) {
+          console.error('Error getting token:', err);
+        }
+      }
   }
+  
+
+
+
   
 
 
