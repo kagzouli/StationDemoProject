@@ -19,12 +19,31 @@
             "styles": ["src/styles.css"],
             "scripts": [],
             "baseHref": "/station-angular4-poc"
-          }
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "sourceMap": false
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "station-angular4-poc:build"
+            "browserTarget": "station-angular4-poc:build:development"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "station-angular4-poc:build:production"
+            },
+            "development": {
+              "browserTarget": "station-angular4-poc:build:development"
+            }
           }
         }
       }

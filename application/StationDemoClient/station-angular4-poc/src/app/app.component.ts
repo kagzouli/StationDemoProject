@@ -70,7 +70,7 @@ export class AppComponent {
      // return null;
    // }
    // return claims['name'];
-   return "TEMPORARY"
+   return ""
   }
 
   }

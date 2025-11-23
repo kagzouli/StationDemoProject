@@ -7,15 +7,15 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --port 80 --base-href /station-angular4-poc/ --disable-host-check",
+    "start": "ng serve --host 0.0.0.0 --port 80 --configuration=development --base-href /station-angular4-poc/ --disable-host-check",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "staging": "ng build --staging --env=staging --base-href=/station-angular4-poc/ --output-path=distTomcat",
-    "staging-zip": "ng build --staging --env=staging --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
-    "prod": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=distTomcat",
-    "prod-zip": "ng build --prod --env=prod --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/"
+    "staging": "ng build --staging --env=staging --configuration=production --base-href=/station-angular4-poc/ --output-path=distTomcat",
+    "staging-zip": "ng build --staging --env=staging --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
+    "prod": "ng build --prod --env=prod --configuration=production --base-href=/station-angular4-poc/ --output-path=distTomcat",
+    "prod-zip": "ng build --prod --env=prod --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/"
   },
   "dependencies": {
     "@angular/animations": "12.2.17",
