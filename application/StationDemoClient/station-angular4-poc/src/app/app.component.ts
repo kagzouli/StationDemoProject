@@ -59,6 +59,14 @@ export class AppComponent {
       this.authService.loginWithRedirect();
    }
 
+   loginPopup() {
+    this.authService.loginWithPopup().subscribe({
+      next: (result) => console.log('Logged in', result),
+      error: (err) => console.error(err)
+    });
+  }
+
+
 
   /**
    * Get the given name
