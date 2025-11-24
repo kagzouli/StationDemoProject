@@ -114,35 +114,32 @@ export class SearchStationComponent implements OnInit {
       this.launchAction = true;
            
            
-           // Launch the search
-           if (this.rForm.valid) {
-             // Create the criteria for the search
-            this.paginator.pageIndex = 0;
-            let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
-              form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
+      // Create the criteria for the search
+      this.paginator.pageIndex = 0;
+      let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
+        form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
 
-             // Ajout critere recherche
-             criteriaSearchStation.orders.length = 0;
-             criteriaSearchStation.orders.push(new OrderBean(this.sort.active , this.sort.direction));
+      // Ajout critere recherche
+      criteriaSearchStation.orders.length = 0;
+      criteriaSearchStation.orders.push(new OrderBean(this.sort.active , this.sort.direction));
 
-             // Launch the search
-             this.launchAction = true;
-             this.dataSource.findStations(criteriaSearchStation);
-             this.criteriaSearch = criteriaSearchStation;
+      // Launch the search
+      this.launchAction = true;
+      this.dataSource.findStations(criteriaSearchStation);
+      this.criteriaSearch = criteriaSearchStation;
 
-             // Count the number of stations of the pagination
-             this.countStationsByCrit(criteriaSearchStation);
+      // Count the number of stations of the pagination
+      this.countStationsByCrit(criteriaSearchStation);
     
 
-             this.launchAction = false;
-        }else {
-           window.alert('There is a mistake in your input.');
-           // Invalid data on form - we reset.
-           this.rForm.reset();
-           this.launchAction = false;
-         }
-       } 
-   }
+      this.launchAction = false;
+    }else {
+      window.alert('There is a mistake in your input.');
+      // Invalid data on form - we reset.
+      this.rForm.reset();
+      this.launchAction = false;
+    }
+  }
 
    /**
     * Load to load the stations for pagination

@@ -21,7 +21,6 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthModule , AuthClientConfig  } from '@auth0/auth0-angular';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -42,7 +41,9 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
   const cfg =  {
     domain: configService.get('oktaUrl'),
     clientId: configService.get('clientIdTrafStat'),
-    redirectUri: window.location.origin + "/station-angular4-poc/"
+    redirectUri: window.location.origin + "/station-angular4-poc/",
+    useRefreshTokens: true,   // <-- enable refresh tokens
+  cacheLocation: 'localstorage' // required if using refresh tokens
   };
 
   return {
@@ -72,7 +73,6 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
     MatSortModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    OAuthModule.forRoot(),
     AuthModule.forRoot(), // leave empty here
     TranslateModule.forRoot({
       loader: {
