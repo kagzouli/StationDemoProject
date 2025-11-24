@@ -19,8 +19,6 @@ import { OrderBean } from '../../bean/orderbean';
 
 import {merge} from "rxjs/observable/merge";
 
-import { OAuthService } from 'angular-oauth2-oidc';
-import { UserBean } from '../../bean/user';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -59,7 +57,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;    
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService,  private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService,  private router: Router,private translateService: TranslateService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
