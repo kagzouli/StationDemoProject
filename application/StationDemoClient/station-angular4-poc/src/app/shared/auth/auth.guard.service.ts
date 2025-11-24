@@ -1,13 +1,14 @@
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private oauthService: OAuthService, private router: Router) {}
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.oauthService.hasValidIdToken()) {
+  constructor(private authService: AuthService, private router: Router) {}
+  async  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const claims = await this.authService.getIdTokenClaims().toPromise();
+    if (claims){
 
       // Get the roles authorized for this route
       const componentRoles = route.data["roles"] as Array<string>;

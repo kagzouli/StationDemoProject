@@ -159,17 +159,14 @@ export class SearchStationComponent implements OnInit {
      this.dataSource.findStations(this.criteriaSearch);
    }
 
-   /**
-    * Count the number of station total
-    * @param criteria 
-    */
-   countStationsByCrit(criteria : CriteriaSearchStation){
-    this.trafficstationService.countStations(criteria).subscribe(
-      (countStation : number) => {
-         this.numberElementsFound = countStation;
-      }
-    );
-   }
+   // --- Count stations ---
+  async countStationsByCrit(criteria: CriteriaSearchStation) {
+    try {
+      this.numberElementsFound = await this.trafficstationService.countStations(criteria);
+    } catch (error) {
+      console.error('Error counting stations:', error);
+    }
+  }
   
 
    onStationClicked(trafficStation){

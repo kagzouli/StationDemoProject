@@ -25,26 +25,26 @@ export class SelectStationComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-      // Get the parameter for stationId
-      let stationId = 0;
-      this.parentRoute.params.subscribe(params => {   
-         stationId = params['stationId'];
-      });
+    // Get the parameter for stationId
+    let stationId = 0;
+    this.parentRoute.params.subscribe(params => {   
+      stationId = params['stationId'];
+    });
 
-      // Call the select station id.
-      this.trafficstationService.selectStationById(stationId).subscribe(
-        (trafficParam: TrafficStationBean) => {
-          this.trafficStationBean = trafficParam;
-          this.isDataAvailable = true;
-       },
-       (error : HttpErrorResponse) => {
-        if (error.status === 404){
-          this.router.navigate(['/error/404',{}]);                         
-        }
+    try {
+      const trafficParam: TrafficStationBean = await this.trafficstationService.selectStationById(stationId);
+      this.trafficStationBean = trafficParam;
+      this.isDataAvailable = true;
+
+    }catch (error: any) {
+      if (error.status === 404) {
+        this.router.navigate(['/error/404', {}]);
+      } else {
+        console.error('Error fetching station:', error);
       }
-      );
+    }
    
   }
 
@@ -64,21 +64,19 @@ export class SelectStationComponent implements OnInit {
    * 
    * @param event 
    */
-  callDeleteStation(event){
+  async callDeleteStation(event){
     let paramsDelete = { stationName: this.trafficStationBean.station };
    //let paramsDelete = "{}";
    
     if (confirm(this.trafficstationService.translateMessage("STATION_DELETE_SUCCESS_CONFIRM", paramsDelete))) {
  
-           // Method to create a station
-        this.trafficstationService.deleteStation(this.trafficStationBean.id).subscribe(
-          (result: any) => {
-               window.alert(this.trafficstationService.translateMessage('STATION_DELETE_SUCCESS' , {}));
-               this.router.navigate(['/stationdemo/searchstations',{}]);               
-          },
-          (error : HttpErrorResponse) => {
-          }
-        );
+      await this.trafficstationService.deleteStation(this.trafficStationBean.id);
+
+      // Success message
+      window.alert(this.trafficstationService.translateMessage('STATION_DELETE_SUCCESS', {}));
+
+      // Navigate after deletion
+      this.router.navigate(['/stationdemo/searchstations', {}]);
     
     }
 

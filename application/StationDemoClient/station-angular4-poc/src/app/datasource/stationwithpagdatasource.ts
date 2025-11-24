@@ -32,17 +32,19 @@ export class StationWithPagDataSource extends DataSource<TrafficStationBean> {
             this.loadStationsBehavior.complete();
         }
 
-        findStations(criteriaSearchStation : CriteriaSearchStation){
+        async findStations(criteriaSearchStation : CriteriaSearchStation){
 
             this.loadStationsBehavior.next(true);
 
-            
-
-            this.trafficStationService.findTrafficStations(criteriaSearchStation).pipe(
-                catchError(() => of([])),
-                finalize(() => this.loadStationsBehavior.next(false))
-            )
-            .subscribe(stations => this.stationTrafficBehavior.next(stations));
+            try {
+                const stations = await this.trafficStationService.findTrafficStations(criteriaSearchStation);
+                this.stationTrafficBehavior.next(stations);
+            } catch (error) {
+                console.error('Error loading stations:', error);
+                this.stationTrafficBehavior.next([]); // fallback to empty array
+            } finally {
+                this.loadStationsBehavior.next(false); // stop loading
+            }         
         }
-      }
+    }
       
