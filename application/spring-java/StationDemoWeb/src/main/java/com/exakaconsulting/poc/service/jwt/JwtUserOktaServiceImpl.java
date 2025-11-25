@@ -26,8 +26,8 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtUserOktaServiceImpl.class);
 
 
-	@Value("${okta.issuerUrl}")
-	private String issuerUrl;
+	@Value("${okta.issuerDomain}")
+	private String issuerDomain;
 	
 	@Override
 	public JwtUserDto parseToken(String token) {
@@ -36,7 +36,7 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 		try {
 			
 			// Initialise the JWT Verifier
-			final AccessTokenVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(this.issuerUrl);
+			final AccessTokenVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(this.issuerDomain);
 			Assert.notNull(jwtVerifier, "The JWT verifier must be initialized.");
 			
 			final Jwt jwt = jwtVerifier.decode(token);

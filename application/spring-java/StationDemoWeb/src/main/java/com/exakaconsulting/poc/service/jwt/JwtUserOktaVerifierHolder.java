@@ -32,26 +32,27 @@ public class JwtUserOktaVerifierHolder {
 	/**
 	 * Method to get the JWT Verifier.<br/>
 	 * 
-	 * @param issuerUrl
+	 * @param issuerDomain
 	 * @param oktaClientId
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	protected synchronized AccessTokenVerifier getInstanceJwtVerifier(final String issuerUrl){
+	protected synchronized AccessTokenVerifier getInstanceJwtVerifier(final String issuerDomain){
 		
 		// Generate the key associated to this 2 parameters
-		final String keyCache = issuerUrl;
+		final String keyCache = issuerDomain;
 		
 		
 		return mapJwtVerifiers.computeIfAbsent(keyCache, jwtVerifier->  {
 			
 					return JwtVerifiers.accessTokenVerifierBuilder()
-						    .setIssuer(issuerUrl)
+						    .setIssuer(issuerDomain + "/")
+						    
 			                 // defaults to 'api://default'
 						    .setConnectionTimeout(Duration.ofSeconds(5))    // defaults to 5s
 						    .setRetryMaxAttempts(2)                     // defaults to 2
 						    .setRetryMaxElapsed(Duration.ofSeconds(10)) // defaults to 10s
-						    
+						    .setAudience(issuerDomain + "/api/v2/")
 						    .build();
 					/*return new JwtHelper()
 						    .setIssuerUrl(issuerUrl)

@@ -46,9 +46,12 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
     useRefreshTokens: true,   // <-- enable refresh tokens
     cacheLocation: 'localstorage', // required if using refresh tokens
     useRefreshTokensFallback: false, // optional, but recommended
+    audience: `https://${oktaUrl}/api/v2/`,
+    scope: "openid profile email offline_access api.read",
     authorizationParams: {
-      audience: `https://${oktaUrl}/api/v2/`,
-      scope: "openid profile email offline_access"
+      scope: "openid profile email offline_access api.read",
+      redirect_uri: window.location + "/station-angular4-poc/"
+ 
     }
   };
 
