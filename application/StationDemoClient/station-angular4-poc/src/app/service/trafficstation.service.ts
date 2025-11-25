@@ -118,16 +118,13 @@ async deleteStation(stationId: number): Promise<any> {
 private async createHttpHeader(contentType: string): Promise<HttpHeaders> {
    const token = await this.authService.getAccessTokenSilently().toPromise();
 
-   let headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${token}`);
-
-   if (contentType) headers = headers.set('Content-Type', contentType);
-
-   if (this.translateService.currentLang) {
-      headers = headers
-         .set('Content-Language', this.translateService.currentLang)
-         .set('Accept-Language', this.translateService.currentLang);
-   }
+   let headers : HttpHeaders = new HttpHeaders().set('Content-Type', contentType).set('Authorization','Bearer ' + token);
+     
+   if (this.translateService.currentLang != null){
+      headers = headers.set('Content-Language', this.translateService.currentLang);
+      headers = headers.set('Accept-Language', this.translateService.currentLang);
+      }       
+  
    return headers;
 }
 

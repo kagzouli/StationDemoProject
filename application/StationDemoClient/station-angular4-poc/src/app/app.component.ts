@@ -1,95 +1,76 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { Router } from "@angular/router";
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ConfigurationLoaderService } from './service/configuration-loader.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
 
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;
   user$ = this.authService.user$;
+  roles: string[] = [];
 
   jwtHelper = new JwtHelperService();
 
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private translateService: TranslateService,
+    private readonly configurationLoaderService: ConfigurationLoaderService
+  ) {}
 
-  constructor(private authService: AuthService, private router : Router, private translateService : TranslateService, private readonly configurationLoaderService : ConfigurationLoaderService) {
-    this.translateService.use("fr");
-    this.authService.getAccessTokenSilently().subscribe({
-      next: (token) => {
-          
-          const decodedToken = this.jwtHelper.decodeToken(token);  
-        
-          if (decodedToken != null){
-            let groups : string[]  =  decodedToken['groups'];
-            if (groups != null && groups.length > 0){
-              sessionStorage.setItem('Role', groups[0]);
-          }
+  ngOnInit(): void {
+    // Set language
+    this.translateService.use('fr');
 
-          // Set the lang of the user
-          const locale =  decodedToken['locale'];
-          if (locale != null && locale.length >= 2){
-            // On doit utiliser une classe Locale mais pour le POC, je fais simple.
-            let substr = locale.substring(0,2);
-            this.translateService.use(substr);
-          }else{
-            this.translateService.use("fr");
-          }
+    // Subscribe to ID token claims to get roles
+    this.authService.isAuthenticated$
+      .pipe(
+        switchMap(isAuth => {
+          if (!isAuth) return of(null); // user not authenticated
+          return this.authService.idTokenClaims$;
+        })
+      )
+      .subscribe(claims => {
+        if (claims) {
+          this.roles = claims['roles'] || [];
+          const role = this.roles[0] || '';
+          sessionStorage.setItem('Role', role);
+          console.log('User roles:', this.roles);
         }
-        this.router.navigate([this.router.url]);
-      },
-      error: (err) => console.error('Error getting access token', err)
-    });
+      });
 
-
-    }
-
-    async ngOnInit(): Promise<void> {
-      const isAuthenticated = await this.authService.isAuthenticated$.toPromise();
-
-      if (isAuthenticated) {
-        try {
-          const token = await this.authService.getAccessTokenSilently().toPromise();
-          if (token){
-            const decodedToken = this.jwtHelper.decodeToken(token); 
-            const locale =  decodedToken['locale'];
-            if (locale != null && locale.length >= 2){
-              // On doit utiliser une classe Locale mais pour le POC, je fais simple.
-              let substr = locale.substring(0,2);
-              this.translateService.use(substr);
-            }else{
-              this.translateService.use("fr");
-            }
-          } 
-        } catch (err) {
-          console.error('Error getting token:', err);
-        }
-      }
+    // Optional: fetch access token (JWT) correctly
+    this.authService.isAuthenticated$
+      .pipe(
+        switchMap(isAuth => {
+          if (!isAuth) return of(null);
+          return this.authService.getAccessTokenSilently();
+        })
+      )
+      .subscribe({
+        next: token => {
+          if (token) {
+            // If you really need to decode:
+            const decodedToken = this.jwtHelper.decodeToken(token);
+            console.log("decoded Token : " + decodedToken);
+          }
+        },
+        error: err => console.error('Error getting access token:', err)
+      });
   }
-  
 
-
-
-  
-
-
-   /**
-    * Login to the application 
-    *
-    */
-   login() {
-      this.authService.loginWithRedirect();
-   }
-
-
+  /** Login to the application */
+  login(): void {
+    this.authService.loginWithRedirect();
+  }
 }
-  

@@ -38,16 +38,17 @@ export function initializeApp(configService: ConfigurationLoaderService) {
 }
 
 export function authConfigFactory(configService: ConfigurationLoaderService) {
+  let oktaUrl = configService.get('oktaUrl')
   const cfg =  {
-    domain: configService.get('oktaUrl'),
+    domain: oktaUrl,
     clientId: configService.get('clientIdTrafStat'),
     redirectUri: window.location.origin + "/station-angular4-poc/",
     useRefreshTokens: true,   // <-- enable refresh tokens
     cacheLocation: 'localstorage', // required if using refresh tokens
     useRefreshTokensFallback: false, // optional, but recommended
     authorizationParams: {
-      audience: `https://${configService.get('oktaUrl')}/api/v2/`,
-      scope: "openid profile email"
+      audience: `https://${oktaUrl}/api/v2/`,
+      scope: "openid profile email offline_access"
     }
   };
 
