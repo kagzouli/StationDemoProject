@@ -43,7 +43,12 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
     clientId: configService.get('clientIdTrafStat'),
     redirectUri: window.location.origin + "/station-angular4-poc/",
     useRefreshTokens: true,   // <-- enable refresh tokens
-  cacheLocation: 'localstorage' // required if using refresh tokens
+    cacheLocation: 'localstorage', // required if using refresh tokens
+    useRefreshTokensFallback: false, // optional, but recommended
+    authorizationParams: {
+      audience: `https://${configService.get('oktaUrl')}/api/v2/`,
+      scope: "openid profile email"
+    }
   };
 
   return {
