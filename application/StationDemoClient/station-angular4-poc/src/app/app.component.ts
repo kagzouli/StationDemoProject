@@ -48,25 +48,6 @@ export class AppComponent implements OnInit {
           sessionStorage.setItem('Role', role);
         }
       });
-
-    // Optional: fetch access token (JWT) correctly
-    this.authService.isAuthenticated$
-      .pipe(
-        switchMap(isAuth => {
-          if (!isAuth) return of(null);
-          return this.authService.getAccessTokenSilently();
-        })
-      )
-      .subscribe({
-        next: token => {
-          if (token) {
-            // If you really need to decode:
-            const decodedToken = this.jwtHelper.decodeToken(token);
-            console.log("decoded Token : " + decodedToken);
-          }
-        },
-        error: err => console.error('Error getting access token:', err)
-      });
   }
 
   /** Login to the application */
