@@ -13,13 +13,12 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
 import { tap } from 'rxjs/operators/tap';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { OrderBean } from '../../bean/orderbean';
 
 import {merge} from "rxjs/observable/merge";
 
-import { OAuthService } from 'angular-oauth2-oidc';
-import { UserBean } from '../../bean/user';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -58,7 +57,7 @@ export class SearchStationComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;    
 
-  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService,  private router: Router, private oauthService: OAuthService,private translateService: TranslateService) { 
+  constructor(private fb: FormBuilder, private trafficstationService: TrafficstationService,  private router: Router,private translateService: TranslateService) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.maxLength(64)])],
@@ -115,35 +114,32 @@ export class SearchStationComponent implements OnInit {
       this.launchAction = true;
            
            
-           // Launch the search
-           if (this.rForm.valid) {
-             // Create the criteria for the search
-            this.paginator.pageIndex = 0;
-            let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
-              form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
+      // Create the criteria for the search
+      this.paginator.pageIndex = 0;
+      let criteriaSearchStation : CriteriaSearchStation = new CriteriaSearchStation(form.reseau, form.station , form.trafficMin,
+        form.trafficMax , form.ville , 1 , this.NUMBER_MAX_ELEMENTS_TAB);
 
-             // Ajout critere recherche
-             criteriaSearchStation.orders.length = 0;
-             criteriaSearchStation.orders.push(new OrderBean(this.sort.active , this.sort.direction));
+      // Ajout critere recherche
+      criteriaSearchStation.orders.length = 0;
+      criteriaSearchStation.orders.push(new OrderBean(this.sort.active , this.sort.direction));
 
-             // Launch the search
-             this.launchAction = true;
-             this.dataSource.findStations(criteriaSearchStation);
-             this.criteriaSearch = criteriaSearchStation;
+      // Launch the search
+      this.launchAction = true;
+      this.dataSource.findStations(criteriaSearchStation);
+      this.criteriaSearch = criteriaSearchStation;
 
-             // Count the number of stations of the pagination
-             this.countStationsByCrit(criteriaSearchStation);
+      // Count the number of stations of the pagination
+      this.countStationsByCrit(criteriaSearchStation);
     
 
-             this.launchAction = false;
-        }else {
-           window.alert('There is a mistake in your input.');
-           // Invalid data on form - we reset.
-           this.rForm.reset();
-           this.launchAction = false;
-         }
-       } 
-   }
+      this.launchAction = false;
+    }else {
+      window.alert('There is a mistake in your input.');
+      // Invalid data on form - we reset.
+      this.rForm.reset();
+      this.launchAction = false;
+    }
+  }
 
    /**
     * Load to load the stations for pagination
@@ -160,17 +156,14 @@ export class SearchStationComponent implements OnInit {
      this.dataSource.findStations(this.criteriaSearch);
    }
 
-   /**
-    * Count the number of station total
-    * @param criteria 
-    */
-   countStationsByCrit(criteria : CriteriaSearchStation){
-    this.trafficstationService.countStations(criteria).subscribe(
-      (countStation : number) => {
-         this.numberElementsFound = countStation;
-      }
-    );
-   }
+   // --- Count stations ---
+  async countStationsByCrit(criteria: CriteriaSearchStation) {
+    try {
+      this.numberElementsFound = await this.trafficstationService.countStations(criteria);
+    } catch (error) {
+      console.error('Error counting stations:', error);
+    }
+  }
   
 
    onStationClicked(trafficStation){

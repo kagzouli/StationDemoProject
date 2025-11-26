@@ -1,8 +1,8 @@
-<div *ngIf="!givenName">
+<div *ngIf="!(isAuthenticated$ | async)">
   <button class="button" (click)="login()">Login</button>
 </div>`
 
-<div *ngIf="givenName">
+<div *ngIf="(isAuthenticated$ | async)">
     
   <div class=”container”>
     <!-- Header -->

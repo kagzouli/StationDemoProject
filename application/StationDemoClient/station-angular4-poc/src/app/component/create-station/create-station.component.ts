@@ -53,7 +53,7 @@ export class CreateStationComponent implements OnInit {
     return invalidform || this.launchAction; 
   }
 
-  createStation(form){
+  async createStation(form){
 
      let trafficStationBean : TrafficStationBean = new TrafficStationBean();
      trafficStationBean.reseau  = form.reseau;
@@ -67,32 +67,35 @@ export class CreateStationComponent implements OnInit {
      trafficStationBean.arrondissement = form.arrondissement;
 
      // Call the service crediting bank
-     if (this.rForm.valid) {
+    if (this.rForm.valid) {
       //Before the credit disable the button.
 
-        // Make the tab empty
-       this.errors.length = 0;
+      // Make the tab empty
+      this.errors.length = 0;
                
       
-        // Method to create a station
-        this.trafficstationService.createStation(trafficStationBean).subscribe(
-          (trafficStationId: number) => {
-            window.alert(this.trafficstationService.translateMessage("STATION_CREATE_SUCCESS" , {}));
-            this.router.navigate(['/stationdemo/searchstations',{}]); 
-            this.launchAction = false;         
-          },
-          (error : HttpErrorResponse) => {
-            if (error.status === 409){
-              this.errors.push(error.error);
-              this.launchAction = false;           
-            }
-          }
-        );
+      try {
+        const trafficStationId: number = await this.trafficstationService.createStation(trafficStationBean);
+
+        // Success
+        window.alert(this.trafficstationService.translateMessage("STATION_CREATE_SUCCESS", {}));
+        this.router.navigate(['/stationdemo/searchstations', {}]);
+
+      }catch (error: any) {
+        // Handle HTTP errors
+        if (error.status === 409) {
+          this.errors.push(error.error);
+        } else {
+          console.error('Error creating station:', error);
+        }
+      } finally {
+        this.launchAction = false;
       }
-      else {
-        // Invalid data on form - we reset.
-        this.rForm.reset();
-      }
+    }
+    else {
+      // Invalid data on form - we reset.
+      this.rForm.reset();
+    }
   }
 
   /**

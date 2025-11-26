@@ -5,24 +5,21 @@ import { HttpClient , HttpHeaders , HttpParams,HttpErrorResponse} from '@angular
 import { CriteriaSearchStation } from '../bean/criteriasearchstation';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError } from 'rxjs/operators/catchError';
+import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { OAuthService } from 'angular-oauth2-oidc';
 import { TranslateService } from '@ngx-translate/core';
 
 import { OrderBean } from '../bean/orderbean';
 import { ConfigurationLoaderService } from './configuration-loader.service';
-import { Configuration } from '../bean/configuration';
+import { AuthService } from '@auth0/auth0-angular';
 
 
 @Injectable()
 export class TrafficstationService {
   
 
-  constructor(private readonly http: HttpClient, private readonly oauthService : OAuthService, 
+  constructor(private readonly http: HttpClient, private readonly authService : AuthService, 
     private readonly translateService : TranslateService,
     private readonly router: Router,
     private readonly configurationLoaderService : ConfigurationLoaderService) {
@@ -30,121 +27,114 @@ export class TrafficstationService {
 
   
 
-   /**
-   * Method to find all traffic stations by criteria.<br/>
-   * 
-   */  
-  findTrafficStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<TrafficStationBean[]> {
-    const headers = this.createHttpHeader('application/json');
+// --- Find traffic stations ---
+async findTrafficStations(criteriaSearchStation: CriteriaSearchStation): Promise<TrafficStationBean[]> {
+   const headers = await this.createHttpHeader('application/json');
 
-    let params = this.convertStationCriteria(criteriaSearchStation);
-    if (params != null && params.trim() !== ''){
-       params = '?' + params;
-    }
+   let params = this.convertStationCriteria(criteriaSearchStation);
+   if (params && params.trim() !== '') params = '?' + params;
 
-    return this.http.get(`${this.configurationLoaderService.getURLTrafficService()}/stations` + params, {headers: headers})
-    .pipe(catchError(err =>  this.formatErrors(err)));
- }
-
- private formatErrors(error: any) {
+   return this.http
+      .get<TrafficStationBean[]>(
+      `${this.configurationLoaderService.getURLTrafficService()}/stations${params}`,
+      { headers }
+   )
+   .toPromise();
+}
 
 
-  if (error instanceof HttpErrorResponse){
-     const status = error.status;
-     if (status === 400 || status === 401 || status === 403 || status === 404 || status === 500){
-        this.router.navigate(['/error/' + status]);
-     }else{
-      return new ErrorObservable(error);
-     }
-  }else{
-    return new ErrorObservable(error);
-  }
+// --- Count stations ---
+async countStations(criteriaSearchStation: CriteriaSearchStation): Promise<number> {
+   const headers = await this.createHttpHeader('application/json');
 
+   let params = this.convertStationCriteria(criteriaSearchStation);
+   if (params && params.trim() !== '') params = '?' + params;
 
-  
+   return this.http
+      .get<number>(
+      `${this.configurationLoaderService.getURLTrafficService()}/stations/count${params}`,
+      { headers }
+   )
+   .toPromise();
 }
 
 
 
-/**
-   * Method to count all traffic stations by criteria.<br/>
-   * 
-   */  
-  countStations(criteriaSearchStation : CriteriaSearchStation) :  Observable<number> {
-    const headers = this.createHttpHeader('application/json');   
+// --- Create station ---
+async createStation(trafficStationBean: TrafficStationBean): Promise<number> {
+   const headers = await this.createHttpHeader('application/json');
 
-    let params = this.convertStationCriteria(criteriaSearchStation);
-    if (params != null && params.trim() !== ''){
-       params = '?' + params;
-    }
-
-
-    return this.http.get(`${this.configurationLoaderService.getURLTrafficService()}/stations/count` + params, {headers: headers})
-    .pipe(catchError(err =>  this.formatErrors(err)));
- }
+   return this.http
+      .put<number>(
+      `${this.configurationLoaderService.getURLTrafficService()}/stations`,
+      trafficStationBean,
+      { headers }
+   )
+   .toPromise();
+}
 
 
+// --- Get station by ID ---
+async selectStationById(id: number): Promise<TrafficStationBean> {
+   const headers = await this.createHttpHeader('application/x-www-form-urlencoded');
 
- /**
-  * Create station 
-
-  */
-  createStation(trafficStationBean : TrafficStationBean)  : Observable<number>{
-    const headers = this.createHttpHeader('application/json');   
-    return this.http.put(`${this.configurationLoaderService.getURLTrafficService()}/stations`, trafficStationBean, {headers: headers})
-    .pipe(catchError(err =>  this.formatErrors(err)));
-  }
+   return this.http
+      .get<TrafficStationBean>(
+      `${this.configurationLoaderService.getURLTrafficService()}/stations/${id}`,
+         { headers }
+   )
+   .toPromise();
+}
 
 
-  // Method to select the station by id.
-  selectStationById(id: number) : Observable<TrafficStationBean>{
-      const headers = this.createHttpHeader('application/x-www-form-urlencoded');     
-      return this.http.get<TrafficStationBean>(`${this.configurationLoaderService.getURLTrafficService()}/stations/${id}`, {headers: headers})
-      .pipe(catchError(err =>  this.formatErrors(err)));
-  }
+// --- Update station ---
+async updateStation(traffic: number, correspondance: string, stationId: number): Promise<any> {
+   const headers = await this.createHttpHeader('application/x-www-form-urlencoded');
 
-  /**
-  * Update station 
+   const params = new HttpParams()
+   .set('newTraffic', traffic.toString())
+   .set('newCorr', correspondance);
 
-  */
-  updateStation(traffic : number, correspondance: string ,stationId: number) : Observable<any>{
-    const headers = this.createHttpHeader('application/x-www-form-urlencoded');  
-   
-    let params = new HttpParams()
-    .append('newTraffic', traffic.toString())
-    .append('newCorr', correspondance);
-    
+   const url = `${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}?${params.toString()}`;
 
-    return this.http.patch(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}` + "?"+ params.toString() ,{}, {headers: headers})
-      .pipe(catchError(err =>  this.formatErrors(err)));
-  }
+   return this.http
+   .patch<any>(url, {}, { headers })
+   .toPromise();
+}
 
-  deleteStation(stationId : number) : Observable<any>{
-      const headers = this.createHttpHeader('application/x-www-form-urlencoded');  
-          
-      return this.http.delete(`${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}`  , {headers: headers})
-       .pipe(catchError(err =>  this.formatErrors(err)));
-  }
 
-  createHttpHeader(contentType: string):  HttpHeaders{
-      let headers : HttpHeaders = new HttpHeaders().set('Content-Type', contentType).set('Authorization','Bearer ' + this.oauthService.getAccessToken());
+// --- Delete station ---
+async deleteStation(stationId: number): Promise<any> {
+   const headers = await this.createHttpHeader('application/x-www-form-urlencoded');
+
+   const url = `${this.configurationLoaderService.getURLTrafficService()}/stations/${stationId}`;
+
+   return this.http
+      .delete<any>(url, { headers })
+      .toPromise();
+}
+
+
+private async createHttpHeader(contentType: string): Promise<HttpHeaders> {
+   const token = await this.authService.getAccessTokenSilently().toPromise();
+
+   let headers : HttpHeaders = new HttpHeaders().set('Content-Type', contentType).set('Authorization','Bearer ' + token);
      
-       if (this.translateService.currentLang != null){
-         headers = headers.set('Content-Language', this.translateService.currentLang);
-         headers = headers.set('Accept-Language', this.translateService.currentLang);
-       }       
+   if (this.translateService.currentLang != null){
+      headers = headers.set('Content-Language', this.translateService.currentLang);
+      headers = headers.set('Accept-Language', this.translateService.currentLang);
+      }       
   
-       return headers;
+   return headers;
+}
 
-  }
-
-  translateMessage(key : string, params : any): string{
-    let value = "";
-    this.translateService.get(key, params).subscribe((res: string) => {
-       value = res;
-    });
-    return value;  
-  }
+translateMessage(key : string, params : any): string{
+   let value = "";
+   this.translateService.get(key, params).subscribe((res: string) => {
+      value = res;
+   });
+   return value;  
+}
 
    /**
    * Convert criteria oeuvre to string.<br/>
@@ -196,6 +186,16 @@ export class TrafficstationService {
     return paramsArray.join('&');
 
   }
+
+  /** Error handler for Angular 9 */
+   private handleError(error: HttpErrorResponse): Observable<never> {
+      if ([400, 401, 403, 404, 500].includes(error.status)) {
+         this.router.navigate(['/error/' + error.status]);
+      } else {
+         console.error('HTTP Error:', error);
+      }
+      return throwError(() => error);
+   }
 
 
 

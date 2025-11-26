@@ -1,10 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,APP_INITIALIZER  } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import {HttpModule} from '@angular/http';
-import {MatTableModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule} from '@angular/material';
+
+// Angular material
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -16,8 +21,7 @@ import { CreateStationComponent } from './component/create-station/create-statio
 import { SelectStationComponent } from './component/select-station/select-station.component';
 import { UpdateStationComponent } from './component/update-station/update-station.component';
 
-
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { AuthModule , AuthClientConfig  } from '@auth0/auth0-angular';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HeaderStationComponent } from './component/header-station/header-station.component';
@@ -29,6 +33,31 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function initializeApp(configService: ConfigurationLoaderService) {
+  return () => configService.loadConfigurations();
+}
+
+export function authConfigFactory(configService: ConfigurationLoaderService) {
+  let oktaUrl = configService.get('oktaUrl')
+  const cfg =  {
+    domain: oktaUrl,
+    clientId: configService.get('clientIdTrafStat'),
+    redirectUri: window.location.origin + "/station-angular4-poc/",
+    useRefreshTokens: true,   // <-- enable refresh tokens
+    cacheLocation: 'localstorage', // required if using refresh tokens
+    useRefreshTokensFallback: false, // optional, but recommended
+    audience: `https://${oktaUrl}/api/v2/`,
+    scope: "openid profile email offline_access api.read",
+    authorizationParams: {
+        scope: "openid profile email offline_access api.read"
+    }
+  };
+
+  return {
+    get: () => cfg // provide the old `.get()` API
+  };
+
+}
 
 @NgModule({
   declarations: [
@@ -45,14 +74,13 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpModule,
     MatTableModule,
     MatPaginatorModule,
     AppRoutingModule,
     MatSortModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    OAuthModule.forRoot(),
+    AuthModule.forRoot(), // leave empty here
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -61,7 +89,20 @@ export function createTranslateLoader(http: HttpClient) {
       }
     })
   ],
-  providers: [ConfigurationLoaderService],
+  providers: [
+    ConfigurationLoaderService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigurationLoaderService],
+      multi: true
+    },
+    {
+      provide: AuthClientConfig,
+      useFactory: authConfigFactory,
+      deps: [ConfigurationLoaderService]
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

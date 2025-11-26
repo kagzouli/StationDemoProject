@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.exakaconsulting.poc.service.ConstantStationDemo;
-import com.okta.jwt.AccessTokenVerifier;
-import com.okta.jwt.Jwt;
+import com.auth0.jwt.interfaces.JWTVerifier;
 
 import java.util.List;
 import java.util.Map;
@@ -26,8 +30,8 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JwtUserOktaServiceImpl.class);
 
 
-	@Value("${okta.issuerUrl}")
-	private String issuerUrl;
+	@Value("${okta.issuerDomain}")
+	private String issuerDomain;
 	
 	@Override
 	public JwtUserDto parseToken(String token) {
@@ -35,21 +39,21 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 		JwtUserDto jwtUserDto = null;
 		try {
 			
-			// Initialise the JWT Verifier
-			final AccessTokenVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(this.issuerUrl);
+				
+			
+			final JWTVerifier jwtVerifier = JwtUserOktaVerifierHolder.getInstance().getInstanceJwtVerifier(token, this.issuerDomain);
 			Assert.notNull(jwtVerifier, "The JWT verifier must be initialized.");
 			
-			final Jwt jwt = jwtVerifier.decode(token);
-			Map<String, Object> claims = jwt.getClaims();
+			final DecodedJWT jwt = jwtVerifier.verify(token);
+			Map<String, Claim> claims = jwt.getClaims();
 			
 			if (claims != null && !claims.isEmpty()){
 				jwtUserDto = new JwtUserDto();
-				
-				jwtUserDto.setUsername((String) claims.get("sub"));
-				
-				final List<String> listGroups = (List<String>) claims.get("groups");
-				if (listGroups != null && !listGroups.isEmpty()){
-					jwtUserDto.setRole(listGroups.get(0));
+				jwtUserDto.setUsername("stationservice");				
+				// Get role
+				final List<String> listRoles = jwt.getClaim("https://station.com/roles").asList(String.class);
+				if (listRoles != null && !listRoles.isEmpty()){
+					jwtUserDto.setRole(listRoles.get(0));
 				}
 			
 			}
