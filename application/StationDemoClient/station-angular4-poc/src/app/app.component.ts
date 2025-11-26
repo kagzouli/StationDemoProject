@@ -43,7 +43,8 @@ export class AppComponent implements OnInit {
       .subscribe(claims => {
         if (claims) {
           this.roles = claims['roles'] || [];
-          const role = this.roles[0] || '';
+          //TODO : A corriger
+          const role = this.roles[0] || 'manager';
           sessionStorage.setItem('Role', role);
           console.log('User roles:', this.roles);
         }

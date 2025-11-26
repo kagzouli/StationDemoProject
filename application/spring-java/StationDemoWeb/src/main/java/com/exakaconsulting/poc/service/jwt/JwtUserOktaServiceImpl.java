@@ -53,7 +53,9 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 				String name = jwt.getClaim("name").asString();    // full name
 				String nickname = jwt.getClaim("nickname").asString();  // username-like alias
 	
-//				jwtUserDto.setUsername((String) claims.get("sub"));
+				//TODO : A changer
+				jwtUserDto.setUsername("stationservice");
+				jwtUserDto.setRole("manager");
 //				
 //				final List<String> listGroups = (List<String>) claims.get("groups");
 //				if (listGroups != null && !listGroups.isEmpty()){
