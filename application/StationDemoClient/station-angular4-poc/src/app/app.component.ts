@@ -42,11 +42,10 @@ export class AppComponent implements OnInit {
       )
       .subscribe(claims => {
         if (claims) {
-          this.roles = claims['roles'] || [];
-          //TODO : A corriger
-          const role = this.roles[0] || 'manager';
+          // Get role 
+          this.roles   = claims['https://station.com/roles'] || null;
+          const role = this.roles[0] || '';
           sessionStorage.setItem('Role', role);
-          console.log('User roles:', this.roles);
         }
       });
 
