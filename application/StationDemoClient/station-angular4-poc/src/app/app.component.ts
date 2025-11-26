@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ConfigurationLoaderService } from './service/configuration-loader.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +17,6 @@ export class AppComponent implements OnInit {
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$;
   user$ = this.authService.user$;
   roles: string[] = [];
-
-  jwtHelper = new JwtHelperService();
 
   constructor(
     private authService: AuthService,
