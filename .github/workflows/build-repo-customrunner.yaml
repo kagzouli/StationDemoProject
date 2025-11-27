@@ -12,7 +12,7 @@ on:
         required: true
 
 env:
-  REPO_DOCKER_HUB: kagzouli3
+  REPO_DOCKER_HUB: kagzouli
 
 
 jobs:

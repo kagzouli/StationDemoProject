@@ -34,7 +34,7 @@ spec:
         runAsGroup: 20050
       containers:
         - name: stationback
-          image: kagzouli3/station-back:{{station.version}}
+          image: kagzouli/station-back:{{station.version}}
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true

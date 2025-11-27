@@ -26,7 +26,7 @@ on:
         required: true
 
 env:
-  NODEJS_VERSION: 14
+  NODEJS_VERSION: 16
 
 jobs:
 
@@ -133,7 +133,7 @@ jobs:
  
       - name: Upload backend JAR
         id: upload-backendjar
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backendjar
           path: current/application/spring-java/StationDemoWeb/target/StationDemoSecureWeb.jar
@@ -251,7 +251,7 @@ jobs:
 
       - name: Upload frontend zip
         id: upload-frontendangular
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frontendangular
           path: current/application/StationDemoClient/station-angular4-poc/dist

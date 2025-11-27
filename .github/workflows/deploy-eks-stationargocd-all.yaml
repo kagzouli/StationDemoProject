@@ -476,7 +476,7 @@ jobs:
         id: retrieve-docker-registry
         run: |
           if [[ "${{ github.event.inputs.repoDockerType }}" == "dockerhub" ]]; then
-                echo "contextPath=kagzouli3" >> $GITHUB_OUTPUT
+                echo "contextPath=kagzouli" >> $GITHUB_OUTPUT
           fi
           if [[ "${{ github.event.inputs.repoDockerType }}" == "awsecr" ]]; then
               echo "contextPath=${{ steps.retrieve-account.outputs.identifier }}.dkr.ecr.${{ github.event.inputs.region}}.amazonaws.com/station" >> $GITHUB_OUTPUT
