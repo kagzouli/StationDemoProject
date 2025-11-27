@@ -160,11 +160,11 @@ stationfront:
   region: eu-west-3
   
   # Client id traf stat
-  clientIdTrafStat: 0oaeg3yghaL9mQalz0h7
+  clientIdTrafStat: WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A
   
   
   #Okta URL
-  oktaUrl: https://dev-884254.oktapreview.com
+  oktaUrl: https://dev-yqv4qm6lycv6w51d.us.auth0.com
 
   # Liste des ip alb du station front
   albiplist: []

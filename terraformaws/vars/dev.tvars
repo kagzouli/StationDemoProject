@@ -55,8 +55,8 @@ station_front_image="kagzouli3/station-front-nginx:1.4.1"
 station_front_host_port=80
 station_front_instance_count=2
 station_front_url_external="station"
-station_front_clientidtrafstat="0oaeg3yghaL9mQalz0h7"
-station_front_oktaurl="https://dev-884254.oktapreview.com"
+station_front_clientidtrafstat="WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A"
+station_front_oktaurl="https://dev-yqv4qm6lycv6w51d.us.auth0.com"
 
 # Alerte
 mail_cloudwatch_alert=["toto@toto.com"]
