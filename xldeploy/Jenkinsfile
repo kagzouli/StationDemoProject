@@ -26,6 +26,6 @@
 
         // Deploy to the right environment (dev)
         stage('Deploy to env'){
-            xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/stationdev', packageId: 'Applications/TEST/EXAKA/station-app/1.4.1'
+            xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/stationdev', packageId: 'Applications/TEST/EXAKA/station-app/1.5.0'
         }
 }
