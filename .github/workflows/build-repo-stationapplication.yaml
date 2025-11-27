@@ -128,7 +128,7 @@ jobs:
       # Download artifact
       - name: download backend JAR
         id: download-backendjar
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: backendjar
           path: current/application/spring-java/StationDemoWeb/docker/
@@ -239,7 +239,7 @@ jobs:
       # Download artifact
       - name: download front end angular
         id: download-frontend-angular
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: frontendangular
           path: current/application/StationDemoClient/station-angular4-poc/dockerwithnginx/dist
