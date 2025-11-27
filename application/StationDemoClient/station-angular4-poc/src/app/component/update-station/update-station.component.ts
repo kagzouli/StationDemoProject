@@ -34,9 +34,10 @@ export class UpdateStationComponent implements OnInit {
   async ngOnInit() {
 
     // Get the selected traffic station
-    const params = await this.parentRoute.params.toPromise();
-    let stationId = +params['stationId']; // convert to number
-  
+    let stationId = 0;
+    this.parentRoute.params.subscribe(params => {   
+      stationId = params['stationId'];
+    });
 
     try {
       const trafficParam: TrafficStationBean = await this.trafficstationService.selectStationById(stationId);
