@@ -56,7 +56,7 @@ station_front_host_port=80
 station_front_instance_count=2
 station_front_url_external="station"
 station_front_clientidtrafstat="WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A"
-station_front_oktaurl="https://dev-yqv4qm6lycv6w51d.us.auth0.com"
+station_front_oktaurl="dev-yqv4qm6lycv6w51d.us.auth0.com"
 
 # Alerte
 mail_cloudwatch_alert=["toto@toto.com"]

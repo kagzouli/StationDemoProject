@@ -164,7 +164,7 @@ stationfront:
   
   
   #Okta URL
-  oktaUrl: https://dev-yqv4qm6lycv6w51d.us.auth0.com
+  oktaUrl: dev-yqv4qm6lycv6w51d.us.auth0.com
 
   # Liste des ip alb du station front
   albiplist: []
