@@ -33,7 +33,7 @@ spec:
         runAsGroup: 101
       containers:
         - name: stationfront-nginx
-          image: kagzouli3/station-front-nginx:{{station.version}}
+          image: kagzouli/station-front-nginx:{{station.version}}
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true

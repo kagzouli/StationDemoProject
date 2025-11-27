@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   station_db:
-    image: "${REPO_NEXUS_URL}kagzouli3/station-db:${VERSION}"
+    image: "${REPO_NEXUS_URL}kagzouli/station-db:${VERSION}"
     deploy:
       replicas: 1 
       restart_policy:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - station_db
       - station_redis
-    image: "${REPO_NEXUS_URL}kagzouli3/station-back:${VERSION}"
+    image: "${REPO_NEXUS_URL}kagzouli/station-back:${VERSION}"
     deploy:
       replicas: 1
       restart_policy:
@@ -52,7 +52,7 @@ services:
     #  - logstationback:/usr/local/tomcat/logs
  
   station_front:
-    image: "${REPO_NEXUS_URL}kagzouli3/station-front-nginx:${VERSION}"
+    image: "${REPO_NEXUS_URL}kagzouli/station-front-nginx:${VERSION}"
     deploy:
       replicas: 1
       restart_policy:
