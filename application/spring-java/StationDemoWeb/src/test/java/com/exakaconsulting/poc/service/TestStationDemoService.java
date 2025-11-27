@@ -226,40 +226,6 @@ public class TestStationDemoService extends AbstractServiceTest{
 		assertEquals(StringUtils.join(trafficJustUpdate.getListCorrespondance() , ","), newCorr);	
 	}
 	
-	@Test
-	public void testDeleteUpdateTrafficStationExists(){
-
-		// Update a unic trafficStation
-		final String STATION = "PORTE DE CHOI";	
-		final TrafficStationBean trafficUnicBean =  this.getUnicTrafficStation(STATION);
-
-		// Delete it, exists
-		try{
-			this.stationDemoService.deleteTrafficStation(trafficUnicBean.getId());
-		}catch(TrafficStationNotExists exception){
-			assertTrue(false);
-		}
-		
-		// Test that it does not exists anymore
-		try{
-			this.stationDemoService.findStationById(trafficUnicBean.getId());
-		}catch(TrafficStationNotExists exception){
-			assertTrue(true);
-		}
-	}
-	
-	@Test
-	public void DeleteTrafficStationNotExists(){
-
-
-		// Delete it, exists
-		try{
-			this.stationDemoService.deleteTrafficStation(100000);
-		}catch(TrafficStationNotExists exception){
-			assertTrue(true);
-		}
-		
-	}
 	
 	@Test
 	public void testSearchWithPageAndMax(){
@@ -290,7 +256,42 @@ public class TestStationDemoService extends AbstractServiceTest{
 		assertTrue(listStations.size() == AbstractCriteriaSearch.MAX_NUMBER_ELEMENTS);
 		
 	}
-	
+
+
+	@Test
+	public void testDeleteUpdateTrafficStationExists(){
+
+		// Update a unic trafficStation
+		final String STATION = "PORTE DE CHOI";	
+		final TrafficStationBean trafficUnicBean =  this.getUnicTrafficStation(STATION);
+
+		// Delete it, exists
+		try{
+			this.stationDemoService.deleteTrafficStation(trafficUnicBean.getId());
+		}catch(TrafficStationNotExists exception){
+			assertTrue(false);
+		}
+		
+		// Test that it does not exists anymore
+		try{
+			this.stationDemoService.findStationById(trafficUnicBean.getId());
+		}catch(TrafficStationNotExists exception){
+			assertTrue(true);
+		}
+	}
+
+	@Test
+	public void DeleteTrafficStationNotExists(){
+
+
+		// Delete it, exists
+		try{
+			this.stationDemoService.deleteTrafficStation(100000);
+		}catch(TrafficStationNotExists exception){
+			assertTrue(true);
+		}
+		
+	}
 	
 	/**
 	 * Method utils to get aunic traffic station
