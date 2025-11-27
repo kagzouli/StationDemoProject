@@ -49,7 +49,7 @@ public class JwtUserOktaServiceImpl implements IJwtUserService {
 			
 			if (claims != null && !claims.isEmpty()){
 				jwtUserDto = new JwtUserDto();
-				jwtUserDto.setUsername("stationservice");				
+				jwtUserDto.setUsername(jwt.getClaim("https://station.com/nickname").asString());				
 				// Get role
 				final List<String> listRoles = jwt.getClaim("https://station.com/roles").asList(String.class);
 				if (listRoles != null && !listRoles.isEmpty()){
