@@ -58,8 +58,8 @@ services:
       restart_policy:
         condition: on-failure
     environment:
-      - CLIENT_ID_TRAF_STAT=0oaeg3yghaL9mQalz0h7
-      - OKTA_URL=https://dev-884254.oktapreview.com
+      - CLIENT_ID_TRAF_STAT=WcfX8ATlmstSllDzo0nCRqDQeWMcfu2A
+      - OKTA_URL=https://dev-yqv4qm6lycv6w51d.us.auth0.com
       - CONTEXT_BACK_URL=http://51.254.36.120:4000
     ports:
         - "80:8080"

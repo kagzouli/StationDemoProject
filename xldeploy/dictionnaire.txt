@@ -2,7 +2,7 @@ station_namespace  --> stationdev2
 stationback.nbReplicas ---> 1
 stationback.hostname   --->  stationback.exakaconsulting.org
 station.version=1.4.1
-stationfront.oktaUrl  ---->  https://dev-yqv4qm6lycv6w51d.okta.com
+stationfront.oktaUrl  ---->  https://dev-yqv4qm6lycv6w51d.us.auth0.com
 stationfront.nbReplicas ---->  1
 
 
