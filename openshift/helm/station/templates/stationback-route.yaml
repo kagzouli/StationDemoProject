@@ -2,6 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: stationback-route
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   host: {{ .Values.stationback.hostname }}
   path: /StationDemoSecureWeb 
@@ -11,3 +12,6 @@ spec:
     weight: 100      # 100% traffic
   port:
     targetPort: stationback
+  tls:
+    termination: edge                 # OpenShift router handles TLS
+    insecureEdgeTerminationPolicy: Redirect  # redirect HTTP -> HTTPS

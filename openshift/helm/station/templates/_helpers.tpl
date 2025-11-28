@@ -27,7 +27,7 @@ Return the stationfront image
 Return the contextPathBackUrl
 */}}
 {{- define "stationback.contextpath" -}}
-{{- printf "http://%s:%s" .Values.stationback.hostname  (toString .Values.stationback.externalPort) -}}
+{{- printf "https://%s:%s" .Values.stationback.hostname  (toString .Values.stationback.externalPort) -}}
 {{- end -}}
 
 {{/*
