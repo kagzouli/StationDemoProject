@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ import com.exakaconsulting.poc.ApplicationTest;
 @SpringBootTest(classes = ApplicationTest.class)
 @Transactional
 @TestPropertySource(locations="classpath:test.properties")
+@Sql(scripts = {"/db-data-h2-trafstat-test.sql"})
 @EnableTransactionManagement
 @ActiveProfiles("test")
 public abstract class AbstractServiceTest {
