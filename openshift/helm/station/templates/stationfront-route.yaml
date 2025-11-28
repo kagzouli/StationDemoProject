@@ -2,6 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: stationfront-route
+  namespace: {{ .Release.Namespace | quote }}
 spec:
   host: {{ .Values.stationfront.hostname }}
   path: /station-angular4-poc
