@@ -50,7 +50,7 @@ spec:
           - name: OKTA_URL
             value: {{stationfront.oktaUrl}}
           - name: CONTEXT_BACK_URL
-            value: "http://{{stationback.hostname}}:4000" 
+            value: "https://{{stationback.hostname}}:443" 
           resources:
             requests:
               cpu: 100m
