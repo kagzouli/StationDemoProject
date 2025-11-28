@@ -1,14 +1,10 @@
 import {DataSource, CollectionViewer} from '@angular/cdk/collections';
 
 import {Observable} from 'rxjs/Observable';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from 'rxjs';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 import { TrafficstationService } from '../service/trafficstation.service';
 import { CriteriaSearchStation } from '../bean/criteriasearchstation';
-
-import { catchError } from 'rxjs/operators/catchError';
-import { finalize } from 'rxjs/operators/finalize';
-import { of } from 'rxjs/observable/of';
 
 
 export class StationWithPagDataSource extends DataSource<TrafficStationBean> {

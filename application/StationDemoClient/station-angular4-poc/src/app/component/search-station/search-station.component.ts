@@ -12,12 +12,12 @@ import { TrafficstationService } from '../../service/trafficstation.service';
 
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { StationWithPagDataSource } from '../../datasource/stationwithpagdatasource';
-import { tap } from 'rxjs/operators/tap';
+import { tap } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { OrderBean } from '../../bean/orderbean';
 
-import {merge} from "rxjs/observable/merge";
+import { merge } from 'rxjs';
 
 import { TranslateService } from '@ngx-translate/core';
 
