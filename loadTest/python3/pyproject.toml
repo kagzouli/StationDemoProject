@@ -1,0 +1,33 @@
+[project]
+name = "loadtest"
+version = "1.1.0"
+description = "loadtest"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "requests",
+    "kubernetes",
+    "typer[all]",
+]
+
+[project.scripts]
+loadtest = "loadtest.__main__:main"
+
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[tool.setuptools.package-data]
+"loadtest" = [
+    "utils/*",
+    "utils/k6/*",
+]
