@@ -75,3 +75,5 @@ loadTest/python3/.idea/
 loadtest.egg-info/
 __pycache__/
 build/
+
+uv.lock
