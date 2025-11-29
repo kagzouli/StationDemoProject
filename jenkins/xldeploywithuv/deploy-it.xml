@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udm.DeploymentPackage version="1.1.0" application="TEST/EXAKA/loadtest-uv">
+
+  <application />
+  <orchestrator />
+
+  <deployables>
+    <file.Folder name="loadtest-uv"  file="loadtest-1.1.0">
+      <tags />
+      <scanPlaceholders>true</scanPlaceholders>
+      <preScannedPlaceholders>true</preScannedPlaceholders>
+      <fileEncodings>
+        <entry key=".+\.properties">ISO-8859-1</entry>
+      </fileEncodings>
+      <textFileNamesRegexToTranscode>.+\.(cfg | conf | config | ini | properties | props | txt | asp | aspx | htm | html | jsf | jsp | xht | xhtml | sql | xml | xsd | xsl | xslt)</textFileNamesRegexToTranscode>
+      <members>
+        <file>**/*</file>
+      </members>
+      <targetPath>/tmp/karim/loadtest</targetPath>
+    </file.Folder>
+  </deployables>
+
+  <dependencyResolution>LATEST</dependencyResolution>
+  <undeployDependencies>false</undeployDependencies>
+
+</udm.DeploymentPackage>

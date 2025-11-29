@@ -1,0 +1,58 @@
+//serverCredentials : String
+// XL Deploy server credentials used to connect to the XL Deploy server. *
+// This must be configured under Manage Jenkins >> Configure System >> XL Deploy
+ node {
+
+        stage('Clean Workspace') {
+            deleteDir() // deletes everything in the workspace
+        }
+
+        stage('Checkout') {
+            git branch: "develop", url: "https://github.com/kagzouli/StationDemoProject.git"
+        }
+
+        stage('uv sync project') {
+            script {
+                steps.dir("loadTest/python3/"){
+                    steps.bat "uv sync"
+                }
+            }
+        }
+
+        stage('uv build') {
+            script {
+                steps.dir("loadTest/python3/"){
+                    steps.bat "uv build"
+                }
+            }
+        }
+
+        stage('Untargz') {
+            script {
+                steps.dir("loadTest/python3"){
+                    // Unzip loadtest
+                    steps.bat "7z x dist/loadtest-1.1.0.tar.gz"
+                    // Untar 
+                    steps.bat "7z x loadtest-1.1.0.tar"
+                    
+                    steps.bat "mkdir outenv"
+                    steps.bat "move loadtest-1.1.0 outenv"
+                }
+            }
+        }
+
+        // Create the .dar to prepare it to deploy to XLDeploy
+        stage('Create .dar'){
+            xldCreatePackage basedir: "${env.WORKSPACE}", artifactsPath: 'loadTest/python3/outenv', manifestPath: 'jenkins/xldeploywithuv/deploy-it.xml', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
+        }
+
+        // Create the .dar to prepare it to deploy to XLDeploy
+        stage('Publish application'){
+            xldPublishPackage serverCredentials: 'xldeploy-cred', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
+         }
+
+        // Deploy to the right environment (dev)
+        stage('Deploy to env'){
+            xldDeploy serverCredentials: 'xldeploy-cred', environmentId: 'Environments/TEST/EXAKA/loadtest-dev', packageId: 'Applications/TEST/EXAKA/loadtest-uv/1.1.0'
+        }
+}
