@@ -43,7 +43,7 @@
 
         // Create the .dar to prepare it to deploy to XLDeploy
         stage('Create .dar'){
-            xldCreatePackage basedir: "${env.WORKSPACE}", artifactsPath: 'loadTest/python3/outenv', manifestPath: 'jenkins/xldeploywithuv/deploy-it.xml', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
+            xldCreatePackage artifactsPath: 'loadTest/python3/outenv', manifestPath: 'jenkins/xldeploywithuv/deploy-it.xml', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
         }
 
         // Create the .dar to prepare it to deploy to XLDeploy
