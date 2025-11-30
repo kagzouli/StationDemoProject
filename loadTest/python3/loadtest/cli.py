@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 import typer
 from loadtest.utils import prometheus
 from loadtest.utils.k6 import k6
+from dotenv import load_dotenv
 
 
 def url_callback(value: str):
@@ -22,6 +23,10 @@ def main(
         container_name: str = typer.Option(default="", help="The Container name"),
         load_file: str = typer.Option(default="data.txt", help="The load files for the data.")
 ):
+    # Load env variable
+    load_dotenv()  # loads .env into environment
+
+
     # Start the timer before the test
     start_time = int(time.time())
 

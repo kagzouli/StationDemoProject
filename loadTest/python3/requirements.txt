@@ -1,3 +1,4 @@
 requests
 kubernetes
 typer[all]
+python-dotenv
