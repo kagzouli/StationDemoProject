@@ -9,6 +9,7 @@ dependencies = [
     "requests",
     "kubernetes",
     "typer[all]",
+    "python-dotenv"
 ]
 
 [project.scripts]
@@ -30,4 +31,6 @@ dev = [
 "loadtest" = [
     "utils/*",
     "utils/k6/*",
+    "../.env"
 ]
+
