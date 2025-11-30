@@ -1,5 +1,8 @@
 pip install  .
 
+# Env variable
+PROMETHEUS_URL="http://prometheus.exakaconsulting.org/api/v1"
+
 # Params
 NB_USERS=40
 WAIT_TIME=6

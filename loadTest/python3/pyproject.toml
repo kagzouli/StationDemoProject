@@ -31,4 +31,6 @@ dev = [
 "loadtest" = [
     "utils/*",
     "utils/k6/*",
+    "../.env"
 ]
+
