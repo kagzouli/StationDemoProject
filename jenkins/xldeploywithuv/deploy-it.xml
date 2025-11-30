@@ -9,7 +9,6 @@
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
       <preScannedPlaceholders>true</preScannedPlaceholders>
-      <delimiters>{{ }}</delimiters>
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
       </fileEncodings>
