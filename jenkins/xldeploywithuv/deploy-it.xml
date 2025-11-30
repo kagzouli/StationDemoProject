@@ -8,7 +8,6 @@
     <file.Folder name="loadtest-uv"  file="loadtest-1.1.0">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
-      <delimiters>{{ }}</delimiters>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
