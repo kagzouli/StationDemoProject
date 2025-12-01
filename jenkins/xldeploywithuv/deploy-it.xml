@@ -13,7 +13,7 @@
       <fileEncodings>
         <entry key=".+\.properties">ISO-8859-1</entry>
       </fileEncodings>
-      <textFileNamesRegexToTranscode>.+\.(cfg | conf | config | ini | properties | props | txt | asp | aspx |htm|html|jsf|jsp|xht|xhtml|sql|xml|xsd|xsl|xslt|env)</textFileNamesRegexToTranscode>
+      <textFileNamesRegexToTranscode>.+\.(cfg | conf | config | ini | properties | props | txt | asp | aspx | htm | html | jsf | jsp | xht | xhtml | sql | xml | xsd | xsl | xslt | env )</textFileNamesRegexToTranscode>
       <members>
         <file>**/*</file>
       </members>
