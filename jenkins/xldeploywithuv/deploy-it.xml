@@ -18,6 +18,7 @@
         <file>**/*</file>
       </members>
       <targetPath>/tmp/karim/loadtest</targetPath>
+      <createTargetPath>true</createTargetPath>
     </file.Folder>
   </deployables>
 
