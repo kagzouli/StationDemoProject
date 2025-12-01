@@ -6,7 +6,6 @@ from loadtest.utils import prometheus
 from loadtest.utils.k6 import k6
 from dotenv import load_dotenv
 
-# File {{TEST_COMMENT}}
 def url_callback(value: str):
     if value[:4] != "http":
         raise typer.BadParameter("URL must start with http or https")
