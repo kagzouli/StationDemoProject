@@ -23,7 +23,7 @@ def main(
         load_file: str = typer.Option(default="data.txt", help="The load files for the data.")
 ):
     # Load env variable
-    load_dotenv()  # loads .env into environment
+    load_dotenv("config.properties")  # loads .env into environment
 
 
     # Start the timer before the test
