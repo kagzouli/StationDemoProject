@@ -27,23 +27,9 @@
             }
         }
 
-        stage('Untargz') {
-            script {
-                steps.dir("loadTest/python3"){
-                    // Unzip loadtest
-                    steps.bat "7z x dist/loadtest-1.1.0.tar.gz"
-                    // Untar 
-                    steps.bat "7z x loadtest-1.1.0.tar"
-                    
-                    steps.bat "mkdir outenv"
-                    steps.bat "move loadtest-1.1.0 outenv"
-                }
-            }
-        }
-
         // Create the .dar to prepare it to deploy to XLDeploy
         stage('Create .dar'){
-            xldCreatePackage artifactsPath: 'loadTest/python3/outenv', manifestPath: 'jenkins/xldeploywithuv/deploy-it.xml', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
+            xldCreatePackage artifactsPath: 'loadTest/python3/dist', manifestPath: 'jenkins/xldeploywithuv/deploy-it.xml', darPath: 'loadtest-uv-${BUILD_NUMBER}.dar'
         }
 
         // Create the .dar to prepare it to deploy to XLDeploy
