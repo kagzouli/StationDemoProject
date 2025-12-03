@@ -5,6 +5,7 @@ import typer
 from loadtest.utils import prometheus
 from loadtest.utils.k6 import k6
 from dotenv import load_dotenv
+import os
 
 def url_callback(value: str):
     if value[:4] != "http":
@@ -25,6 +26,8 @@ def main(
     # Load env variable
     load_dotenv("config.properties")  # loads .env into environment
 
+    # Only for XLDeploy test - not for the project
+    print_variable()
 
     # Start the timer before the test
     start_time = int(time.time())
@@ -61,3 +64,8 @@ def main(
 def get_epochtime_ms(date_time: datetime) -> int:
     epochtime = int(round(date_time.timestamp()))
     return epochtime
+
+# Print variable
+def print_variable():
+    prometheus_api_url: str = os.getenv("PROMETHEUS_API_URL")
+    print(f"Prometheus Api Url : {prometheus_api_url}")
