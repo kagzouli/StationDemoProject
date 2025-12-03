@@ -5,6 +5,7 @@ import typer
 from loadtest.utils import prometheus
 from loadtest.utils.k6 import k6
 from dotenv import load_dotenv
+from pathlib import Path
 import os
 
 def url_callback(value: str):
@@ -24,7 +25,8 @@ def main(
         load_file: str = typer.Option(default="data.txt", help="The load files for the data.")
 ):
     # Load env variable
-    load_dotenv("config.properties")  # loads .env into environment
+    env_path = Path(__file__).parent / "config.properties"
+    load_dotenv(env_path)  # loads .env into environment
 
     # Only for XLDeploy test - not for the project
     print_variable()
