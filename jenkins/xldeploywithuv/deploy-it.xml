@@ -5,9 +5,11 @@
   <orchestrator />
 
   <deployables>
-    <file.Archive name="loadtest-1.1.0.tar.gz"  file="loadtest-1.1.0.tar.gz" fileType="tar.gz">
+
+    <file.Archive name="loadtest.tar.gz"  file="loadtest-1.1.0.tar.gz">
       <tags />
       <scanPlaceholders>true</scanPlaceholders>
+      <order>10</order>
       <delimiters>{{ }}</delimiters>
       <preScannedPlaceholders>true</preScannedPlaceholders>
       <fileEncodings>
@@ -20,7 +22,37 @@
       <targetPath>/tmp/karim/loadtest</targetPath>
       <createTargetPath>true</createTargetPath>
     </file.Archive>
+
+    <cmd.Command name="untar-targz">
+      <tags/>
+      <commandLine>tar -xvf /tmp/karim/loadtest/loadtest.tar.gz -C /tmp/karim/loadtest/ </commandLine>
+      <order>60</order>
+      <undoOrder>49</undoOrder>
+      <undoDependencies/>
+      <runUndoCommandOnUpgrade>true</runUndoCommandOnUpgrade>
+      <!-- IMPORTANT: force ordering -->
+      <dependencies>
+        <ref refId="loadtest.tar.gz"/>
+      </dependencies>
+    </cmd.Command>
+
+    <cmd.Command name="link-target">
+      <tags/>
+      <commandLine>ln -s /tmp/karim/loadtest/loadtest-1.1.0 /tmp/karim/loadtest/loadtest </commandLine>
+      <order>62</order>
+      <undoOrder>47</undoOrder>
+      <undoDependencies/>
+      <runUndoCommandOnUpgrade>true</runUndoCommandOnUpgrade>
+      <!-- IMPORTANT: force ordering -->
+      <dependencies>
+        <ref refId="untar-targz"/>
+      </dependencies>
+    </cmd.Command>
+
+
+
   </deployables>
+
 
   <dependencyResolution>LATEST</dependencyResolution>
   <undeployDependencies>false</undeployDependencies>
