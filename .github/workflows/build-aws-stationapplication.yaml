@@ -26,7 +26,7 @@ on:
         required: true
 
 env:
-  NODEJS_VERSION: 16
+  NODEJS_VERSION: 18
 
 jobs:
 
