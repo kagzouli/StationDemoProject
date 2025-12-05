@@ -49,5 +49,8 @@
       }
     }
   },
-  "defaultProject": "station-angular4-poc"
+  "defaultProject": "station-angular4-poc",
+  "cli": {
+    "analytics": false
+  }
 }

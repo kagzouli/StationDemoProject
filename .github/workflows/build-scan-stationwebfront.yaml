@@ -7,12 +7,12 @@ on:
 
       docker_project_version:
         type: string
-        default: 1.5.0
+        default: 1.5.1
         description: station  project version
         required: true
 
 env:
-  NODEJS_VERSION: 14
+  NODEJS_VERSION: 18
   REPO_DOCKER_HUB: kagzouli
 
 jobs:
