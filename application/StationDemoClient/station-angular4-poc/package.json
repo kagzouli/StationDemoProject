@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host station.exakaconsulting.org --port 443 --configuration=development --ssl  --base-href /station-angular4-poc/ --disable-host-check",
+    "start": "ng serve --host station.exakaconsulting.org --port 443 --configuration=development --ssl  --disable-host-check",
     "build": "ng build --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
     "test": "ng test",
     "lint": "ng lint",
