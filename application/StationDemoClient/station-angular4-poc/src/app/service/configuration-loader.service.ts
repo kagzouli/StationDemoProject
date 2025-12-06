@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
 import { Configuration } from '../bean/configuration';
-import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ConfigurationLoaderService {

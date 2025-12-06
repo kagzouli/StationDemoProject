@@ -1,7 +1,6 @@
 import {DataSource, CollectionViewer} from '@angular/cdk/collections';
 
-import {Observable} from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TrafficStationBean } from '../bean/trafficstationbean';
 import { TrafficstationService } from '../service/trafficstation.service';
 import { CriteriaSearchStation } from '../bean/criteriasearchstation';

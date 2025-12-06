@@ -7,15 +7,13 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host station.exakaconsulting.org --port 443 --configuration=development --ssl  --disable-host-check",
-    "build": "ng build --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
+    "start": "ng serve station-angular4-poc",
+    "build": "ng build station-angular4-poc --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "staging": "ng build --staging  --configuration=production --base-href=/station-angular4-poc/ --output-path=distTomcat",
-    "staging-zip": "ng build --staging  --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
-    "prod": "ng build  --configuration=production --base-href=/station-angular4-poc/ --output-path=distTomcat",
-    "prod-zip": "ng build  --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/"
+    "staging-zip": "ng build station-angular4-poc --staging  --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/",
+    "prod-zip": "ng build station-angular4-poc  --configuration=production --base-href=/station-angular4-poc/ --output-path=dist/station-angular4-poc/"
   },
   "dependencies": {
     "@angular/animations": "19.2.17",

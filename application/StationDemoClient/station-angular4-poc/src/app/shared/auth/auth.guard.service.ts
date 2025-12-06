@@ -2,12 +2,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   async  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    const claims = await this.authService.getIdTokenClaims().toPromise();
+    const claims = await firstValueFrom(this.authService.idTokenClaims$);
     if (claims){
 
       // Get the roles authorized for this route
