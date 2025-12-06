@@ -87,7 +87,7 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
   ],
   providers: [
     ConfigurationLoaderService,

@@ -12,7 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-select-station',
   templateUrl: './select-station.component.html',
   styleUrls: ['./select-station.component.css'],
-  providers: [TrafficstationService]
+  providers: [TrafficstationService],
+  standalone: false
 })
 export class SelectStationComponent implements OnInit {
 

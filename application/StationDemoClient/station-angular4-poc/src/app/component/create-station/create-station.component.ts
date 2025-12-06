@@ -14,7 +14,8 @@ import { Router } from "@angular/router";
   selector: 'app-create-station',
   templateUrl: './create-station.component.html',
   styleUrls: ['./create-station.component.css'],
-  providers: [TrafficstationService]
+  providers: [TrafficstationService],
+  standalone: false
 })
 export class CreateStationComponent implements OnInit {
 

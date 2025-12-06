@@ -9,7 +9,8 @@ import { AuthService , User  } from '@auth0/auth0-angular';
   selector: 'app-header-station',
   templateUrl: './header-station.component.html',
   styleUrls: ['./header-station.component.css'],
-  providers: []
+  providers: [],
+  standalone: false
 })
 export class HeaderStationComponent implements OnInit {
 

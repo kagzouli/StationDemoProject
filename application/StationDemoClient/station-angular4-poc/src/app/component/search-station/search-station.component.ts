@@ -27,7 +27,8 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-search-station',
   templateUrl: './search-station.component.html',
   styleUrls: ['./search-station.component.css'],
-  providers: [TrafficstationService]
+  providers: [TrafficstationService],
+  standalone: false
 })
 export class SearchStationComponent implements OnInit {
 
