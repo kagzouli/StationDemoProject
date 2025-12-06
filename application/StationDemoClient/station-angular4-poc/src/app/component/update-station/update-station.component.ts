@@ -13,7 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-update-station',
   templateUrl: './update-station.component.html',
   styleUrls: ['./update-station.component.css'],
-  providers: [TrafficstationService]
+  providers: [TrafficstationService],
+  standalone: false
 })
 export class UpdateStationComponent implements OnInit {
 
