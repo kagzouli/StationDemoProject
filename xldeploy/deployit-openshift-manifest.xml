@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<udm.DeploymentPackage version="1.5.2" application="TEST/EXAKA/station-app">
+<udm.DeploymentPackage version="1.5.3" application="TEST/EXAKA/station-app">
   <application />
   <orchestrator />
   <deployables>

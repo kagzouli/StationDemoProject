@@ -23,7 +23,7 @@ spec:
           value: {{ .Values.app.noderolearn | quote }}
 
     repoURL: {{ .Values.helm.repository | quote }} 
-    targetRevision: 1.5.2
+    targetRevision: 1.5.3
   syncPolicy:
     automated:
       prune: true
