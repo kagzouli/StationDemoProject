@@ -3,8 +3,11 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
-    "module": "commonjs",
-    "target": "es5",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node16",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "types": [
       "jasmine",
       "node"
