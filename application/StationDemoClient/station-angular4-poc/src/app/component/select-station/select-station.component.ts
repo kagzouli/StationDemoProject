@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  , signal } from '@angular/core';
 
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -18,36 +18,36 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class SelectStationComponent implements OnInit {
 
   /** Traffic station bean */
-  trafficStationBean : TrafficStationBean;
+  trafficStationBean = signal<TrafficStationBean | null>(null);
 
-  isDataAvailable : boolean;
 
   constructor(private parentRoute: ActivatedRoute, private trafficstationService: TrafficstationService, private router: Router) { 
 
   }
 
   async ngOnInit() {
+    const stationId = +this.parentRoute.snapshot.params['stationId'] || 0;
+    this.loadStation(stationId);
+}
 
-    // Get the parameter for stationId
-    let stationId = 0;
-    this.parentRoute.params.subscribe(params => {   
-      stationId = params['stationId'];
-    });
+private async loadStation(stationId: number) {
+  try {
+    const trafficParam = await this.trafficstationService.selectStationById(stationId);
+    this.trafficStationBean.set(trafficParam);
 
-    try {
-      const trafficParam: TrafficStationBean = await this.trafficstationService.selectStationById(stationId);
-      this.trafficStationBean = trafficParam;
-      this.isDataAvailable = true;
-
-    }catch (error: any) {
-      if (error.status === 404) {
-        this.router.navigate(['/error/404', {}]);
-      } else {
-        console.error('Error fetching station:', error);
-      }
+  } catch (error: any) {
+    if (error.status === 404) {
+      this.router.navigate(['/error/404']);
+    } else {
+      console.error('Error fetching station:', error);
     }
-   
   }
+}
+
+get isDataAvailable() {
+  return !!this.trafficStationBean();
+}
+
 
 
   /**
@@ -57,7 +57,7 @@ export class SelectStationComponent implements OnInit {
    * 
    */
   callUpdateStation(event) {
-     this.router.navigate(['/stationdemo/updatestation', this.trafficStationBean.id]);
+     this.router.navigate(['/stationdemo/updatestation', this.trafficStationBean()!.id]);
   }
 
   /**
@@ -66,19 +66,23 @@ export class SelectStationComponent implements OnInit {
    * @param event 
    */
   async callDeleteStation(event){
-    let paramsDelete = { stationName: this.trafficStationBean.station };
-   //let paramsDelete = "{}";
-   
-    if (confirm(this.trafficstationService.translateMessage("STATION_DELETE_SUCCESS_CONFIRM", paramsDelete))) {
- 
-      await this.trafficstationService.deleteStation(this.trafficStationBean.id);
+    const bean = this.trafficStationBean();
+    if (bean) {
+      const paramsDelete = { stationName: bean.station };
 
-      // Success message
-      window.alert(this.trafficstationService.translateMessage('STATION_DELETE_SUCCESS', {}));
-
-      // Navigate after deletion
-      this.router.navigate(['/stationdemo/searchstations', {}]);
+    //let paramsDelete = "{}";
     
+      if (confirm(this.trafficstationService.translateMessage("STATION_DELETE_SUCCESS_CONFIRM", paramsDelete))) {
+  
+        await this.trafficstationService.deleteStation(this.trafficStationBean()!.id);
+
+        // Success message
+        window.alert(this.trafficstationService.translateMessage('STATION_DELETE_SUCCESS', {}));
+
+        // Navigate after deletion
+        this.router.navigate(['/stationdemo/searchstations', {}]);
+      
+      }
     }
 
   }
