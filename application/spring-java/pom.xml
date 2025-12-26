@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-dependencies</artifactId>
-		<version>3.1.3</version>
+		<version>3.5.9</version>
 	</parent>
 	<groupId>com.exakaconsulting.poc</groupId>
 	<artifactId>StationDemoProject</artifactId>
@@ -26,7 +26,7 @@
 	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   <validationapi.version>2.0.1.Final</validationapi.version>
 	   <springplugin.version>3.0.0</springplugin.version>
-	   <mysqlconnector.version>8.0.33</mysqlconnector.version>
+	   <mysqlconnector.version>8.4.0</mysqlconnector.version>
 	   
 	   <!-- Sonar -->
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
