@@ -5,7 +5,9 @@
     "baseUrl": "./",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "Node16",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "types": [
