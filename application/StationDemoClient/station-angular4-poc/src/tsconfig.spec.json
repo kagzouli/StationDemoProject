@@ -3,8 +3,13 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
-    "module": "commonjs",
-    "target": "es5",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "types": [
       "jasmine",
       "node"

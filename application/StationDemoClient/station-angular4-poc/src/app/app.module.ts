@@ -23,14 +23,14 @@ import { UpdateStationComponent } from './component/update-station/update-statio
 
 import { AuthModule , AuthClientConfig  } from '@auth0/auth0-angular';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TranslateHttpLoader , TRANSLATE_HTTP_LOADER_CONFIG} from '@ngx-translate/http-loader';
 import { HeaderStationComponent } from './component/header-station/header-station.component';
 import { ConfigurationLoaderService } from './service/configuration-loader.service';
 import { ErrorComponent } from './component/error/error.component';
 
 // AoT requires an exported function for factories
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+export function createTranslateLoader() {
+  return new TranslateHttpLoader();
 }
 
 export function initializeApp(configService: ConfigurationLoaderService) {
@@ -102,7 +102,14 @@ export function authConfigFactory(configService: ConfigurationLoaderService) {
       provide: AuthClientConfig,
       useFactory: authConfigFactory,
       deps: [ConfigurationLoaderService]
+    },
+     {
+    provide: TRANSLATE_HTTP_LOADER_CONFIG,
+    useValue: {
+      prefix: './assets/i18n/',
+      suffix: '.json'
     }
+  }
   ],
   bootstrap: [AppComponent],
 })

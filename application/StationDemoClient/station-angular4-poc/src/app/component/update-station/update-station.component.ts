@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { TrafficstationService } from '../../service/trafficstation.service';
 import { TrafficStationBean } from '../../bean/trafficstationbean';
@@ -21,9 +21,7 @@ export class UpdateStationComponent implements OnInit {
   rForm: FormGroup;
 
    /** Traffic station bean */
-  trafficStationBeanUpdate : TrafficStationBean;
-   
-  isDataAvailable : boolean;
+  trafficStationBeanUpdate = signal<TrafficStationBean | null>(null);
 
   launchAction : boolean = false;
   
@@ -42,14 +40,12 @@ export class UpdateStationComponent implements OnInit {
 
     try {
       const trafficParam: TrafficStationBean = await this.trafficstationService.selectStationById(stationId);
-
-      this.trafficStationBeanUpdate = trafficParam;
-      this.isDataAvailable = true;
-
+      this.trafficStationBeanUpdate.set(trafficParam);
+      
       // Initialise the form
       this.rForm = this.fb.group({
-        'traffic': [this.trafficStationBeanUpdate.traffic, Validators.compose([Validators.required])],
-        'correspondance': [this.trafficStationBeanUpdate.listCorrespondance, Validators.maxLength(150)]
+        'traffic': [this.trafficStationBeanUpdate()!.traffic, Validators.compose([Validators.required])],
+        'correspondance': [this.trafficStationBeanUpdate()!.listCorrespondance, Validators.maxLength(150)]
       });
 
     } catch (error: any) {
@@ -64,6 +60,11 @@ export class UpdateStationComponent implements OnInit {
     return this.isDataAvailable ?  (invalidform || this.launchAction) : false; 
   }
 
+  get isDataAvailable() {
+    return !!this.trafficStationBeanUpdate();
+  }
+
+
   async updateStation(form: any) {
     if (!this.rForm.valid) {
       // Invalid form: reset
@@ -77,7 +78,7 @@ export class UpdateStationComponent implements OnInit {
       await this.trafficstationService.updateStation(
         form.traffic,
         form.correspondance,
-        this.trafficStationBeanUpdate.id
+        this.trafficStationBeanUpdate()!.id
       );
 
       window.alert(this.trafficstationService.translateMessage("STATION_UPDATE_SUCESSS", {}));

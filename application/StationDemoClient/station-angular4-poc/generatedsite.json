@@ -1,18 +1,22 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "ES2022",
+    "useDefineForClassFields": false,
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "ES2022",
       "dom"
     ]
   }
