@@ -14,7 +14,7 @@ on:
 
       docker_project_version:
         type: string
-        default: 1.5.4
+        default: 1.5.5
         description: station  project version
         required: true
 
