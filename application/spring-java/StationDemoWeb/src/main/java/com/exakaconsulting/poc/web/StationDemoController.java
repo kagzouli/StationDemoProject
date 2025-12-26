@@ -284,7 +284,7 @@ public class StationDemoController {
 	@PatchMapping(value = "/station/stations/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ResponseBody
 	@PreAuthorize("hasRole('manager')")
-	public ResponseEntity<Void> updateTrafficStation(@RequestParam Long newTraffic, @RequestParam String newCorr, @PathVariable("id") Integer id){
+	public ResponseEntity<Void> updateTrafficStation(@RequestParam("newTraffic") Long newTraffic, @RequestParam("newCorr") String newCorr, @PathVariable("id") Integer id){
 		if (LOGGER.isInfoEnabled()){
 			LOGGER.info(String.format("BEGIN of the method updateTrafficStation of the class %s", StationDemoController.class.getName()));			
 		}
