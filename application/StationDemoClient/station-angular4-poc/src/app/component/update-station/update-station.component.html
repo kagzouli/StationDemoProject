@@ -11,11 +11,11 @@
 
               <tr>
                 <td><span class="pocbold" translate="NETWORK_LABEL"></span></td>
-                <td>{{trafficStationBeanUpdate.reseau}}</td>
+                <td>{{trafficStationBeanUpdate()!.reseau}}</td>
               </tr>
               <tr>
                 <td><span class="pocbold" translate="STATION_LABEL"></span></td>
-                <td>{{trafficStationBeanUpdate.station}}</td>
+                <td>{{trafficStationBeanUpdate()!.station}}</td>
               </tr>
               <tr>
                 <td><span class="pocbold" translate="TRAFFIC_LABEL"></span></td>
@@ -23,15 +23,15 @@
               </tr>
               <tr>
                 <td><span class="pocbold" translate="CORRESPOND_LABEL"></span></td>
-                <td> <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate.listCorrespondance}}"/></td>
+                <td> <input type="text"  formControlName="correspondance" value="{{trafficStationBeanUpdate()!.listCorrespondance}}"/></td>
               </tr>
               <tr>
                 <td><span class="pocbold" translate="CITY_LABEL"></span></td>
-                <td>{{trafficStationBeanUpdate.ville}}</td>
+                <td>{{trafficStationBeanUpdate()!.ville}}</td>
               </tr>
               <tr>
                 <td><span class="pocbold" translate="ARRONDISS_LABEL"></span></td>
-                <td>{{trafficStationBeanUpdate.arrondissement}}</td>
+                <td>{{trafficStationBeanUpdate()!.arrondissement}}</td>
               </tr>
            </table>
        
