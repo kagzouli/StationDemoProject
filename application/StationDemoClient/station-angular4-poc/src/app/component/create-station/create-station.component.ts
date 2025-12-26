@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {StringMapEntry} from '../../bean/stringmapentry';
 import { TrafficstationService } from '../../service/trafficstation.service';
@@ -33,7 +33,7 @@ export class CreateStationComponent implements OnInit {
 
   displayArron : boolean = false;
 
-  constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router) { 
+  constructor(private fb: FormBuilder , private trafficstationService: TrafficstationService , private router: Router, private cdr: ChangeDetectorRef) { 
 
     this.rForm = fb.group({
       'reseau' : [null, Validators.compose([Validators.required])],
@@ -89,6 +89,8 @@ export class CreateStationComponent implements OnInit {
         } else {
           console.error('Error creating station:', error);
         }
+
+        this.cdr.detectChanges();
       } finally {
         this.launchAction = false;
       }

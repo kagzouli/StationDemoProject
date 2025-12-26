@@ -28,7 +28,7 @@ app:
   hscaler: 'keda'
 
 image:
-  tag: 1.5.3
+  tag: 1.5.4
 
   # Context path of the repo nexus url
   repoNexusUrl: 'kagzouli'
