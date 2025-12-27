@@ -36,31 +36,40 @@ public class StationSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
-		 http.cors(cors -> cors.disable()).
-		
-		 
-		// formLogin(formLogin -> formLogin.disable()).
-		 csrf(csrf -> csrf.disable()).
-		 authorizeHttpRequests().
-		 requestMatchers(HttpMethod.GET,"/health").permitAll().
-		 requestMatchers(HttpMethod.GET,"/actuator").permitAll().
-		 requestMatchers(HttpMethod.GET,"/actuator/**").permitAll().
-		 requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().
-		 requestMatchers(HttpMethod.GET,"/v3/api-docs.yaml").permitAll().
-		 anyRequest().authenticated().and().
-		 sessionManagement().
-		 sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
-		 authenticationProvider(authenticationProvider).
-		 addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).
-		 exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
-		 
-				        
-		
-				
-		
-		return http.build();
-		
+	    http
+	        // Disable form login
+	        .formLogin(formLogin -> formLogin.disable())
+
+	        // Disable CSRF (needed for stateless JWT)
+	        .csrf(csrf -> csrf.disable())
+
+	        // Authorization rules
+	        .authorizeHttpRequests(auth -> auth
+	            .requestMatchers(HttpMethod.GET, "/health").permitAll()
+	            .requestMatchers("/actuator/**").permitAll() // includes /actuator
+	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+	            .requestMatchers(HttpMethod.GET, "/v3/api-docs.yaml").permitAll()
+	            .anyRequest().authenticated()
+	        )
+
+	        // Stateless session (JWT)
+	        .sessionManagement(session -> session
+	            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        )
+
+	        // Authentication provider
+	        .authenticationProvider(authenticationProvider)
+
+	        // JWT filter before UsernamePasswordAuthenticationFilter
+	        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+	        // Custom unauthorized handler
+	        .exceptionHandling(exceptions -> exceptions
+	            .authenticationEntryPoint(unauthorizedHandler)
+	        );
+
+	    return http.build();
 	}
+
 
 }
