@@ -20,7 +20,6 @@
 	   <auth0-java-jwt>4.4.0</auth0-java-jwt>
 	   <jacoco.version>0.8.8</jacoco.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
-	   <validationapi.version>2.0.1.Final</validationapi.version>
 	   <springplugin.version>3.0.0</springplugin.version>
 	   <mysqlconnector.version>8.4.0</mysqlconnector.version>
 	   
@@ -91,10 +90,10 @@
 		</dependency>
 		
 		<dependency>
-    		<groupId>javax.validation</groupId>
-    		<artifactId>validation-api</artifactId>
-    		<version>${validationapi.version}</version>
-		</dependency>
+        	<groupId>jakarta.validation</groupId>
+        	<artifactId>jakarta.validation-api</artifactId>
+			<version>${jakarta-validation.version}</version>
+      	</dependency>
 
 		
 		<dependency>
