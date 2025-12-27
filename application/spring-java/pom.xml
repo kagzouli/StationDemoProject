@@ -18,12 +18,13 @@
 	   <java-jwt.version>3.8.3</java-jwt.version>
 	   <auth0-jwks-rsa.version>0.21.2</auth0-jwks-rsa.version>
 	   <auth0-java-jwt>4.4.0</auth0-java-jwt>
-	   <jacoco.version>0.8.8</jacoco.version>
+	   <jacoco.version>0.8.14</jacoco.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
 	   <springplugin.version>3.0.0</springplugin.version>
 	   <mysqlconnector.version>8.4.0</mysqlconnector.version>
 	   
 	   <!-- Sonar -->
+	   <sonar.java.binaries>target</sonar.java.binaries>
 	   <sonar.exclusions>**/*Exception, **/*Application*.java, **/*Filter.java, **/*Configuration.java, **/*Bean.java, **/Constant*.java, **/*Holder.java, **/*Provider.java  </sonar.exclusions>
 	   <sonar.sources>src/main</sonar.sources>
 	   <!-- Below property indicates the pattern of the test suite -->
@@ -31,7 +32,7 @@
 	   <!-- Sonar-JaCoCo properties -->
 	   <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 	   <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-	   <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+	   <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	   <sonar.language>java</sonar.language>
 	   
 	   </properties>
@@ -219,13 +220,21 @@
 		        <plugin>
       			   <groupId>org.sonarsource.scanner.maven</groupId>
        			   <artifactId>sonar-maven-plugin</artifactId>
-        		   <version>3.3.0.603</version>
+        		   <version>5.5.0.6356</version>
       			</plugin>
 				
 				<plugin>
 				  <groupId>org.jacoco</groupId>
 				  <artifactId>jacoco-maven-plugin</artifactId>
 				  <version>${jacoco.version}</version>
+				  <executions>
+                	<execution>
+                    	<id>prepare-agent</id>
+                    	<goals>
+                        	<goal>prepare-agent</goal>
+                    	</goals>
+                	</execution>
+            	  </executions>
 			  </plugin>				
 			</plugins>
 		</pluginManagement>
