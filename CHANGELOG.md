@@ -33,3 +33,8 @@ All notable changes to this project will be documented here.
 ### Fixed
 - Correction affichage erreur lors de la création d'une station déja existante. 
 
+
+## [v1.5.5] - 2025-12-27
+### Added
+- Montée version de Spring boot 3.5.9 en 4.1.0
+
