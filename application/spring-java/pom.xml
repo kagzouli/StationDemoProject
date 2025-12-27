@@ -13,7 +13,6 @@
 	<properties>
 	   <java.version>17</java.version>
 	   <springdocopenapi.version>1.6.14</springdocopenapi.version>
-	   <springbatch.version>5.0.0</springbatch.version>
 	   <springboot.version>4.0.1</springboot.version>
 	   <springredis.version>4.0.1</springredis.version>
 	   <java-jwt.version>3.8.3</java-jwt.version>
@@ -21,7 +20,6 @@
 	   <auth0-java-jwt>4.4.0</auth0-java-jwt>
 	   <jacoco.version>0.8.8</jacoco.version>
 	   <gitflow.version>1.0-m5.1</gitflow.version>
-	   <urlrewriterfilter.version>4.0.4</urlrewriterfilter.version>
 	   <validationapi.version>2.0.1.Final</validationapi.version>
 	   <springplugin.version>3.0.0</springplugin.version>
 	   <mysqlconnector.version>8.4.0</mysqlconnector.version>
@@ -78,19 +76,6 @@
         	<artifactId>jakarta.servlet-api</artifactId>
         	<version>${jakarta-servlet.version}</version>
       	</dependency>
-				
-		<!-- Batch -->
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-core</artifactId>
-			<version>${springbatch.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-test</artifactId>
-			<scope>test</scope>
-			<version>${springbatch.version}</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
